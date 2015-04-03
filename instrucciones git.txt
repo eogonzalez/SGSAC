@@ -1,0 +1,12 @@
+1. Instalar Git en la maquina
+2. Ir a Git Bash
+3. Configurar las variables globales del Git para poder hacer commit 
+	Ejecutar el comado
+$git --global user.name "Nombre"
+$git --global user.email djgonzalezeder@gmail.comado
+
+4. Si necesitamos crear repositorio
+
+5. Si necesitamos copiar un repositori existente
+
+
