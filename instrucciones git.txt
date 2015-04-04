@@ -2,8 +2,11 @@
 2. Ir a Git Bash
 3. Configurar las variables globales del Git para poder hacer commit 
 	Ejecutar el comado
-$git --global user.name "Nombre"
-$git --global user.email djgonzalezeder@gmail.comado
+$git config --global user.name "Nombre"
+$git config --global user.email djgonzalezeder@gmail.com
+
+4. Para verificar las variables 
+$git config --list
 
 4. Si necesitamos crear repositorio
 
