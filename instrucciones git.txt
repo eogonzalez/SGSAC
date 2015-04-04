@@ -12,4 +12,6 @@ $git config --list
 
 5. Si necesitamos copiar un repositori existente
 
-
+Cuando me dio error el pull
+git config branch.master.remote origin
+git config branch.master.merge refs/heads/master
