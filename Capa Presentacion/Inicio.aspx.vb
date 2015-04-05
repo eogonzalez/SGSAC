@@ -1,11 +1,22 @@
-﻿Public Class Inicio
+﻿Imports System.Web.HttpResponse
+
+Public Class Inicio
     Inherits System.Web.UI.Page
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
 
-    End Sub
+        'Dim userid As String
 
-    Protected Sub btn_ingresar_Click(sender As Object, e As EventArgs) Handles btn_ingresar.Click
+        'userid = Session["UsuarioID"]
+
+        'If (!IsPostBack) Then
+
+        '    If (userid = "" Or userid = IsNull) Then
+        Response.Redirect("../Login.aspx")
+
+        '    End If
+
+        'End If
 
     End Sub
 End Class
