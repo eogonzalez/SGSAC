@@ -8,11 +8,39 @@
     <title></title>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
+    <style type="text/css">
+        .auto-style1 {
+            width: 100%;
+        }
+        .auto-style2 {
+            height: 23px;
+            text-align: center;
+        }
+        .auto-style3 {
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
     <form id="form1" runat="server">
     <div>
         <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        
+            <table class="auto-style1">
+                <tr>
+                    <td class="auto-style2">Logo Mineco</td>
+                    <td class="auto-style2">Nombre Sistema</td>
+                </tr>
+                <tr>
+                    <td class="auto-style2" colspan="2">Barra Menu</td>
+                </tr>
+                <tr>
+                    <td class="auto-style3" colspan="2">Area de trabajo</td>
+                </tr>
+                <tr>
+                    <td class="auto-style3" colspan="2">Pie de pagina</td>
+                </tr>
+            </table>
         
         </asp:ContentPlaceHolder>
     </div>
