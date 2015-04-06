@@ -56,3 +56,36 @@ GO
 
 ALTER TABLE [dbo].[g_usuarios] ADD  CONSTRAINT [DF_g_usuarios_estado]  DEFAULT ((1)) FOR [estado]
 GO
+
+/****** Object:  Table [dbo].[g_usuarios_seguridad]    Script Date: 04/05/2015 19:06:18 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+SET ANSI_PADDING ON
+GO
+
+CREATE TABLE [dbo].[g_usuarios_seguridad](
+	[corr_usuarios_ingreso] [int] IDENTITY(1,1) NOT NULL,
+	[id_usuario] [int] NOT NULL,
+	[fecha_ultimo_acceso] [datetime] NOT NULL,
+	[direccion_ip] [varchar](100) NOT NULL,
+ CONSTRAINT [PK_g_usuarios_seguridad] PRIMARY KEY CLUSTERED 
+(
+	[corr_usuarios_ingreso] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO
+
+ALTER TABLE [dbo].[g_usuarios_seguridad]  WITH CHECK ADD  CONSTRAINT [FK_g_usuarios_seguridad_g_usuarios1] FOREIGN KEY([id_usuario])
+REFERENCES [dbo].[g_usuarios] ([id_usuario])
+GO
+
+ALTER TABLE [dbo].[g_usuarios_seguridad] CHECK CONSTRAINT [FK_g_usuarios_seguridad_g_usuarios1]
+GO

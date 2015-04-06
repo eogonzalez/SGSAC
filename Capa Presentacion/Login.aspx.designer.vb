@@ -75,4 +75,13 @@ Partial Public Class Login
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
     Protected WithEvents btn_ingresar As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''Control lbl_mensaje_login.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents lbl_mensaje_login As Global.System.Web.UI.WebControls.Label
 End Class

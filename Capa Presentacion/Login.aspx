@@ -35,12 +35,17 @@
                     <asp:Label ID="Label2" runat="server" Text="Contraseña" Width="100px"></asp:Label>
                     :</td>
                 <td>
-                    <asp:TextBox ID="txt_contraseña" runat="server" Width="150px"></asp:TextBox>
+                    <asp:TextBox ID="txt_contraseña" runat="server" Width="150px" TextMode="Password"></asp:TextBox>
                 </td>
             </tr>
             <tr>
                 <td colspan="2" style="text-align: center">
                     <asp:Button ID="btn_ingresar" runat="server" Text="Ingresar" />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align: center">
+                    <asp:Label ID="lbl_mensaje_login" runat="server"></asp:Label>
                 </td>
             </tr>
         </table>

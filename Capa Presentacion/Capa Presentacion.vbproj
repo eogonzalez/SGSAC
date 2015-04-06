@@ -58,6 +58,10 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Capa Datos\Capa Datos.vbproj">
+      <Project>{bc64a989-0886-41ba-a218-f35bf736e90f}</Project>
+      <Name>Capa Datos</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
