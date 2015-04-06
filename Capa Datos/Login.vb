@@ -7,14 +7,14 @@ Public Class LoginService
     Public Function Autenticar(ByVal usuario As String, ByVal contraseña As String) As Boolean
         Dim sql_query As String
         Dim count As Integer
+        Dim objConexion As New ConectarService
 
         'Declaramos la sentencia SQL
         sql_query = " SELECT COUNT(*) FROM g_usuarios  WHERE usuario = @usuario AND password = @contraseña "
 
-        Using sql_coneccion = New SqlConnection(ConfigurationManager.ConnectionStrings("cn").ConnectionString)
+        Using conexion = objConexion.Conectar
             Try
-
-                Dim command As SqlCommand = New SqlCommand(sql_query, sql_coneccion)
+                Dim command As SqlCommand = New SqlCommand(sql_query, conexion)
                 command.Parameters.AddWithValue("@usuario", usuario)
 
                 'Encriptamos la contraseña
@@ -23,11 +23,12 @@ Public Class LoginService
 
                 command.Parameters.AddWithValue("@contraseña", hash)
 
-                sql_coneccion.Open()
+                'sql_coneccion.Open()
+                conexion.Open()
                 count = Convert.ToInt32(command.ExecuteScalar())
 
             Catch ex As Exception
-                MsgBox(ex.Message.ToString)
+                MsgBox("ERROR AUTENTICAR = " + ex.Message.ToString)
             Finally
 
             End Try
@@ -43,17 +44,16 @@ Public Class LoginService
 
     'Funcion que consulta el Id_usuario 
     Public Function ConsultarUsuario(ByVal usuario As String, ByVal contraseña As String) As Integer
-        Dim sql As String
+        Dim sql_query As String
         Dim int_idUsuario As Integer = 0
+        Dim objConexion As New ConectarService
 
-        sql = "  SELECT id_usuario FROM g_usuarios WHERE usuario = @usuario AND password = @contraseña "
+        sql_query = "  SELECT id_usuario FROM g_usuarios WHERE usuario = @usuario AND password = @contraseña "
 
-        Using sql_coneccion As New SqlConnection(ConfigurationManager.ConnectionStrings("cn").ConnectionString)
+        Using conexion = objConexion.Conectar
             Try
-                sql_coneccion.Open()
 
-                Dim command As SqlCommand = New SqlCommand(sql, sql_coneccion)
-
+                Dim command As SqlCommand = New SqlCommand(sql_query, conexion)
                 command.Parameters.AddWithValue("@usuario", usuario)
 
                 'Encriptamos la contraseña
@@ -61,10 +61,12 @@ Public Class LoginService
                 Dim hash As String = encrip.EncodePassword(usuario + contraseña)
                 command.Parameters.AddWithValue("@contraseña", hash)
 
+                conexion.Open()
+
                 int_idUsuario = Convert.ToInt32(command.ExecuteScalar())
 
             Catch ex As Exception
-                MsgBox("Error ConsultarUsuario" + ex.Message.ToString)
+                MsgBox("ERROR CONSULTARUSUARIO = " + ex.Message.ToString)
             Finally
 
 
@@ -76,25 +78,26 @@ Public Class LoginService
 
     'La funcion seguridad registra en la tabla g_usuarios_seguridad el ultimo acceso del usuario
     Public Function Seguridad(ByVal id_usuario As Integer, ByVal fecha_acceso As Date, ByVal dir_ip As String)
-        Dim sql As String
+        Dim sql_query As String
         Dim int_identidad As Integer = 0
+        Dim objConexion As New ConectarService
 
-        sql = " INSERT INTO g_usuarios_seguridad(id_usuario, fecha_ultimo_acceso, direccion_ip) VALUES(@idUsuario,@fechaAcceso,@dirIP) Select SCOPE_IDENTITY() "
+        sql_query = " INSERT INTO g_usuarios_seguridad(id_usuario, fecha_ultimo_acceso, direccion_ip) VALUES(@idUsuario,@fechaAcceso,@dirIP) Select SCOPE_IDENTITY() "
 
-        Using sql_coneccion As New SqlConnection(ConfigurationManager.ConnectionStrings("cn").ConnectionString)
+        Using conexion = objConexion.Conectar
             Try
-                sql_coneccion.Open()
-
-                Dim command As SqlCommand = New SqlCommand(sql, sql_coneccion)
+                Dim command As SqlCommand = New SqlCommand(sql_query, conexion)
 
                 command.Parameters.AddWithValue("idUsuario", id_usuario)
                 command.Parameters.AddWithValue("fechaAcceso", fecha_acceso)
                 command.Parameters.AddWithValue("dirIP", dir_ip)
 
+                conexion.Open()
+
                 int_identidad = Convert.ToInt32(command.ExecuteScalar())
 
             Catch ex As Exception
-                MsgBox("ERROR SEGURIDAD " + ex.Message.ToString)
+                MsgBox("ERROR SEGURIDAD = " + ex.Message.ToString)
             Finally
 
             End Try
