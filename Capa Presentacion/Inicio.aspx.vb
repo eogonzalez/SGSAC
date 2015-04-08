@@ -1,4 +1,5 @@
-﻿
+﻿Imports Reglas_del_negocio
+
 Public Class Inicio
     Inherits System.Web.UI.Page
 
@@ -8,13 +9,25 @@ Public Class Inicio
 
         userid = Session("UsuarioID")
 
-        If (Not IsPostBack) Then
+        LlenarMenu()
 
-            If (userid = "" Or userid = Nothing) Then
-                Response.Redirect("~/Login.aspx")
-            End If
+    End Sub
 
-        End If
+    Private Sub LlenarMenu()
+        Dim CapaNegocios As New cnGeneral
+        Dim tbl As New DataTable
+        tbl = CapaNegocios.MenuPrincipal.Tables("Menu")
 
+        'Recorer la tabla para llenar los items del Menu principal
+        For Each enc As DataRow In tbl.Rows
+            Dim Item As New MenuItem
+
+            Item.Value = enc("id_opcion")
+            Item.Text = enc("nombre")
+            Item.ToolTip = enc("descripcion")
+            Item.NavigateUrl = enc("url")
+
+            MenuPrincipal.Items.Add(Item)
+        Next
     End Sub
 End Class

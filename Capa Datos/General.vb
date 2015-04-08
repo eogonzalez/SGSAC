@@ -1,6 +1,10 @@
 ﻿Imports System.Security.Cryptography
 Imports System.Text
+Imports System.Data.SqlClient
 Public Class General
+    Dim objConeccion As New ConectarService
+    Dim cn As New SqlConnection
+    Dim da As New SqlDataAdapter
 
     Public Function EncodePassword(ByVal originalPassword As String) As String
 
@@ -20,6 +24,21 @@ Public Class General
         'Convertimos el arreglo de bytes a cadena.
         Return Convert.ToBase64String(hash)
 
+    End Function
+
+    Public Function MunuPrincipal() As DataSet
+
+        'Se Llena el Data Set por medio del procedimiento almacenado y se retorna el mismo
+        Dim ds As New DataSet
+        cn = objConeccion.Conectar
+        da = New SqlDataAdapter("dbo.SP_SEL_MENU", cn)
+        da.Fill(ds, "Menu")
+        Return ds
+
+        'Desechar
+        ds.Dispose()
+        da.Dispose()
+        cn.Dispose()
     End Function
 
 End Class

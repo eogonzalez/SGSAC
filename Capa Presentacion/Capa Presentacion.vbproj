@@ -62,6 +62,10 @@
       <Project>{bc64a989-0886-41ba-a218-f35bf736e90f}</Project>
       <Name>Capa Datos</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Reglas del negocio\Capa Negocio.vbproj">
+      <Project>{53ebda85-84fe-47b9-b18c-cb47716d2eae}</Project>
+      <Name>Capa Negocio</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
@@ -87,6 +91,7 @@
     <Import Include="System.Web.UI.HtmlControls" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Images\ministerioeco.jpg" />
     <Content Include="Inicio.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="Web.config" />
