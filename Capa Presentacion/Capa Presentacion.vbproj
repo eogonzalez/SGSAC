@@ -91,12 +91,44 @@
     <Import Include="System.Web.UI.HtmlControls" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="frmInstrumentosMant.aspx" />
+    <Content Include="frmTipoInstrumento.aspx" />
+    <Content Include="frmTipoRelacionInstrumento.aspx" />
+    <Content Include="frmTratadosyAcuerdos.aspx" />
     <Content Include="Images\ministerioeco.jpg" />
     <Content Include="Inicio.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="frmInstrumentosMant.aspx.designer.vb">
+      <DependentUpon>frmInstrumentosMant.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="frmInstrumentosMant.aspx.vb">
+      <DependentUpon>frmInstrumentosMant.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="frmTipoInstrumento.aspx.designer.vb">
+      <DependentUpon>frmTipoInstrumento.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="frmTipoInstrumento.aspx.vb">
+      <DependentUpon>frmTipoInstrumento.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="frmTipoRelacionInstrumento.aspx.designer.vb">
+      <DependentUpon>frmTipoRelacionInstrumento.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="frmTipoRelacionInstrumento.aspx.vb">
+      <DependentUpon>frmTipoRelacionInstrumento.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="frmTratadosyAcuerdos.aspx.designer.vb">
+      <DependentUpon>frmTratadosyAcuerdos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="frmTratadosyAcuerdos.aspx.vb">
+      <DependentUpon>frmTratadosyAcuerdos.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="General.Master.designer.vb">
       <DependentUpon>General.Master</DependentUpon>
     </Compile>

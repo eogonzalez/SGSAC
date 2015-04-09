@@ -89,3 +89,100 @@ GO
 
 ALTER TABLE [dbo].[g_usuarios_seguridad] CHECK CONSTRAINT [FK_g_usuarios_seguridad_g_usuarios1]
 GO
+
+/****** Object:  Table [dbo].[IC_Tipo_Instrumento]    Script Date: 04/08/2015 23:51:21 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+SET ANSI_PADDING ON
+GO
+
+CREATE TABLE [dbo].[IC_Tipo_Instrumento](
+	[id_tipo_instrumento] [int] NOT NULL,
+	[descripcion] [varchar](100) NOT NULL,
+	[observaciones] [varchar](300) NOT NULL,
+ CONSTRAINT [PK_IC_Tipo_Instrumento] PRIMARY KEY CLUSTERED 
+(
+	[id_tipo_instrumento] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO
+
+/****** Object:  Table [dbo].[IC_Tipo_Relacion_Instrumento]    Script Date: 04/08/2015 23:53:39 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+SET ANSI_PADDING ON
+GO
+
+CREATE TABLE [dbo].[IC_Tipo_Relacion_Instrumento](
+	[id_tipo_relacion_instrumento] [int] NOT NULL,
+	[descripcion] [varchar](100) NOT NULL,
+	[observaciones] [varchar](300) NOT NULL,
+ CONSTRAINT [PK_IC_Tipo_Relacion_Instrumento] PRIMARY KEY CLUSTERED 
+(
+	[id_tipo_relacion_instrumento] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO
+
+/****** Object:  Table [dbo].[IC_Instrumentos]    Script Date: 04/08/2015 23:58:22 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+SET ANSI_PADDING ON
+GO
+
+CREATE TABLE [dbo].[IC_Instrumentos](
+	[id_instrumento] [int] NOT NULL,
+	[id_tipo_instrumento] [int] NOT NULL,
+	[id_tipo_relacion_instrumento] [int] NOT NULL,
+	[nombre_instrumento] [varchar](150) NOT NULL,
+	[sigla] [varchar](100) NOT NULL,
+	[sigla_alternativa] [varchar](100) NOT NULL,
+	[observaciones] [varchar](500) NOT NULL,
+	[fecha_firma] [datetime] NOT NULL,
+	[fecha_ratificada] [datetime] NOT NULL,
+	[fecha_vigencia] [datetime] NOT NULL,
+ CONSTRAINT [PK_IC_Instrumentos] PRIMARY KEY CLUSTERED 
+(
+	[id_instrumento] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO
+
+ALTER TABLE [dbo].[IC_Instrumentos]  WITH CHECK ADD  CONSTRAINT [FK_IC_Instrumentos_IC_Tipo_Instrumento] FOREIGN KEY([id_tipo_instrumento])
+REFERENCES [dbo].[IC_Tipo_Instrumento] ([id_tipo_instrumento])
+GO
+
+ALTER TABLE [dbo].[IC_Instrumentos] CHECK CONSTRAINT [FK_IC_Instrumentos_IC_Tipo_Instrumento]
+GO
+
+ALTER TABLE [dbo].[IC_Instrumentos]  WITH CHECK ADD  CONSTRAINT [FK_IC_Instrumentos_IC_Tipo_Relacion_Instrumento] FOREIGN KEY([id_tipo_relacion_instrumento])
+REFERENCES [dbo].[IC_Tipo_Relacion_Instrumento] ([id_tipo_relacion_instrumento])
+GO
+
+ALTER TABLE [dbo].[IC_Instrumentos] CHECK CONSTRAINT [FK_IC_Instrumentos_IC_Tipo_Relacion_Instrumento]
+GO
+
