@@ -150,6 +150,16 @@ GO
 SET ANSI_PADDING ON
 GO
 
+/****** Object:  Table [dbo].[IC_Instrumentos]    Script Date: 04/09/2015 22:56:58 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+SET ANSI_PADDING ON
+GO
+
 CREATE TABLE [dbo].[IC_Instrumentos](
 	[id_instrumento] [int] NOT NULL,
 	[id_tipo_instrumento] [int] NOT NULL,
@@ -161,6 +171,7 @@ CREATE TABLE [dbo].[IC_Instrumentos](
 	[fecha_firma] [datetime] NOT NULL,
 	[fecha_ratificada] [datetime] NOT NULL,
 	[fecha_vigencia] [datetime] NOT NULL,
+	[estado] [bit] NOT NULL,
  CONSTRAINT [PK_IC_Instrumentos] PRIMARY KEY CLUSTERED 
 (
 	[id_instrumento] ASC
@@ -186,3 +197,5 @@ GO
 ALTER TABLE [dbo].[IC_Instrumentos] CHECK CONSTRAINT [FK_IC_Instrumentos_IC_Tipo_Relacion_Instrumento]
 GO
 
+ALTER TABLE [dbo].[IC_Instrumentos] ADD  CONSTRAINT [DF_IC_Instrumentos_estado]  DEFAULT ((1)) FOR [estado]
+GO

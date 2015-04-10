@@ -49,6 +49,24 @@
                     <asp:ScriptManager ID="ScriptManager1" runat="server">
                     </asp:ScriptManager>
                     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                        <ContentTemplate>
+                            <asp:GridView ID="gvInstrumentos" runat="server" AutoGenerateColumns="false">
+                                <Columns>
+                                    <asp:BoundField DataField="id_instrumento" HeaderText="Id Instrumento" SortExpression="id_intrumento" />
+                                    <asp:TemplateField>
+                                        <ItemTemplate>
+                                            <asp:RadioButton ID="rb_sigla" runat="server" />
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:BoundField DataField="sigla" HeaderText="Sigla" />
+                                    <asp:BoundField DataField="nombre_instrumento" HeaderText="Tratado o Acuerdo Comercial" />
+                                    <asp:BoundField DataField="fecha_firma" HeaderText="Fecha Firma" DataFormatString="{0:d}"/>
+                                    <asp:BoundField DataField="fecha_ratificada" HeaderText="Fecha Ratificación" DataFormatString="{0:d}"/>
+                                    <asp:BoundField DataField="fecha_vigencia" HeaderText="Fecha Vigencia" DataFormatString="{0:d}" />
+                                    
+                                </Columns>
+                            </asp:GridView>
+                        </ContentTemplate>
                     </asp:UpdatePanel>
                 </td>
             </tr>

@@ -63,6 +63,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CDInstrumentosComerciales.vb" />
     <Compile Include="Coneccion.vb" />
     <Compile Include="General.vb" />
     <Compile Include="Login.vb" />
