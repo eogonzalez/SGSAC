@@ -59,13 +59,13 @@ Partial Public Class frmInstrumentosMant
     Protected WithEvents Label3 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''Control ListBox1.
+    '''Control ddlstTipoInstrumento.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents ListBox1 As Global.System.Web.UI.WebControls.ListBox
+    Protected WithEvents ddlstTipoInstrumento As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''Control Label4.
@@ -113,13 +113,13 @@ Partial Public Class frmInstrumentosMant
     Protected WithEvents Label6 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''Control ListBox2.
+    '''Control ddlstTipoRelacion.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents ListBox2 As Global.System.Web.UI.WebControls.ListBox
+    Protected WithEvents ddlstTipoRelacion As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''Control Label7.

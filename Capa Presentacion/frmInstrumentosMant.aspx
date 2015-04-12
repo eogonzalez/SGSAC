@@ -1,5 +1,7 @@
 ﻿<%@ Page Language="vb" AutoEventWireup="false" CodeBehind="frmInstrumentosMant.aspx.vb" Inherits="Capa_Presentacion.frmInstrumentosMant" %>
 
+<%@ Register assembly="AjaxControlToolkit" namespace="AjaxControlToolkit" tagprefix="cc1" %>
+
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -36,7 +38,8 @@
                                 <asp:Label ID="Label3" runat="server" Text="Tipo Instrumento:"></asp:Label>
                             </td>
                             <td colspan="5">
-                                <asp:ListBox ID="ListBox1" runat="server"></asp:ListBox>
+                                <asp:DropDownList ID="ddlstTipoInstrumento" runat="server">
+                                </asp:DropDownList>
                             </td>
                         </tr>
                         <tr>
@@ -56,7 +59,8 @@
                                 <asp:Label ID="Label6" runat="server" Text="Acuerdo entre:"></asp:Label>
                             </td>
                             <td>
-                                <asp:ListBox ID="ListBox2" runat="server"></asp:ListBox>
+                                <asp:DropDownList ID="ddlstTipoRelacion" runat="server">
+                                </asp:DropDownList>
                             </td>
                         </tr>
                         <tr>

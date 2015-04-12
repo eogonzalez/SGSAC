@@ -40,6 +40,10 @@
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AjaxControlToolkit, Version=15.1.1.100, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\AppData\Local\Microsoft\VisualStudio\12.0\Extensions\hufndfbt.4gm\AjaxControlToolkit.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -58,9 +62,9 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Capa Datos\Capa Datos.vbproj">
-      <Project>{bc64a989-0886-41ba-a218-f35bf736e90f}</Project>
-      <Name>Capa Datos</Name>
+    <ProjectReference Include="..\Capa Entidad\Capa Entidad.vbproj">
+      <Project>{320e434b-bb2b-4303-b40c-ad0def3dcbf6}</Project>
+      <Name>Capa Entidad</Name>
     </ProjectReference>
     <ProjectReference Include="..\Reglas del negocio\Capa Negocio.vbproj">
       <Project>{53ebda85-84fe-47b9-b18c-cb47716d2eae}</Project>
@@ -93,7 +97,9 @@
   <ItemGroup>
     <Content Include="frmInstrumentosMant.aspx" />
     <Content Include="frmTipoInstrumento.aspx" />
+    <Content Include="frmTipoInstrumentoMant.aspx" />
     <Content Include="frmTipoRelacionInstrumento.aspx" />
+    <Content Include="frmTipoRelacionInstrumentoMant.aspx" />
     <Content Include="frmTratadosyAcuerdos.aspx" />
     <Content Include="Images\ministerioeco.jpg" />
     <Content Include="Inicio.aspx" />
@@ -113,13 +119,27 @@
     </Compile>
     <Compile Include="frmTipoInstrumento.aspx.vb">
       <DependentUpon>frmTipoInstrumento.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="frmTipoInstrumentoMant.aspx.designer.vb">
+      <DependentUpon>frmTipoInstrumentoMant.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="frmTipoInstrumentoMant.aspx.vb">
+      <DependentUpon>frmTipoInstrumentoMant.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="frmTipoRelacionInstrumento.aspx.designer.vb">
       <DependentUpon>frmTipoRelacionInstrumento.aspx</DependentUpon>
     </Compile>
     <Compile Include="frmTipoRelacionInstrumento.aspx.vb">
       <DependentUpon>frmTipoRelacionInstrumento.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="frmTipoRelacionInstrumentoMant.aspx.designer.vb">
+      <DependentUpon>frmTipoRelacionInstrumentoMant.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="frmTipoRelacionInstrumentoMant.aspx.vb">
+      <DependentUpon>frmTipoRelacionInstrumentoMant.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="frmTratadosyAcuerdos.aspx.designer.vb">

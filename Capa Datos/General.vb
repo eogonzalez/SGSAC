@@ -41,4 +41,33 @@ Public Class General
         cn.Dispose()
     End Function
 
+    Public Function ObtenerCorrelativoId(ByVal nombreTabla As String, ByVal llave_tabla As String, Optional ByVal TieneEstado As Boolean = False) As Integer
+        Dim correlativo As Integer
+        Dim sql_query As String
+
+        Try
+            sql_query = " SELECT max(" + llave_tabla + ") " +
+                        " FROM " +
+                        nombreTabla
+
+            If TieneEstado = True Then
+                sql_query = sql_query + " WHERE estado = 1 "
+            End If
+
+            Using cn = objConeccion.Conectar
+                Dim command As SqlCommand = New SqlCommand(sql_query, cn)
+                cn.Open()
+                correlativo = command.ExecuteScalar
+            End Using
+
+        Catch ex As SqlException
+            MsgBox("ERROR DE SQL OBTENERCORRELATIVOID = " + ex.Message.ToString)
+        Catch ex As Exception
+            MsgBox("ERROR OBTENERCORRELATIVOID = " + ex.Message.ToString)
+        Finally
+            cn.Dispose()
+        End Try
+        Return correlativo + 1
+    End Function
+
 End Class

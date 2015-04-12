@@ -1,5 +1,5 @@
 ﻿Imports System.Data.SqlClient
-Imports Capa_Datos
+Imports Reglas_del_negocio
 
 Public Class Login
     Inherits System.Web.UI.Page
@@ -12,7 +12,7 @@ Public Class Login
 
         Dim str_usuario As String
         Dim str_contraseña As String
-        Dim c_login As New LoginService
+        Dim c_login As New CNLogin
 
 
         str_usuario = txt_usuario.Text.Replace(";", "").Replace("--", "")

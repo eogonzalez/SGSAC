@@ -14,16 +14,10 @@ Public Class frmTratadosyAcuerdos
         Dim tbl As New DataTable
         tbl = objCapaNegocio.LlenarInstrumentos.Tables(0)
 
-
         With gvInstrumentos
             .DataSource = tbl
             .DataBind()
-
-
-
         End With
-
-
     End Sub
 
     Protected Sub ImageButton5_Click(sender As Object, e As ImageClickEventArgs) Handles ImageButton5.Click
