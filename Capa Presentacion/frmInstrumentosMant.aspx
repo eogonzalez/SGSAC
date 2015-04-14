@@ -13,15 +13,18 @@
             width: 100%;
         }
     </style>
+
+     <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+
 </head>
 <body>
-    <form id="form1" runat="server">
+    <form id="form1" class="panel panel-primary" runat="server">
+        <div class="panel-heading">Mantenimiento de Instrumentos Comerciales</div>
         <table class="auto-style1">
-            <tr>
-                <td colspan="6">
-                    <asp:Label ID="Label1" runat="server" Text="Datos Generales"></asp:Label>
-                </td>
-            </tr>
             <tr>
                 <td colspan="6">
                     <table class="auto-style1">

@@ -11,46 +11,29 @@
             width: 99%;
         }
     </style>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+
+    <link href="CSS/Login.css" rel="stylesheet" />
+
 </head>
-<body style="width: 322px">
-    <form id="form1" runat="server">
-    <div>
-    
-        <table class="auto-style1">
-            <tr>
-                <td colspan="2" style="text-align: center">
-                    <asp:Label ID="Label3" runat="server" Text="Login"></asp:Label>
-                </td>
-            </tr>
-            <tr>
-                <td style="text-align: right">
-                    <asp:Label ID="Label1" runat="server" Text="Usuario" Width="100px"></asp:Label>
-                    :</td>
-                <td>
-                    <asp:TextBox ID="txt_usuario" runat="server" Width="150px"></asp:TextBox>
-                </td>
-            </tr>
-            <tr>
-                <td style="text-align: right">
-                    <asp:Label ID="Label2" runat="server" Text="Contraseña" Width="100px"></asp:Label>
-                    :</td>
-                <td>
-                    <asp:TextBox ID="txt_contraseña" runat="server" Width="150px" TextMode="Password"></asp:TextBox>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2" style="text-align: center">
-                    <asp:Button ID="btn_ingresar" runat="server" Text="Ingresar" />
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2" style="text-align: center">
+
+<body>
+    <div class="container">
+      <div class =" card card-container">
+           <form id="form1" runat="server" class="form-signin">
+                    <asp:TextBox ID="txt_usuario" type="Usuario" class="form-control" runat="server" placeholder="Usuario" required autofocus></asp:TextBox>
+                    <br />
+
+                    <asp:TextBox ID="txt_contraseña" type="Contraseña" class="form-control" runat="server" TextMode="Password" placeholder="Contraseña" required></asp:TextBox>
+                    <asp:Button ID="btn_ingresar" class="btn btn-lg btn-primary btn-block btn-signin" runat="server" Text="Ingresar" />
                     <asp:Label ID="lbl_mensaje_login" runat="server"></asp:Label>
-                </td>
-            </tr>
-        </table>
-    
+          </form>
+        </div>
     </div>
-    </form>
 </body>
 </html>

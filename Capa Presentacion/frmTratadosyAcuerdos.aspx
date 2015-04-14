@@ -18,16 +18,21 @@
             width: 50px;
         }
     </style>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+
 </head>
 <body>
-    <form id="form1" runat="server">
+    <form id="form1" class="panel panel-primary" runat="server">
+    <div class="panel-heading">Instrumentos Comerciales</div>
     <div>
     
         <table class="auto-style1">
             <tr>
-                <td>
-                    <asp:Label ID="Label1" runat="server" Font-Bold="True" Font-Strikeout="False" ForeColor="#000099" Text="Datos Instrumentos Comerciales"></asp:Label>
-                </td>
                 <td class="auto-style4">
                     <asp:ImageButton ID="ImageButton5" runat="server" Height="44px" ImageUrl="~/Images/nuevo.png" Width="46px" />
                 </td>

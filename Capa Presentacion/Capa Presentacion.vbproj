@@ -95,13 +95,19 @@
     <Import Include="System.Web.UI.HtmlControls" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="CSS\Login.css" />
     <Content Include="frmInstrumentosMant.aspx" />
     <Content Include="frmTipoInstrumento.aspx" />
     <Content Include="frmTipoInstrumentoMant.aspx" />
     <Content Include="frmTipoRelacionInstrumento.aspx" />
     <Content Include="frmTipoRelacionInstrumentoMant.aspx" />
     <Content Include="frmTratadosyAcuerdos.aspx" />
+    <Content Include="Images\ayuda.png" />
+    <Content Include="Images\desgraba.png" />
+    <Content Include="Images\editar.png" />
     <Content Include="Images\ministerioeco.jpg" />
+    <Content Include="Images\nuevo.png" />
+    <Content Include="Images\paises.png" />
     <Content Include="Inicio.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="Web.config" />
