@@ -20,30 +20,44 @@
             text-align: center;
         }
     </style>
+       <!-- Latest compiled and minified CSS -->
+    <%--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"/>--%>
+    
+
+    <!-- Optional theme -->
+    <%--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css"/>--%>
+
+    <link href="bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" />
+
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+
+
+
+
 </head>
+
 <body>
-    <form id="form1" runat="server">
+
+    <form id="form1"  runat="server">
+        <table style="margin: 0 auto 0 auto">
+            <tr>
+                <td>
+                    <asp:Image ID="imgLogo" ImageUrl="~/Images/ministerioeco.jpg" runat="server" Height="95px" Width="264px" />
+                </td>
+                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</td>
+                <td style="text-align:center">
+                    <asp:Label ID="lblTitulo" runat="server" Text="Sistema de Gestión del SAC <br /> Ministerio de Economía" ForeColor="#054795" Font-Names="Verdana" Font-Bold="true" Font-Size="XX-Large"></asp:Label>
+                </td>
+            </tr>
+        </table>
+
+    
     <div>
         <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
-        
-            <table class="auto-style1">
-                <tr>
-                    <td class="auto-style2">Logo Mineco</td>
-                    <td class="auto-style2">Nombre Sistema</td>
-                </tr>
-                <tr>
-                    <td class="auto-style2" colspan="2">Barra Menu</td>
-                </tr>
-                <tr>
-                    <td class="auto-style3" colspan="2">Area de trabajo</td>
-                </tr>
-                <tr>
-                    <td class="auto-style3" colspan="2">Pie de pagina</td>
-                </tr>
-            </table>
-        
+      
         </asp:ContentPlaceHolder>
     </div>
+
     </form>
 </body>
 </html>

@@ -1,11 +1,6 @@
-﻿<%@ Page Language="vb" AutoEventWireup="false" CodeBehind="frmTratadosyAcuerdos.aspx.vb" Inherits="Capa_Presentacion.frmTratadosyAcuerdos" %>
+﻿<%@ Page Language="vb" AutoEventWireup="false"  MasterPageFile="~/General.Master" CodeBehind="frmTratadosyAcuerdos.aspx.vb" Inherits="Capa_Presentacion.frmTratadosyAcuerdos" %>
 
-<!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title></title>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server"> 
     <style type="text/css">
         .auto-style1 {
             width: 100%;
@@ -18,66 +13,53 @@
             width: 50px;
         }
     </style>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <div class="panel panel-primary">
 
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
-
-</head>
-<body>
-    <form id="form1" class="panel panel-primary" runat="server">
+  
     <div class="panel-heading">Instrumentos Comerciales</div>
-    <div>
-    
-        <table class="auto-style1">
-            <tr>
-                <td class="auto-style4">
-                    <asp:ImageButton ID="ImageButton5" runat="server" Height="44px" ImageUrl="~/Images/nuevo.png" Width="46px" />
-                </td>
-                <td class="auto-style4">
-                    <asp:ImageButton ID="ImageButton4" runat="server" Height="44px" ImageUrl="~/Images/editar.png" Width="46px" />
-                </td>
-                <td class="auto-style4">
-                    <asp:ImageButton ID="ImageButton3" runat="server" Height="44px" ImageUrl="~/Images/desgraba.png" Width="46px" />
-                </td>
-                <td class="auto-style4">
-                    <asp:ImageButton ID="ImageButton2" runat="server" Height="44px" ImageUrl="~/Images/paises.png" Width="46px" />
-                </td>
-                <td class="auto-style4">
-                    <asp:ImageButton ID="ImageButton1" runat="server" Height="44px" ImageUrl="~/Images/ayuda.png" Width="46px" />
-                </td>
-            </tr>
-            <tr>
-                <td class="auto-style2" colspan="6">
-                    <asp:ScriptManager ID="ScriptManager1" runat="server">
-                    </asp:ScriptManager>
-                    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
-                        <ContentTemplate>
-                            <asp:GridView ID="gvInstrumentos" runat="server" AutoGenerateColumns="false">
-                                <Columns>
-                                    <asp:BoundField DataField="id_instrumento" HeaderText="Id Instrumento" SortExpression="id_intrumento" />
-                                    <asp:TemplateField>
-                                        <ItemTemplate>
-                                            <asp:RadioButton ID="rb_sigla" runat="server" />
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:BoundField DataField="sigla" HeaderText="Sigla" />
-                                    <asp:BoundField DataField="nombre_instrumento" HeaderText="Tratado o Acuerdo Comercial" />
-                                    <asp:BoundField DataField="fecha_firma" HeaderText="Fecha Firma" DataFormatString="{0:d}"/>
-                                    <asp:BoundField DataField="fecha_ratificada" HeaderText="Fecha Ratificación" DataFormatString="{0:d}"/>
-                                    <asp:BoundField DataField="fecha_vigencia" HeaderText="Fecha Vigencia" DataFormatString="{0:d}" />
+        <br />
+
+        <div class="btn-group pull-right" role="group" >
+            <asp:LinkButton ID="lkBtt_nuevo" runat="server" CssClass="btn btn-primary">
+                <i aria-hidden="true" class="glyphicon glyphicon-pencil"></i> Nuevo </asp:LinkButton>
+        
+            <asp:LinkButton ID="lkBtt_editar" runat="server" CssClass="btn btn-primary">
+                <i aria-hidden="true" class="glyphicon glyphicon-edit"></i> Editar </asp:LinkButton>
+                
+            <asp:LinkButton ID="lkBtt_categorias" runat="server" CssClass="btn btn-primary">
+                <i aria-hidden="true" class="glyphicon glyphicon-random"></i>  Categorias </asp:LinkButton>
+                
+            <asp:LinkButton ID="lkBtt_paises" runat="server" CssClass="btn btn-primary">
+                <i aria-hidden="true" class="glyphicon glyphicon-globe"></i> Paises </asp:LinkButton>
+        
+            <asp:LinkButton ID="LinkButton5" runat="server" CssClass="btn btn-primary">
+                <i aria-hidden="true" class="glyphicon glyphicon-question-sign"></i> Ayuda </asp:LinkButton>
+      
+        </div>
+
+        <div>
+            <asp:GridView ID="gvInstrumentos" runat="server" 
+                CssClass="table table-hover table-striped" 
+                GridLines="None"
+                AutoGenerateColumns="false">
+                <Columns>
+                    <asp:BoundField DataField="id_instrumento" HeaderText="Id Instrumento" SortExpression="id_intrumento" Visible="false" />
+                    <asp:TemplateField>
+                        <ItemTemplate>
+                            <asp:RadioButton ID="rb_sigla" runat="server" />
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:BoundField DataField="sigla" HeaderText="Sigla" />
+                    <asp:BoundField DataField="nombre_instrumento" HeaderText="Tratado o Acuerdo Comercial" />
+                    <asp:BoundField DataField="fecha_firma" HeaderText="Fecha Firma" DataFormatString="{0:d}"/>
+                    <asp:BoundField DataField="fecha_ratificada" HeaderText="Fecha Ratificación" DataFormatString="{0:d}"/>
+                    <asp:BoundField DataField="fecha_vigencia" HeaderText="Fecha Vigencia" DataFormatString="{0:d}" />
                                     
-                                </Columns>
-                            </asp:GridView>
-                        </ContentTemplate>
-                    </asp:UpdatePanel>
-                </td>
-            </tr>
-        </table>
-    
-    </div>
-    </form>
-</body>
-</html>
+                </Columns>
+            </asp:GridView>
+        </div>
+      </div>
+</asp:Content>

@@ -37,13 +37,13 @@
         <br />
         <table style="margin: 0 auto 0 auto">
             <tr>
-                <td>
+                <%--<td>
                     <asp:Image ID="imgLogo" ImageUrl="~/Images/ministerioeco.jpg" runat="server" Height="95px" Width="264px" />
                 </td>
                 <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</td>
                 <td style="text-align:center">
                     <asp:Label ID="lblTitulo" runat="server" Text="Sistema de Gestión del SAC <br /> Ministerio de Economía" ForeColor="#054795" Font-Names="Verdana" Font-Bold="true" Font-Size="XX-Large"></asp:Label>
-                </td>
+                </td>--%>
             </tr>
         </table>
     </div>   

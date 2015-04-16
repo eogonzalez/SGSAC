@@ -26,10 +26,10 @@
     <div class="container">
       <div class =" card card-container">
            <form id="form1" runat="server" class="form-signin">
-                    <asp:TextBox ID="txt_usuario" type="Usuario" class="form-control" runat="server" placeholder="Usuario" required autofocus></asp:TextBox>
+                    <asp:TextBox ID="txt_usuario" type="usuario" class="form-control" runat="server" placeholder="Usuario" required autofocus></asp:TextBox>
                     <br />
 
-                    <asp:TextBox ID="txt_contraseña" type="Contraseña" class="form-control" runat="server" TextMode="Password" placeholder="Contraseña" required></asp:TextBox>
+                    <asp:TextBox ID="txt_contraseña" type="password" class="form-control" runat="server" TextMode="Password" placeholder="Contraseña" required></asp:TextBox>
                     <asp:Button ID="btn_ingresar" class="btn btn-lg btn-primary btn-block btn-signin" runat="server" Text="Ingresar" />
                     <asp:Label ID="lbl_mensaje_login" runat="server"></asp:Label>
           </form>
