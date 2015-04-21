@@ -1,28 +1,18 @@
 ﻿<%@ Master Language="VB" AutoEventWireup="false" CodeBehind="General.master.vb" Inherits="Capa_Presentacion.General" %>
 
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
+
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title></title>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
-    <style type="text/css">
-        .auto-style1 {
-            width: 100%;
-        }
-        .auto-style2 {
-            height: 23px;
-            text-align: center;
-        }
-        .auto-style3 {
-            text-align: center;
-        }
-    </style>
-       <!-- Latest compiled and minified CSS -->
+    <!-- Latest compiled and minified CSS -->
     <%--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"/>--%>
-    
+
 
     <!-- Optional theme -->
     <%--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css"/>--%>
@@ -31,33 +21,61 @@
 
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 
-
-
+    <link href="CSS/OtrosEstilos.css" rel="stylesheet" />
 
 </head>
 
 <body>
 
-    <form id="form1"  runat="server">
-        <table style="margin: 0 auto 0 auto">
+    <form id="form1" runat="server">
+        <table style="margin: 0 auto 0 auto; text-align: center; width: 100%; background-color: #054795">
             <tr>
                 <td>
-                    <asp:Image ID="imgLogo" ImageUrl="~/Images/ministerioeco.jpg" runat="server" Height="95px" Width="264px" />
+                    <br />
                 </td>
-                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</td>
-                <td style="text-align:center">
-                    <asp:Label ID="lblTitulo" runat="server" Text="Sistema de Gestión del SAC <br /> Ministerio de Economía" ForeColor="#054795" Font-Names="Verdana" Font-Bold="true" Font-Size="XX-Large"></asp:Label>
+            </tr>
+            <tr>
+                <td style="text-align: left">
+                    <asp:Image ID="imgLogo" runat="server" ImageUrl="~/Images/Logo.jpg" />
+                </td>
+                <%--<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</td>--%>
+                <td style="text-align: center">
+                    <asp:Label ID="lblTitulo" runat="server" Text="Sistema de Gestión del SAC <br /> Ministerio de Economía" ForeColor="White" Font-Names="Verdana" Font-Bold="true" Font-Size="Large"></asp:Label>
+                </td>
+                <td style="text-align: right">
+                    <asp:Label ID="txtFecha" runat="server" ForeColor="White" Font-Names="Verdana" Font-Bold="true" Font-Size="Medium"></asp:Label>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <hr />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3" style="text-align: center">
+                    <asp:Menu ID="MenuPrincipal" runat="server" DisappearAfter="500" Orientation="Horizontal" Font-Names="Trebuchet MS, Arial">
+                        <StaticMenuItemStyle BackColor="#054795" ForeColor="White" HorizontalPadding="40" VerticalPadding="10" />
+                        <StaticHoverStyle BackColor="#0066cc" ForeColor="White" BorderColor="White" BorderStyle="Double" BorderWidth="1px" />
+                        <DynamicMenuItemStyle BackColor="RoyalBlue" ForeColor="WhiteSmoke" HorizontalPadding="5" VerticalPadding="2" />
+                        <DynamicHoverStyle BackColor="CornflowerBlue" BorderStyle="Double" BorderWidth="1px" BorderColor="White" />
+                    </asp:Menu>
                 </td>
             </tr>
         </table>
+        <table style="background-color: #054795; width: 100%; text-align: center">
+        </table>
+        <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+        <div class="clear">
 
-    
-    <div>
-        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
-      
-        </asp:ContentPlaceHolder>
-    </div>
+            </div>
+        <div>
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                <br />
+            </asp:ContentPlaceHolder>
+        </div>
+        <div class="clear">
 
+            </div>
     </form>
 </body>
 </html>

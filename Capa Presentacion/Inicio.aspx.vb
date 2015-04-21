@@ -9,7 +9,7 @@ Public Class Inicio
 
         userid = Session("UsuarioID")
 
-        LlenarMenu()
+        'LlenarMenu()
 
     End Sub
 

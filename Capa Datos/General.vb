@@ -57,7 +57,7 @@ Public Class General
             Using cn = objConeccion.Conectar
                 Dim command As SqlCommand = New SqlCommand(sql_query, cn)
                 cn.Open()
-                correlativo = command.ExecuteScalar
+                correlativo = IIf(IsDBNull(command.ExecuteScalar), 0, command.ExecuteScalar)
             End Using
 
         Catch ex As SqlException
