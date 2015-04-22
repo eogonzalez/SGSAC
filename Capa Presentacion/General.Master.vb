@@ -20,14 +20,37 @@ Public Class General
         'Recorer la tabla para llenar los items del Menu principal
         For Each enc As DataRow In tbl.Rows
             Dim Item As New MenuItem
-            Dim lkbutton As New HyperLink
-            Item.Value = enc("id_opcion")
-            Item.Text = enc("nombre")
-            Item.ToolTip = enc("descripcion")
-            Item.NavigateUrl = enc("url")
 
-            MenuPrincipal.Items.Add(Item)
+            If IsDBNull(enc("id_padre")) Then
+                Item.Value = enc("id_opcion")
+                Item.Text = enc("nombre")
+                Item.ToolTip = enc("descripcion")
+                Item.NavigateUrl = enc("url")
 
+                MenuPrincipal.Items.Add(Item)
+
+                LlenarSubMenu(Item, tbl)
+            End If
+
+        Next
+    End Sub
+
+    Private Sub LlenarSubMenu(ByVal Menus As MenuItem, ByVal Datos As Data.DataTable)
+
+        For Each enc As DataRow In Datos.Rows
+            Dim Item As New MenuItem
+            If Not IsDBNull(enc("id_padre")) Then
+                If Menus.Value = enc("id_padre") Then
+                    Item.Value = enc("id_opcion")
+                    Item.Text = enc("nombre")
+                    Item.ToolTip = enc("descripcion")
+                    Item.NavigateUrl = enc("url")
+
+                    Menus.ChildItems.Add(Item)
+
+                    LlenarSubMenu(Item, Datos)
+                End If
+            End If
         Next
     End Sub
 

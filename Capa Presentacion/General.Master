@@ -30,7 +30,7 @@
 
     <%--<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />--%>
 
-    <%--<link href="CSS/OtrosEstilos.css" rel="stylesheet" />--%>
+    <link href="CSS/OtrosEstilos.css" rel="stylesheet" />
 
 </head>
 
@@ -73,7 +73,7 @@
         </table>
         <table style="background-color: #054795; width: 100%; text-align: center">
         </table>
-        <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+        <asp:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server"></asp:ToolkitScriptManager>
   
 
         <div>
