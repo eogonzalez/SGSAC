@@ -3,7 +3,7 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-        <style type="text/css">
+    <style type="text/css">
         .auto-style1 {
             width: 100%;
         }
@@ -17,56 +17,10 @@
             width: 50px;
         }
     </style>
-    
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div>        
-        <asp:Panel ID="pnlNuevoInstrumento" runat="server" BorderColor="Black" BackColor="White"
-                BorderStyle="Inset" BorderWidth="1px">
-                <table>
-                    <tr>
-                        <td>
-                            <asp:Label ID="Label1" runat="server" Text="Tipo de Instrumento"></asp:Label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <asp:Label ID="Label2" runat="server" Text="Código correlativo:"></asp:Label>
-                        </td>
-                        <td>
-                            <asp:TextBox ID="txtIdTipoInstrumento" CssClass=" form form-control"  runat="server" Enabled="False"></asp:TextBox>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <asp:Label ID="Label3" runat="server" CssClass="text-info" Text="Tipo de instrumento:"></asp:Label>
-                        </td>
-                        <td>
-                            <asp:TextBox ID="txtDescripcion" runat="server" placeholder="Tipo de instrumento" CssClass="form-control" MaxLength="100" Width="324px"></asp:TextBox>
-                            <cc1:FilteredTextBoxExtender ID="txtDescripcion_FilteredTextBoxExtender" ValidChars="ABCDEFGHIJKLMNÑOPQRSTUVWXYZabcdefghijklmnñopqrstuvwxyz ÁÉÍÓÚáéíóú" runat="server" BehaviorID="txtDescripcion_FilteredTextBoxExtender" TargetControlID="txtDescripcion" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <asp:Label ID="Label4" runat="server" Text="Observaciones:"></asp:Label>
-                        </td>
-                        <td>
-                            <asp:TextBox ID="txtObservaciones" CssClass="form-control" runat="server" Height="61px" TextMode="MultiLine" Width="544px"></asp:TextBox>
-                            <cc1:FilteredTextBoxExtender ID="txtObservaciones_FilteredTextBoxExtender" runat="server" ValidChars="ABCDEFGHIJKLMNÑOPQRSTUVWXYZabcdefghijklmnñopqrstuvwxyz ÁÉÍÓÚáéíóú1234567890/-.,:;" BehaviorID="txtObservaciones_FilteredTextBoxExtender" FilterMode="ValidChars" FilterType="Custom" TargetControlID="txtObservaciones" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp
-                            <asp:Button ID="Button1" runat="server" Text="Guardar" />
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp
-                            <asp:Button ID="Button2" runat="server" Text="Salir" />
-                        </td>
-                    </tr>
-                </table>
-            </asp:Panel>
-    </div>
+
 
     <div class="panel panel-primary">
 
@@ -78,7 +32,9 @@
             <asp:LinkButton ID="lkBtt_nuevo" runat="server" CssClass="btn btn-primary">
                 <i aria-hidden="true" class="glyphicon glyphicon-pencil"></i> Nuevo </asp:LinkButton>
 
-            <cc1:ModalPopupExtender ID="lkBtt_nuevo_ModalPopupExtender"  BackgroundCssClass="modalBackground" runat="server" BehaviorID="lkBtt_nuevo_ModalPopupExtender" PopupControlID="pnlNuevoInstrumento" DynamicServicePath="" TargetControlID="lkBtt_nuevo">
+            <cc1:ModalPopupExtender ID="lkBtt_nuevo_ModalPopupExtender" BackgroundCssClass="modalBackground"
+                runat="server" BehaviorID="lkBtt_nuevo_ModalPopupExtender" PopupControlID="pnlNuevoInstrumento"
+                DynamicServicePath="" TargetControlID="lkBtt_nuevo">
             </cc1:ModalPopupExtender>
 
             <asp:LinkButton ID="lkBtt_editar" runat="server" CssClass="btn btn-primary">
@@ -117,10 +73,91 @@
 
                 </Columns>
             </asp:GridView>
-            
+
         </div>
         <div>
-            
         </div>
+    </div>
+
+    <div>
+        <asp:Panel ID="pnlNuevoInstrumento" CssClass="panel panel-primary" runat="server" BorderColor="Black" BackColor="White"
+            BorderStyle="Inset" BorderWidth="1px" heigth="600" Width="35%">
+            <div class="panel-heading">Mantenimiento de Instrumentos Comerciales</div>
+            <div class="panel-body form-horizontal">
+
+                <div class="form-group">
+                    <asp:Label ID="Label2" class="control-label col-xs-4" runat="server" Text="Nombre: "></asp:Label>
+                    <div class="col-xs-8">
+                        <asp:TextBox ID="txtNombreInstrumento" type="text" class="form-control" runat="server"></asp:TextBox>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <asp:Label ID="Label3" class="control-label col-xs-4" runat="server" Text="Tipo Instrumento:"></asp:Label>
+                    <div class="col-xs-8">
+                        <asp:DropDownList ID="ddlstTipoInstrumento" class="form-control" runat="server">
+                        </asp:DropDownList>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <asp:Label ID="Label4" class="control-label col-xs-4" runat="server" Text="Sigla:"></asp:Label>
+                    <div class="col-xs-8">
+                        <asp:TextBox ID="txtSigla" type="text" class="form-control" runat="server"></asp:TextBox>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <asp:Label ID="Label5" class="control-label col-xs-4" runat="server" Text="Sigla alterna:"></asp:Label>
+                    <div class="col-xs-8">
+                        <asp:TextBox ID="txtSiglaAlterna" type="text" class="form-control" runat="server"></asp:TextBox>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <asp:Label ID="Label6" class="control-label col-xs-4" runat="server" Text="Acuerdo entre:"></asp:Label>
+                    <div class="col-xs-8">
+                        <asp:DropDownList ID="ddlstTipoRelacion" class="form-control" runat="server">
+                        </asp:DropDownList>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <asp:Label ID="Label7" class="control-label col-xs-4" runat="server" Text="Observaciones:"></asp:Label>
+                    <div class="col-xs-8">
+                        <asp:TextBox ID="txtObservaciones" type="text" class="form-control" runat="server" TextMode="MultiLine"></asp:TextBox>
+                    </div>
+                </div>
+
+                <h5>Registro de fechas para Guatemala</h5>
+
+                <div class="form-group">
+                    <asp:Label ID="Label9" class="control-label col-xs-4" runat="server" Text="Fecha Firma:"></asp:Label>
+                    <div class="col-xs-8">
+                        <asp:TextBox ID="txtFechaFirma" class="form-control" runat="server" TextMode="Date"></asp:TextBox>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <asp:Label ID="Label10" class="control-label col-xs-4" runat="server" Text="Fecha Ratificación:"></asp:Label>
+                    <div class="col-xs-8">
+                        <asp:TextBox ID="txtFechaRatifica" class="form-control" runat="server" TextMode="Date"></asp:TextBox>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <asp:Label ID="Label11" class="control-label col-xs-4" runat="server" Text="Fecha Vigencia:"></asp:Label>
+                    <div class="col-xs-8">
+                        <asp:TextBox ID="txtFechaVigencia" class="form-control" runat="server" TextMode="Date"></asp:TextBox>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="panel-footer">
+                <asp:Button ID="Button1" class="btn btn-primary" runat="server" Text="Guardar" />
+                <asp:Button ID="Button2" class="btn btn-default" runat="server" Text="Salir" />
+            </div>
+        </asp:Panel>
     </div>
 </asp:Content>

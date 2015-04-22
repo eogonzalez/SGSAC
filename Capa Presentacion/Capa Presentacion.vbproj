@@ -95,6 +95,7 @@
     <Import Include="System.Web.UI.HtmlControls" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="boots1.aspx" />
     <Content Include="bootstrap\css\bootstrap-theme.css" />
     <Content Include="bootstrap\css\bootstrap-theme.min.css" />
     <Content Include="bootstrap\css\bootstrap.css" />
@@ -103,8 +104,6 @@
     <Content Include="bootstrap\js\bootstrap.js" />
     <Content Include="bootstrap\js\bootstrap.min.js" />
     <Content Include="bootstrap\js\npm.js" />
-    <Content Include="Borrar.aspx" />
-    <Content Include="Borrar1.aspx" />
     <Content Include="CSS\Login.css" />
     <Content Include="frmInstrumentosMant.aspx" />
     <Content Include="frmTipoInstrumento.aspx" />
@@ -123,18 +122,11 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Borrar.aspx.designer.vb">
-      <DependentUpon>Borrar.aspx</DependentUpon>
+    <Compile Include="boots1.aspx.designer.vb">
+      <DependentUpon>boots1.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Borrar.aspx.vb">
-      <DependentUpon>Borrar.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="Borrar1.aspx.designer.vb">
-      <DependentUpon>Borrar1.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Borrar1.aspx.vb">
-      <DependentUpon>Borrar1.aspx</DependentUpon>
+    <Compile Include="boots1.aspx.vb">
+      <DependentUpon>boots1.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="frmInstrumentosMant.aspx.designer.vb">

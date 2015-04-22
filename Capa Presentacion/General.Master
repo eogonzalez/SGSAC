@@ -10,24 +10,33 @@
     <title></title>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
+      <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
+
+
     <!-- Latest compiled and minified CSS -->
-    <%--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"/>--%>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
 
 
     <!-- Optional theme -->
-    <%--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css"/>--%>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css"/>
 
-    <link href="bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" />
+          <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+  
 
-    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <%--<link href="bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" />--%>
 
-    <link href="CSS/OtrosEstilos.css" rel="stylesheet" />
+    <%--<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />--%>
+
+    <%--<link href="CSS/OtrosEstilos.css" rel="stylesheet" />--%>
 
 </head>
 
 <body>
 
-    <form id="form1" runat="server">
+    <form id="form1"  runat="server">
         <table style="margin: 0 auto 0 auto; text-align: center; width: 100%; background-color: #054795">
             <tr>
                 <td>
@@ -65,17 +74,15 @@
         <table style="background-color: #054795; width: 100%; text-align: center">
         </table>
         <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
-        <div class="clear">
+  
 
-            </div>
         <div>
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
                 <br />
             </asp:ContentPlaceHolder>
         </div>
-        <div class="clear">
 
-            </div>
+
     </form>
 </body>
 </html>
