@@ -73,7 +73,7 @@
         </table>
         <table style="background-color: #054795; width: 100%; text-align: center">
         </table>
-        <asp:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server"></asp:ToolkitScriptManager>
+        <asp:ScriptManager ID="ToolkitScriptManager1" runat="server"></asp:ScriptManager>
   
 
         <div>

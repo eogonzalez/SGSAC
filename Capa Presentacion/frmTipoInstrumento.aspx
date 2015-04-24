@@ -1,52 +1,100 @@
-﻿<%@ Page Language="vb" AutoEventWireup="false" CodeBehind="frmTipoInstrumento.aspx.vb" Inherits="Capa_Presentacion.frmTipoInstrumento" %>
+﻿<%@ Page Language="vb" AutoEventWireup="false" MasterPageFile="~/General.Master" CodeBehind="frmTipoInstrumento.aspx.vb" Inherits="Capa_Presentacion.frmTipoInstrumento" %>
 
-<!DOCTYPE html>
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title></title>
-         <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-</head>
-<body>
-    <form id="form1" class="panel panel-primary" runat="server">
-        <div class="panel-heading">Instrumentos Comerciales</div>
-    <div>
-    
-        
-                    <asp:ImageButton ID="ImageButton5" runat="server" Height="44px" ImageUrl="~/Images/nuevo.png" Width="46px" />
-                    <asp:ImageButton ID="ImageButton4" runat="server" Height="44px" ImageUrl="~/Images/editar.png" Width="46px" />
-                    <asp:ImageButton ID="ImageButton3" runat="server" Height="44px" ImageUrl="~/Images/desgraba.png" Width="46px" />
-        <asp:ImageButton ID="ImageButton2" runat="server" Height="44px" ImageUrl="~/Images/paises.png" Width="46px" />
-                    <asp:ImageButton ID="ImageButton1" runat="server" Height="44px" ImageUrl="~/Images/ayuda.png" Width="46px" />
 
-         <table class="table table-condensed">
-            <tr class="active">
-                <td class="active">
-                    
-                            <asp:GridView ID="gvTipoInstrumento" runat="server" AutoGenerateColumns="false">
-                                <Columns>
-                                    <asp:BoundField DataField="id_tipo_instrumento" HeaderText="Id Tipo Instrumento" SortExpression="id_tipo_instrumento" />
-                                    <asp:TemplateField>
-                                        <ItemTemplate>
-                                            <asp:RadioButton ID="rb_tipo_instrumento" runat="server" />
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:BoundField DataField="descripcion" HeaderText="Tipo Instrumento" />
-                                    
-                                </Columns>
-                            </asp:GridView>
-                    
-                </td>
-            </tr>
-        </table>
+    <%-- Panel Principal con Grid --%>
+    <div class="panel panel-primary">
+        <div class="panel-heading">Tipo Instrumentos Comerciales</div>
+        <br />
+
+        <%--Barra de botones--%>
+        <div class="btn-group pull-right">
+
+            <asp:LinkButton ID="lkBtt_Nuevo" runat="server" CssClass="btn btn-primary">
+                <i aria-hidden="true" class="glyphicon glyphicon-pencil"></i>
+                Nuevo
+            </asp:LinkButton>
+
+            <cc1:ModalPopupExtender ID="lkBtt_Nuevo_ModalPopupExtender" BackgroundCssClass="modalBackground"
+                runat="server" BehaviorID="lkBtt_nuevo_ModalPopupExtender" PopupControlID="pnlNuevoTipoInstrumento"
+                DynamicServicePath="" TargetControlID="lkBtt_Nuevo">
+            </cc1:ModalPopupExtender>
+
+              <asp:LinkButton ID="lkBtt_Editar" runat="server" CssClass="btn btn-primary">
+                <i aria-hidden="true" class="glyphicon glyphicon-edit"></i>
+                Editar
+            </asp:LinkButton>
+
+              <asp:LinkButton ID="lkBtt_ayuda" runat="server" CssClass="btn btn-primary">
+                <i aria-hidden="true" class="glyphicon glyphicon-sign"></i>
+                Ayuda
+            </asp:LinkButton>
+        </div>
+
+        <%-- Gridview --%>
+        <div>
+            <asp:GridView ID="gvTipoInstrumento" runat="server"
+                CssClass="table table-hover table-striped"
+                GridLines="None"
+                EmptyDataText="No se encontraron tipos de instrumentos"
+                AutoGenerateColumns="false">
+                <Columns>
+                    <asp:BoundField DataField="id_tipo_instrumento" HeaderText="Id Tipo Instrumento" SortExpression="id_tipo_instrumento" />
+                    <asp:TemplateField>
+                        <ItemTemplate>
+                            <asp:RadioButton ID="rb_tipo_instrumento" runat="server" />
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:BoundField DataField="descripcion" HeaderText="Tipo Instrumento" />
+
+                </Columns>
+            </asp:GridView>
+        </div>
 
     </div>
-    </form>
-</body>
-</html>
+
+    <%-- Panel del mantenimiento de tipo de instrumento --%>
+    <div>
+        <asp:Panel ID="pnlNuevoTipoInstrumento" CssClass="panel panel-primary" runat="server" BorderColor="Black" BackColor="White"
+            BorderStyle="Inset" BorderWidth="1px" heigth="600" Width="35%">
+            <div class="panel-heading">Mantenimiento de Tipo Instrumentos</div>
+
+            <div class="panel-body form-horizontal">
+
+                <div class="form-group">
+                    <asp:Label ID="Label1" CssClass="control-label col-xs-4" enabled="false" runat="server"  Text="Codigo: "></asp:Label>
+                    <div class="col-xs-8">
+                        <asp:TextBox ID="txtIdTipoInstrumento" type="text" CssClass="form-control" runat="server"></asp:TextBox>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <asp:Label ID="Label2" CssClass="control-label col-xs-4" runat="server" Text="Tipo Instrumento:"></asp:Label>
+                    <div class="col-xs-8">
+                        <asp:TextBox ID="txtDescripcion" type="text" CssClass="form-control" runat="server"></asp:TextBox>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <asp:Label ID="Label3" CssClass="control-label col-xs-4" runat="server" Text="Observaciones:"></asp:Label>
+                    <div class="col-xs-8">
+                        <asp:TextBox ID="txtObservaciones" type="text" CssClass="form-control" runat="server" TextMode="MultiLine"></asp:TextBox>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="panel-footer">
+                <asp:Button ID="btnGuardar" CssClass="btn btn-primary" runat="server" Text="Guardar" />
+                <asp:Button ID="btnSalir" CssClass="btn btn-default" runat="server" Text="Salir" />
+            </div>
+        </asp:Panel>
+    </div>
+
+</asp:Content>
+

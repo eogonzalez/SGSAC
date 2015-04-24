@@ -23,8 +23,6 @@
 
 
     <div class="panel panel-primary">
-
-
         <div class="panel-heading">Instrumentos Comerciales</div>
         <br />
 
@@ -57,6 +55,7 @@
                 GridLines="None"
                 EmptyDataText="No se encontraron instrumentos comerciales"
                 AutoGenerateColumns="false">
+
                 <Columns>
                     <asp:BoundField DataField="id_instrumento" HeaderText="Id Instrumento" SortExpression="id_intrumento" Visible="false" />
                     <asp:TemplateField>
@@ -72,11 +71,11 @@
                     <asp:BoundField DataField="fecha_vigencia" HeaderText="Fecha Vigencia" DataFormatString="{0:d}" />
 
                 </Columns>
+
             </asp:GridView>
 
         </div>
-        <div>
-        </div>
+
     </div>
 
     <div>
@@ -86,77 +85,81 @@
             <div class="panel-body form-horizontal">
 
                 <div class="form-group">
-                    <asp:Label ID="Label2" class="control-label col-xs-4" runat="server" Text="Nombre: "></asp:Label>
+                    <asp:Label ID="Label2" CssClass="control-label col-xs-4" runat="server" Text="Nombre: "></asp:Label>
                     <div class="col-xs-8">
-                        <asp:TextBox ID="txtNombreInstrumento" type="text" class="form-control" runat="server"></asp:TextBox>
+                        <asp:TextBox ID="txtNombreInstrumento" type="text" CssClass="form-control" runat="server"></asp:TextBox>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <asp:Label ID="Label3" class="control-label col-xs-4" runat="server" Text="Tipo Instrumento:"></asp:Label>
+                    <asp:Label ID="Label3" CssClass="control-label col-xs-4" runat="server" Text="Tipo Instrumento:"></asp:Label>
                     <div class="col-xs-8">
-                        <asp:DropDownList ID="ddlstTipoInstrumento" class="form-control" runat="server">
+                        <asp:DropDownList ID="ddlstTipoInstrumento" CssClass="form-control" runat="server">
                         </asp:DropDownList>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <asp:Label ID="Label4" class="control-label col-xs-4" runat="server" Text="Sigla:"></asp:Label>
+                    <asp:Label ID="Label4" CssClass="control-label col-xs-4" runat="server" Text="Sigla:"></asp:Label>
                     <div class="col-xs-8">
-                        <asp:TextBox ID="txtSigla" type="text" class="form-control" runat="server"></asp:TextBox>
+                        <asp:TextBox ID="txtSigla" type="text" CssClass="form-control" runat="server"></asp:TextBox>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <asp:Label ID="Label5" class="control-label col-xs-4" runat="server" Text="Sigla alterna:"></asp:Label>
+                    <asp:Label ID="Label5" CssClass="control-label col-xs-4" runat="server" Text="Sigla alterna:"></asp:Label>
                     <div class="col-xs-8">
-                        <asp:TextBox ID="txtSiglaAlterna" type="text" class="form-control" runat="server"></asp:TextBox>
+                        <asp:TextBox ID="txtSiglaAlterna" type="text" CssClass="form-control" runat="server"></asp:TextBox>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <asp:Label ID="Label6" class="control-label col-xs-4" runat="server" Text="Acuerdo entre:"></asp:Label>
+                    <asp:Label ID="Label6" CssClass="control-label col-xs-4" runat="server" Text="Acuerdo entre:"></asp:Label>
                     <div class="col-xs-8">
-                        <asp:DropDownList ID="ddlstTipoRelacion" class="form-control" runat="server">
+                        <asp:DropDownList ID="ddlstTipoRelacion" CssClass="form-control" runat="server">
                         </asp:DropDownList>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <asp:Label ID="Label7" class="control-label col-xs-4" runat="server" Text="Observaciones:"></asp:Label>
+                    <asp:Label ID="Label7" CssClass="control-label col-xs-4" runat="server" Text="Observaciones:"></asp:Label>
                     <div class="col-xs-8">
-                        <asp:TextBox ID="txtObservaciones" type="text" class="form-control" runat="server" TextMode="MultiLine"></asp:TextBox>
+                        <asp:TextBox ID="txtObservaciones" type="text" CssClass="form-control" runat="server" TextMode="MultiLine"></asp:TextBox>
                     </div>
                 </div>
 
-                <h5>Registro de fechas para Guatemala</h5>
+                <h5>
+                    <span class="label label-primary">
+                        Registro de fechas para Guatemala
+                    </span>
+                </h5>
 
                 <div class="form-group">
-                    <asp:Label ID="Label9" class="control-label col-xs-4" runat="server" Text="Fecha Firma:"></asp:Label>
+                    <asp:Label ID="Label9" Cssclass="control-label col-xs-4" runat="server" Text="Fecha Firma:"></asp:Label>
                     <div class="col-xs-8">
-                        <asp:TextBox ID="txtFechaFirma" class="form-control" runat="server" TextMode="Date"></asp:TextBox>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <asp:Label ID="Label10" class="control-label col-xs-4" runat="server" Text="Fecha Ratificación:"></asp:Label>
-                    <div class="col-xs-8">
-                        <asp:TextBox ID="txtFechaRatifica" class="form-control" runat="server" TextMode="Date"></asp:TextBox>
+                        <asp:TextBox ID="txtFechaFirma" CssClass="form-control" runat="server" TextMode="Date"></asp:TextBox>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <asp:Label ID="Label11" class="control-label col-xs-4" runat="server" Text="Fecha Vigencia:"></asp:Label>
+                    <asp:Label ID="Label10" Cssclass="control-label col-xs-4" runat="server" Text="Fecha Ratificación:"></asp:Label>
                     <div class="col-xs-8">
-                        <asp:TextBox ID="txtFechaVigencia" class="form-control" runat="server" TextMode="Date"></asp:TextBox>
+                        <asp:TextBox ID="txtFechaRatifica" CssClass="form-control" runat="server" TextMode="Date"></asp:TextBox>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <asp:Label ID="Label11" CssClass="control-label col-xs-4" runat="server" Text="Fecha Vigencia:"></asp:Label>
+                    <div class="col-xs-8">
+                        <asp:TextBox ID="txtFechaVigencia" CssClass="form-control" runat="server" TextMode="Date"></asp:TextBox>
                     </div>
                 </div>
             </div>
 
 
             <div class="panel-footer">
-                <asp:Button ID="Button1" class="btn btn-primary" runat="server" Text="Guardar" />
-                <asp:Button ID="Button2" class="btn btn-default" runat="server" Text="Salir" />
+                <asp:Button ID="Button1" CssClass="btn btn-primary" runat="server" Text="Guardar" />
+                <asp:Button ID="Button2" CssClass="btn btn-default" runat="server" Text="Salir" />
             </div>
         </asp:Panel>
     </div>

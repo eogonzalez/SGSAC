@@ -95,7 +95,6 @@
     <Import Include="System.Web.UI.HtmlControls" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="boots1.aspx" />
     <Content Include="bootstrap\css\bootstrap-theme.css" />
     <Content Include="bootstrap\css\bootstrap-theme.min.css" />
     <Content Include="bootstrap\css\bootstrap.css" />
@@ -122,13 +121,6 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="boots1.aspx.designer.vb">
-      <DependentUpon>boots1.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="boots1.aspx.vb">
-      <DependentUpon>boots1.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
     <Compile Include="frmInstrumentosMant.aspx.designer.vb">
       <DependentUpon>frmInstrumentosMant.aspx</DependentUpon>
     </Compile>
