@@ -18,6 +18,18 @@
         }
     </style>
 
+    <script language="javascript" type="text/javascript">
+        function SelectSingleRadiobutton(rdbtnid) {
+            var rdBtn = document.getElementById(rdbtnid);
+            var rdBtnList = document.getElementsByTagName("input");
+            for (i = 0; i < rdBtnList.length; i++) {
+                if (rdBtnList[i].type == "radio" && rdBtnList[i].id != rdBtn.id) {
+                    rdBtnList[i].checked = false;
+                }
+            }
+        }
+    </script>
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
@@ -27,25 +39,20 @@
         <br />
 
         <div class="btn-group pull-right" role="group">
-            <asp:LinkButton ID="lkBtt_nuevo" runat="server" CssClass="btn btn-primary">
-                <i aria-hidden="true" class="glyphicon glyphicon-pencil"></i> Nuevo </asp:LinkButton>
+            <asp:LinkButton ID="lkBtt_nuevo" runat="server" CssClass="btn btn-primary"> <i aria-hidden="true" class="glyphicon glyphicon-pencil"></i>Nuevo </asp:LinkButton>
 
             <cc1:ModalPopupExtender ID="lkBtt_nuevo_ModalPopupExtender" BackgroundCssClass="modalBackground"
                 runat="server" BehaviorID="lkBtt_nuevo_ModalPopupExtender" PopupControlID="pnlNuevoInstrumento"
                 DynamicServicePath="" TargetControlID="lkBtt_nuevo">
             </cc1:ModalPopupExtender>
 
-            <asp:LinkButton ID="lkBtt_editar" runat="server" CssClass="btn btn-primary">
-                <i aria-hidden="true" class="glyphicon glyphicon-edit"></i> Editar </asp:LinkButton>
+            <asp:LinkButton ID="lkBtt_editar" runat="server" CssClass="btn btn-primary"> <i aria-hidden="true" class="glyphicon glyphicon-edit"></i>Editar </asp:LinkButton>
 
-            <asp:LinkButton ID="lkBtt_categorias" runat="server" CssClass="btn btn-primary">
-                <i aria-hidden="true" class="glyphicon glyphicon-random"></i>  Categorias </asp:LinkButton>
+            <asp:LinkButton ID="lkBtt_categorias" runat="server" CssClass="btn btn-primary"> <i aria-hidden="true" class="glyphicon glyphicon-random"></i>Categorias </asp:LinkButton>
 
-            <asp:LinkButton ID="lkBtt_paises" runat="server" CssClass="btn btn-primary">
-                <i aria-hidden="true" class="glyphicon glyphicon-globe"></i> Paises </asp:LinkButton>
+            <asp:LinkButton ID="lkBtt_paises" runat="server" CssClass="btn btn-primary"> <i aria-hidden="true" class="glyphicon glyphicon-globe"></i>Paises </asp:LinkButton>
 
-            <asp:LinkButton ID="LinkButton5" runat="server" CssClass="btn btn-primary">
-                <i aria-hidden="true" class="glyphicon glyphicon-question-sign"></i> Ayuda </asp:LinkButton>
+            <asp:LinkButton ID="LinkButton5" runat="server" CssClass="btn btn-primary"> <i aria-hidden="true" class="glyphicon glyphicon-question-sign"></i>Ayuda </asp:LinkButton>
 
         </div>
 
@@ -54,14 +61,18 @@
                 CssClass="table table-hover table-striped"
                 GridLines="None"
                 EmptyDataText="No se encontraron instrumentos comerciales"
-                AutoGenerateColumns="false">
+                AutoGenerateColumns="false"
+                AutoGenerateSelectButton="True"
+                selectedindex="1"
+                DataKeyNames="id_instrumento">
 
                 <Columns>
                     <asp:BoundField DataField="id_instrumento" HeaderText="Id Instrumento" SortExpression="id_intrumento" Visible="false" />
                     <asp:TemplateField>
                         <ItemTemplate>
-                            <asp:RadioButtonList ID="rb_sigla" runat="server"></asp:RadioButtonList>
-                            <%--<asp:RadioButton ID="rb_sigla" runat="server" />--%>
+                            <%--<asp:RadioButtonList ID="rb_sigla" runat="server"></asp:RadioButtonList>--%>
+                            <asp:RadioButton ID="rb_sigla" runat="server" OnClick="javascript:SelectSingleRadiobutton(this.id)"/>
+                            <asp:CheckBox ID="cb_instrumento" runat="server" />
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:BoundField DataField="sigla" HeaderText="Sigla" />

@@ -150,4 +150,61 @@ Public Class frmTratadosyAcuerdos
 
 
     End Sub
+
+    Function getIdInstrumentoGridView() As Integer
+        Dim id_instrumento As Integer
+
+        'Dim name = gvInstrumentos.DataKeys(1).Values("rb_sigla").ToString().Trim()
+
+        For Each fila As GridViewRow In gvInstrumentos.Rows
+            Dim check As RadioButton = fila.FindControl("rb_sigla")
+            If check.Checked Then
+
+
+
+                Dim id = TryCast(gvInstrumentos.SelectedRow.DataItem, TextBox).Text
+
+                id = Convert.ToInt32(id)
+                'id_instrumento = Convert.ToInt32(fila.Cells(0).Text)
+
+            Else
+
+            End If
+        Next
+
+        Return id_instrumento
+
+    End Function
+
+    'Protected Sub gvInstrumentos_SelectedIndexChanged(sender As Object, e As EventArgs) Handles gvInstrumentos.SelectedIndexChanged
+    '    'Dim row As GridViewRow = gvInstrumentos.SelectedRow
+
+    '    'MsgBox("Selecciono IndexChanged " & row.Cells(1).Text & ".")
+    '    'MsgBox("Selecciono IndexChanged")
+
+    '    'Dim id_instrumento = getIdInstrumentoGridView()
+
+    'End Sub
+
+    'Protected Sub CustomersGridView_SelectedIndexChanging(ByVal sender As Object, ByVal e As GridViewSelectEventArgs) Handles gvInstrumentos.SelectedIndexChanging
+
+    '    ' Get the currently selected row. Because the SelectedIndexChanging event
+    '    ' occurs before the select operation in the GridView control, the
+    '    ' SelectedRow property cannot be used. Instead, use the Rows collection
+    '    ' and the NewSelectedIndex property of the e argument passed to this 
+    '    ' event handler.
+    '    Dim row As GridViewRow = gvInstrumentos.Rows(e.NewSelectedIndex)
+
+    '    ' You can cancel the select operation by using the Cancel
+    '    ' property. For this example, if the user selects a customer with 
+    '    ' the ID "ANATR", the select operation is canceled and an error message
+    '    ' is displayed.
+    '    If row.Cells(1).Text = "ANATR" Then
+    '        e.Cancel = True
+    '        MsgBox("You cannot select " + row.Cells(1).Text & ".")
+    '    End If
+
+    'End Sub
+
+
 End Class
