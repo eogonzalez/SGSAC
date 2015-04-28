@@ -30,7 +30,7 @@ Public Class frmTratadosyAcuerdos
     Protected Sub lkBtt_editar_Click(sender As Object, e As EventArgs) Handles lkBtt_editar.Click
         accion = "editar"
 
-        Dim fila_id As GridViewRow = gvInstrumentos.SelectedRow
+        'Dim fila_id As GridViewRow = gvInstrumentos.SelectedRow
         'Dim id_instrumento As String = fila_id.Cells(1).Text
 
         'If String.IsNullOrEmpty(id_instrumento) Then
@@ -39,6 +39,15 @@ Public Class frmTratadosyAcuerdos
         '    Response.Redirect("frmInstrumentosMant.aspx?accion=" + accion + "&id_instrumento=" + id_instrumento)
         'End If
 
+        Dim idInstrumentos As New Integer
+
+        For i As Integer = 0 To gvInstrumentos.Rows.Count - 1
+            Dim rbutton As RadioButton = gvInstrumentos.Rows(i).FindControl("rb_sigla")
+            If rbutton.Checked Then
+                idInstrumentos = gvInstrumentos.Rows(i).Cells(1).Text
+                Response.Redirect("frmInstrumentosMant.aspx")
+            End If
+        Next
 
 
     End Sub

@@ -67,7 +67,7 @@
                 DataKeyNames="id_instrumento">
 
                 <Columns>
-                    <asp:BoundField DataField="id_instrumento" HeaderText="Id Instrumento" SortExpression="id_intrumento" Visible="false" />
+                    <asp:BoundField DataField="id_instrumento" HeaderText="Id Instrumento" SortExpression="id_intrumento" />
                     <asp:TemplateField>
                         <ItemTemplate>
                             <%--<asp:RadioButtonList ID="rb_sigla" runat="server"></asp:RadioButtonList>--%>
