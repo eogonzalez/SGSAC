@@ -4,7 +4,10 @@ Imports Capa_Entidad
 Public Class frmTratadosyAcuerdos
     Inherits System.Web.UI.Page
     Dim objCapaNegocio As New CNInstrumentosComerciales
-    Dim accion As String
+    Public accion As String
+
+
+#Region "Funciones del Sistema"
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not IsPostBack Then
@@ -12,71 +15,44 @@ Public Class frmTratadosyAcuerdos
 
             LlenarTipoInstrumento()
             LlenarTipoRelacionInstrumento()
+
         End If
     End Sub
 
-    Protected Sub Llenar_gvInstrumentos()
-        Dim tbl As New DataTable
-
-        tbl = objCapaNegocio.LlenarInstrumentos.Tables(0)
-
-        With gvInstrumentos
-            .DataSource = tbl
-            .DataBind()
-        End With
-
-    End Sub
-
     Protected Sub lkBtt_editar_Click(sender As Object, e As EventArgs) Handles lkBtt_editar.Click
+
         accion = "editar"
 
-        'Dim fila_id As GridViewRow = gvInstrumentos.SelectedRow
-        'Dim id_instrumento As String = fila_id.Cells(1).Text
+        Dim id_instrumento As Integer
+        id_instrumento = Convert.ToInt32(getIdInstrumentoGridView())
+        If id_instrumento = 0 Then
+            MsgBox("Seleccione un instrumeto")
+            Exit Sub
+        Else
+            LlenarInstrumentosMant(accion, id_instrumento)
+            lkBtt_nuevo_ModalPopupExtender.Show()
 
-        'If String.IsNullOrEmpty(id_instrumento) Then
-        '    MsgBox("Seleccione un registro")
-        'Else
-        '    Response.Redirect("frmInstrumentosMant.aspx?accion=" + accion + "&id_instrumento=" + id_instrumento)
-        'End If
-
-        Dim idInstrumentos As New Integer
-
-        For i As Integer = 0 To gvInstrumentos.Rows.Count - 1
-            Dim rbutton As RadioButton = gvInstrumentos.Rows(i).FindControl("rb_sigla")
-            If rbutton.Checked Then
-                idInstrumentos = gvInstrumentos.Rows(i).Cells(1).Text
-                Response.Redirect("frmInstrumentosMant.aspx")
-            End If
-        Next
-
+        End If
 
     End Sub
 
+    Protected Sub btn_Guardar_Click(sender As Object, e As EventArgs) Handles btn_Guardar.Click
 
-    Sub LlenarTipoInstrumento()
-        Dim objCNInstrumentos As New CNInstrumentosComerciales
+        If accion = "editar" Then
+            EditarInstrumento()
+            Llenar_gvInstrumentos()
 
-        With objCNInstrumentos.SelectTipoInstrumento
-            ddlstTipoInstrumento.DataTextField = .Tables(0).Columns("descripcion").ToString()
-            ddlstTipoInstrumento.DataValueField = .Tables(0).Columns("id_tipo_instrumento").ToString()
-            ddlstTipoInstrumento.DataSource = .Tables(0)
-            ddlstTipoInstrumento.DataBind()
-        End With
+        Else
+            GuardarInstrumento()
+
+            Llenar_gvInstrumentos()
+
+        End If
     End Sub
 
-    Sub LlenarTipoRelacionInstrumento()
-        Dim objCNInstrumentos As New CNInstrumentosComerciales
-        With objCNInstrumentos.SelectTipoRelacionInstrumento
-            ddlstTipoRelacion.DataTextField = .Tables(0).Columns("descripcion").ToString()
-            ddlstTipoRelacion.DataValueField = .Tables(0).Columns("id_tipo_relacion_instrumento").ToString()
-            ddlstTipoRelacion.DataSource = .Tables(0)
-            ddlstTipoRelacion.DataBind()
+#End Region
 
-        End With
-
-    End Sub
-
-    'Funciones para capturar los valores
+#Region "Funciones para capturar valores del formulario"
     Function getIdInstrumento() As Integer
         Dim objGeneral As New cnGeneral
         Dim IdInstrumento As Integer
@@ -136,9 +112,101 @@ Public Class frmTratadosyAcuerdos
         Return fecha_vigencia
     End Function
 
-    Sub NuevoInstrumento()
+#End Region
+
+#Region "Mis Funciones"
+
+    'Procedimiento para llenar el GridView de instrumentos
+    Protected Sub Llenar_gvInstrumentos()
+        Dim tbl As New DataTable
+
+        tbl = objCapaNegocio.SelectInstrumentos.Tables(0)
+
+        With gvInstrumentos
+            .DataSource = tbl
+            .DataBind()
+        End With
+
+    End Sub
+
+    'Procedimiento que llena el combo de tipo relacion instrumento
+    Sub LlenarTipoRelacionInstrumento()
+        Dim objCNInstrumentos As New CNInstrumentosComerciales
+        With objCNInstrumentos.SelectTipoRelacionInstrumento
+            ddlstTipoRelacion.DataTextField = .Tables(0).Columns("descripcion").ToString()
+            ddlstTipoRelacion.DataValueField = .Tables(0).Columns("id_tipo_relacion_instrumento").ToString()
+            ddlstTipoRelacion.DataSource = .Tables(0)
+            ddlstTipoRelacion.DataBind()
+
+        End With
+
+    End Sub
+
+    'Procedimiento que llena el combo de tipo instrumento
+    Sub LlenarTipoInstrumento()
+        Dim objCNInstrumentos As New CNInstrumentosComerciales
+
+        With objCNInstrumentos.SelectTipoInstrumento
+            ddlstTipoInstrumento.DataTextField = .Tables(0).Columns("descripcion").ToString()
+            ddlstTipoInstrumento.DataValueField = .Tables(0).Columns("id_tipo_instrumento").ToString()
+            ddlstTipoInstrumento.DataSource = .Tables(0)
+            ddlstTipoInstrumento.DataBind()
+        End With
+    End Sub
+
+    'Funcion que obtiene del grid el id del instrumento
+    Function getIdInstrumentoGridView() As String
+        Dim idInstrumento As Integer = Nothing
+
+        For i As Integer = 0 To gvInstrumentos.Rows.Count - 1
+            Dim rbutton As RadioButton = gvInstrumentos.Rows(i).FindControl("rb_sigla")
+            If rbutton.Checked Then
+                idInstrumento = gvInstrumentos.Rows(i).Cells(0).Text
+            End If
+        Next
+
+        Return idInstrumento
+
+    End Function
+
+    'Procedimiento para llenar formulario con el id del instrumento seleccionado
+    Sub LlenarInstrumentosMant(ByVal accion As String, ByVal id_instrumento As Integer)
+
+
+        Dim ObjCEInstrumentoMant As New CEInstrumentosMant
+        Dim ObjCNInstrumentoMant As New CNInstrumentosComerciales
+
+        Dim datosInstrumentos As New DataTable
+        datosInstrumentos = ObjCNInstrumentoMant.SelectInstrumentoMant(id_instrumento)
+
+        If datosInstrumentos.Rows.Count = 0 Then
+            MsgBox("El usuario no existe")
+            Exit Sub
+        Else
+            If accion = "editar" Then
+
+                ddlstTipoInstrumento.DataValueField = datosInstrumentos.Rows(0)("id_tipo_instrumento")
+                ddlstTipoRelacion.DataValueField = datosInstrumentos.Rows(0)("id_tipo_relacion_instrumento")
+                txtNombreInstrumento.Text = datosInstrumentos.Rows(0)("nombre_instrumento").ToString
+                txtSigla.Text = datosInstrumentos.Rows(0)("sigla").ToString
+                txtSiglaAlterna.Text = datosInstrumentos.Rows(0)("sigla_alternativa").ToString
+                txtObservaciones.Text = datosInstrumentos.Rows(0)("observaciones").ToString
+
+                txtFechaFirma.Text = datosInstrumentos.Rows(0)("fecha_firma").ToString
+                txtFechaRatifica.Text = datosInstrumentos.Rows(0)("fecha_ratificada").ToString
+                txtFechaVigencia.Text = datosInstrumentos.Rows(0)("fecha_vigencia").ToString
+
+            End If
+        End If
+    End Sub
+
+    'Procedimiento para agregar nuevo instrumento
+    Sub GuardarInstrumento()
+        'Declaro las varialbes de la capa de datos y entidad
         Dim objeto As New CEInstrumentosMant
         Dim cnInstrumentos As New CNInstrumentosComerciales
+
+        'Obtengo los valores de los controles
         objeto.id_instrumento = getIdInstrumento()
         objeto.id_tipo_instrumento = getTipoInstrumento()
         objeto.id_tipo_relacion_instrumento = getTipoRelacionInstrumento()
@@ -150,70 +218,35 @@ Public Class frmTratadosyAcuerdos
         objeto.fecha_ratificada = getFechaRatifica()
         objeto.fecha_vigencia = getFechaVigencia()
         objeto.estado = True
+
+        'Envio los valores a la capa entidad con el objeto a la funcion guardar nuevo instrumento
         cnInstrumentos.InsertInstrumento(objeto)
     End Sub
 
-    Protected Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+    'Procedimiento para editar instrumento
+    Sub EditarInstrumento()
+        'Declaro las variables de la capa de datos y entidad
+        Dim CEObjeto As New CEInstrumentosMant
+        Dim CNInstrumentos As New CNInstrumentosComerciales
 
-        NuevoInstrumento()
+        'Obtengo los valores de los controles
+        CEObjeto.id_instrumento = getIdInstrumento()
+        CEObjeto.id_tipo_instrumento = getTipoInstrumento()
+        CEObjeto.id_tipo_relacion_instrumento = getTipoRelacionInstrumento()
+        CEObjeto.nombre_instrumento = getNombreInstrumento()
+        CEObjeto.sigla = getSigla()
+        CEObjeto.sigla_alternativa = getSiglaAlterna()
+        CEObjeto.observaciones = getObservaciones()
+        CEObjeto.fecha_firma = getFechaFirma()
+        CEObjeto.fecha_ratificada = getFechaRatifica()
+        CEObjeto.fecha_vigencia = getFechaVigencia()
+        CEObjeto.estado = True
 
+        'Envio los valores a la capa entidad con el Objeto a la funcion actualizar instrumentos
+        CNInstrumentos.UpdateInstrumento(CEObjeto)
 
     End Sub
 
-    Function getIdInstrumentoGridView() As Integer
-        Dim id_instrumento As Integer
-
-        'Dim name = gvInstrumentos.DataKeys(1).Values("rb_sigla").ToString().Trim()
-
-        For Each fila As GridViewRow In gvInstrumentos.Rows
-            Dim check As RadioButton = fila.FindControl("rb_sigla")
-            If check.Checked Then
-
-
-
-                Dim id = TryCast(gvInstrumentos.SelectedRow.DataItem, TextBox).Text
-
-                id = Convert.ToInt32(id)
-                'id_instrumento = Convert.ToInt32(fila.Cells(0).Text)
-
-            Else
-
-            End If
-        Next
-
-        Return id_instrumento
-
-    End Function
-
-    'Protected Sub gvInstrumentos_SelectedIndexChanged(sender As Object, e As EventArgs) Handles gvInstrumentos.SelectedIndexChanged
-    '    'Dim row As GridViewRow = gvInstrumentos.SelectedRow
-
-    '    'MsgBox("Selecciono IndexChanged " & row.Cells(1).Text & ".")
-    '    'MsgBox("Selecciono IndexChanged")
-
-    '    'Dim id_instrumento = getIdInstrumentoGridView()
-
-    'End Sub
-
-    'Protected Sub CustomersGridView_SelectedIndexChanging(ByVal sender As Object, ByVal e As GridViewSelectEventArgs) Handles gvInstrumentos.SelectedIndexChanging
-
-    '    ' Get the currently selected row. Because the SelectedIndexChanging event
-    '    ' occurs before the select operation in the GridView control, the
-    '    ' SelectedRow property cannot be used. Instead, use the Rows collection
-    '    ' and the NewSelectedIndex property of the e argument passed to this 
-    '    ' event handler.
-    '    Dim row As GridViewRow = gvInstrumentos.Rows(e.NewSelectedIndex)
-
-    '    ' You can cancel the select operation by using the Cancel
-    '    ' property. For this example, if the user selects a customer with 
-    '    ' the ID "ANATR", the select operation is canceled and an error message
-    '    ' is displayed.
-    '    If row.Cells(1).Text = "ANATR" Then
-    '        e.Cancel = True
-    '        MsgBox("You cannot select " + row.Cells(1).Text & ".")
-    '    End If
-
-    'End Sub
-
+#End Region
 
 End Class

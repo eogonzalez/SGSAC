@@ -6,6 +6,9 @@ Public Class CDInstrumentosComerciales
     Dim da As SqlDataAdapter
     Dim ds As New DataSet
 
+#Region "Funciones y procedimientos para el Mantenimiento de Instrumentos"
+
+    'Funcion para llenar el GridView de Instrumentos
     Public Function SelectInstrumentos() As DataSet
         'Se Llena el Data Set por medio del procedimiento almacenado y se retorna el mismo
         Dim sql_query As String
@@ -22,7 +25,7 @@ Public Class CDInstrumentosComerciales
                 da.Fill(ds, "Ls_Instrumentos")
 
             Catch ex As Exception
-                MsgBox("ERROR CONSULTARUSUARIO = " + ex.Message.ToString)
+                MsgBox("ERROR CONSULTA INSTRUMENTOS = " + ex.Message.ToString)
             Finally
                 objConeccion.Conectar.Dispose()
                 cn.Dispose()
@@ -34,7 +37,7 @@ Public Class CDInstrumentosComerciales
         End Using
     End Function
 
-    'Funcion para seleccionar listao de tipo de instrumetos
+    'Funcion para seleccionar listado del combo tipo de instrumetos
     Public Function SelectTipoInstrumento() As DataSet
         Try
             Dim sql_string As String
@@ -58,7 +61,7 @@ Public Class CDInstrumentosComerciales
 
     End Function
 
-    'Funcion para seleccionar listado de tipo de relaciones de instrumentos
+    'Funcion para seleccionar listado del combo tipo de relaciones de instrumentos
     Public Function SelectTipoRelacionInstrumento() As DataSet
         Try
             Dim sql_string As String
@@ -84,8 +87,40 @@ Public Class CDInstrumentosComerciales
 
     End Function
 
-   
-    'Metodo para insertar nuevo intrumento comercial
+    'Funcion para seleccionar el instrumento segun el id_instrumento
+    Public Function SelectInstrumentosMant(ByVal id_instrumento As Integer) As DataTable
+        'Se Llena el Data Set por medio del procedimiento almacenado y se retorna el mismo
+        Dim sql_query As String
+        Dim dtInstrumentos As New DataTable
+
+        sql_query = " SELECT  id_tipo_instrumento, id_tipo_relacion_instrumento, nombre_instrumento, sigla, sigla_alternativa, observaciones, fecha_firma, fecha_ratificada, fecha_vigencia " +
+            " FROM IC_Instrumentos " +
+            " WHERE estado = 1 " +
+            " AND id_instrumento = @id_instrumento "
+
+        Using cn = objConeccion.Conectar
+            Try
+
+                Dim command As SqlCommand = New SqlCommand(sql_query, cn)
+                command.Parameters.AddWithValue("id_instrumento", id_instrumento)
+                da = New SqlDataAdapter(command)
+
+                da.Fill(dtInstrumentos)
+                cn.Close()
+
+            Catch ex As Exception
+                MsgBox("ERROR CONSULTARUSUARIO = " + ex.Message.ToString)
+            Finally
+                objConeccion.Conectar.Dispose()
+                cn.Dispose()
+            End Try
+
+            Return dtInstrumentos
+
+        End Using
+    End Function
+
+    'Metodo para Insertar nuevo instrumento comercial
     Public Sub InsertInstrumento(ByVal objInstrumento As CEInstrumentosMant)
         Try
             Dim sql_query As String
@@ -139,7 +174,7 @@ Public Class CDInstrumentosComerciales
         End Try
     End Sub
 
-    'Metodo para actualizar instrumento comercial
+    'Metodo para Actualizar instrumento comercial
     Public Sub UpdateInstrumento(ByVal objInstrumento As CEInstrumentosMant)
         Try
             Dim sql_query As String
@@ -183,6 +218,10 @@ Public Class CDInstrumentosComerciales
 
         End Try
     End Sub
+
+#End Region
+
+#Region "Funciones y procedimientos para el Mantenimiento de Tipo de Instrumentos"
 
     'Metodo para insertar tipo de instrumento
     Public Sub InsertTipoInstrumento(ByVal objTipoInstrumento As CETipoInstrumento)
@@ -242,6 +281,10 @@ Public Class CDInstrumentosComerciales
         End Try
     End Sub
 
+#End Region
+
+#Region "Funciones y procedimientos para el Mantenimiento de Tipo Relacion Instrumentos"
+
     'Metodo para insertar tipo relacion de instrumento
     Public Sub InsertTipoRelacionInstrumento(ByVal objTipoRelacionInstrumento As CETipoRelacionInstrumento)
         Try
@@ -299,4 +342,7 @@ Public Class CDInstrumentosComerciales
 
         End Try
     End Sub
+
+#End Region
+
 End Class

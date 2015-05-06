@@ -48,6 +48,13 @@
 
             <asp:LinkButton ID="lkBtt_editar" runat="server" CssClass="btn btn-primary"> <i aria-hidden="true" class="glyphicon glyphicon-edit"></i>Editar </asp:LinkButton>
 
+            <%--<cc1:ModalPopupExtender ID="lkBtt_editar_ModalPopup" BackgroundCssClass="modalBackground"
+                runat="server" BehaviorID="lkBtt_editar_ModalPopupExtender" PopupControlID="pnlNuevoInstrumento"
+                DynamicServicePath="" TargetControlID="lkBtt_editar" OnLoad="lkBtt_nuevo_Click">
+            </cc1:ModalPopupExtender>--%>
+
+
+
             <asp:LinkButton ID="lkBtt_categorias" runat="server" CssClass="btn btn-primary"> <i aria-hidden="true" class="glyphicon glyphicon-random"></i>Categorias </asp:LinkButton>
 
             <asp:LinkButton ID="lkBtt_paises" runat="server" CssClass="btn btn-primary"> <i aria-hidden="true" class="glyphicon glyphicon-globe"></i>Paises </asp:LinkButton>
@@ -62,7 +69,6 @@
                 GridLines="None"
                 EmptyDataText="No se encontraron instrumentos comerciales"
                 AutoGenerateColumns="false"
-                AutoGenerateSelectButton="True"
                 selectedindex="1"
                 DataKeyNames="id_instrumento">
 
@@ -72,7 +78,6 @@
                         <ItemTemplate>
                             <%--<asp:RadioButtonList ID="rb_sigla" runat="server"></asp:RadioButtonList>--%>
                             <asp:RadioButton ID="rb_sigla" runat="server" OnClick="javascript:SelectSingleRadiobutton(this.id)"/>
-                            <asp:CheckBox ID="cb_instrumento" runat="server" />
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:BoundField DataField="sigla" HeaderText="Sigla" />
@@ -148,29 +153,32 @@
                 <div class="form-group">
                     <asp:Label ID="Label9" Cssclass="control-label col-xs-4" runat="server" Text="Fecha Firma:"></asp:Label>
                     <div class="col-xs-8">
-                        <asp:TextBox ID="txtFechaFirma" CssClass="form-control" runat="server" TextMode="Date"></asp:TextBox>
+                        <asp:TextBox ID="txtFechaFirma" CssClass="form-control" runat="server"></asp:TextBox>
+                        <cc1:CalendarExtender ID="txtFechaFirma_CalendarExtender" runat="server" BehaviorID="txtFechaFirma_CalendarExtender" TargetControlID="txtFechaFirma" />
                     </div>
                 </div>
 
                 <div class="form-group">
                     <asp:Label ID="Label10" Cssclass="control-label col-xs-4" runat="server" Text="Fecha Ratificación:"></asp:Label>
                     <div class="col-xs-8">
-                        <asp:TextBox ID="txtFechaRatifica" CssClass="form-control" runat="server" TextMode="Date"></asp:TextBox>
+                        <asp:TextBox ID="txtFechaRatifica" CssClass="form-control" runat="server" ></asp:TextBox>
+                        <cc1:CalendarExtender ID="txtFechaRatifica_CalendarExtender" runat="server" BehaviorID="txtFechaRatifica_CalendarExtender" TargetControlID="txtFechaRatifica" />
                     </div>
                 </div>
 
                 <div class="form-group">
                     <asp:Label ID="Label11" CssClass="control-label col-xs-4" runat="server" Text="Fecha Vigencia:"></asp:Label>
                     <div class="col-xs-8">
-                        <asp:TextBox ID="txtFechaVigencia" CssClass="form-control" runat="server" TextMode="Date"></asp:TextBox>
+                        <asp:TextBox ID="txtFechaVigencia" CssClass="form-control" runat="server"></asp:TextBox>
+                        <cc1:CalendarExtender ID="txtFechaVigencia_CalendarExtender" runat="server" BehaviorID="txtFechaVigencia_CalendarExtender" TargetControlID="txtFechaVigencia" />
                     </div>
                 </div>
             </div>
 
 
             <div class="panel-footer">
-                <asp:Button ID="Button1" CssClass="btn btn-primary" runat="server" Text="Guardar" />
-                <asp:Button ID="Button2" CssClass="btn btn-default" runat="server" Text="Salir" />
+                <asp:Button ID="btn_Guardar" CssClass="btn btn-primary" runat="server" Text="Guardar" />
+                <asp:Button ID="btn_Salir" CssClass="btn btn-default" runat="server" Text="Salir" />
             </div>
         </asp:Panel>
     </div>
