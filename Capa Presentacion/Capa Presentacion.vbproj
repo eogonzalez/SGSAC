@@ -104,6 +104,7 @@
     <Content Include="bootstrap\js\bootstrap.min.js" />
     <Content Include="bootstrap\js\npm.js" />
     <Content Include="CSS\Login.css" />
+    <Content Include="CSS\OtrosEstilos.css" />
     <Content Include="frmInstrumentosMant.aspx" />
     <Content Include="frmTipoInstrumento.aspx" />
     <Content Include="frmTipoInstrumentoMant.aspx" />

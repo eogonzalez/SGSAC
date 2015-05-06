@@ -27,14 +27,14 @@ Public Class CNInstrumentosComerciales
     End Function
 
     'Metodo para Insertar nuevo instrumento comercial
-    Public Sub InsertInstrumento(ByVal objIns As CEInstrumentosMant)
-        objCDInstrumentos.InsertInstrumento(objIns)
-    End Sub
+    Public Function InsertInstrumento(ByVal objIns As CEInstrumentosMant) As Boolean
+        Return objCDInstrumentos.InsertInstrumento(objIns)
+    End Function
 
     'Metodo para Actualizar instrumento comercial
-    Public Sub UpdateInstrumento(ByVal objIns As CEInstrumentosMant)
-        objCDInstrumentos.UpdateInstrumento(objIns)
-    End Sub
+    Public Function UpdateInstrumento(ByVal objIns As CEInstrumentosMant) As Boolean
+        Return objCDInstrumentos.UpdateInstrumento(objIns)
+    End Function
 
 #End Region
 

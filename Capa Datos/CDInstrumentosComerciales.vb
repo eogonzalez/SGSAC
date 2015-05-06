@@ -121,7 +121,7 @@ Public Class CDInstrumentosComerciales
     End Function
 
     'Metodo para Insertar nuevo instrumento comercial
-    Public Sub InsertInstrumento(ByVal objInstrumento As CEInstrumentosMant)
+    Public Function InsertInstrumento(ByVal objInstrumento As CEInstrumentosMant) As Boolean
         Try
             Dim sql_query As String
             sql_query = " INSERT INTO IC_Instrumentos " +
@@ -164,18 +164,19 @@ Public Class CDInstrumentosComerciales
                 command.Parameters.AddWithValue("estado", objInstrumento.estado)
                 conexion.Open()
                 command.ExecuteScalar()
-                MsgBox("Instrumento agregado con exito")
+
+                Return True
             End Using
 
         Catch ex As Exception
-            MsgBox("ERROR Registra Instrumento = " + ex.Message.ToString)
+            Return False
         Finally
 
         End Try
-    End Sub
+    End Function
 
     'Metodo para Actualizar instrumento comercial
-    Public Sub UpdateInstrumento(ByVal objInstrumento As CEInstrumentosMant)
+    Public Function UpdateInstrumento(ByVal objInstrumento As CEInstrumentosMant) As Boolean
         Try
             Dim sql_query As String
             sql_query = " UPDATE IC_Instrumentos " +
@@ -208,16 +209,16 @@ Public Class CDInstrumentosComerciales
                 conexion.Open()
                 command.ExecuteScalar()
 
-                MsgBox(" Se actualizo instrumento " + objInstrumento.id_instrumento + " correctamente.")
+                Return True
             End Using
         Catch ex As SqlException
-            MsgBox("ERROR Actualiza Instrumento = " + ex.Message.ToString)
+            Return False
         Catch ex As Exception
-            MsgBox("ERROR Actualiza Instrumento = " + ex.Message.ToString)
+            Return False
         Finally
 
         End Try
-    End Sub
+    End Function
 
 #End Region
 

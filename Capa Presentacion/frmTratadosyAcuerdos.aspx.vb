@@ -4,50 +4,62 @@ Imports Capa_Entidad
 Public Class frmTratadosyAcuerdos
     Inherits System.Web.UI.Page
     Dim objCapaNegocio As New CNInstrumentosComerciales
-    Public accion As String
-
 
 #Region "Funciones del Sistema"
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not IsPostBack Then
             Llenar_gvInstrumentos()
-
             LlenarTipoInstrumento()
             LlenarTipoRelacionInstrumento()
-
+            Me.btn_Guardar.Attributes.Add("onclick", "this.value='Guardando Espere...';this.disabled = true;" & Me.GetPostBackEventReference(Me.btn_Guardar))
         End If
     End Sub
 
     Protected Sub lkBtt_editar_Click(sender As Object, e As EventArgs) Handles lkBtt_editar.Click
-
-        accion = "editar"
-
+        
         Dim id_instrumento As Integer
         id_instrumento = Convert.ToInt32(getIdInstrumentoGridView())
         If id_instrumento = 0 Then
             MsgBox("Seleccione un instrumeto")
             Exit Sub
         Else
-            LlenarInstrumentosMant(accion, id_instrumento)
+            LlenarInstrumentosMant("editar", id_instrumento)
+            btn_Guardar.CommandName = "editar"
+            hfIdInstrumento.Value = id_instrumento
             lkBtt_nuevo_ModalPopupExtender.Show()
-
         End If
 
     End Sub
 
     Protected Sub btn_Guardar_Click(sender As Object, e As EventArgs) Handles btn_Guardar.Click
 
-        If accion = "editar" Then
-            EditarInstrumento()
-            Llenar_gvInstrumentos()
-
+        If btn_Guardar.CommandName = "editar" Then
+            If EditarInstrumento(hfIdInstrumento.Value) Then
+                Mensaje("Instrumento actualizado con éxito")
+                Llenar_gvInstrumentos()
+                btn_Guardar.CommandName = ""
+                LimpiarEditarInstrumento()
+            Else
+                Mensaje("Error al actualizar Instrumento")
+                lkBtt_nuevo_ModalPopupExtender.Show()
+            End If
+            
         Else
-            GuardarInstrumento()
-
-            Llenar_gvInstrumentos()
-
+            If GuardarInstrumento() Then
+                Mensaje("Instrumento guardado con éxito")
+                Llenar_gvInstrumentos()
+                LimpiarEditarInstrumento()
+            Else
+                Mensaje("Error al guardar Instrumento")
+                lkBtt_nuevo_ModalPopupExtender.Show()
+            End If
+            
         End If
+    End Sub
+
+    Protected Sub btn_Salir_Click(sender As Object, e As EventArgs) Handles btn_Salir.Click
+        LimpiarEditarInstrumento()
     End Sub
 
 #End Region
@@ -96,25 +108,44 @@ Public Class frmTratadosyAcuerdos
 
     Function getFechaFirma() As Date
         Dim fecha_firma As Date
-        fecha_firma = Convert.ToDateTime(txtFechaFirma.Text)
+        fecha_firma = txtFechaFirma.Text
         Return fecha_firma
     End Function
 
     Function getFechaRatifica() As Date
         Dim fecha_ratifica As Date
-        fecha_ratifica = Convert.ToDateTime(txtFechaRatifica.Text)
+        fecha_ratifica = txtFechaRatifica.Text
         Return fecha_ratifica
     End Function
 
     Function getFechaVigencia() As Date
         Dim fecha_vigencia As Date
-        fecha_vigencia = Convert.ToDateTime(txtFechaVigencia.Text)
+        fecha_vigencia = txtFechaVigencia.Text
         Return fecha_vigencia
     End Function
 
 #End Region
 
 #Region "Mis Funciones"
+
+    'Mensajes en el formulario
+    Sub Mensaje(ByVal texto As String)
+        Dim jv As String = "<script>alert('" & texto & "');</script>"
+        ScriptManager.RegisterClientScriptBlock(Me, GetType(Page), "alert", jv, False)
+    End Sub
+
+    'Limpiar Formulario Editar Instrumento
+    Sub LimpiarEditarInstrumento()
+        txtNombreInstrumento.Text = ""
+        ddlstTipoInstrumento.ClearSelection()
+        txtSigla.Text = ""
+        txtSiglaAlterna.Text = ""
+        ddlstTipoRelacion.ClearSelection()
+        txtObservaciones.Text = ""
+        txtFechaFirma.Text = ""
+        txtFechaRatifica.Text = ""
+        txtFechaVigencia.Text = ""
+    End Sub
 
     'Procedimiento para llenar el GridView de instrumentos
     Protected Sub Llenar_gvInstrumentos()
@@ -192,16 +223,16 @@ Public Class frmTratadosyAcuerdos
                 txtSiglaAlterna.Text = datosInstrumentos.Rows(0)("sigla_alternativa").ToString
                 txtObservaciones.Text = datosInstrumentos.Rows(0)("observaciones").ToString
 
-                txtFechaFirma.Text = datosInstrumentos.Rows(0)("fecha_firma").ToString
-                txtFechaRatifica.Text = datosInstrumentos.Rows(0)("fecha_ratificada").ToString
-                txtFechaVigencia.Text = datosInstrumentos.Rows(0)("fecha_vigencia").ToString
+                txtFechaFirma.Text = datosInstrumentos.Rows(0)("fecha_firma")
+                txtFechaRatifica.Text = datosInstrumentos.Rows(0)("fecha_ratificada")
+                txtFechaVigencia.Text = datosInstrumentos.Rows(0)("fecha_vigencia")
 
             End If
         End If
     End Sub
 
     'Procedimiento para agregar nuevo instrumento
-    Sub GuardarInstrumento()
+    Private Function GuardarInstrumento() As Boolean
         'Declaro las varialbes de la capa de datos y entidad
         Dim objeto As New CEInstrumentosMant
         Dim cnInstrumentos As New CNInstrumentosComerciales
@@ -220,17 +251,17 @@ Public Class frmTratadosyAcuerdos
         objeto.estado = True
 
         'Envio los valores a la capa entidad con el objeto a la funcion guardar nuevo instrumento
-        cnInstrumentos.InsertInstrumento(objeto)
-    End Sub
+        Return cnInstrumentos.InsertInstrumento(objeto)
+    End Function
 
     'Procedimiento para editar instrumento
-    Sub EditarInstrumento()
+    Private Function EditarInstrumento(ByVal idInstrumento As Integer) As Boolean
         'Declaro las variables de la capa de datos y entidad
         Dim CEObjeto As New CEInstrumentosMant
         Dim CNInstrumentos As New CNInstrumentosComerciales
 
         'Obtengo los valores de los controles
-        CEObjeto.id_instrumento = getIdInstrumento()
+        CEObjeto.id_instrumento = idInstrumento
         CEObjeto.id_tipo_instrumento = getTipoInstrumento()
         CEObjeto.id_tipo_relacion_instrumento = getTipoRelacionInstrumento()
         CEObjeto.nombre_instrumento = getNombreInstrumento()
@@ -243,9 +274,9 @@ Public Class frmTratadosyAcuerdos
         CEObjeto.estado = True
 
         'Envio los valores a la capa entidad con el Objeto a la funcion actualizar instrumentos
-        CNInstrumentos.UpdateInstrumento(CEObjeto)
+        Return CNInstrumentos.UpdateInstrumento(CEObjeto)
 
-    End Sub
+    End Function
 
 #End Region
 
