@@ -41,28 +41,38 @@ Public Class CNInstrumentosComerciales
 #Region "Funciones y procedimientos para el Mantenimiento de Tipo de Instrumentos"
 
     'Metodo para insertar tipo de instrumento
-    Public Sub InsertTipoInstrumento(ByVal objTipoIns As CETipoInstrumento)
-        objCDInstrumentos.InsertTipoInstrumento(objTipoIns)
-    End Sub
+    Public Function InsertTipoInstrumento(ByVal objTipoIns As CETipoInstrumento) As Boolean
+        Return objCDInstrumentos.InsertTipoInstrumento(objTipoIns)
+    End Function
+
+    'Funcion para seleccionar tipo instrumento segun el id_tipoInstrumento
+    Public Function SelectTipoInstrumentoMant(ByVal id_tipoInstrumento As Integer) As DataTable
+        Return objCDInstrumentos.SelectTipoInstrumentoMant(id_tipoInstrumento)
+    End Function
 
     'Metodo para actualizar tipo de instrumento
-    Public Sub UpdateTipoInstrumento(ByVal objTipoIns As CETipoInstrumento)
-        objCDInstrumentos.UpdateTipoInstrumento(objTipoIns)
-    End Sub
+    Public Function UpdateTipoInstrumento(ByVal objTipoIns As CETipoInstrumento) As Boolean
+        Return objCDInstrumentos.UpdateTipoInstrumento(objTipoIns)
+    End Function
 
 #End Region
 
 #Region "Funciones y procedimientos para el Mantenimiento de Tipo Relacion Instrumentos"
 
     'Metodo para insertar tipo relacion de instrumento
-    Public Sub InsertTipoRelacionInstrumento(ByVal objTipoRelIns As CETipoRelacionInstrumento)
-        objCDInstrumentos.InsertTipoRelacionInstrumento(objTipoRelIns)
-    End Sub
+    Public Function InsertTipoRelacionInstrumento(ByVal objTipoRelIns As CETipoRelacionInstrumento) As Boolean
+        Return objCDInstrumentos.InsertTipoRelacionInstrumento(objTipoRelIns)
+    End Function
+
+    'Funcion para obtener el tipo de relacion segun el id_tipoRelacionInstrumento
+    Public Function SelectTipoRelacionInstrumentoMant(ByVal id_tipoRelacionInstrumento As Integer) As DataTable
+        Return objCDInstrumentos.SelectTipoRelacionInstrumentoMant(id_tipoRelacionInstrumento)
+    End Function
 
     'Metodo para actualizar tipo relacion de instrumento
-    Public Sub UpdateTipoRelacionInstrumento(ByRef objTipoRelIns As CETipoRelacionInstrumento)
-        objCDInstrumentos.UpdateTipoRelacionInstrumento(objTipoRelIns)
-    End Sub
+    Public Function UpdateTipoRelacionInstrumento(ByRef objTipoRelIns As CETipoRelacionInstrumento) As Boolean
+        Return objCDInstrumentos.UpdateTipoRelacionInstrumento(objTipoRelIns)
+    End Function
 
 #End Region
 

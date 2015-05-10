@@ -41,15 +41,6 @@ Partial Public Class frmTipoInstrumento
     Protected WithEvents lkBtt_Editar As Global.System.Web.UI.WebControls.LinkButton
 
     '''<summary>
-    '''Control lkBtt_ayuda.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents lkBtt_ayuda As Global.System.Web.UI.WebControls.LinkButton
-
-    '''<summary>
     '''Control gvTipoInstrumento.
     '''</summary>
     '''<remarks>
@@ -68,13 +59,13 @@ Partial Public Class frmTipoInstrumento
     Protected WithEvents pnlNuevoTipoInstrumento As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
-    '''Control Label1.
+    '''Control lbl_IdTipoInstrumento.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents Label1 As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents lbl_IdTipoInstrumento As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''Control txtIdTipoInstrumento.
@@ -86,13 +77,13 @@ Partial Public Class frmTipoInstrumento
     Protected WithEvents txtIdTipoInstrumento As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''Control Label2.
+    '''Control lbl_Descripcion.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents Label2 As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents lbl_Descripcion As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''Control txtDescripcion.
@@ -104,13 +95,13 @@ Partial Public Class frmTipoInstrumento
     Protected WithEvents txtDescripcion As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''Control Label3.
+    '''Control lbl_Observaciones.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents Label3 As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents lbl_Observaciones As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''Control txtObservaciones.
@@ -138,4 +129,13 @@ Partial Public Class frmTipoInstrumento
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
     Protected WithEvents btnSalir As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''Control hfIdTipoInstrumento.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents hfIdTipoInstrumento As Global.System.Web.UI.WebControls.HiddenField
 End Class

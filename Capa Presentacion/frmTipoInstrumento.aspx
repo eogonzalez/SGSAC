@@ -3,6 +3,15 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 
 
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+
+<style type="text/css">
+    .ColumnaOculta {
+            display: none;
+        }
+</style>
+</asp:Content>
+
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
 
@@ -28,11 +37,6 @@
                 <i aria-hidden="true" class="glyphicon glyphicon-edit"></i>
                 Editar
             </asp:LinkButton>
-
-              <asp:LinkButton ID="lkBtt_ayuda" runat="server" CssClass="btn btn-primary">
-                <i aria-hidden="true" class="glyphicon glyphicon-sign"></i>
-                Ayuda
-            </asp:LinkButton>
         </div>
 
         <%-- Gridview --%>
@@ -43,13 +47,17 @@
                 EmptyDataText="No se encontraron tipos de instrumentos"
                 AutoGenerateColumns="false">
                 <Columns>
-                    <asp:BoundField DataField="id_tipo_instrumento" HeaderText="Id Tipo Instrumento" SortExpression="id_tipo_instrumento" />
+                    <asp:BoundField DataField="id_tipo_instrumento" SortExpression="id_tipo_instrumento">
+                        <HeaderStyle CssClass="ColumnaOculta"/>
+                        <ItemStyle CssClass="ColumnaOculta"/>
+                    </asp:BoundField>
                     <asp:TemplateField>
                         <ItemTemplate>
                             <asp:RadioButton ID="rb_tipo_instrumento" runat="server" />
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:BoundField DataField="descripcion" HeaderText="Tipo Instrumento" />
+                    <asp:BoundField DataField="observaciones" HeaderText="Descripcion" />
 
                 </Columns>
             </asp:GridView>
@@ -66,21 +74,21 @@
             <div class="panel-body form-horizontal">
 
                 <div class="form-group">
-                    <asp:Label ID="Label1" CssClass="control-label col-xs-4" enabled="false" runat="server"  Text="Codigo: "></asp:Label>
+                    <asp:Label ID="lbl_IdTipoInstrumento" CssClass="control-label col-xs-4" enabled="false" runat="server"  Text="Codigo: "></asp:Label>
                     <div class="col-xs-8">
                         <asp:TextBox ID="txtIdTipoInstrumento" type="text" CssClass="form-control" runat="server"></asp:TextBox>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <asp:Label ID="Label2" CssClass="control-label col-xs-4" runat="server" Text="Tipo Instrumento:"></asp:Label>
+                    <asp:Label ID="lbl_Descripcion" CssClass="control-label col-xs-4" runat="server" Text="Tipo Instrumento:"></asp:Label>
                     <div class="col-xs-8">
                         <asp:TextBox ID="txtDescripcion" type="text" CssClass="form-control" runat="server"></asp:TextBox>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <asp:Label ID="Label3" CssClass="control-label col-xs-4" runat="server" Text="Observaciones:"></asp:Label>
+                    <asp:Label ID="lbl_Observaciones" CssClass="control-label col-xs-4" runat="server" Text="Observaciones:"></asp:Label>
                     <div class="col-xs-8">
                         <asp:TextBox ID="txtObservaciones" type="text" CssClass="form-control" runat="server" TextMode="MultiLine"></asp:TextBox>
                     </div>
@@ -94,6 +102,10 @@
                 <asp:Button ID="btnSalir" CssClass="btn btn-default" runat="server" Text="Salir" />
             </div>
         </asp:Panel>
+    </div>
+    
+    <div>
+        <asp:HiddenField ID="hfIdTipoInstrumento" runat="server" />
     </div>
 
 </asp:Content>

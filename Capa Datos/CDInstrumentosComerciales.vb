@@ -42,7 +42,7 @@ Public Class CDInstrumentosComerciales
         Try
             Dim sql_string As String
 
-            sql_string = " SELECT id_tipo_instrumento,descripcion " +
+            sql_string = " SELECT id_tipo_instrumento, descripcion, observaciones " +
                 " from IC_Tipo_Instrumento "
 
             Using cn = objConeccion.Conectar
@@ -66,7 +66,7 @@ Public Class CDInstrumentosComerciales
         Try
             Dim sql_string As String
 
-            sql_string = "select id_tipo_relacion_instrumento, descripcion " +
+            sql_string = "select id_tipo_relacion_instrumento, descripcion, observaciones " +
                 " from IC_Tipo_Relacion_Instrumento "
 
             Using cn = objConeccion.Conectar
@@ -89,7 +89,6 @@ Public Class CDInstrumentosComerciales
 
     'Funcion para seleccionar el instrumento segun el id_instrumento
     Public Function SelectInstrumentosMant(ByVal id_instrumento As Integer) As DataTable
-        'Se Llena el Data Set por medio del procedimiento almacenado y se retorna el mismo
         Dim sql_query As String
         Dim dtInstrumentos As New DataTable
 
@@ -225,7 +224,7 @@ Public Class CDInstrumentosComerciales
 #Region "Funciones y procedimientos para el Mantenimiento de Tipo de Instrumentos"
 
     'Metodo para insertar tipo de instrumento
-    Public Sub InsertTipoInstrumento(ByVal objTipoInstrumento As CETipoInstrumento)
+    Public Function InsertTipoInstrumento(ByVal objTipoInstrumento As CETipoInstrumento) As Boolean
         Try
             Dim sql_query As String
 
@@ -246,19 +245,50 @@ Public Class CDInstrumentosComerciales
 
                 conexion.Open()
                 command.ExecuteScalar()
-                MsgBox("Tipo Instrumento agregado con exito")
+                Return True
             End Using
 
         Catch ex As Exception
-            MsgBox("ERROR Registra Tipo Instrumento = " + ex.Message.ToString)
+            Return False
         Finally
 
         End Try
 
-    End Sub
+    End Function
+
+    'Funcion para seleccionar el tipo de instrumento segun el id_tipoInstrumento
+    Public Function SelectTipoInstrumentoMant(ByVal id_tipoInstrumento As Integer) As DataTable
+        Dim sql_query As String
+        Dim dtTipoInstrumentos As New DataTable
+
+        sql_query = " Select descripcion ,observaciones " +
+            " FROM IC_Tipo_Instrumento " +
+            " WHERE id_tipo_instrumento = @id_tipoInstrumento "
+
+        Using cn = objConeccion.Conectar
+            Try
+
+                Dim command As SqlCommand = New SqlCommand(sql_query, cn)
+                command.Parameters.AddWithValue("id_tipoInstrumento", id_tipoInstrumento)
+                da = New SqlDataAdapter(command)
+
+                da.Fill(dtTipoInstrumentos)
+                cn.Close()
+
+            Catch ex As Exception
+                MsgBox("ERROR CONSULTARUSUARIO = " + ex.Message.ToString)
+            Finally
+                objConeccion.Conectar.Dispose()
+                cn.Dispose()
+            End Try
+
+            Return dtTipoInstrumentos
+
+        End Using
+    End Function
 
     'Metodo para actualizar tipo de instrumento
-    Public Sub UpdateTipoInstrumento(ByVal objTipoInstrumento As CETipoInstrumento)
+    Public Function UpdateTipoInstrumento(ByVal objTipoInstrumento As CETipoInstrumento) As Boolean
         Try
             Dim sql_query As String
             sql_query = " UPDATE IC_Tipo_Instrumento " +
@@ -272,22 +302,22 @@ Public Class CDInstrumentosComerciales
                 command.Parameters.AddWithValue("observaciones", objTipoInstrumento.observaciones)
                 conexion.Open()
                 command.ExecuteScalar()
-                MsgBox("Tipo instrumento actualizado con exito!")
+                Return True
             End Using
 
         Catch ex As Exception
-            MsgBox("ERROR Registra Instrumento = " + ex.Message.ToString)
+            Return False
         Finally
 
         End Try
-    End Sub
+    End Function
 
 #End Region
 
 #Region "Funciones y procedimientos para el Mantenimiento de Tipo Relacion Instrumentos"
 
     'Metodo para insertar tipo relacion de instrumento
-    Public Sub InsertTipoRelacionInstrumento(ByVal objTipoRelacionInstrumento As CETipoRelacionInstrumento)
+    Public Function InsertTipoRelacionInstrumento(ByVal objTipoRelacionInstrumento As CETipoRelacionInstrumento) As Boolean
         Try
             Dim sql_query As String
 
@@ -308,19 +338,51 @@ Public Class CDInstrumentosComerciales
 
                 conexion.Open()
                 command.ExecuteScalar()
-                MsgBox("Tipo Relacion Instrumento agregado con exito")
+                Return True
             End Using
 
         Catch ex As Exception
-            MsgBox("ERROR Registra Tipo Relacion Instrumento = " + ex.Message.ToString)
+            Return False
         Finally
 
         End Try
 
-    End Sub
+    End Function
+
+    'Funcion para seleccionar el tipo relacion instrumento segun el id_tipoRelacionInstrumento
+    Public Function SelectTipoRelacionInstrumentoMant(ByVal id_tipoRelacionInstrumento As Integer) As DataTable
+        Dim sql_query As String
+        Dim dtTipoRelacionInstrumentos As New DataTable
+
+        sql_query = " Select descripcion ,observaciones " +
+            " FROM IC_Tipo_Relacion_Instrumento " +
+            " WHERE id_tipo_relacion_instrumento = @id_tipoRelacionInstrumento "
+
+        Using cn = objConeccion.Conectar
+            Try
+
+                Dim command As SqlCommand = New SqlCommand(sql_query, cn)
+                command.Parameters.AddWithValue("id_tipoRelacionInstrumento", id_tipoRelacionInstrumento)
+                da = New SqlDataAdapter(command)
+
+                da.Fill(dtTipoRelacionInstrumentos)
+                cn.Close()
+
+            Catch ex As Exception
+                MsgBox("ERROR CONSULTARUSUARIO = " + ex.Message.ToString)
+            Finally
+                objConeccion.Conectar.Dispose()
+                cn.Dispose()
+            End Try
+
+            Return dtTipoRelacionInstrumentos
+
+        End Using
+
+    End Function
 
     'Metodo para actualizar tipo relacion de instrumento
-    Public Sub UpdateTipoRelacionInstrumento(ByVal objTipoRelacionInstrumento As CETipoRelacionInstrumento)
+    Public Function UpdateTipoRelacionInstrumento(ByVal objTipoRelacionInstrumento As CETipoRelacionInstrumento) As Boolean
         Try
             Dim sql_query As String
             sql_query = " UPDATE IC_Tipo_Relacion_Instrumento " +
@@ -334,15 +396,15 @@ Public Class CDInstrumentosComerciales
                 command.Parameters.AddWithValue("observaciones", objTipoRelacionInstrumento.observaciones)
                 conexion.Open()
                 command.ExecuteScalar()
-                MsgBox("Tipo relacion instrumento actualizado con exito!")
+                Return True
             End Using
 
         Catch ex As Exception
-            MsgBox("ERROR Registra Tipo Relacion Instrumento = " + ex.Message.ToString)
+            Return False
         Finally
 
         End Try
-    End Sub
+    End Function
 
 #End Region
 

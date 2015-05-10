@@ -32,22 +32,13 @@ Partial Public Class frmTipoRelacionInstrumento
     Protected WithEvents lkBtt_Nuevo_ModalPopupExtender As Global.AjaxControlToolkit.ModalPopupExtender
 
     '''<summary>
-    '''Control LinkButton1.
+    '''Control lkBtt_Editar.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents LinkButton1 As Global.System.Web.UI.WebControls.LinkButton
-
-    '''<summary>
-    '''Control LinkButton2.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents LinkButton2 As Global.System.Web.UI.WebControls.LinkButton
+    Protected WithEvents lkBtt_Editar As Global.System.Web.UI.WebControls.LinkButton
 
     '''<summary>
     '''Control gvTipoRelacionInstrumento.
@@ -138,4 +129,13 @@ Partial Public Class frmTipoRelacionInstrumento
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
     Protected WithEvents btnSalir As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''Control hfIdTipoRelacionInstrumento.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents hfIdTipoRelacionInstrumento As Global.System.Web.UI.WebControls.HiddenField
 End Class

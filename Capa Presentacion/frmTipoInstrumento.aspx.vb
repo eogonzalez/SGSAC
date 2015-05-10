@@ -3,37 +3,67 @@ Imports Capa_Entidad
 Public Class frmTipoInstrumento
     Inherits System.Web.UI.Page
     Dim objCNTipoInstrumento As New CNInstrumentosComerciales
+
+#Region "Funciones del sistema"
+
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-
-        Llenar_gvTipoInstrumento()
-
-    End Sub
-
-    Protected Sub Llenar_gvTipoInstrumento()
-        Dim tbl As DataTable
-        tbl = objCNTipoInstrumento.SelectTipoInstrumento.Tables(0)
-
-        With gvTipoInstrumento
-            .DataSource = tbl
-            .DataBind()
-        End With
+        If Not IsPostBack Then
+            Llenar_gvTipoInstrumento()
+            Me.btnGuardar.Attributes.Add("onclick", "this.value='Guardando Espere...';this.disabled=true;" & Me.GetPostBackEventReference(Me.btnGuardar))
+        End If
     End Sub
 
     Protected Sub Page_LoadMant(ByVal sender As Object, ByVal e As System.EventArgs) Handles pnlNuevoTipoInstrumento.Load
-        LlenarCorrelativoTipoInstrumento()
+        If Not IsPostBack Then
+            LlenarCorrelativoTipoInstrumento()
+        End If
+    End Sub
+
+    Protected Sub btnGuardar_Click(sender As Object, e As EventArgs) Handles btnGuardar.Click
+        If btnGuardar.CommandName = "editar" Then
+            If EditarTipoInstrumento(hfIdTipoInstrumento.Value) Then
+                Mensaje("Tipo Instrumento actualizado con exito")
+                Llenar_gvTipoInstrumento()
+                btnGuardar.CommandName = ""
+                LimpiarEditarTipoInstrumento()
+
+            Else
+                Mensaje("Error al actualizar Tipo Instrumento")
+                lkBtt_Nuevo_ModalPopupExtender.Show()
+            End If
+        Else
+            If GuardarTipoInstrumento() Then
+                Mensaje("Tipo Instrumento guardado con éxito")
+                Llenar_gvTipoInstrumento()
+                LimpiarEditarTipoInstrumento()
+
+            Else
+                Mensaje("Error al guardar Tipo Instrumento")
+                lkBtt_Nuevo_ModalPopupExtender.Show()
+            End If
+
+        End If
 
     End Sub
 
-    Sub LlenarCorrelativoTipoInstrumento()
-        Dim CNInstrumento As New cnGeneral
-        Dim nombreTabla As String
-        Dim llaveTable As String
+    Protected Sub lkBtt_Editar_Click(sender As Object, e As EventArgs) Handles lkBtt_Editar.Click
+        Dim id_tipo_instrumento As Integer = 0
+        id_tipo_instrumento = Convert.ToInt32(getIdTipoInstrumentoGridView())
+        If id_tipo_instrumento = 0 Then
+            Mensaje("Seleccione un Tipo Instrumento")
+            Exit Sub
+        Else
+            LlenarTipoInstrumentoMnat("editar", id_tipo_instrumento)
+            btnGuardar.CommandName = "editar"
+            hfIdTipoInstrumento.Value = id_tipo_instrumento
+            lkBtt_Nuevo_ModalPopupExtender.Show()
 
-        nombreTabla = "IC_Tipo_Instrumento"
-        llaveTable = " id_tipo_instrumento "
-
-        'txtIdTipoInstrumento.Text = CNInstrumento.ObtenerCorrelativoId(nombreTabla, llaveTable).ToString
+        End If
     End Sub
+
+#End Region
+
+#Region "Funciones para capturar valores del formulario"
 
     Function getIdCorrelativoTipoInstrumento() As Integer
         Return Convert.ToInt32(txtIdTipoInstrumento.Text)
@@ -47,26 +77,113 @@ Public Class frmTipoInstrumento
         Return txtObservaciones.Text
     End Function
 
-    Protected Sub Button1_Click(sender As Object, e As EventArgs) Handles btnGuardar.Click
-        NuevoTipoInstrumento()
 
+#End Region
 
+#Region "Mis funciones"
+
+    'Funcion para editar tipo instrumento
+    Private Function EditarTipoInstrumento(ByVal id_tipoInstrumento As Integer) As Boolean
+        'Declaro las variables de la capa de datos y entidad
+        Dim CE_objTipoInstrumento As New CETipoInstrumento
+        Dim CN_objTipoInstrumento As New CNInstrumentosComerciales
+
+        'Obtengo los valores de los controles
+        CE_objTipoInstrumento.id_tipo_instrumento = id_tipoInstrumento
+        CE_objTipoInstrumento.descripcion = getDescripcion()
+        CE_objTipoInstrumento.observaciones = getObservaciones()
+
+        'Envio los valores a la capa entidad con el objeto a la funcion actualizar tipo instrumento
+        Return CN_objTipoInstrumento.UpdateTipoInstrumento(CE_objTipoInstrumento)
+    End Function
+
+    'Procedimiento para llenar formulario con el id del instrumento
+    Sub LlenarTipoInstrumentoMnat(ByVal accion As String, ByVal id_tipoInstrumento As Integer)
+        Dim Obj_CNTipoInstrumentoMant As New CNInstrumentosComerciales
+
+        Dim dtTipoInstrumento As New DataTable
+        dtTipoInstrumento = Obj_CNTipoInstrumentoMant.SelectTipoInstrumentoMant(id_tipoInstrumento)
+
+        If dtTipoInstrumento.Rows.Count = 0 Then
+            Mensaje("El Tipo Instrumento no existe")
+            Exit Sub
+        Else
+            If accion = "editar" Then
+                txtIdTipoInstrumento.Text = id_tipoInstrumento.ToString
+                txtDescripcion.Text = dtTipoInstrumento.Rows(0)("descripcion").ToString
+                txtObservaciones.Text = dtTipoInstrumento.Rows(0)("observaciones").ToString
+            End If
+        End If
     End Sub
 
-    Sub NuevoTipoInstrumento()
+    'Procedimiento para mostrar mensajes en el formulario
+    Sub Mensaje(ByVal texto As String)
+        Dim jv As String = "<script>alert('" & texto & "');</script>"
+
+        ScriptManager.RegisterClientScriptBlock(Me, GetType(Page), "alert", jv, False)
+    End Sub
+
+    'Procedimiento para limbiar editar tipo instrumento
+    Sub LimpiarEditarTipoInstrumento()
+        txtIdTipoInstrumento.Text = ""
+        txtDescripcion.Text = ""
+        txtObservaciones.Text = ""
+    End Sub
+
+    'Procedimiento para llenar Gridview de Tipo Instrumento
+    Protected Sub Llenar_gvTipoInstrumento()
+        Dim tbl As DataTable
+        tbl = objCNTipoInstrumento.SelectTipoInstrumento.Tables(0)
+
+        With gvTipoInstrumento
+            .DataSource = tbl
+            .DataBind()
+        End With
+    End Sub
+
+    'Procedimiento para Llenar Correlativo Tipo Instrumento
+    Sub LlenarCorrelativoTipoInstrumento()
+        Dim CNInstrumento As New cnGeneral
+        Dim nombreTabla As String
+        Dim llaveTable As String
+
+        nombreTabla = "IC_Tipo_Instrumento"
+        llaveTable = " id_tipo_instrumento "
+
+        'txtIdTipoInstrumento.Text = CNInstrumento.ObtenerCorrelativoId(nombreTabla, llaveTable).ToString
+    End Sub
+
+    'Funcion para guardar nuevo tipo instrumento
+    Private Function GuardarTipoInstrumento() As Boolean
+        'Declaro las variables de la capa de datos y entidad
         Dim CEObj As New CETipoInstrumento
         Dim CNTipoInstrumentoIns As New CNInstrumentosComerciales
 
+        'Obtengo los valores de los controles
         CEObj.id_tipo_instrumento = getIdCorrelativoTipoInstrumento()
         CEObj.descripcion = getDescripcion()
         CEObj.observaciones = getObservaciones()
 
-        CNTipoInstrumentoIns.InsertTipoInstrumento(CEObj)
+        'Envio los valores a la capa entidad con el objeto a la funcion guardar nuevo tipo instrumento
+        Return CNTipoInstrumentoIns.InsertTipoInstrumento(CEObj)
 
-        gvTipoInstrumento.DataSource = Nothing
-        gvTipoInstrumento.DataBind()
+    End Function
 
-        'Llenar_gvTipoInstrumento()
+    'Funcion que obtiene del grid el id del tipo instrumento
+    Function getIdTipoInstrumentoGridView() As String
+        Dim idTipoInstrumento As String = Nothing
 
-    End Sub
+        For i As Integer = 0 To gvTipoInstrumento.Rows.Count - 1
+            Dim rbutton As RadioButton = gvTipoInstrumento.Rows(i).FindControl("rb_tipo_instrumento")
+            If rbutton.Checked Then
+                idTipoInstrumento = gvTipoInstrumento.Rows(i).Cells(0).Text
+            End If
+        Next
+
+        Return idTipoInstrumento
+    End Function
+
+#End Region
+
+
 End Class

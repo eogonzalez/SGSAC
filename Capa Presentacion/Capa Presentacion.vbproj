@@ -105,11 +105,8 @@
     <Content Include="bootstrap\js\npm.js" />
     <Content Include="CSS\Login.css" />
     <Content Include="CSS\OtrosEstilos.css" />
-    <Content Include="frmInstrumentosMant.aspx" />
     <Content Include="frmTipoInstrumento.aspx" />
-    <Content Include="frmTipoInstrumentoMant.aspx" />
     <Content Include="frmTipoRelacionInstrumento.aspx" />
-    <Content Include="frmTipoRelacionInstrumentoMant.aspx" />
     <Content Include="frmTratadosyAcuerdos.aspx" />
     <Content Include="Images\ayuda.png" />
     <Content Include="Images\desgraba.png" />
@@ -122,25 +119,11 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="frmInstrumentosMant.aspx.designer.vb">
-      <DependentUpon>frmInstrumentosMant.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="frmInstrumentosMant.aspx.vb">
-      <DependentUpon>frmInstrumentosMant.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
     <Compile Include="frmTipoInstrumento.aspx.designer.vb">
       <DependentUpon>frmTipoInstrumento.aspx</DependentUpon>
     </Compile>
     <Compile Include="frmTipoInstrumento.aspx.vb">
       <DependentUpon>frmTipoInstrumento.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="frmTipoInstrumentoMant.aspx.designer.vb">
-      <DependentUpon>frmTipoInstrumentoMant.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="frmTipoInstrumentoMant.aspx.vb">
-      <DependentUpon>frmTipoInstrumentoMant.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="frmTipoRelacionInstrumento.aspx.designer.vb">
@@ -149,13 +132,6 @@
     <Compile Include="frmTipoRelacionInstrumento.aspx.vb">
       <DependentUpon>frmTipoRelacionInstrumento.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="frmTipoRelacionInstrumentoMant.aspx.designer.vb">
-      <DependentUpon>frmTipoRelacionInstrumentoMant.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="frmTipoRelacionInstrumentoMant.aspx.vb">
-      <DependentUpon>frmTipoRelacionInstrumentoMant.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="frmTratadosyAcuerdos.aspx.designer.vb">
       <DependentUpon>frmTratadosyAcuerdos.aspx</DependentUpon>
