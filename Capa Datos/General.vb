@@ -41,7 +41,7 @@ Public Class General
         cn.Dispose()
     End Function
 
-    Public Function ObtenerCorrelativoId(ByVal nombreTabla As String, ByVal llave_tabla As String, Optional ByVal TieneEstado As Boolean = False) As Integer
+    Public Function ObtenerCorrelativoId(ByVal nombreTabla As String, ByVal llave_tabla As String, Optional ByVal TieneEstado As Boolean = False, Optional ByVal llave_filtro As String = Nothing, Optional ByVal valor_llave_filtro As Integer = 0) As Integer
         Dim correlativo As Integer
         Dim sql_query As String
 
@@ -52,6 +52,14 @@ Public Class General
 
             If TieneEstado = True Then
                 sql_query = sql_query + " WHERE estado = 1 "
+
+                If Not llave_filtro = Nothing Then
+                    sql_query = sql_query + " AND " + llave_filtro + " = " + valor_llave_filtro.ToString
+                End If
+            Else
+                If Not llave_filtro = Nothing Then
+                    sql_query = sql_query + " WHERE " + llave_filtro + " = " + valor_llave_filtro.ToString
+                End If
             End If
 
             Using cn = objConeccion.Conectar

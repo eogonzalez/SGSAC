@@ -12,7 +12,7 @@ Public Class frmTratadosyAcuerdos
             Llenar_gvInstrumentos()
             LlenarTipoInstrumento()
             LlenarTipoRelacionInstrumento()
-            Me.btn_Guardar.Attributes.Add("onclick", "this.value='Guardando Espere...';this.disabled = true;" & Me.GetPostBackEventReference(Me.btn_Guardar))
+            Me.btn_Guardar.Attributes.Add("onclick", "this.value='Guardando Espere...';this.disabled=true;" & Me.GetPostBackEventReference(Me.btn_Guardar))
         End If
     End Sub
 
@@ -60,6 +60,19 @@ Public Class frmTratadosyAcuerdos
 
     Protected Sub btn_Salir_Click(sender As Object, e As EventArgs) Handles btn_Salir.Click
         LimpiarEditarInstrumento()
+    End Sub
+
+    Protected Sub lkBtt_categorias_Click(sender As Object, e As EventArgs) Handles lkBtt_categorias.Click
+        Dim id_intrumento As Integer = 0
+        id_intrumento = Convert.ToInt32(getIdInstrumentoGridView())
+        If id_intrumento = 0 Then
+            Mensaje("Seleccione un instrumento")
+            Exit Sub
+        Else
+            hfIdInstrumento.Value = id_intrumento
+            Response.Redirect("~/frmCategoriasDesgravacion.aspx?id_inst=" + hfIdInstrumento.Value)
+        End If
+
     End Sub
 
 #End Region
@@ -279,5 +292,6 @@ Public Class frmTratadosyAcuerdos
     End Function
 
 #End Region
+
 
 End Class

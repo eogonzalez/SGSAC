@@ -52,7 +52,10 @@
 
                     <asp:LinkButton ID="lkBtt_editar" runat="server" CssClass="btn btn-primary"> <i aria-hidden="true" class="glyphicon glyphicon-edit"></i>Editar </asp:LinkButton>
 
-                    <asp:LinkButton ID="lkBtt_categorias" runat="server" CssClass="btn btn-primary"> <i aria-hidden="true" class="glyphicon glyphicon-random"></i>Categorias </asp:LinkButton>
+                    <asp:LinkButton ID="lkBtt_categorias" runat="server" CssClass="btn btn-primary"> 
+                        <i aria-hidden="true" class="glyphicon glyphicon-random"></i> 
+                        Categorias 
+                    </asp:LinkButton>
 
                     <asp:LinkButton ID="lkBtt_paises" runat="server" CssClass="btn btn-primary"> <i aria-hidden="true" class="glyphicon glyphicon-globe"></i>Paises </asp:LinkButton>
 

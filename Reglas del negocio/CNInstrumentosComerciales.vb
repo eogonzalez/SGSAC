@@ -76,4 +76,30 @@ Public Class CNInstrumentosComerciales
 
 #End Region
 
+#Region "Funciones y procedimientos para el Mantenimiento de Categorias de Desgravacion "
+    'Funcion para actualizar categorias
+    Public Function UpdateCategoriaDesgrava(ByVal objCeCategoria As CECategoriaDesgravacion) As Boolean
+        Return objCDInstrumentos.UpdateCategoriaDesgrava(objCeCategoria)
+    End Function
+
+    'Funcion para seleccionar categoria segun id_categoria
+    Public Function SelectCategoriaDesgravaMant(ByVal id_categoria As Integer, ByVal id_instrumento As Integer) As DataTable
+        Return objCDInstrumentos.SelectCategoriaDesgravaMant(id_categoria, id_instrumento)
+    End Function
+
+    'Funcion para insertar nueva categoria y tramos 
+    Public Function InsertCategoriaDesgrava(ByVal objCECategoria As CECategoriaDesgravacion) As Boolean
+        Return objCDInstrumentos.InsertCategoriaDesgrava(objCECategoria)
+    End Function
+
+    'Funcion que selecciona tipo desgravacion
+    Public Function SelectTipoDesgravacion() As DataSet
+        Return objCDInstrumentos.SelectTipoDesgravacion()
+    End Function
+
+    'Funcion para seleccionar categorias segun el id_instrumento para llenar gvCategorias
+    Public Function SelectCategoriasDesgrava(ByVal id_instrumento As Integer) As DataTable
+        Return objCDInstrumentos.SelectCategoriasDesgrava(id_instrumento)
+    End Function
+#End Region
 End Class

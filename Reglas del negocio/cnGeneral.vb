@@ -11,7 +11,7 @@ Public Class cnGeneral
         Return objMenu.EncodePassword(originalPassword)
     End Function
 
-    Public Function ObtenerCorrelativoId(ByVal nombretabla As String, ByVal llave_tabla As String, Optional ByVal TieneEstado As Boolean = False) As Integer
-        Return objMenu.ObtenerCorrelativoId(nombretabla, llave_tabla, TieneEstado)
+    Public Function ObtenerCorrelativoId(ByVal nombretabla As String, ByVal llave_tabla As String, Optional ByVal TieneEstado As Boolean = False, Optional ByVal llave_filtro As String = Nothing, Optional ByVal valor_llave_filtro As Integer = 0) As Integer
+        Return objMenu.ObtenerCorrelativoId(nombretabla, llave_tabla, TieneEstado, llave_filtro, valor_llave_filtro)
     End Function
 End Class

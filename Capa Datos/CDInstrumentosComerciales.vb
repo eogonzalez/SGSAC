@@ -1,6 +1,7 @@
 ﻿Imports System.Text
 Imports System.Data.SqlClient
 Imports Capa_Entidad
+
 Public Class CDInstrumentosComerciales
     Dim objConeccion As New ConectarService
     Dim da As SqlDataAdapter
@@ -404,6 +405,239 @@ Public Class CDInstrumentosComerciales
         Finally
 
         End Try
+    End Function
+
+#End Region
+
+#Region "Funciones y procedimientos para el Mantenimiento de Categorias de Desgravacion"
+
+    'Funcion para actualizar categorias
+    Public Function UpdateCategoriaDesgrava(ByVal objCategoriaDesgrava As CECategoriaDesgravacion) As Boolean
+        Try
+            Dim sql_query As String
+            sql_query = " UPDATE " +
+                " IC_Categorias_Desgravacion " +
+                " SET " +
+                " [id_tipo_desgrava] = @id_tipo_desgrava " +
+                " ,[codigo_categoria] = @codigo_categoria " +
+                " ,[cantidad_tramos] = @cantidad_tramos " +
+                " ,[observaciones] = @observaciones " +
+                " WHERE id_categoria = @id_categoria " +
+                " AND id_instrumento = @id_instrumento "
+
+            Using conexion = objConeccion.Conectar
+                Dim command As SqlCommand = New SqlCommand(sql_query, conexion)
+                command.Parameters.AddWithValue("id_categoria", objCategoriaDesgrava.id_categoria)
+                command.Parameters.AddWithValue("id_instrumento", objCategoriaDesgrava.id_instrumento)
+                command.Parameters.AddWithValue("id_tipo_desgrava", objCategoriaDesgrava.id_tipo_desgravacion)
+                command.Parameters.AddWithValue("codigo_categoria", objCategoriaDesgrava.codigo_categoria)
+                command.Parameters.AddWithValue("cantidad_tramos", objCategoriaDesgrava.cantidad_tramos)
+                command.Parameters.AddWithValue("observaciones", objCategoriaDesgrava.observaciones)
+
+                conexion.Open()
+                command.ExecuteScalar()
+                Return True
+            End Using
+
+        Catch ex As Exception
+            Return False
+        Finally
+
+        End Try
+    End Function
+
+    'Funcion para seleccionar el tipo de categoria segun el id_categoria
+    Public Function SelectCategoriaDesgravaMant(ByVal id_categoria As Integer, ByVal id_instrumento As Integer) As DataTable
+        Dim sql_query As String
+        Dim dtTipoRelacionInstrumentos As New DataTable
+
+        sql_query = " SELECT " +
+            " [id_tipo_desgrava] " +
+            " ,[codigo_categoria] " +
+            " ,[cantidad_tramos] " +
+            " ,[observaciones] " +
+            " FROM IC_Categorias_Desgravacion " +
+            " WHERE id_categoria = @id_categoria " +
+            " And id_instrumento = @id_instrumento "
+
+        Using cn = objConeccion.Conectar
+            Try
+
+                Dim command As SqlCommand = New SqlCommand(sql_query, cn)
+                command.Parameters.AddWithValue("id_categoria", id_categoria)
+                command.Parameters.AddWithValue("id_instrumento", id_instrumento)
+                da = New SqlDataAdapter(command)
+
+                da.Fill(dtTipoRelacionInstrumentos)
+                cn.Close()
+
+            Catch ex As Exception
+                MsgBox("ERROR CONSULTAR CATEGORIA = " + ex.Message.ToString)
+            Finally
+                objConeccion.Conectar.Dispose()
+                cn.Dispose()
+            End Try
+
+            Return dtTipoRelacionInstrumentos
+
+        End Using
+    End Function
+
+    'Funcion para insertar categorias y tramos
+    Public Function InsertCategoriaDesgrava(ByVal objCECategorias As CECategoriaDesgravacion) As Boolean
+        Try
+            Dim sql_query As String
+            Dim id_categoria As Integer
+
+            Dim objGeneral As New General
+            Dim nombre_tabla As String
+            Dim llave_tabla As String
+            Dim llave_filtro As String
+
+            nombre_tabla = "IC_Categorias_Desgravacion"
+            llave_tabla = "id_categoria"
+            llave_filtro = "id_instrumento"
+
+            'Obtengo correlativo a insertar
+            id_categoria = objGeneral.ObtenerCorrelativoId(nombre_tabla, llave_tabla, False, llave_filtro, objCECategorias.id_instrumento)
+
+            'Insertar Encabezado de categorias
+
+            sql_query = " INSERT INTO " +
+                " IC_Categorias_Desgravacion " +
+                " ([id_categoria] " +
+                " ,[id_instrumento] " +
+                " ,[id_tipo_desgrava] " +
+                " ,[codigo_categoria] " +
+                " ,[cantidad_tramos] " +
+                " ,[observaciones]) " +
+                " VALUES " +
+                " (@id_categoria " +
+                " ,@id_instrumento " +
+                " ,@id_tipo_desgrava " +
+                " ,@codigo_categoria " +
+                " ,@cantidad_tramos " +
+                " ,@observaciones) "
+
+
+            Using conexion = objConeccion.Conectar
+                Dim command As SqlCommand = New SqlCommand(sql_query, conexion)
+                command.Parameters.AddWithValue("id_categoria", id_categoria)
+                command.Parameters.AddWithValue("id_instrumento", objCECategorias.id_instrumento)
+                command.Parameters.AddWithValue("id_tipo_desgrava", objCECategorias.id_tipo_desgravacion)
+                command.Parameters.AddWithValue("codigo_categoria", objCECategorias.codigo_categoria)
+                command.Parameters.AddWithValue("cantidad_tramos", objCECategorias.cantidad_tramos)
+                command.Parameters.AddWithValue("observaciones", objCECategorias.observaciones)
+
+                conexion.Open()
+                command.ExecuteScalar()
+
+                'Llenar los detalles de los tramos 
+                For i As Integer = 1 To objCECategorias.cantidad_tramos
+                    sql_query = " INSERT INTO IC_Categorias_Desgravacion_Tramos " +
+                        " ([id_tramo] " +
+                        " ,[id_categoria] " +
+                        " ,[id_instrumento] " +
+                        " ,[activo]) " +
+                        " VALUES " +
+                        " (@id_tramo " +
+                        " ,@id_categoria " +
+                        " ,@id_instrumento " +
+                        " ,@activo) "
+
+                    command = New SqlCommand(sql_query, conexion)
+                    command.Parameters.AddWithValue("id_tramo", i)
+                    command.Parameters.AddWithValue("id_categoria", id_categoria)
+                    command.Parameters.AddWithValue("id_instrumento", objCECategorias.id_instrumento)
+                    command.Parameters.AddWithValue("activo", "N")
+
+                    command.ExecuteScalar()
+
+                Next
+
+                Return True
+            End Using
+
+        Catch ex As Exception
+            Return False
+        Finally
+
+        End Try
+    End Function
+
+    'Funcion para selectionar los datos del tipo de desgravacion
+    Public Function SelectTipoDesgravacion() As DataSet
+        Try
+            Dim sql_string As String
+
+            sql_string = " Select id_tipo_desgrava" +
+                " ,[descripcion] " +
+                " ,[observaciones] " +
+                " FROM IC_Tipo_Desgravacion "
+
+            Using cn = objConeccion.Conectar
+                Dim command As SqlCommand = New SqlCommand(sql_string, cn)
+                da = New SqlDataAdapter(command)
+                da.Fill(ds, "TimpoIns")
+            End Using
+
+        Catch ex As Exception
+            MsgBox("ERROR SelectTipoDesgravacion = " + ex.Message.ToString)
+        Finally
+
+        End Try
+
+        Return ds
+
+    End Function
+
+    'Funcion para seleccionar categorias segun el id_instrumento para llenar gvCategorias
+    Public Function SelectCategoriasDesgrava(ByVal id_instrumento) As DataTable
+        Dim sql_query As String
+        Dim dtCategoriaDesgrava As New DataTable
+
+        sql_query = " SELECT " +
+            " ICCD.id_categoria, ICI.sigla AS SIGLA, ICCD.codigo_categoria AS CATEGORIA, " +
+            " ICTD.descripcion AS TIPO_DESGRAVACION, ICCDT.periodo_corte AS PERIODO, " +
+            " ICCDT.activo AS ACTIVO, ICCD.cantidad_tramos AS CANTIDAD_TRAMOS, " +
+            " SUM(ICCDT.cantidad_cortes) AS CANTIDAD_CORTES " +
+            " FROM " +
+            " IC_Instrumentos ICI, " +
+            " IC_Tipo_Desgravacion ICTD, " +
+            " IC_Categorias_Desgravacion ICCD, " +
+            " IC_Categorias_Desgravacion_Tramos ICCDT " +
+            " WHERE " +
+            " ICI.id_instrumento = ICCD.id_instrumento And " +
+            " ICCD.id_instrumento = ICCDT.id_instrumento And " +
+            " ICCD.id_categoria = ICCDT.id_categoria And " +
+            " ICCD.id_tipo_desgrava = ICTD.id_tipo_desgrava And " +
+            " ICI.id_instrumento = @id_instrumento " +
+            " GROUP BY " +
+            " ICCD.id_categoria, ICI.sigla, ICCD.codigo_categoria , " +
+            " ICTD.descripcion , ICCDT.periodo_corte , " +
+            " ICCDT.activo , ICCD.cantidad_tramos ," +
+            " ICCDT.cantidad_cortes "
+
+        Using cn = objConeccion.Conectar
+            Try
+
+                Dim command As SqlCommand = New SqlCommand(sql_query, cn)
+                command.Parameters.AddWithValue("id_instrumento", id_instrumento)
+                da = New SqlDataAdapter(command)
+
+                da.Fill(dtCategoriaDesgrava)
+                cn.Close()
+
+            Catch ex As Exception
+                MsgBox("ERROR CONSULTARUSUARIO = " + ex.Message.ToString)
+            Finally
+                objConeccion.Conectar.Dispose()
+                cn.Dispose()
+            End Try
+
+            Return dtCategoriaDesgrava
+
+        End Using
     End Function
 
 #End Region

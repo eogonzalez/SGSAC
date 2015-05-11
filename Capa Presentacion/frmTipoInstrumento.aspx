@@ -33,7 +33,7 @@
                 DynamicServicePath="" TargetControlID="lkBtt_Nuevo">
             </cc1:ModalPopupExtender>
 
-              <asp:LinkButton ID="lkBtt_Editar" runat="server" CssClass="btn btn-primary">
+            <asp:LinkButton ID="lkBtt_Editar" runat="server" CssClass="btn btn-primary">
                 <i aria-hidden="true" class="glyphicon glyphicon-edit"></i>
                 Editar
             </asp:LinkButton>
