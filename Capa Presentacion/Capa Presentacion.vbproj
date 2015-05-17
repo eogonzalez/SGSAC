@@ -106,6 +106,8 @@
     <Content Include="CSS\Login.css" />
     <Content Include="CSS\OtrosEstilos.css" />
     <Content Include="frmCategoriasDesgravacion.aspx" />
+    <Content Include="frmCorteDesgravacion.aspx" />
+    <Content Include="frmTipoDesgravacion.aspx" />
     <Content Include="frmTipoInstrumento.aspx" />
     <Content Include="frmTipoRelacionInstrumento.aspx" />
     <Content Include="frmTratadosyAcuerdos.aspx" />
@@ -125,6 +127,20 @@
     </Compile>
     <Compile Include="frmCategoriasDesgravacion.aspx.vb">
       <DependentUpon>frmCategoriasDesgravacion.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="frmCorteDesgravacion.aspx.designer.vb">
+      <DependentUpon>frmCorteDesgravacion.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="frmCorteDesgravacion.aspx.vb">
+      <DependentUpon>frmCorteDesgravacion.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="frmTipoDesgravacion.aspx.designer.vb">
+      <DependentUpon>frmTipoDesgravacion.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="frmTipoDesgravacion.aspx.vb">
+      <DependentUpon>frmTipoDesgravacion.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="frmTipoInstrumento.aspx.designer.vb">

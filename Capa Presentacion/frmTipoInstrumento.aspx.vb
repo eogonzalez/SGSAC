@@ -150,7 +150,7 @@ Public Class frmTipoInstrumento
         nombreTabla = "IC_Tipo_Instrumento"
         llaveTable = " id_tipo_instrumento "
 
-        'txtIdTipoInstrumento.Text = CNInstrumento.ObtenerCorrelativoId(nombreTabla, llaveTable).ToString
+        txtIdTipoInstrumento.Text = CNInstrumento.ObtenerCorrelativoId(nombreTabla, llaveTable).ToString
     End Sub
 
     'Funcion para guardar nuevo tipo instrumento

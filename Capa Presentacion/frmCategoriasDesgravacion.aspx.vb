@@ -57,7 +57,16 @@ Public Class frmCategoriasDesgravacion
     End Sub
 
     Protected Sub lkBtn_Config_Click(sender As Object, e As EventArgs) Handles lkBtn_Config.Click
+        Dim id_categoria As Integer = 0
+        id_categoria = Convert.ToInt32(getIdCategoriaGridView())
+        If id_categoria = 0 Then
+            Mensaje("Seleccione una categoria")
+            Exit Sub
+        Else
 
+            hfIdCategoria.Value = id_categoria
+            Response.Redirect("~/frmCorteDesgravacion.aspx?id_inst=" + hfIdInstrumento.Value + "&id_ct=" + hfIdCategoria.Value)
+        End If
     End Sub
 
 #End Region

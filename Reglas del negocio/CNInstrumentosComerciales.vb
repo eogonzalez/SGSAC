@@ -4,6 +4,25 @@ Public Class CNInstrumentosComerciales
     Dim objCDInstrumentos As New CDInstrumentosComerciales
     Dim objCDGeneral As New General
 
+#Region "Funciones y procedimientos para el Mantenimiento de Tipo de Desgravacion"
+
+    'Metodo para insertar tipo de desgravacion
+    Public Function InsertTipoDesgravacion(ByVal objTipoDesgravacion As CeTipoDesgravacion) As Boolean
+        Return objCDInstrumentos.InsertTipoDesgravacion(objTipoDesgravacion)
+    End Function
+
+    'Funcion para seleccionar tipo de desgravacion segun el id_tipoDesgravacion
+    Public Function SelectTipoDesgravacionMant(ByVal id_tipoDesgravacion As Integer) As DataTable
+        Return objCDInstrumentos.SelectTipoDesgravacionMant(id_tipoDesgravacion)
+    End Function
+
+    'Metodo para actualizar tipo de desgravacion
+    Public Function UpdateTipoDesgravacion(ByVal objTipoDesgravacion As CeTipoDesgravacion) As Boolean
+        Return objCDInstrumentos.UpdateTipoDesgravacion(objTipoDesgravacion)
+    End Function
+
+#End Region
+
 #Region "Funciones y procedimientos para el Mantenimiento de Instrumentos"
 
     'Funcion para llenar el GridView de Instrumentos

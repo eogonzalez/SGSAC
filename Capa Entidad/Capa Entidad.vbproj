@@ -64,6 +64,7 @@
   <ItemGroup>
     <Compile Include="CECategoriaDesgravacion.vb" />
     <Compile Include="CEInstrumentosMant.vb" />
+    <Compile Include="CeTipoDesgravacion.vb" />
     <Compile Include="CETipoInstrumento.vb" />
     <Compile Include="CETipoRelacionInstrumento.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
