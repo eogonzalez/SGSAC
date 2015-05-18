@@ -7,98 +7,6 @@ Public Class CDInstrumentosComerciales
     Dim da As SqlDataAdapter
     Dim ds As New DataSet
 
-#Region "Funciones y procedimientos para el Mantenimiento de Tipo de Desgravacion"
-    'Metodo para insertar tipo de desgravacion
-    Public Function InsertTipoDesgravacion(ByVal objTipoDesgravacion As CETipoDesgravacion) As Boolean
-        Try
-            Dim sql_query As String
-
-            sql_query = " INSERT INTO IC_Tipo_Desgravacion " +
-           " ([id_tipo_desgrava] " +
-           " ,[descripcion] " +
-           " ,[observaciones]) " +
-           " VALUES " +
-           " (@id_tipo_desgrava " +
-           " ,@descripcion " +
-           " ,@observaciones) "
-
-            Using conexion = objConeccion.Conectar
-                Dim command As SqlCommand = New SqlCommand(sql_query, conexion)
-                command.Parameters.AddWithValue("id_tipo_desgrava", objTipoDesgravacion.id_tipo_desgravacion)
-                command.Parameters.AddWithValue("descripcion", objTipoDesgravacion.descripcion)
-                command.Parameters.AddWithValue("observaciones", objTipoDesgravacion.observaciones)
-
-                conexion.Open()
-                command.ExecuteScalar()
-                Return True
-            End Using
-
-        Catch ex As Exception
-            Return False
-        Finally
-
-        End Try
-
-    End Function
-
-    'Funcion para seleccionar el tipo de desgravacion segun el id_tipoDesgravacion
-    Public Function SelectTipoDesgravacionMant(ByVal id_tipoDesgravacion As Integer) As DataTable
-        Dim sql_query As String
-        Dim dtTipoDesgravacion As New DataTable
-
-        sql_query = " Select descripcion ,observaciones " +
-            " FROM IC_Tipo_Desgravacion " +
-            " WHERE id_tipo_desgrava = @id_tipoDesgravacion "
-
-        Using cn = objConeccion.Conectar
-            Try
-
-                Dim command As SqlCommand = New SqlCommand(sql_query, cn)
-                command.Parameters.AddWithValue("id_tipoDesgravacion", id_tipoDesgravacion)
-                da = New SqlDataAdapter(command)
-
-                da.Fill(dtTipoDesgravacion)
-                cn.Close()
-
-            Catch ex As Exception
-                MsgBox("ERROR Consultar Tipo Desgravacion = " + ex.Message.ToString)
-            Finally
-                objConeccion.Conectar.Dispose()
-                cn.Dispose()
-            End Try
-
-            Return dtTipoDesgravacion
-
-        End Using
-    End Function
-
-    'Metodo para actualizar tipo de desgravacion
-    Public Function UpdateTipoDesgravacion(ByVal objTipoDesgravacion As CETipoDesgravacion) As Boolean
-        Try
-            Dim sql_query As String
-            sql_query = " UPDATE IC_Tipo_Desgravacion " +
-                " SET [descripcion] = @descripcion " +
-                " ,[observaciones] = @observaciones " +
-                " WHERE [id_tipo_desgrava] = @id_tipo_desgravacion "
-            Using conexion = objConeccion.Conectar
-                Dim command As SqlCommand = New SqlCommand(sql_query, conexion)
-                command.Parameters.AddWithValue("id_tipo_desgravacion", objTipoDesgravacion.id_tipo_desgravacion)
-                command.Parameters.AddWithValue("descripcion", objTipoDesgravacion.descripcion)
-                command.Parameters.AddWithValue("observaciones", objTipoDesgravacion.observaciones)
-                conexion.Open()
-                command.ExecuteScalar()
-                Return True
-            End Using
-
-        Catch ex As Exception
-            Return False
-        Finally
-
-        End Try
-    End Function
-
-#End Region
-
 #Region "Funciones y procedimientos para el Mantenimiento de Instrumentos"
 
     'Funcion para llenar el GridView de Instrumentos
@@ -501,6 +409,98 @@ Public Class CDInstrumentosComerciales
 
 #End Region
 
+#Region "Funciones y procedimientos para el Mantenimiento de Tipo de Desgravacion"
+    'Metodo para insertar tipo de desgravacion
+    Public Function InsertTipoDesgravacion(ByVal objTipoDesgravacion As CeTipoDesgravacion) As Boolean
+        Try
+            Dim sql_query As String
+
+            sql_query = " INSERT INTO IC_Tipo_Desgravacion " +
+           " ([id_tipo_desgrava] " +
+           " ,[descripcion] " +
+           " ,[observaciones]) " +
+           " VALUES " +
+           " (@id_tipo_desgrava " +
+           " ,@descripcion " +
+           " ,@observaciones) "
+
+            Using conexion = objConeccion.Conectar
+                Dim command As SqlCommand = New SqlCommand(sql_query, conexion)
+                command.Parameters.AddWithValue("id_tipo_desgrava", objTipoDesgravacion.id_tipo_desgravacion)
+                command.Parameters.AddWithValue("descripcion", objTipoDesgravacion.descripcion)
+                command.Parameters.AddWithValue("observaciones", objTipoDesgravacion.observaciones)
+
+                conexion.Open()
+                command.ExecuteScalar()
+                Return True
+            End Using
+
+        Catch ex As Exception
+            Return False
+        Finally
+
+        End Try
+
+    End Function
+
+    'Funcion para seleccionar el tipo de desgravacion segun el id_tipoDesgravacion
+    Public Function SelectTipoDesgravacionMant(ByVal id_tipoDesgravacion As Integer) As DataTable
+        Dim sql_query As String
+        Dim dtTipoDesgravacion As New DataTable
+
+        sql_query = " Select descripcion ,observaciones " +
+            " FROM IC_Tipo_Desgravacion " +
+            " WHERE id_tipo_desgrava = @id_tipoDesgravacion "
+
+        Using cn = objConeccion.Conectar
+            Try
+
+                Dim command As SqlCommand = New SqlCommand(sql_query, cn)
+                command.Parameters.AddWithValue("id_tipoDesgravacion", id_tipoDesgravacion)
+                da = New SqlDataAdapter(command)
+
+                da.Fill(dtTipoDesgravacion)
+                cn.Close()
+
+            Catch ex As Exception
+                MsgBox("ERROR Consultar Tipo Desgravacion = " + ex.Message.ToString)
+            Finally
+                objConeccion.Conectar.Dispose()
+                cn.Dispose()
+            End Try
+
+            Return dtTipoDesgravacion
+
+        End Using
+    End Function
+
+    'Metodo para actualizar tipo de desgravacion
+    Public Function UpdateTipoDesgravacion(ByVal objTipoDesgravacion As CeTipoDesgravacion) As Boolean
+        Try
+            Dim sql_query As String
+            sql_query = " UPDATE IC_Tipo_Desgravacion " +
+                " SET [descripcion] = @descripcion " +
+                " ,[observaciones] = @observaciones " +
+                " WHERE [id_tipo_desgrava] = @id_tipo_desgravacion "
+            Using conexion = objConeccion.Conectar
+                Dim command As SqlCommand = New SqlCommand(sql_query, conexion)
+                command.Parameters.AddWithValue("id_tipo_desgravacion", objTipoDesgravacion.id_tipo_desgravacion)
+                command.Parameters.AddWithValue("descripcion", objTipoDesgravacion.descripcion)
+                command.Parameters.AddWithValue("observaciones", objTipoDesgravacion.observaciones)
+                conexion.Open()
+                command.ExecuteScalar()
+                Return True
+            End Using
+
+        Catch ex As Exception
+            Return False
+        Finally
+
+        End Try
+    End Function
+
+#End Region
+
 #Region "Funciones y procedimientos para el Mantenimiento de Categorias de Desgravacion"
 
     'Funcion para actualizar categorias
@@ -684,7 +684,7 @@ Public Class CDInstrumentosComerciales
     End Function
 
     'Funcion para seleccionar categorias segun el id_instrumento para llenar gvCategorias
-    Public Function SelectCategoriasDesgrava(ByVal id_instrumento) As DataTable
+    Public Function SelectCategoriasDesgrava(ByVal id_instrumento As Integer) As DataTable
         Dim sql_query As String
         Dim dtCategoriaDesgrava As New DataTable
 
@@ -730,6 +730,222 @@ Public Class CDInstrumentosComerciales
             Return dtCategoriaDesgrava
 
         End Using
+    End Function
+
+#End Region
+
+#Region "Funciones y procedimentos para el Mantenimiento de Tramos de Desgravacion"
+    'Funcion para seleccionar el tramo segun el id_instrumento, id_catetoria y id_tramo
+    Public Function SelectTramoCategoriaMant(ByVal id_instrumento As Integer, ByVal id_categoria As Integer, ByVal id_tramo As Integer) As DataTable
+        Dim sql_query As String
+        Dim dtCategoriaDesgrava As New DataTable
+
+        sql_query = " SELECT " +
+            " II.nombre_instrumento, ICD.codigo_categoria, " +
+            " ICDT.id_tramo, ITD.id_tipo_desgrava, " +
+            " ICDT.periodo_corte, ICDT.factor_desgrava, " +
+            " ICDT.cantidad_cortes, ICDT.desgrava_tramo_anterior, " +
+            " ICDT.desgrava_final_tramo " +
+            " FROM " +
+            " IC_Categorias_Desgravacion_Tramos ICDT, " +
+            " IC_Instrumentos II, " +
+            " IC_Categorias_Desgravacion ICD, " +
+            " IC_Tipo_Desgravacion ITD " +
+            " WHERE " +
+            " II.id_instrumento = ICDT.id_instrumento And " +
+            " ICD.id_categoria = ICDT.id_categoria And " +
+            " ICD.id_instrumento = II.id_instrumento And " +
+            " ITD.id_tipo_desgrava = ICD.id_tipo_desgrava And " +
+            " ICDT.id_categoria = @id_categoria And " +
+            " ICDT.id_instrumento = @id_instrumento AND " +
+            " ICDT.id_tramo = @id_tramo "
+
+
+        Using cn = objConeccion.Conectar
+            Try
+
+                Dim command As SqlCommand = New SqlCommand(sql_query, cn)
+                command.Parameters.AddWithValue("id_instrumento", id_instrumento)
+                command.Parameters.AddWithValue("id_categoria", id_categoria)
+                command.Parameters.AddWithValue("id_tramo", id_tramo)
+                da = New SqlDataAdapter(command)
+
+                da.Fill(dtCategoriaDesgrava)
+                cn.Close()
+
+            Catch ex As Exception
+                MsgBox("ERROR CONSULTAR TRAMO = " + ex.Message.ToString)
+            Finally
+                objConeccion.Conectar.Dispose()
+                cn.Dispose()
+            End Try
+
+            Return dtCategoriaDesgrava
+
+        End Using
+    End Function
+
+    'Funcion para Seleccionar tramos segun el id_instrumento y id_categoria para llenar gvTramo
+    Public Function SelectTramoCategoria(ByVal id_instrumento As Integer, ByVal id_categoria As Integer) As DataTable
+        Dim sql_query As String
+        Dim dtCategoriaDesgrava As New DataTable
+
+        sql_query = " SELECT " +
+            " II.sigla, ICD.codigo_categoria, " +
+            " ICDT.id_tramo, ITD.descripcion, " +
+            " ICDT.periodo_corte, ICDT.factor_desgrava, " +
+            " icdt.activo, ICDT.cantidad_cortes " +
+            " FROM " +
+            " IC_Categorias_Desgravacion_Tramos ICDT, " +
+            " IC_Instrumentos II, " +
+            " IC_Categorias_Desgravacion ICD, " +
+            " IC_Tipo_Desgravacion ITD " +
+            " WHERE " +
+            " II.id_instrumento = ICDT.id_instrumento And " +
+            " ICD.id_categoria = ICDT.id_categoria And " +
+            " ICD.id_instrumento = II.id_instrumento And " +
+            " ITD.id_tipo_desgrava = ICD.id_tipo_desgrava And " +
+            " ICDT.id_categoria = @id_categoria And " +
+            " ICDT.id_instrumento = @id_instrumento "
+
+
+        Using cn = objConeccion.Conectar
+            Try
+
+                Dim command As SqlCommand = New SqlCommand(sql_query, cn)
+                command.Parameters.AddWithValue("id_instrumento", id_instrumento)
+                command.Parameters.AddWithValue("id_categoria", id_categoria)
+                da = New SqlDataAdapter(command)
+
+                da.Fill(dtCategoriaDesgrava)
+                cn.Close()
+
+            Catch ex As Exception
+                MsgBox("ERROR CONSULTAR TRAMOS = " + ex.Message.ToString)
+            Finally
+                objConeccion.Conectar.Dispose()
+                cn.Dispose()
+            End Try
+
+            Return dtCategoriaDesgrava
+
+        End Using
+    End Function
+
+#End Region
+
+#Region "Funciones y procedimientos para el Mantenimiento de Tipo de Periodo de corte"
+    'Funcion para seleccionar listado del combo tipo de periodo
+    Public Function SelectTipoPeriodo() As DataSet
+        Try
+            Dim sql_string As String
+
+            sql_string = " SELECT id_tipo_periodo, descripcion, observaciones " +
+                " from IC_Tipo_Periodo_Corte "
+
+            Using cn = objConeccion.Conectar
+                Dim command As SqlCommand = New SqlCommand(sql_string, cn)
+                da = New SqlDataAdapter(command)
+                da.Fill(ds, "TimpoIns")
+            End Using
+
+        Catch ex As Exception
+            MsgBox("ERROR SelectTipoPeriodo = " + ex.Message.ToString)
+        Finally
+
+        End Try
+
+        Return ds
+
+    End Function
+
+    'Metodo para insertar tipo de periodo
+    Public Function InsertTipoPeriodo(ByVal objTipoPeriodo As CETipoPeriodo) As Boolean
+        Try
+            Dim sql_query As String
+
+            sql_query = " INSERT INTO IC_Tipo_Periodo_Corte " +
+           " ([id_tipo_periodo] " +
+           " ,[descripcion] " +
+           " ,[observaciones]) " +
+           " VALUES " +
+           " (@id_tipo_periodo " +
+           " ,@descripcion " +
+           " ,@observaciones) "
+
+            Using conexion = objConeccion.Conectar
+                Dim command As SqlCommand = New SqlCommand(sql_query, conexion)
+                command.Parameters.AddWithValue("id_tipo_periodo", objTipoPeriodo.id_tipo_periodo)
+                command.Parameters.AddWithValue("descripcion", objTipoPeriodo.descripcion)
+                command.Parameters.AddWithValue("observaciones", objTipoPeriodo.observaciones)
+
+                conexion.Open()
+                command.ExecuteScalar()
+                Return True
+            End Using
+
+        Catch ex As Exception
+            Return False
+        Finally
+
+        End Try
+
+    End Function
+
+    'Funcion para seleccionar el tipo de periodo segun el id_tipoPeriodo
+    Public Function SelectTipoPeriodoMant(ByVal id_tipoPeriodo As Integer) As DataTable
+        Dim sql_query As String
+        Dim dtTipoPeriodo As New DataTable
+
+        sql_query = " Select descripcion ,observaciones " +
+            " FROM IC_Tipo_Periodo_Corte " +
+            " WHERE id_tipo_periodo = @id_tipoPeriodo "
+
+        Using cn = objConeccion.Conectar
+            Try
+
+                Dim command As SqlCommand = New SqlCommand(sql_query, cn)
+                command.Parameters.AddWithValue("id_tipoPeriodo", id_tipoPeriodo)
+                da = New SqlDataAdapter(command)
+
+                da.Fill(dtTipoPeriodo)
+                cn.Close()
+
+            Catch ex As Exception
+                MsgBox("ERROR CONSULTAR TIPO PERIODO = " + ex.Message.ToString)
+            Finally
+                objConeccion.Conectar.Dispose()
+                cn.Dispose()
+            End Try
+
+            Return dtTipoPeriodo
+
+        End Using
+    End Function
+
+    'Metodo para actualizar tipo de periodo
+    Public Function UpdateTipoPeriodo(ByVal objTipoPeriodo As CETipoPeriodo) As Boolean
+        Try
+            Dim sql_query As String
+            sql_query = " UPDATE IC_Tipo_Periodo_Corte " +
+                " SET [descripcion] = @descripcion " +
+                " ,[observaciones] = @observaciones " +
+                " WHERE [id_tipo_periodo] = @id_tipo_periodo "
+            Using conexion = objConeccion.Conectar
+                Dim command As SqlCommand = New SqlCommand(sql_query, conexion)
+                command.Parameters.AddWithValue("id_tipo_periodo", objTipoPeriodo.id_tipo_periodo)
+                command.Parameters.AddWithValue("descripcion", objTipoPeriodo.descripcion)
+                command.Parameters.AddWithValue("observaciones", objTipoPeriodo.observaciones)
+                conexion.Open()
+                command.ExecuteScalar()
+                Return True
+            End Using
+
+        Catch ex As Exception
+            Return False
+        Finally
+
+        End Try
     End Function
 
 #End Region

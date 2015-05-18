@@ -341,3 +341,29 @@ GO
 
 SET ANSI_PADDING OFF
 GO
+
+/****** Object:  Table [dbo].[IC_Tipo_Periodo_Corte]    Script Date: 05/17/2015 20:59:52 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+SET ANSI_PADDING ON
+GO
+
+CREATE TABLE [dbo].[IC_Tipo_Periodo_Corte](
+	[id_tipo_periodo] [int] NOT NULL,
+	[descripcion] [varchar](100) NOT NULL,
+	[observaciones] [varchar](300) NOT NULL,
+ CONSTRAINT [PK_IC_Tipo_Periodo_Corte] PRIMARY KEY CLUSTERED 
+(
+	[id_tipo_periodo] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO
+

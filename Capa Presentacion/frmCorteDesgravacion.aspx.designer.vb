@@ -23,6 +23,15 @@ Partial Public Class frmCorteDesgravacion
     Protected WithEvents lkBtn_Configurar As Global.System.Web.UI.WebControls.LinkButton
 
     '''<summary>
+    '''Control lkBtn_Hidden_Config.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents lkBtn_Hidden_Config As Global.System.Web.UI.WebControls.LinkButton
+
+    '''<summary>
     '''Control lkBtt_Configurar_ModalPopupExtender.
     '''</summary>
     '''<remarks>
@@ -30,15 +39,6 @@ Partial Public Class frmCorteDesgravacion
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
     Protected WithEvents lkBtt_Configurar_ModalPopupExtender As Global.AjaxControlToolkit.ModalPopupExtender
-
-    '''<summary>
-    '''Control lkbtn_editar.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents lkbtn_editar As Global.System.Web.UI.WebControls.LinkButton
 
     '''<summary>
     '''Control lkbtn_regresar.
@@ -246,4 +246,13 @@ Partial Public Class frmCorteDesgravacion
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
     Protected WithEvents hfIdCategoria As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''Control hfIdTramo.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents hfIdTramo As Global.System.Web.UI.WebControls.HiddenField
 End Class

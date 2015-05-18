@@ -109,6 +109,7 @@
     <Content Include="frmCorteDesgravacion.aspx" />
     <Content Include="frmTipoDesgravacion.aspx" />
     <Content Include="frmTipoInstrumento.aspx" />
+    <Content Include="frmTipoPeriodo.aspx" />
     <Content Include="frmTipoRelacionInstrumento.aspx" />
     <Content Include="frmTratadosyAcuerdos.aspx" />
     <Content Include="Images\ayuda.png" />
@@ -149,6 +150,13 @@
     <Compile Include="frmTipoInstrumento.aspx.vb">
       <DependentUpon>frmTipoInstrumento.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="frmTipoPeriodo.aspx.designer.vb">
+      <DependentUpon>frmTipoPeriodo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="frmTipoPeriodo.aspx.vb">
+      <DependentUpon>frmTipoPeriodo.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="frmTipoRelacionInstrumento.aspx.designer.vb">
       <DependentUpon>frmTipoRelacionInstrumento.aspx</DependentUpon>

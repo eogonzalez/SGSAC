@@ -30,17 +30,15 @@
             <asp:LinkButton ID="lkBtn_Configurar" runat="server" CssClass="btn btn-primary">
                 <i aria-hidden="true" class="glyphicon glyphicon-cog"></i>
                  Configurar
+            </asp:LinkButton> 
+            <asp:LinkButton ID="lkBtn_Hidden_Config" runat="server" style="display:hidden">
+
             </asp:LinkButton>
 
             <cc1:ModalPopupExtender ID="lkBtt_Configurar_ModalPopupExtender" BackgroundCssClass="modalBackground"
                 runat="server" BehaviorID="lkBtt_Configurar_ModalPopupExtender" PopupControlID="pnlTramos"
-                DynamicServicePath="" TargetControlID="lkBtn_Configurar">
+                DynamicServicePath="" TargetControlID="lkBtn_Hidden_Config">
             </cc1:ModalPopupExtender>
-
-            <asp:LinkButton ID="lkbtn_editar" runat="server" CssClass="btn btn-primary">
-                <i aria-hidden="true" class="glyphicon glyphicon-edit"></i>
-                 Editar
-            </asp:LinkButton>
 
             <asp:LinkButton ID="lkbtn_regresar" runat="server" CssClass="btn btn-primary">
                 <i aria-hidden="true" class="glyphicon glyphicon-arrow-left"></i>
@@ -67,11 +65,12 @@
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:BoundField DataField="sigla" HeaderText="Sigla" />
-                    <asp:BoundField DataField="categoria" HeaderText="Categoria" />
-                    <asp:BoundField DataField="tipo_desgravacion" HeaderText="Tipo Desgravacion" />
-                    <asp:BoundField DataField="periodo" HeaderText="Periodo" />
+                    <asp:BoundField DataField="codigo_categoria" HeaderText="Categoria" />
+                    <asp:BoundField DataField="id_tramo" HeaderText="Orden de Ejecutar" />
+                    <asp:BoundField DataField="descripcion" HeaderText="Tipo Desgravacion" />
+                    <asp:BoundField DataField="periodo_corte" HeaderText="Periodo" />
                     <asp:BoundField DataField="activo" HeaderText="Activo" />
-                    <asp:BoundField DataField="cantidad_tramos" HeaderText="Cantidad Tramos" />
+                    <asp:BoundField DataField="factor_desgrava" HeaderText="Cantidad Tramos" />
                     <asp:BoundField DataField="cantidad_cortes" HeaderText="Cantidad de Cortes" />
                 </Columns>
             </asp:GridView>
@@ -100,7 +99,7 @@
                         <asp:TextBox ID="txtCategoria" type="text" CssClass="form-control" runat="server"></asp:TextBox>
                     </div>
 
-                    <asp:Label ID="lbl_id_etapa" CssClass="control-label col-xs-3" Enabled="false" runat="server" Text="Id de Etapa: "></asp:Label>
+                    <asp:Label ID="lbl_id_etapa" CssClass="control-label col-xs-3" Enabled="false" runat="server" Text="Orden de Etapa: "></asp:Label>
                     <div class="col-xs-3">
                         <asp:TextBox ID="txtIdEtapa" type="text" CssClass="form-control" runat="server"></asp:TextBox>
                     </div>
@@ -179,5 +178,6 @@
     <div>
         <asp:HiddenField ID="hfIdInstrumento" runat="server" />
         <asp:HiddenField ID="hfIdCategoria" runat="server" />
+        <asp:HiddenField ID="hfIdTramo" runat="server" />
     </div>
 </asp:Content>

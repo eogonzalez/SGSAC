@@ -121,4 +121,42 @@ Public Class CNInstrumentosComerciales
         Return objCDInstrumentos.SelectCategoriasDesgrava(id_instrumento)
     End Function
 #End Region
+
+#Region "Funciones y procedimientos para el Mantenimientos de tramos de categorias"
+
+    'Funcion para seleccionar el tramo segun el id_instrumento, id_catetoria y id_tramo
+    Public Function SelectTramoCategoriaMant(ByVal id_instrumento As Integer, ByVal id_categoria As Integer, ByVal id_tramo As Integer) As DataTable
+        Return objCDInstrumentos.SelectTramoCategoriaMant(id_instrumento, id_categoria, id_tramo)
+    End Function
+
+    'Funciones que selecciona los tramos de la categoria
+    Public Function SelectTramoCategoria(ByVal id_instrumento As Integer, ByVal id_categoria As Integer) As DataTable
+        Return objCDInstrumentos.SelectTramoCategoria(id_instrumento, id_categoria)
+    End Function
+
+#End Region
+
+#Region "Funciones y procedimientos para el Mantenieto de Tipo de Periodo"
+
+    'Funcion para seleccionar listado del combo tipo de periodo
+    Public Function SelectTipoPeriodo() As DataSet
+        Return objCDInstrumentos.SelectTipoPeriodo()
+    End Function
+
+    'Metodo para insertar tipo de peiodo
+    Public Function InsertTipoPeriodo(ByVal objTipoPeriodo As CETipoPeriodo) As Boolean
+        Return objCDInstrumentos.InsertTipoPeriodo(objTipoPeriodo)
+    End Function
+
+    'Funcion para seleccionar tipo periodo segun el id_tipoPeriodo
+    Public Function SelectTipoPeriodoMant(ByVal id_tipoPeriodo As Integer) As DataTable
+        Return objCDInstrumentos.SelectTipoPeriodoMant(id_tipoPeriodo)
+    End Function
+
+    'Metodo para actualizar tipo de periodo
+    Public Function UpdateTipoPeriodo(ByVal objTipoPeriodo As CETipoPeriodo) As Boolean
+        Return objCDInstrumentos.UpdateTipoPeriodo(objTipoPeriodo)
+    End Function
+
+#End Region
 End Class
