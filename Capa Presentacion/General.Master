@@ -64,17 +64,17 @@
                 <td colspan="3" style="text-align: center">
                     <asp:Menu ID="MenuPrincipal" runat="server" DisappearAfter="500" Orientation="Horizontal" Font-Names="Trebuchet MS, Arial">
                         <StaticMenuItemStyle BackColor="#054795" ForeColor="White" HorizontalPadding="40" VerticalPadding="10" />
-                        <StaticHoverStyle BackColor="#0066cc" ForeColor="White" BorderColor="White" BorderStyle="Double" BorderWidth="1px" />
-                        <DynamicMenuItemStyle BackColor="RoyalBlue" ForeColor="WhiteSmoke" HorizontalPadding="5" VerticalPadding="2" />
-                        <DynamicHoverStyle BackColor="CornflowerBlue" BorderStyle="Double" BorderWidth="1px" BorderColor="White" />
+                        <StaticHoverStyle BackColor="#0066cc" />
+                        <DynamicMenuItemStyle BackColor="#054795" ForeColor="White" HorizontalPadding="40" VerticalPadding="10" />
+                        <DynamicHoverStyle BackColor="#0066cc" />
                     </asp:Menu>
                 </td>
             </tr>
         </table>
         <table style="background-color: #054795; width: 100%; text-align: center">
         </table>
-        <asp:ScriptManager ID="ToolkitScriptManager1" runat="server"></asp:ScriptManager>
-  
+        <%--<asp:ScriptManager ID="ToolkitScriptManager1" runat="server"></asp:ScriptManager>--%>
+        <asp:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server"></asp:ToolkitScriptManager>
 
         <div>
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
