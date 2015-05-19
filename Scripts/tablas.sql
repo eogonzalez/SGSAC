@@ -265,7 +265,7 @@ GO
 ALTER TABLE [dbo].[IC_Categorias_Desgravacion] CHECK CONSTRAINT [FK_IC_Categorias_Desgravacion_IC_Tipo_Desgravacion]
 GO
 
-/****** Object:  Table [dbo].[IC_Categorias_Desgravacion_Tramos]    Script Date: 04/26/2015 21:14:01 ******/
+/****** Object:  Table [dbo].[IC_Categorias_Desgravacion_Tramos]    Script Date: 05/18/2015 22:06:56 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -277,20 +277,20 @@ GO
 
 CREATE TABLE [dbo].[IC_Categorias_Desgravacion_Tramos](
 	[id_tramo] [int] NOT NULL,
-	[id_categoria] [int] NOT NULL,
 	[id_instrumento] [int] NOT NULL,
+	[id_categoria] [int] NOT NULL,
+	[id_tipo_periodo] [int] NULL,
 	[cantidad_cortes] [int] NULL,
-	[periodo_corte] [char](10) NULL,
 	[desgrava_tramo_anterior] [numeric](28, 8) NULL,
-	[desgrava_final_tramo] [numeric](28, 8) NULL,
+	[desgrava_tramo_final] [numeric](28, 8) NULL,
 	[factor_desgrava] [numeric](28, 8) NULL,
 	[cortes_ejecutados] [int] NULL,
 	[activo] [char](10) NULL,
  CONSTRAINT [PK_IC_Categorias_Desgravacion_Tramos] PRIMARY KEY CLUSTERED 
 (
 	[id_tramo] ASC,
-	[id_categoria] ASC,
-	[id_instrumento] ASC
+	[id_instrumento] ASC,
+	[id_categoria] ASC
 )WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
@@ -299,12 +299,22 @@ GO
 SET ANSI_PADDING OFF
 GO
 
-ALTER TABLE [dbo].[IC_Categorias_Desgravacion_Tramos]  WITH CHECK ADD  CONSTRAINT [FK_IC_Categorias_Desgravacion_Tramos_IC_Categorias_Desgravacion] FOREIGN KEY([id_categoria], [id_instrumento])
+ALTER TABLE [dbo].[IC_Categorias_Desgravacion_Tramos]  WITH CHECK ADD  CONSTRAINT [FK_IC_Categorias_Desgravacion_Tramos_IC_Categorias_Desgravacion1] FOREIGN KEY([id_categoria], [id_instrumento])
 REFERENCES [dbo].[IC_Categorias_Desgravacion] ([id_categoria], [id_instrumento])
 GO
 
-ALTER TABLE [dbo].[IC_Categorias_Desgravacion_Tramos] CHECK CONSTRAINT [FK_IC_Categorias_Desgravacion_Tramos_IC_Categorias_Desgravacion]
+ALTER TABLE [dbo].[IC_Categorias_Desgravacion_Tramos] CHECK CONSTRAINT [FK_IC_Categorias_Desgravacion_Tramos_IC_Categorias_Desgravacion1]
 GO
+
+ALTER TABLE [dbo].[IC_Categorias_Desgravacion_Tramos]  WITH CHECK ADD  CONSTRAINT [FK_IC_Categorias_Desgravacion_Tramos_IC_Tipo_Periodo_Corte1] FOREIGN KEY([id_tipo_periodo])
+REFERENCES [dbo].[IC_Tipo_Periodo_Corte] ([id_tipo_periodo])
+GO
+
+ALTER TABLE [dbo].[IC_Categorias_Desgravacion_Tramos] CHECK CONSTRAINT [FK_IC_Categorias_Desgravacion_Tramos_IC_Tipo_Periodo_Corte1]
+GO
+
+
+
 
 
 /****** Object:  Table [dbo].[G_Paises]    Script Date: 04/26/2015 21:31:16 ******/
