@@ -690,14 +690,15 @@ Public Class CDInstrumentosComerciales
 
         sql_query = " SELECT " +
             " ICCD.id_categoria, ICI.sigla AS SIGLA, ICCD.codigo_categoria AS CATEGORIA, " +
-            " ICTD.descripcion AS TIPO_DESGRAVACION, ICCDT.periodo_corte AS PERIODO, " +
+            " ICTD.descripcion AS TIPO_DESGRAVACION, " +
             " ICCDT.activo AS ACTIVO, ICCD.cantidad_tramos AS CANTIDAD_TRAMOS, " +
             " SUM(ICCDT.cantidad_cortes) AS CANTIDAD_CORTES " +
             " FROM " +
             " IC_Instrumentos ICI, " +
             " IC_Tipo_Desgravacion ICTD, " +
             " IC_Categorias_Desgravacion ICCD, " +
-            " IC_Categorias_Desgravacion_Tramos ICCDT " +
+            " IC_Categorias_Desgravacion_Tramos ICCDT, " +
+            " IC_Tipo_Periodo_Corte ICTPC " +
             " WHERE " +
             " ICI.id_instrumento = ICCD.id_instrumento And " +
             " ICCD.id_instrumento = ICCDT.id_instrumento And " +
@@ -706,7 +707,7 @@ Public Class CDInstrumentosComerciales
             " ICI.id_instrumento = @id_instrumento " +
             " GROUP BY " +
             " ICCD.id_categoria, ICI.sigla, ICCD.codigo_categoria , " +
-            " ICTD.descripcion , ICCDT.periodo_corte , " +
+            " ICTD.descripcion , " +
             " ICCDT.activo , ICCD.cantidad_tramos ," +
             " ICCDT.cantidad_cortes "
 
@@ -721,7 +722,7 @@ Public Class CDInstrumentosComerciales
                 cn.Close()
 
             Catch ex As Exception
-                MsgBox("ERROR CONSULTARUSUARIO = " + ex.Message.ToString)
+                MsgBox("ERROR CONSULTAR Categorias Desgravacion = " + ex.Message.ToString)
             Finally
                 objConeccion.Conectar.Dispose()
                 cn.Dispose()
@@ -743,23 +744,34 @@ Public Class CDInstrumentosComerciales
         sql_query = " SELECT " +
             " II.nombre_instrumento, ICD.codigo_categoria, " +
             " ICDT.id_tramo, ITD.id_tipo_desgrava, " +
-            " ICDT.periodo_corte, ICDT.factor_desgrava, " +
+            " ITPC.descripcion AS periodo_corte , ICDT.factor_desgrava, " +
             " ICDT.cantidad_cortes, ICDT.desgrava_tramo_anterior, " +
-            " ICDT.desgrava_final_tramo " +
+            " ICDT.desgrava_tramo_final " +
             " FROM " +
-            " IC_Categorias_Desgravacion_Tramos ICDT, " +
-            " IC_Instrumentos II, " +
-            " IC_Categorias_Desgravacion ICD, " +
-            " IC_Tipo_Desgravacion ITD " +
+            " IC_Categorias_Desgravacion_Tramos ICDT" +
+            " inner Join" +
+            " IC_Instrumentos II" +
+            " on" +
+            " II.id_instrumento = ICDT.id_instrumento" +
+            " inner Join" +
+            " IC_Categorias_Desgravacion ICD" +
+            " on" +
+            " ICD.id_categoria = ICDT.id_categoria And" +
+            " ICD.id_instrumento = II.id_instrumento" +
+            " inner Join" +
+            " IC_Tipo_Desgravacion ITD" +
+            " on " +
+            " ITD.id_tipo_desgrava = ICD.id_tipo_desgrava" +
+            " Left Join" +
+            " IC_Tipo_Periodo_Corte ITPC" +
+            " on" +
+            " ITPC.id_tipo_periodo = icdt.id_tipo_periodo " +
             " WHERE " +
-            " II.id_instrumento = ICDT.id_instrumento And " +
-            " ICD.id_categoria = ICDT.id_categoria And " +
-            " ICD.id_instrumento = II.id_instrumento And " +
-            " ITD.id_tipo_desgrava = ICD.id_tipo_desgrava And " +
             " ICDT.id_categoria = @id_categoria And " +
             " ICDT.id_instrumento = @id_instrumento AND " +
             " ICDT.id_tramo = @id_tramo "
 
+ 
 
         Using cn = objConeccion.Conectar
             Try
@@ -793,18 +805,29 @@ Public Class CDInstrumentosComerciales
         sql_query = " SELECT " +
             " II.sigla, ICD.codigo_categoria, " +
             " ICDT.id_tramo, ITD.descripcion, " +
-            " ICDT.periodo_corte, ICDT.factor_desgrava, " +
+            " ITPC.descripcion as periodo_corte, ICDT.factor_desgrava, " +
             " icdt.activo, ICDT.cantidad_cortes " +
             " FROM " +
-            " IC_Categorias_Desgravacion_Tramos ICDT, " +
-            " IC_Instrumentos II, " +
-            " IC_Categorias_Desgravacion ICD, " +
-            " IC_Tipo_Desgravacion ITD " +
-            " WHERE " +
-            " II.id_instrumento = ICDT.id_instrumento And " +
+            " IC_Categorias_Desgravacion_Tramos ICDT " +
+            " inner Join " +
+            " IC_Instrumentos II " +
+            " on " +
+            " ICDT.id_instrumento = II.id_instrumento " +
+            " inner Join " +
+            " IC_Categorias_Desgravacion ICD " +
+            " on " +
             " ICD.id_categoria = ICDT.id_categoria And " +
-            " ICD.id_instrumento = II.id_instrumento And " +
-            " ITD.id_tipo_desgrava = ICD.id_tipo_desgrava And " +
+            " ICD.id_categoria = ICDT.id_categoria And " +
+            " ICD.id_categoria = ICDT.id_categoria " +
+            " inner Join " +
+            " IC_Tipo_Desgravacion ITD " +
+            " on " +
+            " ITD.id_tipo_desgrava = ICD.id_tipo_desgrava " +
+            " Left Join " +
+            " IC_Tipo_Periodo_Corte ITPC" +
+            " on " +
+            " ITPC.id_tipo_periodo = ICDT.id_tipo_periodo" +
+            " WHERE " +
             " ICDT.id_categoria = @id_categoria And " +
             " ICDT.id_instrumento = @id_instrumento "
 

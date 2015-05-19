@@ -13,6 +13,7 @@ Public Class frmCorteDesgravacion
 
             LlenargvTramos()
             LlenarTipoDesgravacion()
+            LlenarTipoPeriodo()
 
         End If
     End Sub
@@ -59,10 +60,23 @@ Public Class frmCorteDesgravacion
                 txt_cantidad_cortes.Text = datosTramo.Rows(0)("cantidad_cortes").ToString
                 'ddl_tipo_periodo_corte.DataValueField = datosTramo.Rows(0)("id_tipo_periodo")
                 txt_porcen_desgrava_anterior.Text = datosTramo.Rows(0)("desgrava_tramo_anterior").ToString
-                txt_porcen_desgrava_final.Text = datosTramo.Rows(0)("desgrava_final_tramo").ToString
+                txt_porcen_desgrava_final.Text = datosTramo.Rows(0)("desgrava_tramo_final").ToString
                 txt_factor_desgravacion.Text = datosTramo.Rows(0)("factor_desgrava").ToString
             End If
         End If
+    End Sub
+
+    'Procedimiento para llenar el combo de tipo de periodo
+    Sub LlenarTipoPeriodo()
+        Dim objCNTramo As New CNInstrumentosComerciales
+
+        With objCNTramo.SelectTipoPeriodo
+            ddl_tipo_periodo_corte.DataTextField = .Tables(0).Columns("descripcion").ToString()
+            ddl_tipo_periodo_corte.DataValueField = .Tables(0).Columns("id_tipo_periodo").ToString()
+            ddl_tipo_periodo_corte.DataSource = .Tables(0)
+            ddl_tipo_periodo_corte.DataBind()
+        End With
+
     End Sub
 
     'Procedimiento para llenar el combo de tipo de desgravacion
