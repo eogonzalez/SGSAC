@@ -70,7 +70,7 @@
                     <asp:BoundField DataField="sigla" HeaderText="Sigla" />
                     <asp:BoundField DataField="categoria" HeaderText="Categoria" />
                     <asp:BoundField DataField="tipo_desgravacion" HeaderText="Tipo Desgravacion" />
-                    <asp:BoundField DataField="periodo" HeaderText="Periodo" />
+                    <%--<asp:BoundField DataField="periodo" HeaderText="Periodo" />--%>
                     <asp:BoundField DataField="activo" HeaderText="Activo" />
                     <asp:BoundField DataField="cantidad_tramos" HeaderText="Cantidad Tramos" />
                     <asp:BoundField DataField="cantidad_cortes" HeaderText=" Cantidad de Cortes" />

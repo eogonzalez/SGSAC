@@ -43,23 +43,23 @@
                 <br />
 
                 <div class="btn-group pull-right" role="group">
-                    <asp:LinkButton ID="lkBtt_nuevo" runat="server" CssClass="btn btn-primary"> <i aria-hidden="true" class="glyphicon glyphicon-pencil"></i>Nuevo </asp:LinkButton>
+                    <asp:LinkButton ID="lkBtt_nuevo" runat="server" CssClass="btn btn-primary"> <i aria-hidden="true" class="glyphicon glyphicon-pencil"></i> Nuevo </asp:LinkButton>
 
                     <cc1:ModalPopupExtender ID="lkBtt_nuevo_ModalPopupExtender" BackgroundCssClass="modalBackground"
                         runat="server" BehaviorID="lkBtt_nuevo_ModalPopupExtender" PopupControlID="pnlNuevoInstrumento"
                         DynamicServicePath="" TargetControlID="lkBtt_nuevo">
                     </cc1:ModalPopupExtender>
 
-                    <asp:LinkButton ID="lkBtt_editar" runat="server" CssClass="btn btn-primary"> <i aria-hidden="true" class="glyphicon glyphicon-edit"></i>Editar </asp:LinkButton>
+                    <asp:LinkButton ID="lkBtt_editar" runat="server" CssClass="btn btn-primary"> <i aria-hidden="true" class="glyphicon glyphicon-edit"></i> Editar </asp:LinkButton>
 
                     <asp:LinkButton ID="lkBtt_categorias" runat="server" CssClass="btn btn-primary"> 
                         <i aria-hidden="true" class="glyphicon glyphicon-random"></i> 
-                        Categorias 
+                         Categorias 
                     </asp:LinkButton>
 
-                    <asp:LinkButton ID="lkBtt_paises" runat="server" CssClass="btn btn-primary"> <i aria-hidden="true" class="glyphicon glyphicon-globe"></i>Paises </asp:LinkButton>
+                    <asp:LinkButton ID="lkBtt_paises" runat="server" CssClass="btn btn-primary"> <i aria-hidden="true" class="glyphicon glyphicon-globe"></i> Paises </asp:LinkButton>
 
-                    <asp:LinkButton ID="LinkButton5" runat="server" CssClass="btn btn-primary"> <i aria-hidden="true" class="glyphicon glyphicon-question-sign"></i>Ayuda </asp:LinkButton>
+                    <asp:LinkButton ID="LinkButton5" runat="server" CssClass="btn btn-primary"> <i aria-hidden="true" class="glyphicon glyphicon-indent-left"></i> Asignar Categorias </asp:LinkButton>
 
                 </div>
 

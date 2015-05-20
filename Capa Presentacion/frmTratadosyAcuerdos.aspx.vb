@@ -75,6 +75,10 @@ Public Class frmTratadosyAcuerdos
 
     End Sub
 
+    Protected Sub lkBtt_paises_Click(sender As Object, e As EventArgs) Handles lkBtt_paises.Click
+
+    End Sub
+
 #End Region
 
 #Region "Funciones para capturar valores del formulario"
@@ -292,6 +296,7 @@ Public Class frmTratadosyAcuerdos
     End Function
 
 #End Region
+
 
 
 End Class
