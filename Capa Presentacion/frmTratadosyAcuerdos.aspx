@@ -36,8 +36,7 @@
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <asp:UpdatePanel ID="updpnlGeneral" runat="server">
-        <ContentTemplate>
+
             <div class="panel panel-primary">
                 <div class="panel-heading">Instrumentos Comerciales</div>
                 <br />
@@ -180,6 +179,5 @@
             <div>
                 <asp:HiddenField ID="hfIdInstrumento" runat="server" />
             </div>
-        </ContentTemplate>
-    </asp:UpdatePanel>
+
 </asp:Content>

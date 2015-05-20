@@ -124,6 +124,10 @@ Public Class CNInstrumentosComerciales
 
 #Region "Funciones y procedimientos para el Mantenimientos de tramos de categorias"
 
+    Public Function UpdateTramoCategoriaMant(ByVal ObjCETramo As CECorteDesgravacion) As Boolean
+        Return objCDInstrumentos.UpdateTramoCategoriaMant(ObjCETramo)
+    End Function
+
     'Funcion para seleccionar el tramo segun el id_instrumento, id_catetoria y id_tramo
     Public Function SelectTramoCategoriaMant(ByVal id_instrumento As Integer, ByVal id_categoria As Integer, ByVal id_tramo As Integer) As DataTable
         Return objCDInstrumentos.SelectTramoCategoriaMant(id_instrumento, id_categoria, id_tramo)

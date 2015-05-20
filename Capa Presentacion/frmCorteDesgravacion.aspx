@@ -23,12 +23,13 @@
             var txtFin = document.getElementById("ContentPlaceHolder1" + "_txt_porcen_desgrava_final").value;
             var txtCantCortes = document.getElementById("ContentPlaceHolder1" + "_txt_cantidad_cortes").value;
 
-            if (txtAnt == "" && txtFin == "" && txtCantCortes == "") {
+            if (txtAnt == null || txtFin == "" && txtCantCortes == "") {
 
             }
             else {
                 var factor = (parseFloat(txtFin) - parseFloat(txtAnt)) / parseInt(txtCantCortes);
-                document.getElementById("ContentPlaceHolder1" + "_txt_factor_desgravacion").value = factor.toString();
+                document.getElementById("ContentPlaceHolder1" + "_txt_factor_desgravacion").value = factor;
+                document.getElementById("ContentPlaceHolder1" + "_hfFactor").value = factor;
             }
         }
     </script>
@@ -84,7 +85,7 @@
                     <asp:BoundField DataField="descripcion" HeaderText="Tipo Desgravacion" />
                     <asp:BoundField DataField="periodo_corte" HeaderText="Periodo" />
                     <asp:BoundField DataField="activo" HeaderText="Activo" />
-                    <asp:BoundField DataField="factor_desgrava" HeaderText="Cantidad Tramos" />
+                    <asp:BoundField DataField="factor_desgrava" HeaderText="Factor de Desgravacion" />
                     <asp:BoundField DataField="cantidad_cortes" HeaderText="Cantidad de Cortes" />
                 </Columns>
             </asp:GridView>
@@ -169,7 +170,7 @@
                     <div class="form-group">
                         <asp:Label ID="lbl_factor_desgravacion" CssClass="control-label col-xs-3" Enabled="false" runat="server" Text="Factor de Desgravación"></asp:Label>
                         <div class="col-xs-3">
-                            <asp:TextBox ID="txt_factor_desgravacion" CssClass="form-control" runat="server" disabled></asp:TextBox>
+                            <asp:textbox ID="txt_factor_desgravacion"  CssClass="form-control" runat="server" disabled></asp:textbox>
                         </div>
                     </div>
 
@@ -193,5 +194,6 @@
         <asp:HiddenField ID="hfIdInstrumento" runat="server" />
         <asp:HiddenField ID="hfIdCategoria" runat="server" />
         <asp:HiddenField ID="hfIdTramo" runat="server" />
+        <asp:HiddenField ID="hfFactor" runat="server" />
     </div>
 </asp:Content>

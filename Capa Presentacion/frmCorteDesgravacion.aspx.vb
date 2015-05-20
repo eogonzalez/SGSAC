@@ -33,13 +33,68 @@ Public Class frmCorteDesgravacion
         End If
     End Sub
 
+    Protected Sub btn_genera_cortes_Click(sender As Object, e As EventArgs) Handles btn_genera_cortes.Click
+        If ConfigurarTramo(hfIdInstrumento.Value, hfIdCategoria.Value, hfIdTramo.Value) Then
+            Mensaje("Tramo configurado con éxito.")
+            LlenargvTramos()
+            lkBtn_Configurar.CommandName = ""
+            'LimpiarMnatenimientoTramo()
+        Else
+            Mensaje("Error al configurar Tramo.")
+            lkBtt_Configurar_ModalPopupExtender.Show()
+        End If
+    End Sub
+
+    Protected Sub lkbtn_regresar_Click(sender As Object, e As EventArgs) Handles lkbtn_regresar.Click
+        Response.Redirect("~/frmCategoriasDesgravacion.aspx?id_inst=" + hfIdInstrumento.Value)
+    End Sub
+
 #End Region
 
 #Region "Funciones para obtener valores de los controles"
 
+    Function getCantidadTramos() As Integer
+        Return Convert.ToInt16(txt_cantidad_cortes.Text)
+    End Function
+
+    Function getTipoPeriodo() As Integer
+        Return Convert.ToInt32(ddl_tipo_periodo_corte.SelectedValue)
+    End Function
+
+    Function getPeriodoAnterior() As Decimal
+        Return Convert.ToDecimal(txt_porcen_desgrava_anterior.Text)
+    End Function
+
+    Function getPeriodoFinal() As Decimal
+        Return Convert.ToDecimal(txt_porcen_desgrava_final.Text)
+    End Function
+
+    Function getFactorDesgrava() As Decimal
+        Return Convert.ToDecimal(hfFactor.Value)
+    End Function
+
 #End Region
 
 #Region "Mis Funciones"
+    'Funcion para actualizar el tramo
+    Protected Function ConfigurarTramo(ByVal id_instrumento As Integer, ByVal id_categoria As Integer, ByVal id_tramos As Integer) As Boolean
+        'Declaro las variables de la capa de datos y entidad
+        Dim CEObjeto As New CECorteDesgravacion
+        Dim CNTramo As New CNInstrumentosComerciales
+
+        'Obtengo los valores de los controles
+        CEObjeto.id_instrumento = id_instrumento
+        CEObjeto.id_categoria = id_categoria
+        CEObjeto.id_tramos = id_tramos
+        CEObjeto.id_tipo_periodo = getTipoPeriodo()
+        CEObjeto.cantidad_cortes = getCantidadTramos()
+        CEObjeto.porcen_periodo_anterior = getPeriodoAnterior()
+        CEObjeto.porcen_periodo_final = getPeriodoFinal()
+        CEObjeto.factor_desgrava = getFactorDesgrava()
+
+        Return CNTramo.UpdateTramoCategoriaMant(CEObjeto)
+    End Function
+
 
     'Funcion para llenar los controles con el id_instrumento, id_categoria y id_tramo
     Sub LlenarTramoCategoriaMant(ByVal accion As String, ByVal id_instrumento As Integer, ByVal id_categoria As Integer, ByVal id_tramo As Integer)
@@ -58,10 +113,15 @@ Public Class frmCorteDesgravacion
                 ddl_tipo_desgravacion.DataValueField = datosTramo.Rows(0)("id_tipo_desgrava")
                 txtIdEtapa.Text = datosTramo.Rows(0)("id_tramo").ToString
                 txt_cantidad_cortes.Text = datosTramo.Rows(0)("cantidad_cortes").ToString
-                'ddl_tipo_periodo_corte.DataValueField = datosTramo.Rows(0)("id_tipo_periodo")
-                txt_porcen_desgrava_anterior.Text = datosTramo.Rows(0)("desgrava_tramo_anterior").ToString
-                txt_porcen_desgrava_final.Text = datosTramo.Rows(0)("desgrava_tramo_final").ToString
-                txt_factor_desgravacion.Text = datosTramo.Rows(0)("factor_desgrava").ToString
+
+                If Not (datosTramo.Rows(0)("id_tipo_periodo").ToString = Nothing) Then
+                    ddl_tipo_periodo_corte.DataValueField = datosTramo.Rows(0)("id_tipo_periodo")
+                End If
+
+                txt_porcen_desgrava_anterior.Text = datosTramo.Rows(0)("desgrava_tramo_anterior").ToString("##,##0.00")
+                txt_porcen_desgrava_final.Text = datosTramo.Rows(0)("desgrava_tramo_final").ToString("##,##0.00")
+                txt_factor_desgravacion.Text = datosTramo.Rows(0)("factor_desgrava").ToString("##,##0.00")
+                hfFactor.Value = datosTramo.Rows(0)("factor_desgrava").ToString
             End If
         End If
     End Sub
@@ -127,5 +187,7 @@ Public Class frmCorteDesgravacion
     End Sub
 
 #End Region
+
+
 
 End Class

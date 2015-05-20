@@ -73,8 +73,8 @@
         </table>
         <table style="background-color: #054795; width: 100%; text-align: center">
         </table>
-        <%--<asp:ScriptManager ID="ToolkitScriptManager1" runat="server"></asp:ScriptManager>--%>
-        <asp:ToolkitScriptManager runat="server"></asp:ToolkitScriptManager>
+        <asp:ScriptManager ID="ToolkitScriptManager1" runat="server" EnableScriptGlobalization="True"></asp:ScriptManager>
+        <%--<asp:ToolkitScriptManager runat="server"></asp:ToolkitScriptManager>--%>
 
         <div>
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">

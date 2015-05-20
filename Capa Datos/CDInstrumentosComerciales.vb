@@ -736,6 +736,47 @@ Public Class CDInstrumentosComerciales
 #End Region
 
 #Region "Funciones y procedimentos para el Mantenimiento de Tramos de Desgravacion"
+    'Funcion para actualizar tramos
+    Public Function UpdateTramoCategoriaMant(ByVal ObjCETramo As CECorteDesgravacion) As Boolean
+        Try
+            Dim sql_query As String
+            sql_query = "UPDATE IC_Categorias_Desgravacion_Tramos " +
+                " SET " +
+                " [id_tipo_periodo] = @id_tipo_periodo " +
+                " ,[cantidad_cortes] = @cantidad_cortes " +
+                " ,[desgrava_tramo_anterior] = @desgrava_tramo_anterior " +
+                " ,[desgrava_tramo_final] = @desgrava_tramo_final " +
+                " ,[factor_desgrava] = @factor_desgrava " +
+                " ,[activo] = 'S' " +
+                " WHERE " +
+                " id_tramo = @id_tramo AND " +
+                " id_instrumento = @id_instrumento AND " +
+                " id_categoria = @id_categoria "
+
+
+            Using conexion = objConeccion.Conectar
+                Dim command As SqlCommand = New SqlCommand(sql_query, conexion)
+                command.Parameters.AddWithValue("id_categoria", ObjCETramo.id_categoria)
+                command.Parameters.AddWithValue("id_instrumento", ObjCETramo.id_instrumento)
+                command.Parameters.AddWithValue("id_tramo", ObjCETramo.id_tramos)
+                command.Parameters.AddWithValue("id_tipo_periodo", ObjCETramo.id_tipo_periodo)
+                command.Parameters.AddWithValue("cantidad_cortes", ObjCETramo.cantidad_cortes)
+                command.Parameters.AddWithValue("desgrava_tramo_anterior", ObjCETramo.porcen_periodo_anterior)
+                command.Parameters.AddWithValue("desgrava_tramo_final", ObjCETramo.porcen_periodo_final)
+                command.Parameters.AddWithValue("factor_desgrava", ObjCETramo.factor_desgrava)
+
+                conexion.Open()
+                command.ExecuteScalar()
+                Return True
+            End Using
+
+        Catch ex As Exception
+            Return False
+        Finally
+
+        End Try
+    End Function
+
     'Funcion para seleccionar el tramo segun el id_instrumento, id_catetoria y id_tramo
     Public Function SelectTramoCategoriaMant(ByVal id_instrumento As Integer, ByVal id_categoria As Integer, ByVal id_tramo As Integer) As DataTable
         Dim sql_query As String
@@ -744,7 +785,7 @@ Public Class CDInstrumentosComerciales
         sql_query = " SELECT " +
             " II.nombre_instrumento, ICD.codigo_categoria, " +
             " ICDT.id_tramo, ITD.id_tipo_desgrava, " +
-            " ITPC.descripcion AS periodo_corte , ICDT.factor_desgrava, " +
+            " ICDT.id_tipo_periodo , ICDT.factor_desgrava, " +
             " ICDT.cantidad_cortes, ICDT.desgrava_tramo_anterior, " +
             " ICDT.desgrava_tramo_final " +
             " FROM " +
@@ -771,7 +812,7 @@ Public Class CDInstrumentosComerciales
             " ICDT.id_instrumento = @id_instrumento AND " +
             " ICDT.id_tramo = @id_tramo "
 
- 
+
 
         Using cn = objConeccion.Conectar
             Try
