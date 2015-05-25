@@ -105,6 +105,7 @@
     <Content Include="bootstrap\js\npm.js" />
     <Content Include="CSS\Login.css" />
     <Content Include="CSS\OtrosEstilos.css" />
+    <Content Include="frmAsignaCategoriasSAC.aspx" />
     <Content Include="frmCategoriasDesgravacion.aspx" />
     <Content Include="frmCorteDesgravacion.aspx" />
     <Content Include="frmTipoDesgravacion.aspx" />
@@ -123,6 +124,13 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="frmAsignaCategoriasSAC.aspx.designer.vb">
+      <DependentUpon>frmAsignaCategoriasSAC.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="frmAsignaCategoriasSAC.aspx.vb">
+      <DependentUpon>frmAsignaCategoriasSAC.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="frmCategoriasDesgravacion.aspx.designer.vb">
       <DependentUpon>frmCategoriasDesgravacion.aspx</DependentUpon>
     </Compile>

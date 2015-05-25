@@ -58,7 +58,7 @@
 
                     <asp:LinkButton ID="lkBtt_paises" runat="server" CssClass="btn btn-primary"> <i aria-hidden="true" class="glyphicon glyphicon-globe"></i> Paises </asp:LinkButton>
 
-                    <asp:LinkButton ID="LinkButton5" runat="server" CssClass="btn btn-primary"> <i aria-hidden="true" class="glyphicon glyphicon-indent-left"></i> Asignar Categorias </asp:LinkButton>
+                    <asp:LinkButton ID="lkBtn_asignar_categorias" runat="server" CssClass="btn btn-primary"> <i aria-hidden="true" class="glyphicon glyphicon-indent-left"></i> Asignar Categorias </asp:LinkButton>
 
                 </div>
 

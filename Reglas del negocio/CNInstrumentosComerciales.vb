@@ -163,4 +163,15 @@ Public Class CNInstrumentosComerciales
     End Function
 
 #End Region
+
+#Region "Funciones y procedimientos para el Mantenimiento de Asignacion Categorias"
+
+    'Funcion para obtener los datos del Mantenimiento de Asignacion de Categoria
+    Public Function SelectDatosAsignaCategoriaMant(ByVal id_instrumento As Integer) As DataSet
+        Return objCDInstrumentos.SelectDatosAsignaCategoriaMant(id_instrumento)
+    End Function
+
+#End Region
+
+
 End Class

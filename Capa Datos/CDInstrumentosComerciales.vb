@@ -1014,4 +1014,40 @@ Public Class CDInstrumentosComerciales
 
 #End Region
 
+#Region "Funciones y procedimientos para el Mantenimiento de Asignacion Categorias"
+
+    'Funcion para obtener los datos del Mantenimiento de Asignacion de Categoria
+    Public Function SelectDatosAsignaCategoriaMant(ByVal id_instrumento As Integer) As DataSet
+        Try
+            Dim sql_string As String
+
+            sql_string = " SELECT anio_version,enmienda,anio_inicia_enmienda,anio_fin_enmieda " +
+                " FROM SAC_VERSIONES_BITACORA " +
+                " WHERE estado = 'A'; " +
+                " SELECT nombre_instrumento, sigla " +
+                " FROM IC_Instrumentos " +
+                " WHERE id_instrumento = @id_instrumento; " +
+                " select id_categoria, codigo_categoria " +
+                " from IC_Categorias_Desgravacion " +
+                " WHERE id_instrumento = @id_instrumento; "
+
+            Using cn = objConeccion.Conectar
+                Dim command As SqlCommand = New SqlCommand(sql_string, cn)
+                command.Parameters.AddWithValue("id_instrumento", id_instrumento)
+
+                da = New SqlDataAdapter(command)
+                da.Fill(ds)
+
+            End Using
+
+        Catch ex As Exception
+            MsgBox("ERROR SelectDatosAsignaCategoriaMant = " + ex.Message.ToString)
+        Finally
+
+        End Try
+
+        Return ds
+    End Function
+#End Region
+
 End Class
