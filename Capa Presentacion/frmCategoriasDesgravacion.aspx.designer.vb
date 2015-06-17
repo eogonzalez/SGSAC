@@ -50,6 +50,33 @@ Partial Public Class frmCategoriasDesgravacion
     Protected WithEvents lkBtn_Config As Global.System.Web.UI.WebControls.LinkButton
 
     '''<summary>
+    '''Control lkBtn_Aprueba.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents lkBtn_Aprueba As Global.System.Web.UI.WebControls.LinkButton
+
+    '''<summary>
+    '''Control lkBtn_Hidden_Aprueba.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents lkBtn_Hidden_Aprueba As Global.System.Web.UI.WebControls.LinkButton
+
+    '''<summary>
+    '''Control lkBtt_Aprueba_ModalPopupExtender.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents lkBtt_Aprueba_ModalPopupExtender As Global.AjaxControlToolkit.ModalPopupExtender
+
+    '''<summary>
     '''Control gvCategorias.
     '''</summary>
     '''<remarks>
@@ -156,6 +183,87 @@ Partial Public Class frmCategoriasDesgravacion
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
     Protected WithEvents btn_Salir As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''Control pnlApruebaCategoria.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents pnlApruebaCategoria As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''Control lbl_nombre.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents lbl_nombre As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''Control txt_Nombre.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents txt_Nombre As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Control lbl_sigla.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents lbl_sigla As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''Control txt_sigla.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents txt_sigla As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Control lbl_cantidad_cetegorias.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents lbl_cantidad_cetegorias As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''Control txt_cantidad_categorias.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents txt_cantidad_categorias As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Control btn_Aprobar.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents btn_Aprobar As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''Control btn_Cancelar.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents btn_Cancelar As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''Control hfIdInstrumento.

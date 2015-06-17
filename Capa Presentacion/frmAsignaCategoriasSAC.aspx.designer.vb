@@ -203,6 +203,15 @@ Partial Public Class frmAsignaCategoriasSAC
     Protected WithEvents txt_descripcion_sub_partida As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''Control lkbtn_selec_inciso.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents lkbtn_selec_inciso As Global.System.Web.UI.WebControls.LinkButton
+
+    '''<summary>
     '''Control gvAsignarCategorias.
     '''</summary>
     '''<remarks>

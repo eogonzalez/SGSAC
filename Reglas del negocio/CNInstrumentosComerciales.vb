@@ -96,6 +96,17 @@ Public Class CNInstrumentosComerciales
 #End Region
 
 #Region "Funciones y procedimientos para el Mantenimiento de Categorias de Desgravacion "
+
+    'Funcion para Aprobar Categoria
+    Public Function ApruebaCategoria(ByVal id_instrumento As Integer) As Boolean
+        Return objCDInstrumentos.ApruebaCategoria(id_instrumento)
+    End Function
+
+    'Funcion para obtener el nombre del instrumento y cantidad de categorias
+    Public Function SelectInstrumentoCategoria(ByVal id_instrumento As Integer) As DataTable
+        Return objCDInstrumentos.SelectInstrumentoCategoria(id_instrumento)
+    End Function
+
     'Funcion para actualizar categorias
     Public Function UpdateCategoriaDesgrava(ByVal objCeCategoria As CECategoriaDesgravacion) As Boolean
         Return objCDInstrumentos.UpdateCategoriaDesgrava(objCeCategoria)
@@ -165,6 +176,11 @@ Public Class CNInstrumentosComerciales
 #End Region
 
 #Region "Funciones y procedimientos para el Mantenimiento de Asignacion Categorias"
+
+    'Funcion para obtener los datos para los codigos seleccionados
+    Public Function SelectDatosCodigoInciso(ByVal str_codigo As String) As DataSet
+        Return objCDInstrumentos.SelectDatosCodigoInciso(str_codigo)
+    End Function
 
     'Funcion para obtener los datos del Mantenimiento de Asignacion de Categoria
     Public Function SelectDatosAsignaCategoriaMant(ByVal id_instrumento As Integer) As DataSet

@@ -633,3 +633,49 @@ ALTER TABLE [dbo].[SAC_Asocia_Categoria] CHECK CONSTRAINT [FK_SAC_Asocia_Categor
 GO
 
 
+/****** Object:  Table [dbo].[SAC_Tratados_Bitacora]    Script Date: 06/07/2015 21:55:55 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+SET ANSI_PADDING ON
+GO
+
+CREATE TABLE [dbo].[SAC_Tratados_Bitacora](
+	[id_version] [int] NOT NULL,
+	[id_corte_version] [int] NOT NULL,
+	[id_instrumento] [int] NOT NULL,
+	[anio_version] [int] NULL,
+	[incisos_procesados] [int] NULL,
+	[cantidad_categoria] [int] NULL,
+	[fecha_generada] [date] NULL,
+	[fecha_inicia_vigencia] [date] NULL,
+	[usuario_reviso] [varchar](200) NULL,
+	[fecha_revisada] [date] NULL,
+	[usuario_aprueba] [varchar](200) NULL,
+	[fecha_aprueba] [date] NULL,
+	[estado] [varchar](10) NULL,
+	[usuario] [varchar](200) NULL,
+	[fecha_modifica] [date] NULL,
+ CONSTRAINT [PK_SAC_Tratados_Bitacora] PRIMARY KEY CLUSTERED 
+(
+	[id_version] ASC,
+	[id_corte_version] ASC,
+	[id_instrumento] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO
+
+ALTER TABLE [dbo].[SAC_Tratados_Bitacora]  WITH CHECK ADD  CONSTRAINT [FK_SAC_Tratados_Bitacora_IC_Instrumentos1] FOREIGN KEY([id_instrumento])
+REFERENCES [dbo].[IC_Instrumentos] ([id_instrumento])
+GO
+
+ALTER TABLE [dbo].[SAC_Tratados_Bitacora] CHECK CONSTRAINT [FK_SAC_Tratados_Bitacora_IC_Instrumentos1]
+GO
+

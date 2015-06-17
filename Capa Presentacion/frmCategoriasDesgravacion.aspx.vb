@@ -1,5 +1,6 @@
 ﻿Imports Capa_Entidad
 Imports Reglas_del_negocio
+Imports System.Windows.Forms
 Public Class frmCategoriasDesgravacion
     Inherits System.Web.UI.Page
     Dim objCNInstrumentos As New CNInstrumentosComerciales
@@ -69,6 +70,27 @@ Public Class frmCategoriasDesgravacion
         End If
     End Sub
 
+    Protected Sub lkBtn_Aprueba_Click(sender As Object, e As EventArgs) Handles lkBtn_Aprueba.Click
+        LlenarApruebaMant(hfIdInstrumento.Value)
+        lkBtt_Aprueba_ModalPopupExtender.Show()
+    End Sub
+
+    Protected Sub btn_Aprobar_Click(sender As Object, e As EventArgs) Handles btn_Aprobar.Click
+        'Verifica si es posible aprobar 
+
+        If MessageBox.Show("¿Esta seguro que desea Aprobar las Categorias de Desgravacion Previamente Seleccionadas?",
+                           "Confirmacion", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1
+                           ) = DialogResult.OK Then
+            If objCNInstrumentos.ApruebaCategoria(hfIdInstrumento.Value) Then
+                Mensaje("Categorias Aprobadas Con Exito")
+            Else
+                Mensaje("No es posible aprobar categorias")
+            End If
+        Else
+            Exit Sub
+        End If
+    End Sub
+
 #End Region
 
 #Region "Funciones para obtener valores de los controles"
@@ -90,6 +112,22 @@ Public Class frmCategoriasDesgravacion
 #End Region
 
 #Region "Mis Funciones"
+
+    Protected Sub LlenarApruebaMant(ByVal id_instrumento As Integer)
+        Dim dtApruebaMant As New DataTable
+
+        dtApruebaMant = objCNInstrumentos.SelectInstrumentoCategoria(id_instrumento)
+
+        If dtApruebaMant.Rows.Count = 0 Then
+            Mensaje("No existen datos para llenar opcion.")
+            Exit Sub
+        Else
+            txt_Nombre.Text = dtApruebaMant.Rows(0)("nombre_instrumento").ToString
+            txt_sigla.Text = dtApruebaMant.Rows(0)("sigla").ToString
+            txt_cantidad_categorias.Text = dtApruebaMant.Rows(0)("cantidad_categorias").ToString
+        End If
+
+    End Sub
 
     'Funcion  para actualizar categoria
     Protected Function EditarCategoria(ByVal id_instrumento As Integer, ByVal id_categoria As Integer) As Boolean
@@ -137,7 +175,8 @@ Public Class frmCategoriasDesgravacion
         Dim id_categoria As String = Nothing
 
         For i As Integer = 0 To gvCategorias.Rows.Count - 1
-            Dim rbutton As RadioButton = gvCategorias.Rows(i).FindControl("rb_categoria")
+
+            Dim rbutton As WebControls.RadioButton = gvCategorias.Rows(i).FindControl("rb_categoria")
             If rbutton.Checked Then
                 id_categoria = gvCategorias.Rows(i).Cells(0).Text
             End If

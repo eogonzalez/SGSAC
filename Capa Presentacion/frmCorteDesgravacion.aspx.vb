@@ -1,5 +1,7 @@
 ﻿Imports Capa_Entidad
 Imports Reglas_del_negocio
+
+
 Public Class frmCorteDesgravacion
     Inherits System.Web.UI.Page
     Dim objCNInstrumentos As New CNInstrumentosComerciales
@@ -118,9 +120,9 @@ Public Class frmCorteDesgravacion
                     ddl_tipo_periodo_corte.DataValueField = datosTramo.Rows(0)("id_tipo_periodo")
                 End If
 
-                txt_porcen_desgrava_anterior.Text = datosTramo.Rows(0)("desgrava_tramo_anterior").ToString("##,##0.00")
-                txt_porcen_desgrava_final.Text = datosTramo.Rows(0)("desgrava_tramo_final").ToString("##,##0.00")
-                txt_factor_desgravacion.Text = datosTramo.Rows(0)("factor_desgrava").ToString("##,##0.00")
+                txt_porcen_desgrava_anterior.Text = datosTramo.Rows(0)("desgrava_tramo_anterior").ToString
+                txt_porcen_desgrava_final.Text = datosTramo.Rows(0)("desgrava_tramo_final").ToString
+                txt_factor_desgravacion.Text = datosTramo.Rows(0)("factor_desgrava").ToString
                 hfFactor.Value = datosTramo.Rows(0)("factor_desgrava").ToString
             End If
         End If

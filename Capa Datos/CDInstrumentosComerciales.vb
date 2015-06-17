@@ -503,6 +503,199 @@ Public Class CDInstrumentosComerciales
 
 #Region "Funciones y procedimientos para el Mantenimiento de Categorias de Desgravacion"
 
+    'Funcion para Aprobar Categoria
+    Public Function ApruebaCategoria(ByVal id_instrumento As Integer) As Boolean
+        Dim estado As Boolean = False
+        Try
+            Dim sql_query As String
+            Dim dt_Aprobado As New DataTable
+
+            'Verifica que las Categorias no esten ya Aprobadas
+            sql_query = " SELECT count(1) as aprobado " +
+                " FROM SAC_Tratados_Bitacora " +
+                " WHERE id_instrumento = @id_instrumento AND ESTADO ='A' "
+            Using cn = objConeccion.Conectar
+                Dim command As SqlCommand = New SqlCommand(sql_query, cn)
+                command.Parameters.AddWithValue("id_instrumento", id_instrumento)
+                da = New SqlDataAdapter(command)
+                da.Fill(dt_Aprobado)
+            End Using
+
+            'Si no esta aprobado
+            If (dt_Aprobado.Rows(0)("aprobado") = 0) Then
+                Dim dt_CategoriaActiva As New DataTable
+
+                sql_query = " SELECT COUNT(1) Categoria_Activa " +
+                    " FROM IC_Categorias_Desgravacion_Tramos " +
+                    " WHERE id_instrumento = @id_instrumento AND " +
+                    " activo = 'N' " +
+                    " GROUP BY id_instrumento "
+
+                Using cn = objConeccion.Conectar
+                    Dim command As SqlCommand = New SqlCommand(sql_query, cn)
+                    command.Parameters.AddWithValue("id_instrumento", id_instrumento)
+                    da = New SqlDataAdapter(command)
+                    da.Fill(dt_CategoriaActiva)
+
+                    If (dt_CategoriaActiva.Rows(0)("Categoria_Activa") >= 1) Then
+                        'No se puede aprobar ya que existen categorias sin activar
+                        estado = False
+                    Else
+                        Dim dt_Categorias As New DataTable
+                        Dim contador As Integer = 0
+                        Dim cantidad_cortes As Integer = 0
+                        Dim codigo_categoria As String
+                        Dim id_tramo As Integer = 0
+                        Dim id_categoria As Integer = 0
+
+                        'Si todas las categorias estan activadas
+                        sql_query = " select icd.codigo_categoria, icd.id_categoria, " +
+                            " icd.cantidad_tramos, icdt.id_tramo, icdt.cantidad_cortes " +
+                            " from IC_Categorias_Desgravacion_Tramos icdt " +
+                            " inner Join " +
+                            " IC_Categorias_Desgravacion icd on " +
+                            " icd.id_categoria = icdt.id_categoria And " +
+                            " icd.id_instrumento = icdt.id_instrumento " +
+                            " where icdt.id_instrumento = @id_instrumento " +
+                            " ORDER BY icd.codigo_categoria "
+
+                        Using cn2 = objConeccion.Conectar
+                            Dim command2 As SqlCommand = New SqlCommand(sql_query, cn2)
+                            command2.Parameters.AddWithValue("id_instrumento", id_instrumento)
+                            da = New SqlDataAdapter(command2)
+                            da.Fill(dt_Categorias)
+
+                            '@CodAnteCatego'
+                            codigo_categoria = dt_Categorias.Rows(0)("codigo_categoria").ToString
+
+                            '@Cuenta
+                            contador = 1
+
+                            For Each Row In dt_Categorias.Rows
+                                cantidad_cortes = Convert.ToInt32(dt_Categorias.Rows("cantidad_cortes").ToString)
+                                id_categoria = Convert.ToInt32(dt_Categorias.Rows("id_categoria").ToString)
+                                id_tramo = Convert.ToInt32(dt_Categorias.Rows("id_tramo").ToString)
+
+                                If (dt_Categorias.Rows("codigo_categoria").ToString = codigo_categoria) Then
+
+                                    sql_query = "UPDATE" +
+                                        " IC_Categorias_Desgravacion_Tramos " +
+                                        " SET " +
+                                        " cortes_ejecutados = @cuenta " +
+                                        " WHERE " +
+                                        " id_categoria = @id_categoria and " +
+                                        " id_tramo = @id_tramo "
+                                    Using cn3 = objConeccion.Conectar
+                                        Dim command3 As SqlCommand = New SqlCommand(sql_query, cn3)
+                                        command3.Parameters.AddWithValue("cuenta", contador)
+                                        command3.Parameters.AddWithValue("id_categoria", id_categoria)
+                                        command3.Parameters.AddWithValue("id_tramo", id_tramo)
+                                        cn3.Open()
+                                        command3.ExecuteScalar()
+                                    End Using
+
+                                    contador = contador + cantidad_cortes
+                                Else
+                                    codigo_categoria = dt_Categorias.Rows("codigo_categoria").ToString
+                                    contador = 1
+
+                                    sql_query = "UPDATE" +
+                                        " IC_Categorias_Desgravacion_Tramos " +
+                                        " SET " +
+                                        " cortes_ejecutados = @cuenta " +
+                                        " WHERE " +
+                                        " id_categoria = @id_categoria and " +
+                                        " id_tramo = @id_tramo "
+                                    Using cn3 = objConeccion.Conectar
+                                        Dim command3 As SqlCommand = New SqlCommand(sql_query, cn3)
+                                        command3.Parameters.AddWithValue("cuenta", contador)
+                                        command3.Parameters.AddWithValue("id_categoria", id_categoria)
+                                        command3.Parameters.AddWithValue("id_tramo", id_tramo)
+                                        cn3.Open()
+                                        command3.ExecuteScalar()
+                                    End Using
+
+                                    contador = contador + cantidad_cortes
+                                End If
+                            Next
+                            Dim id_version As Integer = 0
+                            'Consultar la ultima version
+
+
+                            'Insertar en la bitacora tratado el primer registro
+                            sql_query = "INSERT INTO SAC_Tratados_Bitacora" +
+                                " ([id_version] " +
+                                " ,[id_corte_version] " +
+                                " ,[id_instrumento] " +
+                                " ,[cantidad_categoria] " +
+                                " ,[fecha_generada]) " +
+                                " VALUES " +
+                                " (@id_version " +
+                                " ,0 " +
+                                " ,@id_instrumento " +
+                                " ,0 " +
+                                " ,SYSDATETIME())"
+
+                            Using cn3 = objConeccion.Conectar
+                                Dim command3 As SqlCommand = New SqlCommand(sql_query, cn3)
+                                command3.Parameters.AddWithValue("id_version", id_version)
+                                command3.Parameters.AddWithValue("id_instrumento", id_instrumento)
+                                cn3.Open()
+                                command3.ExecuteScalar()
+                            End Using
+
+                        End Using
+
+                        estado = True
+                    End If
+                End Using
+            Else
+                'Si ya esta aprobado
+                estado = False
+            End If
+
+        Catch ex As Exception
+            estado = False
+
+        Finally
+
+        End Try
+        Return estado
+    End Function
+
+    'Funcion para obtener el nombre del instrumento y cantidad de categorias
+    Public Function SelectInstrumentoCategoria(ByVal id_instrumento As Integer) As DataTable
+        Dim sql_query As String
+        Dim dtInstrumentoCategoria As New DataTable
+
+        sql_query = "select II.nombre_instrumento , II.sigla, COUNT(ICD.id_categoria) as cantidad_categorias" +
+            " from IC_Instrumentos II " +
+            " left outer join " +
+            " IC_Categorias_Desgravacion_Tramos ICD on " +
+            " II.id_instrumento = ICD.id_instrumento " +
+            " where II.id_instrumento = @id_instrumento " +
+            " group by II.nombre_instrumento, II.sigla, ICD.id_categoria "
+
+        Using cn = objConeccion.Conectar
+            Try
+                Dim command As SqlCommand = New SqlCommand(sql_query, cn)
+                command.Parameters.AddWithValue("id_instrumento", id_instrumento)
+                da = New SqlDataAdapter(command)
+
+                da.Fill(dtInstrumentoCategoria)
+                cn.Close()
+
+            Catch ex As Exception
+                MsgBox("ERROR CONSULTAR CATEGORIA = " + ex.Message.ToString)
+
+            Finally
+                objConeccion.Conectar.Dispose()
+                cn.Dispose()
+            End Try
+            Return dtInstrumentoCategoria
+        End Using
+    End Function
+
     'Funcion para actualizar categorias
     Public Function UpdateCategoriaDesgrava(ByVal objCategoriaDesgrava As CECategoriaDesgravacion) As Boolean
         Try
@@ -1015,6 +1208,80 @@ Public Class CDInstrumentosComerciales
 #End Region
 
 #Region "Funciones y procedimientos para el Mantenimiento de Asignacion Categorias"
+
+    'Funcion para obtener los datos para los codigos seleccionados
+    Public Function SelectDatosCodigoInciso(ByVal str_codigo As String) As DataSet
+        Try
+            Dim sql_string As String
+            Dim capitulo As String = Nothing
+            Dim partida As String = Nothing
+            Dim subpartida As String = Nothing
+
+            capitulo = str_codigo
+            partida = str_codigo
+            subpartida = str_codigo
+
+            sql_string = " SELECT " +
+                " descripcion_capitulo " +
+                " FROM " +
+                " SAC_Capitulos " +
+                " WHERE " +
+                " Capitulo = @capitulo AND  " +
+                " activo = 'A'; " +
+                " SELECT " +
+                " Descripcion_Partida " +
+                " FROM " +
+                " SAC_Partidas " +
+                " WHERE " +
+                " Capitulo = @capitulo AND " +
+                " Partida = @partida AND  " +
+                " activo = 'A'; " +
+                " SELECT " +
+                " texto_subpartida " +
+                " FROM " +
+                " SAC_Subpartidas " +
+                " WHERE " +
+                " Capitulo = @capitulo AND " +
+                " partida = @partida AND " +
+                " subpartida = @subpartida AND " +
+                " activo = 'A'; " +
+                " SELECT " +
+                " ci.codigo_inciso, ci.texto_inciso, ci.dai_base, " +
+                " icd.codigo_categoria, SAC.inciso_presicion, SAC.texto_precision " +
+                " FROM " +
+                " SAC_Incisos CI " +
+                " left outer join " +
+                " SAC_Asocia_Categoria sac on " +
+                " sac.id_version = ci.id_version And " +
+                " sac.anio_version = CI.anio_version And " +
+                " sac.codigo_inciso = ci.codigo_inciso " +
+                " LEFT OUTER JOIN " +
+                " IC_Categorias_Desgravacion ICD ON " +
+                " icd.id_categoria = sac.id_categoria And " +
+                " icd.id_instrumento = sac.id_instrumento " +
+                " WHERE " +
+                " CI.codigo_inciso LIKE '" + str_codigo + "%' "
+
+            Using cn = objConeccion.Conectar
+                Dim command As SqlCommand = New SqlCommand(sql_string, cn)
+                command.Parameters.AddWithValue("capitulo", capitulo)
+                command.Parameters.AddWithValue("partida", partida)
+                command.Parameters.AddWithValue("subpartida", subpartida)
+                command.Parameters.AddWithValue("codigo_inciso", str_codigo)
+
+                da = New SqlDataAdapter(command)
+                da.Fill(ds)
+
+            End Using
+
+        Catch ex As Exception
+            MsgBox("ERROR SelectDatosInciso = " + ex.Message.ToString)
+        Finally
+
+        End Try
+
+        Return ds
+    End Function
 
     'Funcion para obtener los datos del Mantenimiento de Asignacion de Categoria
     Public Function SelectDatosAsignaCategoriaMant(ByVal id_instrumento As Integer) As DataSet

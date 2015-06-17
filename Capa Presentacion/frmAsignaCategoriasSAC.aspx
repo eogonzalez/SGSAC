@@ -15,6 +15,29 @@
                 }
             }
         }
+
+        function SelectAll() {
+            var rdBtn = document.getElementById("ContentPlaceHolder1_rb_inciso");
+            var rdBtnList = document.getElementsByTagName("input");
+
+
+            
+            if (rdBtn[0].checked){
+                for (i = 0; i < rdBtnList.length; i++) {
+                    if (rdBtnList[i].type == "radio" && rdBtnList[i].value == 1){
+                        rdBtnList[i].checked = true;
+                    }
+                }
+            } else {
+                for (i = 0; i < rdBtnList.length;i++){
+                    if(rdBtnList[i].type == "radio" && rdBtnList[i].value == 0){
+                        rdBtnList[i].checked = true;
+                    }
+                }
+            }
+
+
+        }
      </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -30,6 +53,7 @@
                 <span class="label label-primary">Datos Generales del SAC
                 </span>
             </h5>
+
             <div class="form-group">
 
                 <asp:Label ID="lbl_año_vigencia" CssClass="control-label col-xs-2" text="Año Vigencia SAC" runat="server"> </asp:Label>
@@ -46,6 +70,7 @@
                 <div class="col-xs-1">
                     <asp:TextBox ID="txt_periodo_año_inicial" CssClass="form-control" runat="server" disabled> </asp:TextBox>
                 </div>
+
                 <asp:Label ID="lbl_al" CssClass="control-label col-xs-1" Text=" Al:" runat="server"></asp:Label>
                 <div class="col-xs-1">
                     <asp:TextBox ID="txt_periodo_año_final" CssClass="form-control" runat="server" disabled> </asp:TextBox>
@@ -118,28 +143,36 @@
                 <span class="label label-primary">Asignar Categoria de Desgravación
                 </span>
             </h5>
+            <div class="form-group">
+                <div class="col-xs-2">
+                    <asp:LinkButton ID="lkbtn_selec_inciso" CssClass="btn btn-primary" Text="Seleccionar Todo" runat="server"/>
+                    <%--<asp:LinkButton ID="LinkButton1" CssClass="btn btn-primary" Text="Seleccionar Todo" runat="server" OnClick="javascript:SelectAll()"/>--%>
+                </div>
+            </div>
+
             <div class="table-responsive">
                 <asp:GridView ID="gvAsignarCategorias" runat="server"
                     CssClass="table table-hover table-striped"
                     GridLines="None"
                     EmptyDataText="No se encontraron incisos arancelarios"
-                    AutoGenerateColumns="false">
+                    AutoGenerateColumns="false" AllowPaging="True">
+
+                    <PagerSettings Mode="Numeric"
+                        Position="Bottom"
+                        PageButtonCount="10" />
+
                     <Columns>
-                        <asp:BoundField DataField="id_inciso" SortExpression="id_inciso">
-                            <HeaderStyle CssClass="ColumnaOculta" />
-                            <ItemStyle CssClass="ColumnaOculta" />
-                        </asp:BoundField>
                         <asp:TemplateField>
                             <ItemTemplate>
-                                <asp:RadioButton ID="rb_inciso" runat="server" OnClick="javascript:SelectSingleRadiobutton(this.id)" />
+                                <asp:RadioButton ID="rb_inciso" runat="server"  OnClick="javascript:SelectSingleRadiobutton(this.id)" />
                             </ItemTemplate>
                         </asp:TemplateField>
-                        <asp:BoundField DataField="inciso" HeaderText="Inciso Arancelario" />
-                        <asp:BoundField DataField="descripcion" HeaderText="Descripcion Inciso Arancelario" />
-                        <asp:BoundField DataField="dai" HeaderText="DAI SAC(Base)" />
-                        <asp:BoundField DataField="categoria" HeaderText="Categoria" />
-                        <asp:BoundField DataField="codigo_precision" HeaderText="Código Precision" />
-                        <asp:BoundField DataField="descripcion_precision" HeaderText="Descripcion Precision" />
+                        <asp:BoundField DataField="codigo_inciso" HeaderText="Inciso Arancelario" />
+                        <asp:BoundField DataField="texto_inciso" HeaderText="Descripcion Inciso Arancelario" />
+                        <asp:BoundField DataField="dai_base" HeaderText="DAI SAC(Base)" />
+                        <asp:BoundField DataField="codigo_categoria" HeaderText="Categoria" />
+                        <asp:BoundField DataField="inciso_presicion" HeaderText="Código Precision" />
+                        <asp:BoundField DataField="texto_precision" HeaderText="Descripcion Precision" />
                     </Columns>
                 </asp:GridView>
             </div>
