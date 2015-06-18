@@ -525,11 +525,11 @@ Public Class CDInstrumentosComerciales
             If (dt_Aprobado.Rows(0)("aprobado") = 0) Then
                 Dim dt_CategoriaActiva As New DataTable
 
-                sql_query = " SELECT COUNT(1) Categoria_Activa " +
+                sql_query = " SELECT COALESCE ((SELECT COUNT(1)  " +
                     " FROM IC_Categorias_Desgravacion_Tramos " +
                     " WHERE id_instrumento = @id_instrumento AND " +
                     " activo = 'N' " +
-                    " GROUP BY id_instrumento "
+                    " GROUP BY id_instrumento), 0) Categoria_Activa "
 
                 Using cn = objConeccion.Conectar
                     Dim command As SqlCommand = New SqlCommand(sql_query, cn)
@@ -571,12 +571,12 @@ Public Class CDInstrumentosComerciales
                             '@Cuenta
                             contador = 1
 
-                            For Each Row In dt_Categorias.Rows
-                                cantidad_cortes = Convert.ToInt32(dt_Categorias.Rows("cantidad_cortes").ToString)
-                                id_categoria = Convert.ToInt32(dt_Categorias.Rows("id_categoria").ToString)
-                                id_tramo = Convert.ToInt32(dt_Categorias.Rows("id_tramo").ToString)
+                            For Each Row As DataRow In dt_Categorias.Rows
+                                cantidad_cortes = Convert.ToInt32(Row("cantidad_cortes").ToString)
+                                id_categoria = Convert.ToInt32(Row("id_categoria").ToString)
+                                id_tramo = Convert.ToInt32(Row("id_tramo").ToString)
 
-                                If (dt_Categorias.Rows("codigo_categoria").ToString = codigo_categoria) Then
+                                If (Row("codigo_categoria").ToString = codigo_categoria) Then
 
                                     sql_query = "UPDATE" +
                                         " IC_Categorias_Desgravacion_Tramos " +
@@ -585,6 +585,7 @@ Public Class CDInstrumentosComerciales
                                         " WHERE " +
                                         " id_categoria = @id_categoria and " +
                                         " id_tramo = @id_tramo "
+
                                     Using cn3 = objConeccion.Conectar
                                         Dim command3 As SqlCommand = New SqlCommand(sql_query, cn3)
                                         command3.Parameters.AddWithValue("cuenta", contador)
@@ -596,7 +597,7 @@ Public Class CDInstrumentosComerciales
 
                                     contador = contador + cantidad_cortes
                                 Else
-                                    codigo_categoria = dt_Categorias.Rows("codigo_categoria").ToString
+                                    codigo_categoria = Row("codigo_categoria").ToString
                                     contador = 1
 
                                     sql_query = "UPDATE" +
@@ -606,6 +607,7 @@ Public Class CDInstrumentosComerciales
                                         " WHERE " +
                                         " id_categoria = @id_categoria and " +
                                         " id_tramo = @id_tramo "
+
                                     Using cn3 = objConeccion.Conectar
                                         Dim command3 As SqlCommand = New SqlCommand(sql_query, cn3)
                                         command3.Parameters.AddWithValue("cuenta", contador)
@@ -619,8 +621,22 @@ Public Class CDInstrumentosComerciales
                                 End If
                             Next
                             Dim id_version As Integer = 0
-                            'Consultar la ultima version
+                            'Dim dt_Version As New DataTable
 
+                            ''Consultar la ultima version
+                            'sql_query = " SELECT count(1) as aprobado " +
+                            '    " FROM SAC_Tratados_Bitacora " +
+                            '    " WHERE id_instrumento = @id_instrumento AND ESTADO ='A' "
+
+
+                            'Using cn3 = objConeccion.Conectar
+                            '    Dim command3 As SqlCommand = New SqlCommand(sql_query, cn3)
+                            '    command3.Parameters.AddWithValue("id_instrumento", id_instrumento)
+                            '    da = New SqlDataAdapter(command)
+                            '    da.Fill(dt_Version)
+                            'End Using
+
+                            'id_version = Convert.ToInt32(dt_Version.Rows().ToString)
 
                             'Insertar en la bitacora tratado el primer registro
                             sql_query = "INSERT INTO SAC_Tratados_Bitacora" +
@@ -628,13 +644,15 @@ Public Class CDInstrumentosComerciales
                                 " ,[id_corte_version] " +
                                 " ,[id_instrumento] " +
                                 " ,[cantidad_categoria] " +
-                                " ,[fecha_generada]) " +
+                                " ,[fecha_generada] " +
+                                " ,[estado]) " +
                                 " VALUES " +
                                 " (@id_version " +
                                 " ,0 " +
                                 " ,@id_instrumento " +
                                 " ,0 " +
-                                " ,SYSDATETIME())"
+                                " ,SYSDATETIME()" +
+                                " ,'A')"
 
                             Using cn3 = objConeccion.Conectar
                                 Dim command3 As SqlCommand = New SqlCommand(sql_query, cn3)
