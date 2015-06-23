@@ -92,6 +92,11 @@ Public Class frmTratadosyAcuerdos
 
     End Sub
 
+    Protected Sub lkBtb_calcula_dai_Click(sender As Object, e As EventArgs) Handles lkBtb_calcula_dai.Click
+        'Llena Modal Popup
+        lkBtt_Calcula_Dai_ModalPopupExtender.Show()
+    End Sub
+
 #End Region
 
 #Region "Funciones para capturar valores del formulario"
@@ -309,5 +314,6 @@ Public Class frmTratadosyAcuerdos
     End Function
 
 #End Region
+
 
 End Class

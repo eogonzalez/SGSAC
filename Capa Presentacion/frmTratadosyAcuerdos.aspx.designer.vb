@@ -68,6 +68,33 @@ Partial Public Class frmTratadosyAcuerdos
     Protected WithEvents lkBtn_asignar_categorias As Global.System.Web.UI.WebControls.LinkButton
 
     '''<summary>
+    '''Control lkBtb_calcula_dai.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents lkBtb_calcula_dai As Global.System.Web.UI.WebControls.LinkButton
+
+    '''<summary>
+    '''Control lkBtn_Hidden_Calcula_Dai.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents lkBtn_Hidden_Calcula_Dai As Global.System.Web.UI.WebControls.LinkButton
+
+    '''<summary>
+    '''Control lkBtt_Calcula_Dai_ModalPopupExtender.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents lkBtt_Calcula_Dai_ModalPopupExtender As Global.AjaxControlToolkit.ModalPopupExtender
+
+    '''<summary>
     '''Control gvInstrumentos.
     '''</summary>
     '''<remarks>
@@ -291,6 +318,186 @@ Partial Public Class frmTratadosyAcuerdos
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
     Protected WithEvents btn_Salir As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''Control pnl_Calcula_Dai.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents pnl_Calcula_Dai As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''Control lbl_nombre.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents lbl_nombre As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''Control txt_nombre.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents txt_nombre As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Control lbl_tipo.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents lbl_tipo As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''Control txt_tipo.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents txt_tipo As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Control lbl_cantidad_incisos_calcular.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents lbl_cantidad_incisos_calcular As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''Control txt_cantidad_incisos_calcular.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents txt_cantidad_incisos_calcular As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Control lbl_sigla.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents lbl_sigla As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''Control txt_sigla.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents txt_sigla As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Control lbl_Inicio_Vigencia.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents lbl_Inicio_Vigencia As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''Control txt_inicio_vigencia.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents txt_inicio_vigencia As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Control cal_inicio_vigencia.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents cal_inicio_vigencia As Global.AjaxControlToolkit.CalendarExtender
+
+    '''<summary>
+    '''Control lbl_cantidad_cortes_ejecutados.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents lbl_cantidad_cortes_ejecutados As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''Control txt_cantidad_cortes_ejecutados.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents txt_cantidad_cortes_ejecutados As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Control lbl_ultimo_corte_ejecutado.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents lbl_ultimo_corte_ejecutado As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''Control txt_ultipo_corte_ejecutado.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents txt_ultipo_corte_ejecutado As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Control lbl_corte_ejecutar.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents lbl_corte_ejecutar As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''Control txt_corte_ejecutar.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents txt_corte_ejecutar As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Control btn_Calcular.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents btn_Calcular As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''Control btn_Cancelar.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents btn_Cancelar As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''Control hfIdInstrumento.
