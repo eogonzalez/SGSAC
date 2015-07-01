@@ -244,7 +244,7 @@
 
                     <asp:Label ID="lbl_ultimo_corte_ejecutado" CssClass="control-label col-xs-3" Enabled="false" runat="server" Text="Ultimo corte ejecutado:"></asp:Label>
                     <div class="col-xs-2">
-                        <asp:TextBox ID="txt_ultipo_corte_ejecutado" type="text" CssClass="form-control" runat="server" disabled></asp:TextBox>
+                        <asp:TextBox ID="txt_ultimo_corte_ejecutado" type="text" CssClass="form-control" runat="server" disabled></asp:TextBox>
                     </div>
 
                     <asp:Label ID="lbl_corte_ejecutar" CssClass="control-label col-xs-2" Enabled="false" runat="server" Text="Corte a Ejecutar:"></asp:Label>

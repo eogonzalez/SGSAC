@@ -455,13 +455,13 @@ Partial Public Class frmTratadosyAcuerdos
     Protected WithEvents lbl_ultimo_corte_ejecutado As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''Control txt_ultipo_corte_ejecutado.
+    '''Control txt_ultimo_corte_ejecutado.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents txt_ultipo_corte_ejecutado As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents txt_ultimo_corte_ejecutado As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''Control lbl_corte_ejecutar.

@@ -93,8 +93,38 @@ Public Class frmTratadosyAcuerdos
     End Sub
 
     Protected Sub lkBtb_calcula_dai_Click(sender As Object, e As EventArgs) Handles lkBtb_calcula_dai.Click
-        'Llena Modal Popup
-        lkBtt_Calcula_Dai_ModalPopupExtender.Show()
+        Dim id_instrumento As Integer = 0
+        id_instrumento = Convert.ToInt32(getIdInstrumentoGridView())
+
+        If id_instrumento = 0 Then
+            Mensaje("Seleccione un instrumento.")
+            Exit Sub
+        Else
+            LlenarFormulario_CalculaDAI(id_instrumento)
+            lkBtt_Calcula_Dai_ModalPopupExtender.Show()
+        End If
+    End Sub
+
+    Protected Sub btn_Calcular_Click(sender As Object, e As EventArgs) Handles btn_Calcular.Click
+        'Verifica si se puede realizar calculo
+        Dim id_instrumento As Integer = 0
+        id_instrumento = Convert.ToInt32(getIdInstrumentoGridView())
+
+        If id_instrumento = 0 Then
+            Mensaje("Seleccione un instrumento.")
+            Exit Sub
+        Else
+            hfIdInstrumento.Value = id_instrumento
+            'Realiza calculo 
+            If objCapaNegocio.CalcularDAI(hfIdInstrumento.Value) Then
+                'Calculo se realizo con exito
+                Mensaje("Calculo se realizo con éxito.")
+            Else
+                'No se realizo el calculo
+                Mensaje("Calculo se no se pudo realizar.")
+            End If
+        End If
+
     End Sub
 
 #End Region
@@ -162,6 +192,39 @@ Public Class frmTratadosyAcuerdos
 #End Region
 
 #Region "Mis Funciones"
+
+    'Procedimiento para llenar formulario para calculo de DAI
+    Protected Sub LlenarFormulario_CalculaDAI(ByVal id_instrumento As Integer)
+
+        Dim ds_CalculaDaiMant As New DataSet
+
+        ds_CalculaDaiMant = objCapaNegocio.SelectInstrumentoCalculoDAI(id_instrumento)
+
+        If ds_CalculaDaiMant.Tables(0).Rows.Count = 0 Then
+            Mensaje("No existen datos de instrumentos para llenar opción.")
+            Exit Sub
+        Else
+            txt_nombre.Text = ds_CalculaDaiMant.Tables(0).Rows(0)("nombre_instrumento").ToString
+            txt_tipo.Text = ds_CalculaDaiMant.Tables(0).Rows(0)("descripcion").ToString
+            txt_sigla.Text = ds_CalculaDaiMant.Tables(0).Rows(0)("sigla").ToString
+            txt_inicio_vigencia.Text = ds_CalculaDaiMant.Tables(0).Rows(0)("fecha_vigencia").ToString
+
+            If ds_CalculaDaiMant.Tables(1).Rows.Count = 0 Then
+                Mensaje("No existen incisos asociados al instrumento para calcular.")
+                Exit Sub
+            Else
+                txt_cantidad_incisos_calcular.Text = ds_CalculaDaiMant.Tables(1).Rows(0)("cantidad_incisos_calcular").ToString
+            End If
+
+            If ds_CalculaDaiMant.Tables(2).Rows.Count = 0 Then
+                Mensaje("No se han realizado calculados de DAI para el instrumento seleccionado.")
+            Else
+                txt_cantidad_cortes_ejecutados.Text = ds_CalculaDaiMant.Tables(2).Rows(0)("cantidad_cortes_ejecutados").ToString
+                txt_ultimo_corte_ejecutado.Text = ds_CalculaDaiMant.Tables(2).Rows(0)("ultimo_corte_ejecutado").ToString
+            End If
+        End If
+
+    End Sub
 
     'Mensajes en el formulario
     Sub Mensaje(ByVal texto As String)

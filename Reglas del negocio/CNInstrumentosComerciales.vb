@@ -25,6 +25,16 @@ Public Class CNInstrumentosComerciales
 
 #Region "Funciones y procedimientos para el Mantenimiento de Instrumentos"
 
+    'Funcion para calcular el DAI 
+    Public Function CalcularDAI(ByVal id_instrumento As Integer) As Boolean
+        Return objCDInstrumentos.CalcularDAI(id_instrumento)
+    End Function
+
+    'Funcion para obtener datos para el formulario de calculo de DAI
+    Public Function SelectInstrumentoCalculoDAI(ByVal id_instrumento As Integer) As DataSet
+        Return objCDInstrumentos.SelectInstrumentoCalculoDAI(id_instrumento)
+    End Function
+
     'Funcion para llenar el GridView de Instrumentos
     Public Function SelectInstrumentos() As DataSet
         Return objCDInstrumentos.SelectInstrumentos

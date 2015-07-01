@@ -679,3 +679,51 @@ GO
 ALTER TABLE [dbo].[SAC_Tratados_Bitacora] CHECK CONSTRAINT [FK_SAC_Tratados_Bitacora_IC_Instrumentos1]
 GO
 
+/****** Object:  Table [dbo].[SAC_Dai_Instrumento]    Script Date: 06/30/2015 18:31:55 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+SET ANSI_PADDING ON
+GO
+
+CREATE TABLE [dbo].[SAC_Dai_Instrumento](
+	[id_dai_instrumento] [int] IDENTITY(1,1) NOT NULL,
+	[id_instrumento] [int] NOT NULL,
+	[inciso] [varchar](15) NOT NULL,
+	[categoria] [varchar](500) NOT NULL,
+	[factor_desgrava] [decimal](10, 4) NULL,
+	[desgrava_tramos_antes] [decimal](10, 2) NULL,
+	[nuevo_dai] [decimal](8, 2) NULL,
+	[dai_calc_relativo] [decimal](8, 2) NULL,
+	[dai_calc_absoluto] [decimal](8, 2) NULL,
+	[dai_base] [decimal](8, 2) NULL,
+	[sigla1_instrumento] [varchar](50) NULL,
+	[version_sac_calculo] [int] NULL,
+	[id_corte_nuevo] [int] NULL,
+	[inciso_anterior] [varchar](15) NULL,
+	[usuario_genero] [varchar](200) NULL,
+	[fecha_generada] [date] NULL,
+	[usuario_reviso] [varchar](200) NULL,
+	[fecha_revisada] [date] NULL,
+	[usuario_aprueba] [varchar](200) NULL,
+	[fecha_aprueba] [date] NULL,
+	[fecha_inicia_vigencia] [date] NULL,
+	[fecha_fin_vigencia] [date] NULL,
+	[observaciones] [varchar](500) NULL,
+	[dai_rela_vs_abso] [decimal](8, 2) NULL,
+	[estado] [varchar](10) NULL,
+ CONSTRAINT [PK_SAC_Dai_Instrumento] PRIMARY KEY CLUSTERED 
+(
+	[id_dai_instrumento] ASC,
+	[id_instrumento] ASC,
+	[inciso] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO

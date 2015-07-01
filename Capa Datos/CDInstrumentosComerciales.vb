@@ -9,6 +9,223 @@ Public Class CDInstrumentosComerciales
 
 #Region "Funciones y procedimientos para el Mantenimiento de Instrumentos"
 
+    'Funcion para calcular el DAI 
+    Public Function CalcularDAI(ByVal id_instrumento As Integer) As Boolean
+        Dim estado As Boolean = False
+        Try
+            Dim sql_query As String
+            Dim dt_RegistroActivo As New DataTable
+
+            'Query para obtener registros activos
+            sql_query = "SELECT COALESCE(( " +
+                " Select count(1) " +
+                " FROM SAC_TRATADOS_BITACORA " +
+                " WHERE id_instrumento = @id_instrumento " +
+                " AND ESTADO ='A'),0) registro_activo "
+
+            Using cn = objConeccion.Conectar
+                Dim command As SqlCommand = New SqlCommand(sql_query, cn)
+                command.Parameters.AddWithValue("id_instrumento", id_instrumento)
+                da = New SqlDataAdapter(command)
+                da.Fill(dt_RegistroActivo)
+            End Using
+
+            If dt_RegistroActivo.Rows(0)("registro_activo") = 0 Then
+                estado = False
+            Else
+                Dim dt_Asociadas As New DataTable
+                'Query para obtener cantidad de incisos asociados
+                sql_query = "SELECT COALESCE((" +
+                    " SELECT COUNT(1) FROM SAC_ASOCIA_CATEGORIA " +
+                    " WHERE id_instrumento = @id_instrumento " +
+                    " AND ESTADO ='A'),0) as asociadas "
+
+                Using cn = objConeccion.Conectar
+                    Dim command As SqlCommand = New SqlCommand(sql_query, cn)
+                    command.Parameters.AddWithValue("id_instrumento", id_instrumento)
+                    da = New SqlDataAdapter(command)
+                    da.Fill(dt_Asociadas)
+                End Using
+                'If Not (dt_Asociadas.Rows(0)("asociadas") > 99) Then
+
+                If Not (dt_Asociadas.Rows(0)("asociadas") >= 0) Then
+                    estado = False
+                Else
+                    Dim dt_Correlativo As New DataTable
+                    Dim corte_version As Integer
+                    'Query para obtener el ultimo numero de correlativo
+                    sql_query = " SELECT COALESCE(( " +
+                        " SELECT MAX(ID_CORTE_VERSION)  " +
+                        " FROM SAC_TRATADOS_BITACORA " +
+                        " WHERE id_instrumento = @id_instrumento " +
+                        " AND ESTADO ='A'),0) version "
+                    Using cn = objConeccion.Conectar
+                        Dim command As SqlCommand = New SqlCommand(sql_query, cn)
+                        command.Parameters.AddWithValue("id_instrumento", id_instrumento)
+                        da = New SqlDataAdapter(command)
+                        da.Fill(dt_Correlativo)
+
+                    End Using
+
+                    corte_version = Convert.ToInt32(dt_Correlativo.Rows(0)("version").ToString()) + 1
+                    Dim dt_Categorias As New DataTable
+                    'Query que consulta los tramos por categoria e instrumento
+                    sql_query = "SELECT id_categoria " +
+                        " FROM IC_Categorias_Desgravacion_Tramos " +
+                        " WHERE id_instrumento = @id_instrumento " +
+                        " AND activo = 'S' "
+                    Using cn = objConeccion.Conectar
+                        Dim cuenta As Integer = 0
+                        Dim id_catego As Integer = 0
+
+                        Dim command As SqlCommand = New SqlCommand(sql_query, cn)
+                        command.Parameters.AddWithValue("id_instrumento", id_instrumento)
+                        da = New SqlDataAdapter(command)
+                        da.Fill(dt_Categorias)
+
+
+
+                        For Each Row As DataRow In dt_Categorias.Rows
+                            id_catego = Convert.ToInt32(Row("id_categoria").ToString)
+
+                            sql_query = " INSERT INTO " +
+                                " SAC_Dai_Instrumento(id_instrumento, INCISO, CATEGORIA, " +
+                                " FACTOR_DESGRAVA, DESGRAVA_TRAMOS_ANTES, " +
+                                " DAI_CALC_ABSOLUTO, DAI_BASE, sigla1_instrumento, " +
+                                " ID_CORTE_NUEVO, USUARIO_GENERO, FECHA_GENERADA, estado) " +
+                                " SELECT " +
+                                " @id_instrumento, A.codigo_inciso, A.id_categoria," +
+                                " B.factor_desgrava,B.desgrava_tramo_anterior, " +
+                                " (I.dai_base-((((((@id_corte_nuevo-B.cortes_ejecutados)+1)*B.factor_desgrava)+B.desgrava_tramo_anterior)/100)*I.dai_base)), " +
+                                " I.dai_base,C.sigla, " +
+                                " @id_corte_nuevo, " +
+                                " 'ADMIN',SYSDATETIME(),'CALC1' " +
+                                " FROM " +
+                                " SAC_Asocia_Categoria AS A " +
+                                " LEFT OUTER JOIN " +
+                                " SAC_Incisos AS I ON " +
+                                " A.codigo_inciso = I.codigo_inciso AND " +
+                                " A.id_categoria = @id_categoria " +
+                                " LEFT OUTER JOIN " +
+                                " IC_Categorias_Desgravacion_Tramos AS B ON " +
+                                " A.id_instrumento = B.id_instrumento And " +
+                                " A.id_categoria = B.id_categoria " +
+                                " LEFT OUTER JOIN " +
+                                " IC_Instrumentos AS C ON " +
+                                " A.id_instrumento = C.id_instrumento " +
+                                " WHERE " +
+                                " I.estado = 'A' AND " +
+                                " B.activo = 'S' AND " +
+                                " B.cortes_ejecutados <= @id_corte_nuevo And " +
+                                " @id_corte_nuevo < (B.cortes_ejecutados + B.cantidad_cortes) " +
+                                " ORDER BY " +
+                                " A.codigo_inciso, B.id_tramo "
+
+                            Using cn2 = objConeccion.Conectar
+                                Dim command2 As SqlCommand = New SqlCommand(sql_query, cn2)
+                                command2.Parameters.AddWithValue("id_instrumento", id_instrumento)
+                                command2.Parameters.AddWithValue("id_corte_nuevo", corte_version)
+                                command2.Parameters.AddWithValue("id_categoria", id_catego)
+
+                                cn2.Open()
+                                command2.ExecuteScalar()
+                            End Using
+
+                            cuenta = cuenta + 1
+
+                        Next
+
+                        sql_query = " INSERT INTO " +
+                            " SAC_TRATADOS_BITACORA(id_version, id_corte_version, id_instrumento, CANTIDAD_CATEGORIA, estado, FECHA_GENERADA)  " +
+                            " VALUES " +
+                            " (0, @id_instrumento, @id_corte_nuevo, @cuenta, 'A',SYSDATETIME()) "
+
+                        Using cn2 = objConeccion.Conectar
+                            Dim command2 As SqlCommand = New SqlCommand(sql_query, cn2)
+                            command2.Parameters.AddWithValue("id_instrumento", id_instrumento)
+                            command2.Parameters.AddWithValue("id_corte_nuevo", corte_version)
+                            command2.Parameters.AddWithValue("cuenta", cuenta)
+
+                            cn2.Open()
+                            command2.ExecuteScalar()
+                        End Using
+                    End Using
+
+                    estado = True
+                End If
+
+
+            End If
+
+        Catch ex As Exception
+            estado = False
+        Finally
+
+        End Try
+        Return estado
+    End Function
+
+    'Funcion para obtener datos para el formulario de calculo de DAI
+    Public Function SelectInstrumentoCalculoDAI(ByVal id_instrumento As Integer) As DataSet
+        Dim sql_query As String
+
+
+        sql_query = " SELECT " +
+            " II.nombre_instrumento, " +
+            " II.sigla, " +
+            " TI.descripcion, " +
+            " ii.fecha_vigencia " +
+            " FROM " +
+            " IC_Instrumentos II " +
+            " LEFT OUTER JOIN " +
+            " IC_Tipo_Instrumento TI ON " +
+            " II.id_tipo_instrumento = TI.id_tipo_instrumento " +
+            " WHERE " +
+            " II.id_instrumento = @id_instrumento " +
+            " GROUP BY " +
+            " II.nombre_instrumento, " +
+            " TI.descripcion,  " +
+            " II.sigla,  " +
+            " II.fecha_vigencia; "
+
+        sql_query = sql_query +
+            " SELECT " +
+            " COUNT(1) AS cantidad_incisos_calcular " +
+            " FROM " +
+            " SAC_Asocia_Categoria " +
+            " WHERE " +
+            " id_instrumento = @id_instrumento;"
+
+        sql_query = sql_query +
+            " SELECT " +
+            " COUNT(1) as cantidad_cortes_ejecutados, " +
+            " MAX(id_corte_version) as ultimo_corte_ejecutado " +
+            " FROM " +
+            " SAC_Tratados_Bitacora " +
+            " WHERE " +
+            " id_instrumento = @id_instrumento "
+
+
+        Using cn = objConeccion.Conectar
+            Try
+                Dim command As SqlCommand = New SqlCommand(sql_query, cn)
+                command.Parameters.AddWithValue("id_instrumento", id_instrumento)
+                da = New SqlDataAdapter(command)
+
+                da.Fill(ds)
+                cn.Close()
+
+            Catch ex As Exception
+                MsgBox("ERROR CONSULTAR DATOS CALCULO DAI = " + ex.Message.ToString)
+
+            Finally
+                objConeccion.Conectar.Dispose()
+                cn.Dispose()
+            End Try
+            Return ds
+        End Using
+    End Function
+
     'Funcion para llenar el GridView de Instrumentos
     Public Function SelectInstrumentos() As DataSet
         'Se Llena el Data Set por medio del procedimiento almacenado y se retorna el mismo
