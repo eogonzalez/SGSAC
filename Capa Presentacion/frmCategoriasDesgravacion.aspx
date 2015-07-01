@@ -48,6 +48,19 @@
                 <i aria-hidden="true" class="glyphicon glyphicon-cog"></i>
                 Configurar Tramos
             </asp:LinkButton>
+
+            <asp:LinkButton ID="lkBtn_Aprueba" runat="server" CssClass="btn btn-primary">
+                <i aria-hidden="true" class="glyphicon glyphicon-check"></i>
+                Aprobar Categorias
+            </asp:LinkButton>
+
+            <asp:LinkButton ID="lkBtn_Hidden_Aprueba" runat="server" Style="display: hidden">
+            </asp:LinkButton>
+
+            <cc1:ModalPopupExtender ID="lkBtt_Aprueba_ModalPopupExtender" BackgroundCssClass="modalBackground"
+                runat="server" BehaviorID="lkBtt_Aprueba_ModalPopupExtender" PopupControlID="pnlApruebaCategoria"
+                DynamicServicePath="" TargetControlID="lkBtn_Hidden_Aprueba">
+            </cc1:ModalPopupExtender>
         </div>
 
         <%-- Gridview --%>
@@ -84,7 +97,7 @@
         <asp:Panel ID="pnlNuevaCategoria" CssClass="panel panel-primary" runat="server"
             BorderColor="Black" BackColor="White"
             BorderStyle="Inset" BorderWidth="1px" heigth="600" Width="35%">
-            <div class="panel-heading">Mantenimiento Categorias Desgravacion </div>
+            <div class="panel-heading">Mantenimiento Categorias Desgravación </div>
             <div class="panel-title">Titulo del tratado </div>
 
             <div class="panel-body form-horizontal">
@@ -124,6 +137,47 @@
             </div>
 
 
+        </asp:Panel>
+    </div>
+    
+    <%-- Panel para aprobar categorias de desgravacion --%>
+    <div>
+        <asp:Panel ID="pnlApruebaCategoria" CssClass="panel panel-primary" runat="server"
+            BorderColor="Black" BackColor="White"
+            BorderStyle="Inset" BorderWidth="1px" Height="375" Width="40%">
+            <div class="panel-heading">Aprobar Categorias de Desgravación</div>
+            <div class="panel-title">Aprobar Categorias de Desgravación Instrumento Comercial</div>
+
+            <div class="panel-body form-horizontal">
+                <div class="form-group">
+                    <asp:Label ID="lbl_nombre" CssClass="control-label col-xs-2" Enabled="false" runat="server" Text="Nombre:"></asp:Label>
+                    <div class="col-xs-10">
+                        <asp:TextBox ID="txt_Nombre" type="text" CssClass="form-control" runat="server" disabled></asp:TextBox>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <asp:Label ID="lbl_sigla" CssClass="control-label col-xs-2" Enabled="false" runat="server" Text="Sigla:"></asp:Label>
+                    <div class="col-xs-3">
+                        <asp:TextBox ID="txt_sigla" type="text" CssClass="form-control" runat="server" disabled></asp:TextBox>
+                    </div>
+
+                    <asp:Label ID="lbl_cantidad_cetegorias" CssClass="control-label col-xs-5" runat="server" Text="Cantidad ingresada de Categorias:"></asp:Label>
+                    <div class="col-xs-2">
+                        <asp:TextBox ID="txt_cantidad_categorias" type="text" CssClass="form-control" runat="server" disabled></asp:TextBox>
+                    </div>
+                </div>
+
+                <div class="alert alert-warning" role="alert">
+                    ADVERTENCIA: Si usted efectua este proceso de "Aprobación" NO podrá posteriormente modificar 
+                    ninguno de los datos correspondientes a estas Categorias de Desgravación. 
+
+                </div>
+            </div>
+            <div class="panel-footer">
+                <asp:Button ID="btn_Aprobar" CssClass="btn btn-primary" Text="Aprobar" runat="server" />
+                <asp:Button ID="btn_Cancelar" CssClass="btn btn-default" Text="Cancelar" runat="server" />
+            </div>
         </asp:Panel>
     </div>
 

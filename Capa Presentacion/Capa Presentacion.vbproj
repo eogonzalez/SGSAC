@@ -50,6 +50,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -105,6 +106,7 @@
     <Content Include="bootstrap\js\npm.js" />
     <Content Include="CSS\Login.css" />
     <Content Include="CSS\OtrosEstilos.css" />
+    <Content Include="frmAsignaCategoriasSAC.aspx" />
     <Content Include="frmCategoriasDesgravacion.aspx" />
     <Content Include="frmCorteDesgravacion.aspx" />
     <Content Include="frmPaisesInstrumento.aspx" />
@@ -124,6 +126,13 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="frmAsignaCategoriasSAC.aspx.designer.vb">
+      <DependentUpon>frmAsignaCategoriasSAC.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="frmAsignaCategoriasSAC.aspx.vb">
+      <DependentUpon>frmAsignaCategoriasSAC.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="frmCategoriasDesgravacion.aspx.designer.vb">
       <DependentUpon>frmCategoriasDesgravacion.aspx</DependentUpon>
     </Compile>

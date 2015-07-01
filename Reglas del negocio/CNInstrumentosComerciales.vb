@@ -25,6 +25,16 @@ Public Class CNInstrumentosComerciales
 
 #Region "Funciones y procedimientos para el Mantenimiento de Instrumentos"
 
+    'Funcion para calcular el DAI 
+    Public Function CalcularDAI(ByVal id_instrumento As Integer) As Boolean
+        Return objCDInstrumentos.CalcularDAI(id_instrumento)
+    End Function
+
+    'Funcion para obtener datos para el formulario de calculo de DAI
+    Public Function SelectInstrumentoCalculoDAI(ByVal id_instrumento As Integer) As DataSet
+        Return objCDInstrumentos.SelectInstrumentoCalculoDAI(id_instrumento)
+    End Function
+
     'Funcion para llenar el GridView de Instrumentos
     Public Function SelectInstrumentos() As DataSet
         Return objCDInstrumentos.SelectInstrumentos
@@ -96,6 +106,17 @@ Public Class CNInstrumentosComerciales
 #End Region
 
 #Region "Funciones y procedimientos para el Mantenimiento de Categorias de Desgravacion "
+
+    'Funcion para Aprobar Categoria
+    Public Function ApruebaCategoria(ByVal id_instrumento As Integer) As Boolean
+        Return objCDInstrumentos.ApruebaCategoria(id_instrumento)
+    End Function
+
+    'Funcion para obtener el nombre del instrumento y cantidad de categorias
+    Public Function SelectInstrumentoCategoria(ByVal id_instrumento As Integer) As DataTable
+        Return objCDInstrumentos.SelectInstrumentoCategoria(id_instrumento)
+    End Function
+
     'Funcion para actualizar categorias
     Public Function UpdateCategoriaDesgrava(ByVal objCeCategoria As CECategoriaDesgravacion) As Boolean
         Return objCDInstrumentos.UpdateCategoriaDesgrava(objCeCategoria)
@@ -164,6 +185,20 @@ Public Class CNInstrumentosComerciales
 
 #End Region
 
+#Region "Funciones y procedimientos para el Mantenimiento de Asignacion Categorias"
+
+    'Funcion para obtener los datos para los codigos seleccionados
+    Public Function SelectDatosCodigoInciso(ByVal str_codigo As String) As DataSet
+        Return objCDInstrumentos.SelectDatosCodigoInciso(str_codigo)
+    End Function
+
+    'Funcion para obtener los datos del Mantenimiento de Asignacion de Categoria
+    Public Function SelectDatosAsignaCategoriaMant(ByVal id_instrumento As Integer) As DataSet
+        Return objCDInstrumentos.SelectDatosAsignaCategoriaMant(id_instrumento)
+    End Function
+
+#End Region
+
 #Region "Funciones y procedimientos para el Mantenimiento de Paises Instrumentos"
     'Función para traer los paises instrumento
     Public Function PaisesInstrumento(ByVal IdInstrumento As Integer) As DataSet
@@ -205,4 +240,5 @@ Public Class CNInstrumentosComerciales
         Return objCDInstrumentos.ActualizarInstrumentoPais(obj, objMant)
     End Function
 #End Region
+
 End Class
