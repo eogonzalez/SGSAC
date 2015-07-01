@@ -76,7 +76,15 @@ Public Class frmTratadosyAcuerdos
     End Sub
 
     Protected Sub lkBtt_paises_Click(sender As Object, e As EventArgs) Handles lkBtt_paises.Click
-
+        Dim id_intrumento As Integer = 0
+        id_intrumento = Convert.ToInt32(getIdInstrumentoGridView())
+        If id_intrumento = 0 Then
+            Mensaje("Seleccione un instrumento")
+            Exit Sub
+        Else
+            hfIdInstrumento.Value = id_intrumento
+            Response.Redirect("~/frmPaisesInstrumento.aspx?id_inst=" + hfIdInstrumento.Value)
+        End If
     End Sub
 
 #End Region
@@ -296,7 +304,6 @@ Public Class frmTratadosyAcuerdos
     End Function
 
 #End Region
-
 
 
 End Class
