@@ -28,15 +28,14 @@
                 Nuevo
             </asp:LinkButton>
 
+            <asp:LinkButton ID="lkBtn_Hidden_Nuevo" runat="server" Style="display: hidden">
+            </asp:LinkButton>
             
-                        
-            <cc1:ModalPopupExtender ID="mpePaises" runat="server" PopupControlID="pnlAsinarPais" BackgroundCssClass="modalBackground" BehaviorID="hfPopup_ModalPopupExtender" DynamicServicePath="" TargetControlID="hfPopup">
+            <cc1:ModalPopupExtender ID="mpePaises" runat="server" PopupControlID="pnlAsinarPais" BackgroundCssClass="modalBackground" BehaviorID="hfPopup_ModalPopupExtender" DynamicServicePath="" TargetControlID="lkBtn_Hidden_Nuevo">
             </cc1:ModalPopupExtender>
-
-            
-                        
+ 
             <asp:LinkButton ID="lkBtt_editar" runat="server" CssClass="btn btn-primary"> <i aria-hidden="true" class="glyphicon glyphicon-edit"></i> Editar </asp:LinkButton>
-            <asp:LinkButton ID="lkbtn_Eliminar" runat="server" CssClass="btn btn-primary"> <i aria-hidden="true" class="glyphicon glyphicon-erase"></i> Eliminar </asp:LinkButton>
+            
         </div>
         <div>
             <asp:GridView ID="gvPaisesInstrumento" runat="server"
@@ -165,20 +164,15 @@
                         
                     </div>
                 </ContentTemplate>
-            </asp:UpdatePanel>   
-            <div class="form-group">
-                            <div class="col-xs-7 text-center">
-                                <asp:Button ID="btnGuardar" runat="server" Width="100px" CssClass="btn btn-primary" Text="Guardar" />
-                            </div>
-                            <div class="col-xs-5 text-left">
-                                <asp:Button ID="btnSalir" runat="server" Width="100px" CssClass="btn btn-default" Text="Salir" />
-                            </div>                            
-                        </div>         
+            </asp:UpdatePanel>
+            <div class="panel-footer">
+                    <asp:Button ID="btnGuardar" runat="server"  CssClass="btn btn-primary" Text="Guardar" />
+                    <asp:Button ID="btnSalir" runat="server"  CssClass="btn btn-default" Text="Salir" />
+            </div>
         </asp:Panel>
     </div>
     
     <div>
-        <asp:HiddenField ID="hfPopup" runat="server" />
         <asp:HiddenField ID="hfIdInstrumento" runat="server" />
         <asp:HiddenField ID="hfIdPais" runat="server" />
         <asp:HiddenField ID="hfTipoSocio" runat="server" />
