@@ -107,6 +107,7 @@
     <Content Include="CSS\OtrosEstilos.css" />
     <Content Include="frmCategoriasDesgravacion.aspx" />
     <Content Include="frmCorteDesgravacion.aspx" />
+    <Content Include="frmPaisesInstrumento.aspx" />
     <Content Include="frmTipoDesgravacion.aspx" />
     <Content Include="frmTipoInstrumento.aspx" />
     <Content Include="frmTipoPeriodo.aspx" />
@@ -135,6 +136,13 @@
     </Compile>
     <Compile Include="frmCorteDesgravacion.aspx.vb">
       <DependentUpon>frmCorteDesgravacion.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="frmPaisesInstrumento.aspx.designer.vb">
+      <DependentUpon>frmPaisesInstrumento.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="frmPaisesInstrumento.aspx.vb">
+      <DependentUpon>frmPaisesInstrumento.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="frmTipoDesgravacion.aspx.designer.vb">
