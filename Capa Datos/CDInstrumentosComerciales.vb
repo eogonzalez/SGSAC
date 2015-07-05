@@ -1117,27 +1117,35 @@ Public Class CDInstrumentosComerciales
         Dim dtCategoriaDesgrava As New DataTable
 
         sql_query = " SELECT " +
-            " ICCD.id_categoria, ICI.sigla AS SIGLA, ICCD.codigo_categoria AS CATEGORIA, " +
-            " ICTD.descripcion AS TIPO_DESGRAVACION, " +
-            " ICCDT.activo AS ACTIVO, ICCD.cantidad_tramos AS CANTIDAD_TRAMOS, " +
-            " SUM(ICCDT.cantidad_cortes) AS CANTIDAD_CORTES " +
+            " CATEGO.id_categoria, I.sigla, " +
+            " CATEGO.codigo_categoria AS categoria, " +
+            " CATEGO.descripcion AS Tipo_Desgravacion, " +
+            " CATEGO.activo, " +
+            " CATEGO.cantidad_tramos, " +
+            " CATEGO.CANTIDAD_CORTES " +
             " FROM " +
-            " IC_Instrumentos ICI, " +
-            " IC_Tipo_Desgravacion ICTD, " +
-            " IC_Categorias_Desgravacion ICCD, " +
-            " IC_Categorias_Desgravacion_Tramos ICCDT, " +
-            " IC_Tipo_Periodo_Corte ICTPC " +
+            " IC_Instrumentos I " +
+            " LEFT JOIN " +
+            " (SELECT " +
+            " CD.id_instrumento, CD.id_categoria, " +
+            " CD.codigo_categoria, TD.descripcion, " +
+            " CD.cantidad_tramos, CDT.activo, " +
+            " SUM(CDT.cantidad_cortes) AS CANTIDAD_CORTES " +
+            " FROM " +
+            " IC_Categorias_Desgravacion CD, " +
+            " IC_Categorias_Desgravacion_Tramos CDT, " +
+            " IC_Tipo_Desgravacion TD " +
             " WHERE " +
-            " ICI.id_instrumento = ICCD.id_instrumento And " +
-            " ICCD.id_instrumento = ICCDT.id_instrumento And " +
-            " ICCD.id_categoria = ICCDT.id_categoria And " +
-            " ICCD.id_tipo_desgrava = ICTD.id_tipo_desgrava And " +
-            " ICI.id_instrumento = @id_instrumento " +
+            " CD.id_categoria = CDT.id_categoria And " +
+            " CD.id_instrumento = CDT.id_instrumento And " +
+            " CD.id_tipo_desgrava = TD.id_tipo_desgrava " +
             " GROUP BY " +
-            " ICCD.id_categoria, ICI.sigla, ICCD.codigo_categoria , " +
-            " ICTD.descripcion , " +
-            " ICCDT.activo , ICCD.cantidad_tramos ," +
-            " ICCDT.cantidad_cortes "
+            " CD.id_instrumento, CD.id_categoria, " +
+            " CD.codigo_categoria, TD.descripcion, " +
+            " CD.cantidad_tramos, CDT.activo) CATEGO ON " +
+            " I.id_instrumento = CATEGO.id_instrumento " +
+            " WHERE " +
+            " I.id_instrumento = @id_instrumento "
 
         Using cn = objConeccion.Conectar
             Try
@@ -1286,8 +1294,7 @@ Public Class CDInstrumentosComerciales
             " IC_Categorias_Desgravacion ICD " +
             " on " +
             " ICD.id_categoria = ICDT.id_categoria And " +
-            " ICD.id_categoria = ICDT.id_categoria And " +
-            " ICD.id_categoria = ICDT.id_categoria " +
+            " ICD.id_instrumento = ICDT.id_instrumento" +
             " inner Join " +
             " IC_Tipo_Desgravacion ITD " +
             " on " +

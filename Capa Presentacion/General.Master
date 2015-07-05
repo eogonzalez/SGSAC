@@ -7,36 +7,20 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title></title>
+    <title>Sistema de gestión del SAC</title>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
-      <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-
-
-
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
-
-
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css"/>
-
-          <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-  
-
-    <%--<link href="bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" />--%>
-
-    <%--<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />--%>
-
-    <link href="CSS/OtrosEstilos.css" rel="stylesheet" />
+    
+    <link href="Style/bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <link href="Style/bootstrap/css/bootstrap-theme.css" rel="stylesheet" />
+    <link href="Style/OtrosEstilos.css" rel="stylesheet" />
 
 </head>
 
 <body>
 
     <form id="form1"  runat="server">
+
         <table style="margin: 0 auto 0 auto; text-align: center; width: 100%; background-color: #054795">
             <tr>
                 <td>
@@ -45,7 +29,7 @@
             </tr>
             <tr>
                 <td style="text-align: left">
-                    <asp:Image ID="imgLogo" runat="server" ImageUrl="~/Images/Logo.jpg" />
+                    <asp:Image ID="imgLogo" runat="server" ImageUrl="~/SGSAC/Images/Logo.jpg" />
                 </td>
                 <%--<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</td>--%>
                 <td style="text-align: center">
@@ -71,8 +55,10 @@
                 </td>
             </tr>
         </table>
+
         <table style="background-color: #054795; width: 100%; text-align: center">
         </table>
+
         <asp:ScriptManager ID="ToolkitScriptManager1" runat="server" EnableScriptGlobalization="True"></asp:ScriptManager>
         <%--<asp:ToolkitScriptManager runat="server" EnableScriptGlobalization="True"></asp:ToolkitScriptManager>--%>
         
@@ -82,7 +68,11 @@
             </asp:ContentPlaceHolder>
         </div>
 
-
     </form>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    
+    <script src="Script/jQuery/jquery-1.11.3.js"></script>
+    <script src="Style/bootstrap/js/bootstrap.js"></script>
 </body>
 </html>

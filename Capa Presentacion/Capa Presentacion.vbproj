@@ -96,16 +96,6 @@
     <Import Include="System.Web.UI.HtmlControls" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="bootstrap\css\bootstrap-theme.css" />
-    <Content Include="bootstrap\css\bootstrap-theme.min.css" />
-    <Content Include="bootstrap\css\bootstrap.css" />
-    <Content Include="bootstrap\css\bootstrap.min.css" />
-    <Content Include="bootstrap\fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="bootstrap\js\bootstrap.js" />
-    <Content Include="bootstrap\js\bootstrap.min.js" />
-    <Content Include="bootstrap\js\npm.js" />
-    <Content Include="CSS\Login.css" />
-    <Content Include="CSS\OtrosEstilos.css" />
     <Content Include="frmAsignaCategoriasSAC.aspx" />
     <Content Include="frmCategoriasDesgravacion.aspx" />
     <Content Include="frmCorteDesgravacion.aspx" />
@@ -118,11 +108,23 @@
     <Content Include="Images\ayuda.png" />
     <Content Include="Images\desgraba.png" />
     <Content Include="Images\editar.png" />
+    <Content Include="Images\Logo.jpg" />
     <Content Include="Images\ministerioeco.jpg" />
     <Content Include="Images\nuevo.png" />
     <Content Include="Images\paises.png" />
     <Content Include="Inicio.aspx" />
     <Content Include="Login.aspx" />
+    <Content Include="Script\jQuery\jquery-1.11.3.js" />
+    <Content Include="Style\bootstrap\css\bootstrap-theme.css" />
+    <Content Include="Style\bootstrap\css\bootstrap-theme.min.css" />
+    <Content Include="Style\bootstrap\css\bootstrap.css" />
+    <Content Include="Style\bootstrap\css\bootstrap.min.css" />
+    <Content Include="Style\bootstrap\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Style\bootstrap\js\bootstrap.js" />
+    <Content Include="Style\bootstrap\js\bootstrap.min.js" />
+    <Content Include="Style\bootstrap\js\npm.js" />
+    <Content Include="Style\Login.css" />
+    <Content Include="Style\OtrosEstilos.css" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -240,21 +242,22 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="General.Master" />
-    <Content Include="bootstrap\css\bootstrap-theme.css.map" />
-    <Content Include="bootstrap\css\bootstrap.css.map" />
-    <Content Include="bootstrap\fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="bootstrap\fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="bootstrap\fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="bootstrap\fonts\glyphicons-halflings-regular.woff2" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
     </None>
+    <None Include="My Project\PublishProfiles\SGSAC.pubxml" />
     <None Include="My Project\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+    <Content Include="Style\bootstrap\css\bootstrap-theme.css.map" />
+    <Content Include="Style\bootstrap\css\bootstrap.css.map" />
+    <Content Include="Style\bootstrap\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Style\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Style\bootstrap\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Style\bootstrap\fonts\glyphicons-halflings-regular.woff2" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -262,6 +265,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

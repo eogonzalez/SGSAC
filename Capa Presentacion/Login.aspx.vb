@@ -5,7 +5,7 @@ Public Class Login
     Inherits System.Web.UI.Page
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-
+        txtFecha.Text = DateTime.Now.ToLongDateString()
     End Sub
 
     Protected Sub btn_ingresar_Click(sender As Object, e As EventArgs) Handles btn_ingresar.Click
@@ -39,9 +39,6 @@ Public Class Login
         Else
             lbl_mensaje_login.Text = "Autenticar, Usuario no registrado o contraseña incorrecta"
         End If
-
-
-
 
     End Sub
 End Class
