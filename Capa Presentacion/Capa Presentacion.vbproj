@@ -114,6 +114,7 @@
     <Content Include="Images\paises.png" />
     <Content Include="Inicio.aspx" />
     <Content Include="Login.aspx" />
+    <Content Include="Logout.aspx" />
     <Content Include="Script\jQuery\jquery-1.11.3.js" />
     <Content Include="Style\bootstrap\css\bootstrap-theme.css" />
     <Content Include="Style\bootstrap\css\bootstrap-theme.min.css" />
@@ -210,6 +211,13 @@
     </Compile>
     <Compile Include="Login.aspx.vb">
       <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Logout.aspx.designer.vb">
+      <DependentUpon>Logout.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Logout.aspx.vb">
+      <DependentUpon>Logout.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />

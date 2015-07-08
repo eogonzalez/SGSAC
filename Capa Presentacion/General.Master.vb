@@ -4,11 +4,17 @@ Public Class General
     Inherits System.Web.UI.MasterPage
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-        txtFecha.Text = DateTime.Now.ToLongDateString()
+        If CType(Session("UsuarioID"), Integer) >= 1 Then
+            txtFecha.Text = DateTime.Now.ToLongDateString()
 
-        If Not IsPostBack Then
-            LlenarMenu()
+            If Not IsPostBack Then
+                LlenarMenu()
+            End If
+        Else
+            Response.Redirect("~/Login.aspx")
         End If
+
+        
 
     End Sub
 
