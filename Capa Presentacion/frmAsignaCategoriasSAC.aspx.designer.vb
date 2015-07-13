@@ -149,6 +149,15 @@ Partial Public Class frmAsignaCategoriasSAC
     Protected WithEvents btn_seleccionar As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
+    '''Control Datos_SAC.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents Datos_SAC As Global.System.Web.UI.UpdatePanel
+
+    '''<summary>
     '''Control lbl_descripcion_capitulo.
     '''</summary>
     '''<remarks>
@@ -203,13 +212,13 @@ Partial Public Class frmAsignaCategoriasSAC
     Protected WithEvents txt_descripcion_sub_partida As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''Control lkbtn_selec_inciso.
+    '''Control Datos_GridView.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents lkbtn_selec_inciso As Global.System.Web.UI.WebControls.LinkButton
+    Protected WithEvents Datos_GridView As Global.System.Web.UI.UpdatePanel
 
     '''<summary>
     '''Control gvAsignarCategorias.
@@ -246,4 +255,13 @@ Partial Public Class frmAsignaCategoriasSAC
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
     Protected WithEvents hfIdInstrumento As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''Control hfCheckInciso.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents hfCheckInciso As Global.System.Web.UI.WebControls.HiddenField
 End Class

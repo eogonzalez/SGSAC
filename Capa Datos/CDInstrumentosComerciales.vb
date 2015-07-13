@@ -1459,9 +1459,22 @@ Public Class CDInstrumentosComerciales
             Dim partida As String = Nothing
             Dim subpartida As String = Nothing
 
-            capitulo = str_codigo
-            partida = str_codigo
-            subpartida = str_codigo
+            If str_codigo.Length >= 2 Then
+                capitulo = str_codigo.Substring(0, 2)
+                If str_codigo.Length >= 4 Then
+                    partida = str_codigo.Substring(2, 2)
+                    If str_codigo.Length >= 6 Then
+                        subpartida = str_codigo.Substring(4, 2)
+                    Else
+                        subpartida = str_codigo
+                    End If
+                Else
+                    partida = str_codigo.Substring(0, 1)
+                    subpartida = str_codigo.Substring(0, 1)
+                End If
+            Else
+                Exit Try
+            End If
 
             sql_string = " SELECT " +
                 " descripcion_capitulo " +
@@ -1469,7 +1482,7 @@ Public Class CDInstrumentosComerciales
                 " SAC_Capitulos " +
                 " WHERE " +
                 " Capitulo = @capitulo AND  " +
-                " activo = 'A'; " +
+                " activo = 'S'; " +
                 " SELECT " +
                 " Descripcion_Partida " +
                 " FROM " +
@@ -1477,7 +1490,7 @@ Public Class CDInstrumentosComerciales
                 " WHERE " +
                 " Capitulo = @capitulo AND " +
                 " Partida = @partida AND  " +
-                " activo = 'A'; " +
+                " activo = 'S'; " +
                 " SELECT " +
                 " texto_subpartida " +
                 " FROM " +
@@ -1486,7 +1499,7 @@ Public Class CDInstrumentosComerciales
                 " Capitulo = @capitulo AND " +
                 " partida = @partida AND " +
                 " subpartida = @subpartida AND " +
-                " activo = 'A'; " +
+                " activo = 'S'; " +
                 " SELECT " +
                 " ci.codigo_inciso, ci.texto_inciso, ci.dai_base, " +
                 " icd.codigo_categoria, SAC.inciso_presicion, SAC.texto_precision " +

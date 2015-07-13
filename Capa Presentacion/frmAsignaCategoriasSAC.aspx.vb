@@ -23,10 +23,36 @@ Public Class frmAsignaCategoriasSAC
         LlenarSeleccionCodigoInciso(txt_codigo_arancel.Text)
     End Sub
 
+    'Metodo para cambiar el estado de los checkbox del gridview
+    Protected Sub cb_seleccionar_todo_CheckedChanged(sender As Object, e As EventArgs)
 
-    'Protected Sub btn_selec_inciso_Click(sender As Object, e As EventArgs) Handles btn_selec_inciso.Click
+        Dim check_all As CheckBox = sender
 
-    'End Sub
+        If check_all.Checked Then
+            For i As Integer = 0 To gvAsignarCategorias.Rows.Count - 1
+                Dim check_inciso As CheckBox = gvAsignarCategorias.Rows(i).FindControl("cb_inciso")
+
+                If Not check_inciso.Checked Then
+                    check_inciso.Checked = True
+                End If
+            Next
+        Else
+            For i As Integer = 0 To gvAsignarCategorias.Rows.Count - 1
+                Dim check_inciso As CheckBox = gvAsignarCategorias.Rows(i).FindControl("cb_inciso")
+
+                If check_inciso.Checked Then
+                    check_inciso.Checked = False
+                End If
+            Next
+        End If
+
+
+    End Sub
+
+
+    Protected Sub cb_inciso_CheckedChanged(sender As Object, e As EventArgs)
+        'ClientScript.RegisterStartupScript(sender.GetType(), "EstatusCheck", "StatusCheck();", True)
+    End Sub
 
 #End Region
 
@@ -121,5 +147,6 @@ Public Class frmAsignaCategoriasSAC
     End Sub
 
 #End Region
+
 
 End Class

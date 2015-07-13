@@ -16,8 +16,8 @@
             }
         }
 
-        function SelectAll() {
-            var rdBtn = document.getElementById("ContentPlaceHolder1_rb_inciso");
+        function SelectAll(id) {
+            var rdBtn = document.getElementById(id);
             var rdBtnList = document.getElementsByTagName("input");
 
 
@@ -36,6 +36,26 @@
                 }
             }
 
+
+        }
+
+        function StatusCheck() {
+            alert("Entra status check");
+
+            var rdBtn = document.getElementById("cb_inciso");
+            var rdBtnList = document.getElementsByTagName("input");
+            var hfCheck = document.getElementById("hfCheckInciso");
+
+            for (i = 0; i < rdBtnList.length; i++) {
+
+                if (i == rdBtnList.length) {
+                    alert("Entra si el tamaño es el mismo");
+                    hfCheck.value = "1";
+                } else {
+                    alert("Entra si el tamaño no es el mismo");
+                    hfCheck.value = "0";
+                }
+            }
 
         }
      </script>
@@ -116,65 +136,70 @@
                 <span class="label label-primary">Descripción Capitulo-Partida y Subpartida Seleccionada
                 </span>
             </h5>
-            <div class="form-group">
-                <asp:Label ID="lbl_descripcion_capitulo" CssClass="control-label col-xs-2" Text="Capitulo:" runat="server"></asp:Label>
-                <div class="col-xs-10">
-                    <asp:TextBox ID="txt_descripcion_capitulo" CssClass="form-control" runat="server" disabled></asp:TextBox>
-                </div>
-            </div>
+            <asp:UpdatePanel ID="Datos_SAC" runat="server">
+                <ContentTemplate>
+                    <div class="form-group">
+                        <asp:Label ID="lbl_descripcion_capitulo" CssClass="control-label col-xs-2" Text="Capitulo:" runat="server"></asp:Label>
+                        <div class="col-xs-10">
+                            <asp:TextBox ID="txt_descripcion_capitulo" CssClass="form-control" runat="server" disabled></asp:TextBox>
+                        </div>
+                    </div>
 
-            <div class="form-group">
+                    <div class="form-group">
 
-                <asp:Label ID="lbl_descripcion_partida" CssClass="control-label col-xs-2" Text="Partida:" runat="server"></asp:Label>
-                <div class="col-xs-10">
-                    <asp:TextBox ID="txt_descripcion_partida" CssClass="form-control" runat="server" disabled></asp:TextBox>
-                </div>
-            </div>
+                        <asp:Label ID="lbl_descripcion_partida" CssClass="control-label col-xs-2" Text="Partida:" runat="server"></asp:Label>
+                        <div class="col-xs-10">
+                            <asp:TextBox ID="txt_descripcion_partida" CssClass="form-control" runat="server" disabled></asp:TextBox>
+                        </div>
+                    </div>
 
-            <div class="form-group">
-                <asp:Label ID="lbl_descripcion_sub_partida" CssClass="control-label col-xs-2" Text="Subpartida:" runat="server"></asp:Label>
-                <div class="col-xs-10">
-                    <asp:TextBox ID="txt_descripcion_sub_partida" CssClass="form-control" runat="server" disabled></asp:TextBox>
-                </div>
-            </div>
+                    <div class="form-group">
+                        <asp:Label ID="lbl_descripcion_sub_partida" CssClass="control-label col-xs-2" Text="Subpartida:" runat="server"></asp:Label>
+                        <div class="col-xs-10">
+                            <asp:TextBox ID="txt_descripcion_sub_partida" CssClass="form-control" runat="server" disabled></asp:TextBox>
+                        </div>
+                    </div>
+                </ContentTemplate>
+            </asp:UpdatePanel>
 
             <%-- Grid para asignar categoria --%>
             <h5>
                 <span class="label label-primary">Asignar Categoria de Desgravación
                 </span>
             </h5>
-            <div class="form-group">
-                <div class="col-xs-2">
-                    <asp:LinkButton ID="lkbtn_selec_inciso" CssClass="btn btn-primary" Text="Seleccionar Todo" runat="server"/>
-                    <%--<asp:LinkButton ID="LinkButton1" CssClass="btn btn-primary" Text="Seleccionar Todo" runat="server" OnClick="javascript:SelectAll()"/>--%>
-                </div>
-            </div>
 
             <div class="table-responsive">
-                <asp:GridView ID="gvAsignarCategorias" runat="server"
-                    CssClass="table table-hover table-striped"
-                    GridLines="None"
-                    EmptyDataText="No se encontraron incisos arancelarios"
-                    AutoGenerateColumns="false" AllowPaging="True">
+                <asp:UpdatePanel ID="Datos_GridView" runat="server">
+                    <ContentTemplate>
+                        <asp:GridView ID="gvAsignarCategorias" runat="server"
+                            CssClass="table table-hover table-striped"
+                            GridLines="None"
+                            EmptyDataText="No se encontraron incisos arancelarios"
+                            AutoGenerateColumns="false" AllowPaging="True">
 
-                    <PagerSettings Mode="Numeric"
-                        Position="Bottom"
-                        PageButtonCount="10" />
+                            <PagerSettings Mode="Numeric"
+                                Position="Bottom"
+                                PageButtonCount="10" />
 
-                    <Columns>
-                        <asp:TemplateField>
-                            <ItemTemplate>
-                                <asp:RadioButton ID="rb_inciso" runat="server"  OnClick="javascript:SelectSingleRadiobutton(this.id)" />
-                            </ItemTemplate>
-                        </asp:TemplateField>
-                        <asp:BoundField DataField="codigo_inciso" HeaderText="Inciso Arancelario" />
-                        <asp:BoundField DataField="texto_inciso" HeaderText="Descripcion Inciso Arancelario" />
-                        <asp:BoundField DataField="dai_base" HeaderText="DAI SAC(Base)" />
-                        <asp:BoundField DataField="codigo_categoria" HeaderText="Categoria" />
-                        <asp:BoundField DataField="inciso_presicion" HeaderText="Código Precision" />
-                        <asp:BoundField DataField="texto_precision" HeaderText="Descripcion Precision" />
-                    </Columns>
-                </asp:GridView>
+                            <Columns>
+                                <asp:TemplateField>
+                                    <HeaderTemplate>
+                                        <asp:CheckBox ID="cb_seleccionar_todo" runat="server" AutoPostBack="True" OnCheckedChanged="cb_seleccionar_todo_CheckedChanged" Text="Seleccionar Todo" />
+                                    </HeaderTemplate>
+                                    <ItemTemplate>
+                                        <asp:CheckBox ID="cb_inciso" runat="server" OnCheckedChanged="cb_inciso_CheckedChanged" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:BoundField DataField="codigo_inciso" HeaderText="Inciso Arancelario" />
+                                <asp:BoundField DataField="texto_inciso" HeaderText="Descripcion Inciso Arancelario" />
+                                <asp:BoundField DataField="dai_base" HeaderText="DAI SAC(Base)" />
+                                <asp:BoundField DataField="codigo_categoria" HeaderText="Categoria" />
+                                <asp:BoundField DataField="inciso_presicion" HeaderText="Código Precision" />
+                                <asp:BoundField DataField="texto_precision" HeaderText="Descripcion Precision" />
+                            </Columns>
+                        </asp:GridView>
+                    </ContentTemplate>
+                </asp:UpdatePanel>
             </div>
         </div>
 
@@ -188,5 +213,6 @@
 
     <div>
         <asp:HiddenField ID="hfIdInstrumento" runat="server" />
+        <asp:HiddenField ID="hfCheckInciso" runat="server" />
     </div>
 </asp:Content>
