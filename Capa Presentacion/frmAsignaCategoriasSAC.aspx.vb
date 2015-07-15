@@ -1,8 +1,21 @@
 ﻿Imports Capa_Entidad
 Imports Reglas_del_negocio
 
+
 Public Class frmAsignaCategoriasSAC
     Inherits System.Web.UI.Page
+    Shared _tabla_incisos As DataTable
+
+    Public Shared Property tabla_incisos As DataTable
+        Get
+            Return _tabla_incisos
+        End Get
+        Set(value As DataTable)
+            _tabla_incisos = value
+        End Set
+    End Property
+
+
 
 #Region "Funciones del sistema"
 
@@ -26,11 +39,11 @@ Public Class frmAsignaCategoriasSAC
     'Metodo para cambiar el estado de los checkbox del gridview
     Protected Sub cb_seleccionar_todo_CheckedChanged(sender As Object, e As EventArgs)
 
-        Dim check_all As CheckBox = sender
+        Dim check_all As System.Web.UI.WebControls.CheckBox = sender
 
         If check_all.Checked Then
             For i As Integer = 0 To gvAsignarCategorias.Rows.Count - 1
-                Dim check_inciso As CheckBox = gvAsignarCategorias.Rows(i).FindControl("cb_inciso")
+                Dim check_inciso As System.Web.UI.WebControls.CheckBox = gvAsignarCategorias.Rows(i).FindControl("cb_inciso")
 
                 If Not check_inciso.Checked Then
                     check_inciso.Checked = True
@@ -38,7 +51,7 @@ Public Class frmAsignaCategoriasSAC
             Next
         Else
             For i As Integer = 0 To gvAsignarCategorias.Rows.Count - 1
-                Dim check_inciso As CheckBox = gvAsignarCategorias.Rows(i).FindControl("cb_inciso")
+                Dim check_inciso As System.Web.UI.WebControls.CheckBox = gvAsignarCategorias.Rows(i).FindControl("cb_inciso")
 
                 If check_inciso.Checked Then
                     check_inciso.Checked = False
@@ -49,9 +62,24 @@ Public Class frmAsignaCategoriasSAC
 
     End Sub
 
-
     Protected Sub cb_inciso_CheckedChanged(sender As Object, e As EventArgs)
-        'ClientScript.RegisterStartupScript(sender.GetType(), "EstatusCheck", "StatusCheck();", True)
+        Dim check As CheckBox = CType(sender, CheckBox)
+        Dim fila As GridViewRow = CType(check.NamingContainer, GridViewRow)
+
+        If check.Checked Then
+
+        Else
+
+        End If
+
+    End Sub
+
+    Protected Sub gvAsignarCategorias_PageIndexChanging(ByVal sender As Object, ByVal e As System.Web.UI.WebControls.GridViewPageEventArgs) Handles gvAsignarCategorias.PageIndexChanging
+        gvAsignarCategorias.PageIndex = e.NewPageIndex
+        With gvAsignarCategorias
+            .DataSource = tabla_incisos
+            .DataBind()
+        End With
     End Sub
 
 #End Region
@@ -92,6 +120,8 @@ Public Class frmAsignaCategoriasSAC
                 Dim tbl As New DataTable
 
                 tbl = .Tables(3)
+                tabla_incisos = .Tables(3)
+                tabla_incisos.Columns.Add(New DataColumn("Selected", GetType(Boolean)))
 
                 With gvAsignarCategorias
                     .DataSource = tbl

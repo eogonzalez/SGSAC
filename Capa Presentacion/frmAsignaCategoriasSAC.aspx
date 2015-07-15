@@ -187,7 +187,7 @@
                                         <asp:CheckBox ID="cb_seleccionar_todo" runat="server" AutoPostBack="True" OnCheckedChanged="cb_seleccionar_todo_CheckedChanged" Text="Seleccionar Todo" />
                                     </HeaderTemplate>
                                     <ItemTemplate>
-                                        <asp:CheckBox ID="cb_inciso" runat="server" OnCheckedChanged="cb_inciso_CheckedChanged" />
+                                        <asp:CheckBox ID="cb_inciso" runat="server" OnCheckedChanged="cb_inciso_CheckedChanged" AutoPostBack="true" />
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:BoundField DataField="codigo_inciso" HeaderText="Inciso Arancelario" />
