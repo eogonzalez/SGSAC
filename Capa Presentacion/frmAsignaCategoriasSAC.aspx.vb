@@ -65,10 +65,25 @@ Public Class frmAsignaCategoriasSAC
     Protected Sub cb_inciso_CheckedChanged(sender As Object, e As EventArgs)
         Dim check As CheckBox = CType(sender, CheckBox)
         Dim fila As GridViewRow = CType(check.NamingContainer, GridViewRow)
+        Dim CodigoInciso As String = ""
+
+        CodigoInciso = fila.Cells(1).Text
 
         If check.Checked Then
 
+            For Each enc As DataRow In tabla_incisos.Rows
+                If enc("codigo_inciso") = CodigoInciso Then
+                    enc("Selected") = 1
+                End If
+            Next
+
         Else
+
+            For Each enc As DataRow In tabla_incisos.Rows
+                If enc("codigo_inciso") = CodigoInciso Then
+                    enc("Selected") = 0
+                End If
+            Next
 
         End If
 
@@ -179,4 +194,8 @@ Public Class frmAsignaCategoriasSAC
 #End Region
 
 
+    Protected Sub btn_asigna_categoria_Click(sender As Object, e As EventArgs) Handles btn_asigna_categoria.Click
+        Dim tblDatos As New DataTable
+        tblDatos = tabla_incisos
+    End Sub
 End Class
