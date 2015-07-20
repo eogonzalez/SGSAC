@@ -15,8 +15,6 @@ Public Class frmAsignaCategoriasSAC
         End Set
     End Property
 
-
-
 #Region "Funciones del sistema"
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
@@ -25,6 +23,7 @@ Public Class frmAsignaCategoriasSAC
 
             LlenarAsignaCategoriaMant(hfIdInstrumento.Value)
 
+            Me.btn_asigna_categoria.Attributes.Add("onclick", "this.vale='Guardando Espere...';this.disabled=true;" & Me.GetPostBackEventReference(Me.btn_asigna_categoria))
         End If
 
     End Sub
@@ -62,6 +61,7 @@ Public Class frmAsignaCategoriasSAC
 
     End Sub
 
+    'Metodo que almacena en datatable checkbox selecionado o no seleccionado
     Protected Sub cb_inciso_CheckedChanged(sender As Object, e As EventArgs)
         Dim check As CheckBox = CType(sender, CheckBox)
         Dim fila As GridViewRow = CType(check.NamingContainer, GridViewRow)
@@ -89,17 +89,37 @@ Public Class frmAsignaCategoriasSAC
 
     End Sub
 
+    'Metodo para manejar gridview cuando se cambia de pagina
     Protected Sub gvAsignarCategorias_PageIndexChanging(ByVal sender As Object, ByVal e As System.Web.UI.WebControls.GridViewPageEventArgs) Handles gvAsignarCategorias.PageIndexChanging
         gvAsignarCategorias.PageIndex = e.NewPageIndex
         With gvAsignarCategorias
             .DataSource = tabla_incisos
             .DataBind()
         End With
+        'Metodo para marcar checkbox del gridview cuando cambia de pagina
+        Check_GridVew()
+    End Sub
+
+    Protected Sub btn_asigna_categoria_Click(sender As Object, e As EventArgs) Handles btn_asigna_categoria.Click
+        Dim obj_asigna As New CNInstrumentosComerciales
+
+        If obj_asigna.InsertAsignaCategoria(hfIdInstrumento.Value, getIdCategoria, tabla_incisos) Then
+            Mensaje("Se asigno categoria con exito.")
+        Else
+            Mensaje("Error al asignar categoria.")
+        End If
     End Sub
 
 #End Region
 
 #Region "Funciones para obtener valores"
+    Function getIdCategoria() As Integer
+        Dim id_categoria As Integer
+
+        id_categoria = Convert.ToInt32(ddl_categoria_asignar.SelectedValue)
+
+        Return id_categoria
+    End Function
 
 #End Region
 
@@ -133,10 +153,18 @@ Public Class frmAsignaCategoriasSAC
 
             Else
                 Dim tbl As New DataTable
+                Dim column As New DataColumn
 
                 tbl = .Tables(3)
                 tabla_incisos = .Tables(3)
-                tabla_incisos.Columns.Add(New DataColumn("Selected", GetType(Boolean)))
+
+                With column
+                    .ColumnName = "Selected"
+                    .DataType = GetType(Boolean)
+                    .DefaultValue = False
+                End With
+                tabla_incisos.Columns.Add(column)
+                'tabla_incisos.Columns.Add(New DataColumn("Selected", GetType(Boolean)))
 
                 With gvAsignarCategorias
                     .DataSource = tbl
@@ -191,11 +219,41 @@ Public Class frmAsignaCategoriasSAC
         End With
     End Sub
 
+    'Metodo para marcar check del gridview cuando cambia de pagina
+    Sub Check_GridVew()
+        With gvAsignarCategorias
+            'Recorro datatable
+            For Each row As DataRow In tabla_incisos.Rows
+                'Si la fila esta seleccionada
+                If row("Selected") = True Then
+                    'Recorro grid view para marcar check
+                    For i As Integer = 0 To .Rows.Count - 1
+                        Dim codigo_dt As String
+                        Dim codigo_gv As String
+                        Dim check As CheckBox
+
+                        codigo_dt = row("codigo_inciso")
+                        codigo_gv = .Rows(i).Cells(1).Text
+                        check = .Rows(i).FindControl("cb_inciso")
+                        'Si el el codigo del datatable es igual al del grid view marcar y salir
+                        If codigo_dt = codigo_gv Then
+                            check.Checked = True
+                            Exit For
+                        End If
+                    Next
+                End If
+            Next
+        End With
+
+    End Sub
+
+    'Procedimiento para mostrar mensajes en el formulario
+    Sub Mensaje(ByVal texto As String)
+        Dim jv As String = "<script>alert('" & texto & "');</script>"
+
+        ScriptManager.RegisterClientScriptBlock(Me, GetType(Page), "alert", jv, False)
+    End Sub
+
 #End Region
 
-
-    Protected Sub btn_asigna_categoria_Click(sender As Object, e As EventArgs) Handles btn_asigna_categoria.Click
-        Dim tblDatos As New DataTable
-        tblDatos = tabla_incisos
-    End Sub
 End Class

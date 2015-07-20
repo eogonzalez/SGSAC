@@ -187,6 +187,11 @@ Public Class CNInstrumentosComerciales
 
 #Region "Funciones y procedimientos para el Mantenimiento de Asignacion Categorias"
 
+    'Funcion para Insertar las Asociaciones de categoria
+    Public Function InsertAsignaCategoria(ByVal id_instrumento As Integer, ByVal id_categoria As Integer, ByVal dt_asocia As DataTable) As Boolean
+        Return objCDInstrumentos.InsertAsignaCategoria(id_instrumento, id_categoria, dt_asocia)
+    End Function
+
     'Funcion para obtener los datos para los codigos seleccionados
     Public Function SelectDatosCodigoInciso(ByVal str_codigo As String) As DataSet
         Return objCDInstrumentos.SelectDatosCodigoInciso(str_codigo)

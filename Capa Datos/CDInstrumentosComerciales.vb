@@ -1451,6 +1451,59 @@ Public Class CDInstrumentosComerciales
 
 #Region "Funciones y procedimientos para el Mantenimiento de Asignacion Categorias"
 
+    'Funcion para Insertar las Asociaciones de categoria
+    Public Function InsertAsignaCategoria(ByVal id_instrumento As Integer, ByVal id_categoria As Integer, ByVal dt_asocia As DataTable) As Boolean
+        Dim estado As Boolean = False
+        Try
+            Dim sql_query As String
+
+            sql_query = " INSERT INTO " +
+                " SAC_Asocia_Categoria " +
+                " ([id_instrumento] " +
+                " ,[id_categoria] " +
+                " ,[id_version] " +
+                " ,[anio_version] " +
+                " ,[codigo_inciso] " +
+                " ,[estado]) " +
+                " (SELECT " +
+                " CD.id_instrumento, CD.id_categoria, " +
+                " VB.id_version, VB.anio_version,  " +
+                " @codigo_inciso , 'A' " +
+                " From " +
+                " SAC_Versiones_Bitacora VB, " +
+                " IC_Categorias_Desgravacion CD " +
+                " WHERE " +
+                " CD.id_categoria = @id_categoria AND " +
+                " CD.id_instrumento = @id_instrumento AND " +
+                " VB.estado = 'A') "
+
+            For Each row As DataRow In dt_asocia.Rows
+
+                If row("Selected") = True Then
+
+                    Using conexion = objConeccion.Conectar
+                        Dim command As SqlCommand = New SqlCommand(sql_query, conexion)
+                        command.Parameters.AddWithValue("id_instrumento", id_instrumento)
+                        command.Parameters.AddWithValue("id_categoria", id_categoria)
+                        command.Parameters.AddWithValue("codigo_inciso", row("codigo_inciso"))
+
+                        conexion.Open()
+                        command.ExecuteScalar()
+                        estado = True
+                    End Using
+
+                End If
+
+            Next
+
+        Catch ex As Exception
+            estado = False
+        Finally
+
+        End Try
+        Return estado
+    End Function
+
     'Funcion para obtener los datos para los codigos seleccionados
     Public Function SelectDatosCodigoInciso(ByVal str_codigo As String) As DataSet
         Try
@@ -1506,7 +1559,18 @@ Public Class CDInstrumentosComerciales
                 " FROM " +
                 " SAC_Incisos CI " +
                 " left outer join " +
-                " SAC_Asocia_Categoria sac on " +
+                " (SELECT " +
+                " AC.id_version, AC.anio_version, " +
+                " AC.codigo_inciso, " +
+                " AC.id_categoria, AC.id_instrumento," +
+                " AC.inciso_presicion, AC.texto_precision " +
+                " FROM " +
+                " SAC_Asocia_Categoria AC, " +
+                " SAC_Versiones_Bitacora VB " +
+                " WHERE " +
+                " ac.id_version = vb.id_version AND " +
+                " ac.anio_version = vb.anio_version AND " +
+                " vb.estado = 'A') SAC on " +
                 " sac.id_version = ci.id_version And " +
                 " sac.anio_version = CI.anio_version And " +
                 " sac.codigo_inciso = ci.codigo_inciso " +
@@ -1515,6 +1579,7 @@ Public Class CDInstrumentosComerciales
                 " icd.id_categoria = sac.id_categoria And " +
                 " icd.id_instrumento = sac.id_instrumento " +
                 " WHERE " +
+                " CI.estado = 'A' AND  " +
                 " CI.codigo_inciso LIKE '" + str_codigo + "%' "
 
             Using cn = objConeccion.Conectar
