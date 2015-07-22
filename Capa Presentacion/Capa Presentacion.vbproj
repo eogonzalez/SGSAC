@@ -272,6 +272,7 @@
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
     </None>
+    <None Include="My Project\PublishProfiles\local.pubxml" />
     <None Include="My Project\PublishProfiles\SGSAC.pubxml" />
     <None Include="My Project\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
