@@ -1893,4 +1893,70 @@ Public Class CDInstrumentosComerciales
     End Function
 #End Region
 
+#Region "Funciones y procedimientos para el Mantenimiento de Enmiendas del SAC"
+
+    'Funcion para seleccionar el SAC segun el id_version_sac
+    Public Function SelectVersionSACMant(ByVal id_version_sac As Integer) As DataTable
+        Dim sql_query As String
+        Dim dtSAC As New DataTable
+
+        sql_query = " SELECT anio_version, " +
+            " enmienda, fecha_inicia_vigencia, " +
+            " fecha_fin_vigencia, observaciones" +
+            " FROM SAC_Versiones_Bitacora " +
+            " WHERE id_version = @id_version "
+
+        Using cn = objConeccion.Conectar
+            Try
+
+                Dim command As SqlCommand = New SqlCommand(sql_query, cn)
+                command.Parameters.AddWithValue("id_version", id_version_sac)
+                da = New SqlDataAdapter(command)
+
+                da.Fill(dtSAC)
+                cn.Close()
+
+            Catch ex As Exception
+                MsgBox("ERROR CONSULTAR VERSION SAC = " + ex.Message.ToString)
+            Finally
+                objConeccion.Conectar.Dispose()
+                cn.Dispose()
+            End Try
+
+            Return dtSAC
+
+        End Using
+    End Function
+
+    'Funcion para llenar el GridView de Enmiendas del SAC
+    Public Function SelectEnmiendas() As DataSet
+        'Se Llena el Data Set por medio del la consulta y se retorna el mismo
+        Dim sql_query As String
+
+        sql_query = " SELECT id_version, anio_version, " +
+            " enmienda, fecha_inicia_vigencia, " +
+            " fecha_fin_vigencia, estado, observaciones" +
+            " FROM SAC_Versiones_Bitacora "
+
+        Using cn = objConeccion.Conectar
+            Try
+
+                Dim command As SqlCommand = New SqlCommand(sql_query, cn)
+                da = New SqlDataAdapter(sql_query, cn)
+                da.Fill(ds)
+
+            Catch ex As Exception
+                MsgBox("ERROR CONSULTA VERSIONES ENMIENDAS SAC = " + ex.Message.ToString)
+            Finally
+                objConeccion.Conectar.Dispose()
+                cn.Dispose()
+                da.Dispose()
+            End Try
+
+            Return ds
+
+        End Using
+    End Function
+
+#End Region
 End Class

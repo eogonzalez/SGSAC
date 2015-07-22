@@ -246,4 +246,19 @@ Public Class CNInstrumentosComerciales
     End Function
 #End Region
 
+#Region "Funciones y procedimientos para el Mantenimiento de Enmiendas del SAC"
+
+    'Funcion para seleccionar el SAC segun el id_version_sac
+    Public Function SelectVersionSACMant(ByVal id_version_sac As Integer) As DataTable
+        Return objCDInstrumentos.SelectVersionSACMant(id_version_sac)
+    End Function
+
+    'Funcion para llenar el GridView de Enmiendas del SAC
+    Public Function SelectEnmiendas() As DataSet
+        Return objCDInstrumentos.SelectEnmiendas()
+    End Function
+
+#End Region
+
+
 End Class
