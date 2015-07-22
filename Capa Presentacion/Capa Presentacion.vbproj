@@ -100,6 +100,7 @@
     <Content Include="frmCategoriasDesgravacion.aspx" />
     <Content Include="frmConsultaSAC.aspx" />
     <Content Include="frmCorteDesgravacion.aspx" />
+    <Content Include="frmEnmiendas.aspx" />
     <Content Include="frmPaisesInstrumento.aspx" />
     <Content Include="frmTipoDesgravacion.aspx" />
     <Content Include="frmTipoInstrumento.aspx" />
@@ -127,7 +128,9 @@
     <Content Include="Style\bootstrap\js\npm.js" />
     <Content Include="Style\Login.css" />
     <Content Include="Style\OtrosEstilos.css" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="frmAsignaCategoriasSAC.aspx.designer.vb">
@@ -156,6 +159,13 @@
     </Compile>
     <Compile Include="frmCorteDesgravacion.aspx.vb">
       <DependentUpon>frmCorteDesgravacion.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="frmEnmiendas.aspx.designer.vb">
+      <DependentUpon>frmEnmiendas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="frmEnmiendas.aspx.vb">
+      <DependentUpon>frmEnmiendas.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="frmPaisesInstrumento.aspx.designer.vb">

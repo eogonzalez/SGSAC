@@ -33,7 +33,7 @@
             
             <cc1:ModalPopupExtender ID="mpePaises" runat="server" PopupControlID="pnlAsinarPais" BackgroundCssClass="modalBackground" BehaviorID="hfPopup_ModalPopupExtender" DynamicServicePath="" TargetControlID="lkBtn_Hidden_Nuevo">
             </cc1:ModalPopupExtender>
- 
+            
             <asp:LinkButton ID="lkBtt_editar" runat="server" CssClass="btn btn-primary"> <i aria-hidden="true" class="glyphicon glyphicon-edit"></i> Editar </asp:LinkButton>
             
         </div>
