@@ -20,7 +20,7 @@
     <div>
         <table style="margin: 0 auto 0 auto">
             <tr>
-                <td style="text-align:center">
+                <td style="text-align:left">
                     <asp:Menu ID="MenuPrincipal" runat="server" disappearafter="500" Orientation="Horizontal" staticdisplaylevels="2" font-names="Trebuchet MS, Arial" >
                         <staticmenuitemstyle backcolor="#054795" forecolor="WhiteSmoke" horizontalpadding="35" verticalpadding="10" />
                         <statichoverstyle backcolor="#0066cc" forecolor="White" borderstyle="Solid" borderwidth="1px" />

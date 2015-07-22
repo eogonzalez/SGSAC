@@ -11,79 +11,7 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class frmAsignaCategoriasSAC
-
-    '''<summary>
-    '''Control lbl_año_vigencia.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents lbl_año_vigencia As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''Control txt_año_vigencia.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents txt_año_vigencia As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''Control lbl_version_enmienda.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents lbl_version_enmienda As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''Control txt_version_enmienda.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents txt_version_enmienda As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''Control lbl_periodo_enmienda_sac.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents lbl_periodo_enmienda_sac As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''Control txt_periodo_año_inicial.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents txt_periodo_año_inicial As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''Control lbl_al.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents lbl_al As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''Control txt_periodo_año_final.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents txt_periodo_año_final As Global.System.Web.UI.WebControls.TextBox
+Partial Public Class frmConsultaSAC
 
     '''<summary>
     '''Control lbl_nombre_insrumento.
@@ -95,13 +23,13 @@ Partial Public Class frmAsignaCategoriasSAC
     Protected WithEvents lbl_nombre_insrumento As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''Control txt_nombre_instrumento.
+    '''Control ddl_instrumento_comercial.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents txt_nombre_instrumento As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents ddl_instrumento_comercial As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''Control lbl_categoria_asignar.
@@ -221,22 +149,22 @@ Partial Public Class frmAsignaCategoriasSAC
     Protected WithEvents Datos_GridView As Global.System.Web.UI.UpdatePanel
 
     '''<summary>
-    '''Control gvAsignarCategorias.
+    '''Control gv_incisos_sac.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents gvAsignarCategorias As Global.System.Web.UI.WebControls.GridView
+    Protected WithEvents gv_incisos_sac As Global.System.Web.UI.WebControls.GridView
 
     '''<summary>
-    '''Control btn_asigna_categoria.
+    '''Control btn_genera.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents btn_asigna_categoria As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents btn_genera As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''Control btn_Salir.

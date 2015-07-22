@@ -29,7 +29,7 @@
             </tr>
             <tr>
                 <td style="text-align: left">
-                    <asp:Image ID="imgLogo" runat="server" ImageUrl="~/SGSAC/Images/Logo.jpg" />
+                    <asp:Image ID="imgLogo" runat="server" ImageUrl="~/Images/Logo.jpg" />
                 </td>
                 <%--<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</td>--%>
                 <td style="text-align: center">
@@ -45,7 +45,7 @@
                 </td>
             </tr>
             <tr>
-                <td colspan="3" style="text-align: center">
+                <td colspan="3" style="text-align: left">
                     <asp:Menu ID="MenuPrincipal" runat="server" DisappearAfter="500" Orientation="Horizontal" Font-Names="Trebuchet MS, Arial">
                         <StaticMenuItemStyle BackColor="#054795" ForeColor="White" HorizontalPadding="40" VerticalPadding="10" />
                         <StaticHoverStyle BackColor="#0066cc" />
