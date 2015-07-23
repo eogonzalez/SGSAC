@@ -27,6 +27,24 @@ Public Class frmEnmiendas
         End If
     End Sub
 
+    Protected Sub btn_Salir_Click(sender As Object, e As EventArgs) Handles btn_Salir.Click
+        LimpiarFormulario()
+
+    End Sub
+
+
+    Protected Sub lkBtt_categorias_Click(sender As Object, e As EventArgs) Handles lkBtt_categorias.Click
+        Dim id_version_sac As Integer = 0
+        id_version_sac = Convert.ToInt32(getIdVersionGridView())
+        If id_version_sac = 0 Then
+            Mensaje("Seleccione una version del SAC.")
+            Exit Sub
+        Else
+            hfIdVersionSAC.Value = id_version_sac
+            Response.Redirect("~/frmCorrelacionSAC.aspx?id_vs=" + hfIdVersionSAC.Value)
+        End If
+    End Sub
+
 #End Region
 
 #Region "Funciones para capturar valores del formulario"
@@ -34,6 +52,15 @@ Public Class frmEnmiendas
 #End Region
 
 #Region "Mis Funciones"
+
+    'Limpiar formulario
+    Sub LimpiarFormulario()
+        txtAñoVersion.Text = ""
+        txtDescripcion.Text = ""
+        txtFechaFinVigencia.Text = ""
+        txtFechaInicioVigencia.Text = ""
+        txtObservaciones.Text = ""
+    End Sub
 
     'Procedimiento para llenar formulario con el id de la version del sac seleccionado
     Sub LlenarVersionSACMant(ByVal accion As String, ByVal id_version_sac As Integer)
@@ -109,4 +136,5 @@ Public Class frmEnmiendas
 #End Region
 
     
+
 End Class

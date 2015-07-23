@@ -99,6 +99,7 @@
     <Content Include="frmAsignaCategoriasSAC.aspx" />
     <Content Include="frmCategoriasDesgravacion.aspx" />
     <Content Include="frmConsultaSAC.aspx" />
+    <Content Include="frmCorrelacionSAC.aspx" />
     <Content Include="frmCorteDesgravacion.aspx" />
     <Content Include="frmEnmiendas.aspx" />
     <Content Include="frmPaisesInstrumento.aspx" />
@@ -152,6 +153,13 @@
     </Compile>
     <Compile Include="frmConsultaSAC.aspx.vb">
       <DependentUpon>frmConsultaSAC.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="frmCorrelacionSAC.aspx.designer.vb">
+      <DependentUpon>frmCorrelacionSAC.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="frmCorrelacionSAC.aspx.vb">
+      <DependentUpon>frmCorrelacionSAC.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="frmCorteDesgravacion.aspx.designer.vb">

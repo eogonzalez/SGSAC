@@ -1515,9 +1515,15 @@ Public Class CDInstrumentosComerciales
             If str_codigo.Length >= 2 Then
                 capitulo = str_codigo.Substring(0, 2)
                 If str_codigo.Length >= 4 Then
-                    partida = str_codigo.Substring(2, 2)
-                    If str_codigo.Length >= 6 Then
-                        subpartida = str_codigo.Substring(4, 2)
+                    partida = str_codigo.Substring(0, 4)
+                    If str_codigo.Length >= 5 Then
+                        If str_codigo.Length = 5 Then
+                            subpartida = str_codigo.Substring(0, 5) + "%"
+                        Else
+                            If str_codigo.Length >= 6 Then
+                                subpartida = str_codigo.Substring(0, 6) + "%"
+                            End If
+                        End If
                     Else
                         subpartida = str_codigo
                     End If
@@ -1551,7 +1557,7 @@ Public Class CDInstrumentosComerciales
                 " WHERE " +
                 " Capitulo = @capitulo AND " +
                 " partida = @partida AND " +
-                " subpartida = @subpartida AND " +
+                " subpartida like @subpartida AND " +
                 " activo = 'S'; " +
                 " SELECT " +
                 " ci.codigo_inciso, ci.texto_inciso, ci.dai_base, " +
