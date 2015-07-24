@@ -29,9 +29,7 @@ Public Class frmEnmiendas
 
     Protected Sub btn_Salir_Click(sender As Object, e As EventArgs) Handles btn_Salir.Click
         LimpiarFormulario()
-
     End Sub
-
 
     Protected Sub lkBtt_categorias_Click(sender As Object, e As EventArgs) Handles lkBtt_categorias.Click
         Dim id_version_sac As Integer = 0
@@ -45,13 +43,79 @@ Public Class frmEnmiendas
         End If
     End Sub
 
+    Protected Sub btn_Guardar_Click(sender As Object, e As EventArgs) Handles btn_Guardar.Click
+        If btn_Guardar.CommandName = "editar" Then
+            If EditarVersionSAC(hfIdVersionSAC.Value) Then
+                Mensaje("Versión SAC actualizada con éxito")
+                Llenar_gv_Enmiendas_Sac()
+                btn_Guardar.CommandName = ""
+                LimpiarFormulario()
+
+            Else
+                Mensaje("Error al actualizar Versión SAC")
+                lkBtt_nuevo_ModalPopupExtender.Show()
+            End If
+
+        Else
+            'If GuardarVersionSAC() Then
+            '    Mensaje("Versión SAC guardada con éxito")
+            '    Llenar_gv_Enmiendas_Sac()
+            '    LimpiarFormulario()
+            'Else
+            '    Mensaje("Error al guardar Versión SAC")
+            '    lkBtt_nuevo_ModalPopupExtender.Show()
+            'End If
+
+        End If
+    End Sub
+
 #End Region
 
 #Region "Funciones para capturar valores del formulario"
+    Function getAñoVersion() As Integer
+        Return Convert.ToInt32(txtAñoVersion.Text)
+    End Function
+
+    Function getDescripcion() As String
+        Return txtDescripcion.Text
+    End Function
+
+    Function getFechaInicia() As Date
+        Return txtFechaInicioVigencia.Text
+    End Function
+
+    Function getFechaFin() As Date
+        Return txtFechaFinVigencia.Text
+    End Function
+
+    Function getBaseNormativa() As String
+        Return txtObservaciones.Text
+    End Function
 
 #End Region
 
 #Region "Mis Funciones"
+
+    Private Function EditarVersionSAC(ByVal id_version_sac) As Boolean
+        'Declaro las variables de la capa de datos y entidad
+        Dim CEObjeto As New CEEnmiendas
+
+        'Obtengo los valores de los controles
+        CEObjeto.id_version = id_version_sac
+        CEObjeto.anio_version = getAñoVersion()
+        CEObjeto.enmienda = getDescripcion()
+        CEObjeto.fecha_inicia_vigencia = getFechaInicia()
+        CEObjeto.fecha_fin_vigencia = getFechaFin()
+        CEObjeto.observaciones = getBaseNormativa()
+
+        'Envio los valores a la capa entidad con el Objeto a la funcion actualizar instrumentos
+        Return objCapaNegocio.UpdateVersionSAC(CEObjeto)
+
+    End Function
+
+    'Private Function GuardarVersionSAC() As Boolean
+
+    'End Function
 
     'Limpiar formulario
     Sub LimpiarFormulario()
@@ -73,26 +137,22 @@ Public Class frmEnmiendas
         Else
             If accion = "editar" Then
                 txtAñoVersion.Text = datosVersionSac.Rows(0)("anio_version").ToString
-                txtDescripcion.Text = datosVersionSac.Rows(0)("enmienda").ToString
 
-                'If IsNothing(datosVersionSac.Rows(0)("fecha_inicia_vigencia").ToString) Then
+                If Not IsDBNull(datosVersionSac.Rows(0)("enmienda")) Then
+                    txtDescripcion.Text = datosVersionSac.Rows(0)("enmienda").ToString
+                End If
 
-                'Else
-                '    txtFechaInicioVigencia.Text = datosVersionSac.Rows(0)("fecha_inicia_vigencia")
-                'End If
+                If Not IsDBNull(datosVersionSac.Rows(0)("fecha_inicia_vigencia")) Then
+                    txtFechaInicioVigencia.Text = datosVersionSac.Rows(0)("fecha_inicia_vigencia").ToString
+                End If
 
-                'If IsNothing(datosVersionSac.Rows(0)("fecha_fin_vigencia").ToString) Then
+                If Not IsDBNull(datosVersionSac.Rows(0)("fecha_fin_vigencia")) Then
+                    txtFechaFinVigencia.Text = datosVersionSac.Rows(0)("fecha_fin_vigencia").ToString
+                End If
 
-                'Else
-                '    txtFechaFinVigencia.Text = datosVersionSac.Rows(0)("fecha_fin_vigencia").ToString
-                'End If
-
-                'If IsNothing(datosVersionSac.Rows(0)("observaciones").ToString) Then
-
-                'Else
-                '    txtObservaciones.Text = datosVersionSac.Rows(0)("observaciones").ToString
-                'End If
-
+                If Not IsDBNull(datosVersionSac.Rows(0)("observaciones")) Then
+                    txtObservaciones.Text = datosVersionSac.Rows(0)("observaciones").ToString
+                End If
 
             End If
         End If
@@ -134,7 +194,5 @@ Public Class frmEnmiendas
     End Sub
 
 #End Region
-
-    
 
 End Class

@@ -1901,6 +1901,82 @@ Public Class CDInstrumentosComerciales
 
 #Region "Funciones y procedimientos para el Mantenimiento de Enmiendas del SAC"
 
+    'Metodo para Insertar nueva Version SAC
+    Public Function InsertVersionSAC(ByVal objVersionSAC As CEEnmiendas) As Boolean
+        Try
+            Dim sql_query As String
+            sql_query = " INSERT INTO SAC_Versiones_Bitacora " +
+                " ([id_version] " +
+                " ,[anio_version] " +
+                " ,[enmienda] " +
+                " ,[observaciones] " +
+                " ,[fecha_inicia_vigencia] " +
+                " ,[fecha_fin_vigencia] " +
+                " VALUES " +
+                " (@id_version " +
+                " ,@anio_version " +
+                " ,@enmienda " +
+                " ,@observaciones " +
+                " ,@fecha_inicia_vigencia " +
+                " ,@fecha_fin_vigencia) "
+
+            Using conexion = objConeccion.Conectar
+                Dim command As SqlCommand = New SqlCommand(sql_query, conexion)
+                command.Parameters.AddWithValue("id_version", objVersionSAC.id_version)
+                command.Parameters.AddWithValue("anio_version", objVersionSAC.anio_version)
+                command.Parameters.AddWithValue("enmienda", objVersionSAC.enmienda)
+                command.Parameters.AddWithValue("observaciones", objVersionSAC.observaciones)
+                command.Parameters.AddWithValue("fecha_inicia_vigencia", objVersionSAC.fecha_inicia_vigencia)
+                command.Parameters.AddWithValue("fecha_fin_vigencia", objVersionSAC.fecha_fin_vigencia)
+                conexion.Open()
+                command.ExecuteScalar()
+
+                Return True
+            End Using
+
+        Catch ex As Exception
+            Return False
+        Finally
+
+        End Try
+    End Function
+
+    'Metodo para Actualizar version SAC
+    Public Function UpdateVersionSAC(ByVal objVersionSAC As CEEnmiendas) As Boolean
+        Try
+            Dim sql_query As String
+            sql_query = " UPDATE SAC_Versiones_Bitacora " +
+                " SET " +
+                " anio_version = @anio_version " +
+                " ,enmienda = @enmienda " +
+                " ,observaciones = @observaciones " +
+                " ,fecha_inicia_vigencia = @fecha_inicia_vigencia " +
+                " ,fecha_fin_vigencia = @fecha_fin_vigencia " +
+                " WHERE " +
+                " id_version = @id_version "
+
+            Using conexion = objConeccion.Conectar
+                Dim command As SqlCommand = New SqlCommand(sql_query, conexion)
+                command.Parameters.AddWithValue("id_version", objVersionSAC.id_version)
+                command.Parameters.AddWithValue("anio_version", objVersionSAC.anio_version)
+                command.Parameters.AddWithValue("enmienda", objVersionSAC.enmienda)
+                command.Parameters.AddWithValue("observaciones", objVersionSAC.observaciones)
+                command.Parameters.AddWithValue("fecha_inicia_vigencia", objVersionSAC.fecha_inicia_vigencia)
+                command.Parameters.AddWithValue("fecha_fin_vigencia", objVersionSAC.fecha_fin_vigencia)
+                conexion.Open()
+                command.ExecuteScalar()
+
+                Return True
+            End Using
+        Catch ex As SqlException
+            Return False
+        Catch ex As Exception
+            Return False
+        Finally
+
+        End Try
+    End Function
+
     'Funcion para seleccionar el SAC segun el id_version_sac
     Public Function SelectVersionSACMant(ByVal id_version_sac As Integer) As DataTable
         Dim sql_query As String
@@ -1965,4 +2041,5 @@ Public Class CDInstrumentosComerciales
     End Function
 
 #End Region
+
 End Class

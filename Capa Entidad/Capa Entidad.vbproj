@@ -64,6 +64,7 @@
   <ItemGroup>
     <Compile Include="CECategoriaDesgravacion.vb" />
     <Compile Include="CECorteDesgravacion.vb" />
+    <Compile Include="CEEnmiendas.vb" />
     <Compile Include="CeInstrumentoPais.vb" />
     <Compile Include="CeInstrumentoPaisMant.vb" />
     <Compile Include="CEInstrumentosMant.vb" />

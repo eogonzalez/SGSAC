@@ -248,6 +248,16 @@ Public Class CNInstrumentosComerciales
 
 #Region "Funciones y procedimientos para el Mantenimiento de Enmiendas del SAC"
 
+    'Metodo para Insertar nueva Version SAC
+    Public Function InsertVersionSAC(ByVal objVersionSAC As CEEnmiendas) As Boolean
+        Return objCDInstrumentos.InsertVersionSAC(objVersionSAC)
+    End Function
+
+    'Metodo para Actualizar version SAC
+    Public Function UpdateVersionSAC(ByVal objVersionSAC As CEEnmiendas) As Boolean
+        Return objCDInstrumentos.UpdateVersionSAC(objVersionSAC)
+    End Function
+
     'Funcion para seleccionar el SAC segun el id_version_sac
     Public Function SelectVersionSACMant(ByVal id_version_sac As Integer) As DataTable
         Return objCDInstrumentos.SelectVersionSACMant(id_version_sac)
@@ -259,6 +269,5 @@ Public Class CNInstrumentosComerciales
     End Function
 
 #End Region
-
 
 End Class

@@ -23,10 +23,10 @@ Public Class frmAsignaCategoriasSAC
 
             LlenarAsignaCategoriaMant(hfIdInstrumento.Value)
 
-            With gvAsignarCategorias
-                .DataSource = tabla_incisos
-                .DataBind()
-            End With
+            'With gvAsignarCategorias
+            '    .DataSource = tabla_incisos
+            '    .DataBind()
+            'End With
 
             Me.btn_asigna_categoria.Attributes.Add("onclick", "this.vale='Guardando Espere...';this.disabled=true;" & Me.GetPostBackEventReference(Me.btn_asigna_categoria))
         End If
@@ -116,6 +116,7 @@ Public Class frmAsignaCategoriasSAC
     End Sub
 
     Protected Sub btn_Salir_Click(sender As Object, e As EventArgs) Handles btn_Salir.Click
+        'tabla_incisos = Nothing
         Response.Redirect("~/frmTratadosyAcuerdos.aspx")
     End Sub
 
