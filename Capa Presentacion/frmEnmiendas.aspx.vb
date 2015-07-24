@@ -14,13 +14,19 @@ Public Class frmEnmiendas
     End Sub
 
     Protected Sub lkBtt_editar_Click(sender As Object, e As EventArgs) Handles lkBtt_editar.Click
-        Dim id_version As Integer
+        Dim id_version As Integer = 0
+        Dim anio_version As Integer = 0
+
         id_version = Convert.ToInt32(getIdVersionGridView())
+        anio_version = getAnio_VersionGridView()
+
         If id_version = 0 Then
             Mensaje("Seleccione un instrumeto")
             Exit Sub
         Else
-            LlenarVersionSACMant("editar", id_version)
+            txtAñoVersion.Enabled = False
+
+            LlenarVersionSACMant("editar", id_version, anio_version)
             btn_Guardar.CommandName = "editar"
             hfIdVersionSAC.Value = id_version
             lkBtt_nuevo_ModalPopupExtender.Show()
@@ -39,7 +45,9 @@ Public Class frmEnmiendas
             Exit Sub
         Else
             hfIdVersionSAC.Value = id_version_sac
-            Response.Redirect("~/frmCorrelacionSAC.aspx?id_vs=" + hfIdVersionSAC.Value)
+            hfAnioVersion.Value = getAnio_VersionGridView()
+
+            Response.Redirect("~/frmCorrelacionSAC.aspx?id_vs=" + hfIdVersionSAC.Value + "&av=" + hfAnioVersion.Value)
         End If
     End Sub
 
@@ -57,14 +65,14 @@ Public Class frmEnmiendas
             End If
 
         Else
-            'If GuardarVersionSAC() Then
-            '    Mensaje("Versión SAC guardada con éxito")
-            '    Llenar_gv_Enmiendas_Sac()
-            '    LimpiarFormulario()
-            'Else
-            '    Mensaje("Error al guardar Versión SAC")
-            '    lkBtt_nuevo_ModalPopupExtender.Show()
-            'End If
+            If GuardarVersionSAC() Then
+                Mensaje("Versión SAC guardada con éxito")
+                Llenar_gv_Enmiendas_Sac()
+                LimpiarFormulario()
+            Else
+                Mensaje("Error al guardar Versión SAC")
+                lkBtt_nuevo_ModalPopupExtender.Show()
+            End If
 
         End If
     End Sub
@@ -113,9 +121,22 @@ Public Class frmEnmiendas
 
     End Function
 
-    'Private Function GuardarVersionSAC() As Boolean
+    Private Function GuardarVersionSAC() As Boolean
+        'Declaro las varialbes de la capa de datos y entidad
+        Dim objEnmiendas As New CEEnmiendas
 
-    'End Function
+        'Obtengo los valores de los controles
+        'objEnmiendas.id_version = SE OBTIENE ANTES DE INSERTAR
+        objEnmiendas.anio_version = getAñoVersion()
+        objEnmiendas.enmienda = getDescripcion()
+        objEnmiendas.fecha_inicia_vigencia = getFechaInicia()
+        objEnmiendas.fecha_fin_vigencia = getFechaFin()
+        objEnmiendas.observaciones = getBaseNormativa()
+
+        'Envio los valores a la capa entidad con el objeto a la funcion guardar nuevo instrumento
+        Return objCapaNegocio.InsertVersionSAC(objEnmiendas)
+
+    End Function
 
     'Limpiar formulario
     Sub LimpiarFormulario()
@@ -127,9 +148,9 @@ Public Class frmEnmiendas
     End Sub
 
     'Procedimiento para llenar formulario con el id de la version del sac seleccionado
-    Sub LlenarVersionSACMant(ByVal accion As String, ByVal id_version_sac As Integer)
+    Sub LlenarVersionSACMant(ByVal accion As String, ByVal id_version_sac As Integer, ByVal anio_version As Integer)
         Dim datosVersionSac As New DataTable
-        datosVersionSac = objCapaNegocio.SelectVersionSACMant(id_version_sac)
+        datosVersionSac = objCapaNegocio.SelectVersionSACMant(id_version_sac, anio_version)
 
         If datosVersionSac.Rows.Count = 0 Then
             Mensaje("El Version de SAC no existe")
@@ -158,6 +179,19 @@ Public Class frmEnmiendas
         End If
 
     End Sub
+
+    'Funcion que obtiene del grid el anio_version
+    Function getAnio_VersionGridView() As Integer
+        Dim anio_version As Integer = 0
+        For i As Integer = 0 To gv_Versiones_SAC.Rows.Count - 1
+            Dim rbutton As RadioButton = gv_Versiones_SAC.Rows(i).FindControl("rb_version")
+            If rbutton.Checked Then
+                anio_version = gv_Versiones_SAC.Rows(i).Cells(2).Text
+            End If
+        Next
+
+        Return anio_version
+    End Function
 
     'Funcion que obtiene del grid el id del instrumento
     Function getIdVersionGridView() As String

@@ -1901,28 +1901,190 @@ Public Class CDInstrumentosComerciales
 
 #Region "Funciones y procedimientos para el Mantenimiento de Enmiendas del SAC"
 
+    'Funcion para obtener los datos para los codigos seleccionados
+    Public Function SelectDatosCodigoIncisoCorrelacion(ByVal str_codigo As String) As DataSet
+        Try
+            Dim sql_string As String
+            Dim capitulo As String = Nothing
+            Dim partida As String = Nothing
+            Dim subpartida As String = Nothing
+
+            If str_codigo.Length >= 2 Then
+                capitulo = str_codigo.Substring(0, 2)
+                If str_codigo.Length >= 4 Then
+                    partida = str_codigo.Substring(0, 4)
+                    If str_codigo.Length >= 5 Then
+                        If str_codigo.Length = 5 Then
+                            subpartida = str_codigo.Substring(0, 5) + "%"
+                        Else
+                            If str_codigo.Length >= 6 Then
+                                subpartida = str_codigo.Substring(0, 6) + "%"
+                            End If
+                        End If
+                    Else
+                        subpartida = str_codigo
+                    End If
+                Else
+                    partida = str_codigo.Substring(0, 1)
+                    subpartida = str_codigo.Substring(0, 1)
+                End If
+            Else
+                Exit Try
+            End If
+
+            sql_string = " SELECT " +
+                " descripcion_capitulo " +
+                " FROM " +
+                " SAC_Capitulos " +
+                " WHERE " +
+                " Capitulo = @capitulo AND  " +
+                " activo = 'S'; " +
+                " SELECT " +
+                " Descripcion_Partida " +
+                " FROM " +
+                " SAC_Partidas " +
+                " WHERE " +
+                " Capitulo = @capitulo AND " +
+                " Partida = @partida AND  " +
+                " activo = 'S'; " +
+                " SELECT " +
+                " texto_subpartida " +
+                " FROM " +
+                " SAC_Subpartidas " +
+                " WHERE " +
+                " Capitulo = @capitulo AND " +
+                " partida = @partida AND " +
+                " subpartida like @subpartida AND " +
+                " activo = 'S'; " +
+                " SELECT " +
+                " ci.codigo_inciso, ci.texto_inciso, ci.dai_base, " +
+                "  null as estado, null as codigo_inciso_corr, " +
+                " null as texto_inciso_corr, null as dai_corr " +
+                " FROM " +
+                " SAC_Incisos CI " +
+                " left outer join " +
+                " (SELECT " +
+                " AC.id_version, AC.anio_version, " +
+                " AC.codigo_inciso, " +
+                " AC.id_categoria, AC.id_instrumento," +
+                " AC.inciso_presicion, AC.texto_precision " +
+                " FROM " +
+                " SAC_Asocia_Categoria AC, " +
+                " SAC_Versiones_Bitacora VB " +
+                " WHERE " +
+                " ac.id_version = vb.id_version AND " +
+                " ac.anio_version = vb.anio_version AND " +
+                " vb.estado = 'A') SAC on " +
+                " sac.id_version = ci.id_version And " +
+                " sac.anio_version = CI.anio_version And " +
+                " sac.codigo_inciso = ci.codigo_inciso " +
+                " LEFT OUTER JOIN " +
+                " IC_Categorias_Desgravacion ICD ON " +
+                " icd.id_categoria = sac.id_categoria And " +
+                " icd.id_instrumento = sac.id_instrumento " +
+                " WHERE " +
+                " CI.estado = 'A' AND  " +
+                " CI.codigo_inciso LIKE '" + str_codigo + "%' "
+
+            Using cn = objConeccion.Conectar
+                Dim command As SqlCommand = New SqlCommand(sql_string, cn)
+                command.Parameters.AddWithValue("capitulo", capitulo)
+                command.Parameters.AddWithValue("partida", partida)
+                command.Parameters.AddWithValue("subpartida", subpartida)
+                command.Parameters.AddWithValue("codigo_inciso", str_codigo)
+
+                da = New SqlDataAdapter(command)
+                da.Fill(ds)
+
+            End Using
+
+        Catch ex As Exception
+            MsgBox("ERROR SelectDatosInciso = " + ex.Message.ToString)
+        Finally
+
+        End Try
+
+        Return ds
+    End Function
+
+    'Funcion para obtener los datos del Mantenimiento de Correlacion 
+    Public Function SelectCorrelacionMant(ByVal id_version As Integer, ByVal anio_version As Integer) As DataSet
+        Try
+            Dim sql_string As String
+
+            sql_string = "  SELECT anio_version, enmienda, " +
+                " anio_inicia_enmienda,anio_fin_enmieda, " +
+                " 'Version '+enmienda+', Enero '+convert(varchar(10),anio_inicia_enmienda) as descripcion " +
+                " FROM SAC_VERSIONES_BITACORA " +
+                " WHERE id_version = @id_version AND " +
+                " anio_version = @anio_version;  " +
+                " select " +
+                " convert(varchar(10),anio_version) + '-'+convert(varchar(50),id_version) as id_version,  " +
+                " 'Version '+enmienda+', Enero '+convert(varchar(10),anio_inicia_enmienda) as descripcion " +
+                " from SAC_Versiones_Bitacora " +
+                " where estado <> 'A' " +
+                " AND id_version <> @id_version "
+
+            '" AND anio_version <> @anio_version "
+
+            Using cn = objConeccion.Conectar
+                Dim command As SqlCommand = New SqlCommand(sql_string, cn)
+                command.Parameters.AddWithValue("id_version", id_version)
+                command.Parameters.AddWithValue("anio_version", anio_version)
+
+                da = New SqlDataAdapter(command)
+                da.Fill(ds)
+
+            End Using
+
+        Catch ex As Exception
+            MsgBox("ERROR SelectCorrelacionMant = " + ex.Message.ToString)
+        Finally
+
+        End Try
+
+        Return ds
+    End Function
+
     'Metodo para Insertar nueva Version SAC
     Public Function InsertVersionSAC(ByVal objVersionSAC As CEEnmiendas) As Boolean
         Try
             Dim sql_query As String
+            Dim id_version As Integer
+
+            sql_query = "select MAX(id_version)" +
+                " from SAC_Versiones_Bitacora " +
+                " where anio_version = @anio_version "
+
+            Using cn = objConeccion.Conectar
+                Dim command As SqlCommand = New SqlCommand(sql_query, cn)
+                command.Parameters.AddWithValue("anio_version", objVersionSAC.anio_version)
+                cn.Open()
+                id_version = IIf(IsDBNull(command.ExecuteScalar), 0, command.ExecuteScalar) + 1
+            End Using
+
             sql_query = " INSERT INTO SAC_Versiones_Bitacora " +
                 " ([id_version] " +
                 " ,[anio_version] " +
                 " ,[enmienda] " +
                 " ,[observaciones] " +
+                " ,[anio_inicia_enmienda] " +
+                " ,[anio_fin_enmieda] " +
                 " ,[fecha_inicia_vigencia] " +
-                " ,[fecha_fin_vigencia] " +
+                " ,[fecha_fin_vigencia]) " +
                 " VALUES " +
                 " (@id_version " +
                 " ,@anio_version " +
                 " ,@enmienda " +
                 " ,@observaciones " +
+                " ,YEAR(@fecha_inicia_vigencia) " +
+                " ,YEAR(@fecha_fin_vigencia) " +
                 " ,@fecha_inicia_vigencia " +
-                " ,@fecha_fin_vigencia) "
+                " ,@fecha_fin_vigencia ) "
 
             Using conexion = objConeccion.Conectar
                 Dim command As SqlCommand = New SqlCommand(sql_query, conexion)
-                command.Parameters.AddWithValue("id_version", objVersionSAC.id_version)
+                command.Parameters.AddWithValue("id_version", id_version)
                 command.Parameters.AddWithValue("anio_version", objVersionSAC.anio_version)
                 command.Parameters.AddWithValue("enmienda", objVersionSAC.enmienda)
                 command.Parameters.AddWithValue("observaciones", objVersionSAC.observaciones)
@@ -1947,13 +2109,15 @@ Public Class CDInstrumentosComerciales
             Dim sql_query As String
             sql_query = " UPDATE SAC_Versiones_Bitacora " +
                 " SET " +
-                " anio_version = @anio_version " +
-                " ,enmienda = @enmienda " +
+                " enmienda = @enmienda " +
                 " ,observaciones = @observaciones " +
                 " ,fecha_inicia_vigencia = @fecha_inicia_vigencia " +
                 " ,fecha_fin_vigencia = @fecha_fin_vigencia " +
+                " , anio_inicia_enmienda = YEAR(@fecha_inicia_vigencia) " +
+                " , anio_fin_enmieda = YEAR(@fecha_fin_vigencia ) " +
                 " WHERE " +
-                " id_version = @id_version "
+                " id_version = @id_version AND " +
+                " anio_version = @anio_version "
 
             Using conexion = objConeccion.Conectar
                 Dim command As SqlCommand = New SqlCommand(sql_query, conexion)
@@ -1978,7 +2142,7 @@ Public Class CDInstrumentosComerciales
     End Function
 
     'Funcion para seleccionar el SAC segun el id_version_sac
-    Public Function SelectVersionSACMant(ByVal id_version_sac As Integer) As DataTable
+    Public Function SelectVersionSACMant(ByVal id_version_sac As Integer, ByVal anio_version As Integer) As DataTable
         Dim sql_query As String
         Dim dtSAC As New DataTable
 
@@ -1986,13 +2150,15 @@ Public Class CDInstrumentosComerciales
             " enmienda, fecha_inicia_vigencia, " +
             " fecha_fin_vigencia, observaciones" +
             " FROM SAC_Versiones_Bitacora " +
-            " WHERE id_version = @id_version "
+            " WHERE id_version = @id_version AND " +
+            " anio_version = @anio_version "
 
         Using cn = objConeccion.Conectar
             Try
 
                 Dim command As SqlCommand = New SqlCommand(sql_query, cn)
                 command.Parameters.AddWithValue("id_version", id_version_sac)
+                command.Parameters.AddWithValue("anio_version", anio_version)
                 da = New SqlDataAdapter(command)
 
                 da.Fill(dtSAC)

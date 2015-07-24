@@ -248,6 +248,16 @@ Public Class CNInstrumentosComerciales
 
 #Region "Funciones y procedimientos para el Mantenimiento de Enmiendas del SAC"
 
+    'Funcion para obtener los datos para los codigos seleccionados
+    Public Function SelectDatosCodigoIncisoCorrelacion(ByVal str_codigo As String) As DataSet
+        Return objCDInstrumentos.SelectDatosCodigoIncisoCorrelacion(str_codigo)
+    End Function
+
+    'Funcion para obtener los datos del Mantenimiento de Correlacion 
+    Public Function SelectCorrelacionMant(ByVal id_version As Integer, ByVal anio_version As Integer) As DataSet
+        Return objCDInstrumentos.SelectCorrelacionMant(id_version, anio_version)
+    End Function
+
     'Metodo para Insertar nueva Version SAC
     Public Function InsertVersionSAC(ByVal objVersionSAC As CEEnmiendas) As Boolean
         Return objCDInstrumentos.InsertVersionSAC(objVersionSAC)
@@ -259,8 +269,8 @@ Public Class CNInstrumentosComerciales
     End Function
 
     'Funcion para seleccionar el SAC segun el id_version_sac
-    Public Function SelectVersionSACMant(ByVal id_version_sac As Integer) As DataTable
-        Return objCDInstrumentos.SelectVersionSACMant(id_version_sac)
+    Public Function SelectVersionSACMant(ByVal id_version_sac As Integer, ByVal anio_version As Integer) As DataTable
+        Return objCDInstrumentos.SelectVersionSACMant(id_version_sac, anio_version)
     End Function
 
     'Funcion para llenar el GridView de Enmiendas del SAC

@@ -134,7 +134,8 @@
         </asp:Panel>
     </div>
 
-     <div>
+    <div>
         <asp:HiddenField ID="hfIdVersionSAC" runat="server" />
+        <asp:HiddenField ID="hfAnioVersion" runat="server" />
     </div>
 </asp:Content>

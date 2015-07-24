@@ -1,7 +1,5 @@
 ﻿Imports Capa_Entidad
 Imports Reglas_del_negocio
-
-
 Public Class frmAsignaCategoriasSAC
     Inherits System.Web.UI.Page
     Shared _tabla_incisos As DataTable

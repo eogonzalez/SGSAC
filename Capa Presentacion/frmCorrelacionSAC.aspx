@@ -79,6 +79,7 @@
                 <span class="label label-primary">Seleccionar Código Arancelario:
                 </span>
             </h5>
+
             <div class="form-group">
 
                 <asp:Label ID="lbl_codigo_arancel" CssClass="control-label col-xs-2" Text="Código Arancelario:" runat="server"></asp:Label>
@@ -96,6 +97,7 @@
                 <span class="label label-primary">Descripción Capitulo-Partida y Subpartida Seleccionada
                 </span>
             </h5>
+
             <asp:UpdatePanel ID="Datos_SAC" runat="server">
                 <ContentTemplate>
                     <div class="form-group">
@@ -122,23 +124,29 @@
                 </ContentTemplate>
             </asp:UpdatePanel>
 
+
+
+
             <%-- Grid para asignar categoria --%>
             <h5>
                 <span class="label label-primary">Correlación de Incisos
                 </span>
             </h5>
-            <div class="btn-group pull-right">
 
-                <asp:LinkButton ID="lkBtn_Suprimir" runat="server" CssClass="btn btn-primary">
+            <div class="form-group">
+                <div class="btn-group pull-right">
+
+                    <asp:LinkButton ID="lkBtn_Suprimir" runat="server" CssClass="btn btn-primary">
                 <i aria-hidden="true" class="glyphicon glyphicon-remove"></i>
                 Suprimir
-                </asp:LinkButton>
+                    </asp:LinkButton>
 
-                <asp:LinkButton ID="lkBtn_Nuevo" runat="server" CssClass="btn btn-primary">
+                    <asp:LinkButton ID="lkBtn_Nuevo" runat="server" CssClass="btn btn-primary">
                 <i aria-hidden="true" class="glyphicon glyphicon-th-list"></i>
                 Apertura
-                </asp:LinkButton>
+                    </asp:LinkButton>
 
+                </div>
             </div>
 
             <div class="table-responsive">
@@ -176,7 +184,6 @@
 
         <%-- Pie de formulario --%>
         <div class="panel-footer">
-            <asp:Button ID="btn_guardar_cambios" CssClass="btn btn-primary" runat="server" Text="Guardar Cambios" />
             <asp:Button ID="btn_Salir" CssClass="btn btn-default" runat="server" Text="Salir" />
         </div>
 
@@ -184,6 +191,7 @@
 
     <div>
         <asp:HiddenField ID="hfIdVersionSAC" runat="server" />
+        <asp:HiddenField ID="hfAnioVersion" runat="server" />
     </div>
 
 </asp:Content>

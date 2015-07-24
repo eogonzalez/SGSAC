@@ -210,4 +210,13 @@ Partial Public Class frmEnmiendas
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
     Protected WithEvents hfIdVersionSAC As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''Control hfAnioVersion.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents hfAnioVersion As Global.System.Web.UI.WebControls.HiddenField
 End Class
