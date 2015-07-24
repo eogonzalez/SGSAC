@@ -22,7 +22,11 @@
         <%-- Cuerpo del Formulario --%>
         <div class="panel-body form-horizontal">
 
-            <%-- Area de Datos del Instrumento --%>
+            
+            <asp:UpdatePanel ID="Datos_SAC" runat="server">
+                <ContentTemplate>
+
+                    <%-- Area de Datos del Instrumento --%>
             <h5>
                 <span class="label label-primary">1. Seleccione Instrumento Comercial
                 </span>
@@ -30,7 +34,7 @@
             <div class="form-group">
                 <asp:Label ID="lbl_nombre_insrumento" CssClass="control-label col-xs-3" Text=" Nombre del Instrumento Comercial: " runat="server"></asp:Label>
                 <div class="col-xs-9">
-                    <asp:DropDownList ID="ddl_instrumento_comercial" CssClass="form-control" runat="server"></asp:DropDownList>
+                    <asp:DropDownList ID="ddl_instrumento_comercial" AutoPostBack="true" CssClass="form-control" runat="server"></asp:DropDownList>
                 </div>
             </div>
 
@@ -41,15 +45,15 @@
             </h5>
             <div class="form-group">
                 <asp:Label ID="lbl_categoria_asignar" CssClass="control-label col-xs-2" Text="Categoria para asignar:" runat="server"></asp:Label>
-                <div class="col-xs-2">
+                <div class="col-xs-4">
                     <asp:DropDownList ID="ddl_categoria_asignar" CssClass="form-control" runat="server"></asp:DropDownList>
                 </div>
 
                 <asp:Label ID="lbl_codigo_arancel" CssClass="control-label col-xs-2" Text="Código Arancelario:" runat="server"></asp:Label>
-                <div class="col-xs-3">
+                <div class="col-xs-2">
                     <asp:TextBox ID="txt_codigo_arancel" CssClass="form-control" runat="server"></asp:TextBox>
                 </div>
-                <div class="col-xs-3">
+                <div class="col-xs-2">
                     <asp:Button ID="btn_seleccionar" CssClass="btn btn-primary" Text="Seleccionar" runat="server" />
                 </div>
                 
@@ -60,8 +64,7 @@
                 <span class="label label-primary">Descripción Capitulo-Partida y Subpartida Seleccionada
                 </span>
             </h5>
-            <asp:UpdatePanel ID="Datos_SAC" runat="server">
-                <ContentTemplate>
+
                     <div class="form-group">
                         <asp:Label ID="lbl_descripcion_capitulo" CssClass="control-label col-xs-2" Text="Capitulo:" runat="server"></asp:Label>
                         <div class="col-xs-10">
@@ -102,11 +105,6 @@
                                 PageButtonCount="10" />
 
                             <Columns>
-                                <asp:TemplateField>
-                                    <ItemTemplate>
-                                        <asp:RadioButton ID="rb_inciso" runat="server" AutoPostBack="true" />
-                                    </ItemTemplate>
-                                </asp:TemplateField>
                                 <asp:BoundField DataField="codigo_inciso" HeaderText="Inciso Arancelario" />
                                 <asp:BoundField DataField="texto_inciso" HeaderText="Descripcion Inciso Arancelario" />
                                 <asp:BoundField DataField="dai_base" HeaderText="DAI SAC(Base)" />
