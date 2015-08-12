@@ -59,24 +59,6 @@ Partial Public Class frmTipoRelacionInstrumento
     Protected WithEvents pnlNuevoTipoRelacionInstrumento As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
-    '''Control Label2.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents Label2 As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''Control txtIdTipoRelacionInstrumento.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents txtIdTipoRelacionInstrumento As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
     '''Control Label3.
     '''</summary>
     '''<remarks>

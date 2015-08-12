@@ -3,7 +3,7 @@ Imports Reglas_del_negocio
 Public Class frmAsignaCategoriasSAC
     Inherits System.Web.UI.Page
     Shared _tabla_incisos As DataTable
-
+    Shared _categoria_id As Integer
     Public Shared Property tabla_incisos As DataTable
         Get
             Return _tabla_incisos
@@ -12,6 +12,16 @@ Public Class frmAsignaCategoriasSAC
             _tabla_incisos = value
         End Set
     End Property
+
+    Public Shared Property categoria_id As Integer
+        Get
+            Return _categoria_id
+        End Get
+        Set(value As Integer)
+            _categoria_id = value
+        End Set
+    End Property
+
 
 #Region "Funciones del sistema"
 
@@ -33,8 +43,8 @@ Public Class frmAsignaCategoriasSAC
 
     Protected Sub btn_seleccionar_Click(sender As Object, e As EventArgs) Handles btn_seleccionar.Click
         'Ver la manera de no llamar asigna categoria'
+        categoria_id = getIdCategoria()
         LlenarAsignaCategoriaMant(hfIdInstrumento.Value)
-
         LlenarSeleccionCodigoInciso(txt_codigo_arancel.Text)
     End Sub
 
@@ -47,16 +57,46 @@ Public Class frmAsignaCategoriasSAC
             For i As Integer = 0 To gvAsignarCategorias.Rows.Count - 1
                 Dim check_inciso As System.Web.UI.WebControls.CheckBox = gvAsignarCategorias.Rows(i).FindControl("cb_inciso")
 
+                Dim fila As GridViewRow = CType(check_inciso.NamingContainer, GridViewRow)
+                Dim codigo_inciso As String = ""
+
+                codigo_inciso = fila.Cells(1).Text
+
                 If Not check_inciso.Checked Then
                     check_inciso.Checked = True
+
+                    'Recorro tabla incisos que almacena la seleccion local
+                    'Para chequear en tabla local
+                    For Each enc As DataRow In tabla_incisos.Rows
+                        If enc("codigo_inciso") = codigo_inciso Then
+                            enc("selected") = 1
+                            Exit For
+                        End If
+                    Next
+
                 End If
             Next
         Else
             For i As Integer = 0 To gvAsignarCategorias.Rows.Count - 1
                 Dim check_inciso As System.Web.UI.WebControls.CheckBox = gvAsignarCategorias.Rows(i).FindControl("cb_inciso")
 
+                Dim fila As GridViewRow = CType(check_inciso.NamingContainer, GridViewRow)
+                Dim codigo_inciso As String = ""
+
+                codigo_inciso = fila.Cells(1).Text
+
                 If check_inciso.Checked Then
                     check_inciso.Checked = False
+
+                    'Recorro tabla incisos que almacena la seleccion local
+                    'Para des chequear en tabla local
+                    For Each enc As DataRow In tabla_incisos.Rows
+                        If enc("codigo_inciso") = codigo_inciso Then
+                            enc("selected") = 0
+                            Exit For
+                        End If
+                    Next
+
                 End If
             Next
         End If
@@ -107,7 +147,16 @@ Public Class frmAsignaCategoriasSAC
         Dim obj_asigna As New CNInstrumentosComerciales
 
         If obj_asigna.InsertAsignaCategoria(hfIdInstrumento.Value, getIdCategoria, tabla_incisos) Then
+
             Mensaje("Se asigno categoria con exito.")
+
+            tabla_incisos = Nothing
+            gvAsignarCategorias.DataSource = Nothing
+            gvAsignarCategorias.DataBind()
+
+            LlenarAsignaCategoriaMant(hfIdInstrumento.Value)
+            LlenarSeleccionCodigoInciso(txt_codigo_arancel.Text)
+
         Else
             Mensaje("Error al asignar categoria.")
         End If
@@ -219,6 +268,12 @@ Public Class frmAsignaCategoriasSAC
             Else
                 ddl_categoria_asignar.DataTextField = .Tables(2).Columns("codigo_categoria").ToString()
                 ddl_categoria_asignar.DataValueField = .Tables(2).Columns("id_categoria").ToString()
+
+                'Obtiene categoria seleccionada
+                If categoria_id > 0 Then
+                    ddl_categoria_asignar.SelectedValue = categoria_id
+                End If
+
                 ddl_categoria_asignar.DataSource = .Tables(2)
                 ddl_categoria_asignar.DataBind()
             End If

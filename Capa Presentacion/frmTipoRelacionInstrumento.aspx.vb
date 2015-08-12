@@ -13,12 +13,6 @@ Public Class frmTipoRelacionInstrumento
         End If
     End Sub
 
-    Protected Sub Page_LoadMant(ByVal sender As Object, ByVal e As System.EventArgs) Handles pnlNuevoTipoRelacionInstrumento.Load
-        If Not IsPostBack Then
-            LlenarCorrelativoTipoRelacionInstrumento()
-        End If
-    End Sub
-
     Protected Sub btnGuardar_Click(sender As Object, e As EventArgs) Handles btnGuardar.Click
         If btnGuardar.CommandName = "editar" Then
             If EditarTipoRelacionInstrumento(hfIdTipoRelacionInstrumento.Value) Then
@@ -65,10 +59,6 @@ Public Class frmTipoRelacionInstrumento
 
 #Region "Funciones para obtener valores de los controles"
 
-    Function getIdCorrelativoTipoRelacion() As Integer
-        Return Convert.ToInt32(txtIdTipoRelacionInstrumento.Text)
-    End Function
-
     Function getDescripcion() As String
         Return txtDescripcion.Text
     End Function
@@ -83,7 +73,6 @@ Public Class frmTipoRelacionInstrumento
 
     'Procedimiento para limpiar editar tipo relacion instrumento
     Sub LimpiarEdiarTipoRelacionInstrumento()
-        txtIdTipoRelacionInstrumento.Text = ""
         txtDescripcion.Text = ""
         txtObservaciones.Text = ""
     End Sub
@@ -115,7 +104,6 @@ Public Class frmTipoRelacionInstrumento
             Exit Sub
         Else
             If accion = "editar" Then
-                txtIdTipoRelacionInstrumento.Text = id_tipoRelacionInstrumento.ToString
                 txtDescripcion.Text = dtTipoRelacionInstrumento.Rows(0)("descripcion").ToString
                 txtObservaciones.Text = dtTipoRelacionInstrumento.Rows(0)("observaciones").ToString
             End If
@@ -153,19 +141,6 @@ Public Class frmTipoRelacionInstrumento
         End With
     End Sub
 
-    'Procedimiento para llenar correlativo de tipo relacion instrumento
-    Sub LlenarCorrelativoTipoRelacionInstrumento()
-        Dim CNInstrumento As New cnGeneral
-        Dim nombreTabla As String
-        Dim llaveTabla As String
-
-        nombreTabla = "IC_Tipo_Relacion_Instrumento"
-        llaveTabla = "id_tipo_relacion_instrumento"
-
-        txtIdTipoRelacionInstrumento.Text = CNInstrumento.ObtenerCorrelativoId(nombreTabla, llaveTabla).ToString
-
-    End Sub
-
     'Funcion para guardar nuevo tipo de relacion instrumento
     Private Function GuardarTipoRelacionInstrumento() As Boolean
         'Declaracion de variables de la capa de datos y entidad
@@ -173,7 +148,6 @@ Public Class frmTipoRelacionInstrumento
         Dim CNTipoRelacionIns As New CNInstrumentosComerciales
 
         'Obtener los valores de los controles
-        CEObj.id_tipo_relacion_instrumento = getIdCorrelativoTipoRelacion()
         CEObj.descripcion = getDescripcion()
         CEObj.observaciones = getObservaciones()
 
@@ -181,7 +155,6 @@ Public Class frmTipoRelacionInstrumento
         Return CNTipoRelacionIns.InsertTipoRelacionInstrumento(CEObj)
 
     End Function
-
 
 #End Region
 

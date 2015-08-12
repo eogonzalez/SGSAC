@@ -67,19 +67,12 @@
             BorderStyle="Inset" BorderWidth="1px" heigth="600" Width="35%">
             <div class="panel-heading">Mantenimiento de Tipo Relacion Instrumentos</div>
 
-            <div class="panel-body form-horizontal">
-
-                <div class="form-group">
-                    <asp:Label ID="Label2" CssClass="control-label col-xs-4" enabled="false" runat="server" text="Codigo:"></asp:Label>
-                    <div class="col-xs-8">
-                        <asp:TextBox ID="txtIdTipoRelacionInstrumento" type="text" class="form-control" runat="server"></asp:TextBox>
-                    </div>
-                </div>
+            <div class="panel-body form-horizontal" >
 
                 <div class="form-group">
                     <asp:Label ID="Label3" CssClass="control-label col-xs-4" runat="server" Text="Tipo Relacion Instrumento:"></asp:Label>
                     <div class="col-xs-8">
-                        <asp:TextBox ID="txtDescripcion" type="text" CssClass="form-control" runat="server"></asp:TextBox>
+                        <asp:TextBox ID="txtDescripcion" type="text" CssClass="form-control" runat="server" ></asp:TextBox>
                     </div>
                 </div>
 

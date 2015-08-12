@@ -538,6 +538,15 @@ Public Class CDInstrumentosComerciales
     Public Function InsertTipoRelacionInstrumento(ByVal objTipoRelacionInstrumento As CETipoRelacionInstrumento) As Boolean
         Try
             Dim sql_query As String
+            Dim objGeneral As New General
+            Dim id_tipo_relacion_instrumento As Integer
+
+            Dim nombre_tabla = "IC_Tipo_Relacion_Instrumento"
+            Dim llave_tabla = "id_tipo_relacion_instrumento"
+
+            'Obtengo correlativo a insertar
+            id_tipo_relacion_instrumento = objGeneral.ObtenerCorrelativoId(nombre_tabla, llave_tabla)
+
 
             sql_query = " INSERT INTO IC_Tipo_Relacion_Instrumento " +
            " ([id_tipo_relacion_instrumento] " +
@@ -550,7 +559,7 @@ Public Class CDInstrumentosComerciales
 
             Using conexion = objConeccion.Conectar
                 Dim command As SqlCommand = New SqlCommand(sql_query, conexion)
-                command.Parameters.AddWithValue("id_tipo_relacion_instrumento", objTipoRelacionInstrumento.id_tipo_relacion_instrumento)
+                command.Parameters.AddWithValue("id_tipo_relacion_instrumento", id_tipo_relacion_instrumento)
                 command.Parameters.AddWithValue("descripcion", objTipoRelacionInstrumento.descripcion)
                 command.Parameters.AddWithValue("observaciones", objTipoRelacionInstrumento.observaciones)
 
