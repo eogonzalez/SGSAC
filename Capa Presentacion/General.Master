@@ -19,7 +19,7 @@
 
 <body>
 
-    <form id="form1"  runat="server">
+    <form id="form1" runat="server">
 
         <table style="margin: 0 auto 0 auto; text-align: center; width: 100%; background-color: #054795">
             <tr>

@@ -13,12 +13,6 @@ Public Class frmTipoDesgravacion
         End If
     End Sub
 
-    Protected Sub Page_LoadMant(ByVal sender As Object, ByVal e As System.EventArgs) Handles pnlNuevoTipoDesgravacion.Load
-        'If Not IsPostBack Then
-        LlenarCorrelativoTipoDesgravacion()
-        'End If
-    End Sub
-
     Protected Sub btnGuardar_Click(sender As Object, e As EventArgs) Handles btnGuardar.Click
         If btnGuardar.CommandName = "editar" Then
             If EditarTipoDesgravacion(hfIdTipoDesgravacion.Value) Then
@@ -65,10 +59,6 @@ Public Class frmTipoDesgravacion
 
 #Region "Funciones para capturar valores del formulario"
 
-    Function getIdCorrelativoTipoDesgravacion() As Integer
-        Return Convert.ToInt32(txtIdTipoDesgravacion.Text)
-    End Function
-
     Function getDescripcion() As String
         Return txtDescripcion.Text
     End Function
@@ -108,7 +98,6 @@ Public Class frmTipoDesgravacion
             Exit Sub
         Else
             If accion = "editar" Then
-                txtIdTipoDesgravacion.Text = id_tipoDesgravacion.ToString
                 txtDescripcion.Text = dtTipoDesgravacion.Rows(0)("descripcion").ToString
                 txtObservaciones.Text = dtTipoDesgravacion.Rows(0)("observaciones").ToString
             End If
@@ -124,21 +113,8 @@ Public Class frmTipoDesgravacion
 
     'Procedimiento para limpiar editar tipo de desgravacion
     Sub LimpiarEditarTipoDesgravacion()
-        txtIdTipoDesgravacion.Text = ""
         txtDescripcion.Text = ""
         txtObservaciones.Text = ""
-    End Sub
-
-    'Procedimiento para Llenar Correlativo Tipo de desgravacion
-    Sub LlenarCorrelativoTipoDesgravacion()
-        Dim CNDesgravacion As New cnGeneral
-        Dim nombreTabla As String
-        Dim llaveTable As String
-
-        nombreTabla = "IC_Tipo_Desgravacion"
-        llaveTable = " id_tipo_desgrava "
-
-        txtIdTipoDesgravacion.Text = CNDesgravacion.ObtenerCorrelativoId(nombreTabla, llaveTable).ToString
     End Sub
 
     Private Function GuardarTipoDesgravacion() As Boolean
@@ -147,7 +123,6 @@ Public Class frmTipoDesgravacion
         Dim CNTipoDesgravacionIns As New CNInstrumentosComerciales
 
         'Obtengo los valores de los controles
-        CEObj.id_tipo_desgravacion = getIdCorrelativoTipoDesgravacion()
         CEObj.descripcion = getDescripcion()
         CEObj.observaciones = getObservaciones()
 

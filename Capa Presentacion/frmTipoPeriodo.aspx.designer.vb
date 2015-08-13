@@ -59,24 +59,6 @@ Partial Public Class frmTipoPeriodo
     Protected WithEvents pnlNuevoTipoPeriodoCorte As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
-    '''Control lbl_IdTipoPeriodo.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents lbl_IdTipoPeriodo As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''Control txtIdTipoPeriodo.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents txtIdTipoPeriodo As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
     '''Control lbl_Descripcion.
     '''</summary>
     '''<remarks>

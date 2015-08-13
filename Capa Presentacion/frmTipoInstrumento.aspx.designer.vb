@@ -59,24 +59,6 @@ Partial Public Class frmTipoInstrumento
     Protected WithEvents pnlNuevoTipoInstrumento As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
-    '''Control lbl_IdTipoInstrumento.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents lbl_IdTipoInstrumento As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''Control txtIdTipoInstrumento.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents txtIdTipoInstrumento As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
     '''Control lbl_Descripcion.
     '''</summary>
     '''<remarks>

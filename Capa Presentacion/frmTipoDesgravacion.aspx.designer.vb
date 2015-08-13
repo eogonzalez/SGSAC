@@ -59,24 +59,6 @@ Partial Public Class frmTipoDesgravacion
     Protected WithEvents pnlNuevoTipoDesgravacion As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
-    '''Control lbl_IdTipoDesgravacion.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents lbl_IdTipoDesgravacion As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''Control txtIdTipoDesgravacion.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents txtIdTipoDesgravacion As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
     '''Control lbl_Descripcion.
     '''</summary>
     '''<remarks>

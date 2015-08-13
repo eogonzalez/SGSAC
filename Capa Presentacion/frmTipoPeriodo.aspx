@@ -68,13 +68,6 @@
             <div class="panel-body form-horizontal">
 
                 <div class="form-group">
-                    <asp:Label ID="lbl_IdTipoPeriodo" CssClass="control-label col-xs-4" enabled="false" runat="server"  Text="Codigo: "></asp:Label>
-                    <div class="col-xs-8">
-                        <asp:TextBox ID="txtIdTipoPeriodo" type="text" CssClass="form-control" runat="server"></asp:TextBox>
-                    </div>
-                </div>
-
-                <div class="form-group">
                     <asp:Label ID="lbl_Descripcion" CssClass="control-label col-xs-4" runat="server" Text="Tipo Instrumento:"></asp:Label>
                     <div class="col-xs-8">
                         <asp:TextBox ID="txtDescripcion" type="text" CssClass="form-control" runat="server"></asp:TextBox>

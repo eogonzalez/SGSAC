@@ -13,12 +13,6 @@ Public Class frmTipoPeriodo
         End If
     End Sub
 
-    Protected Sub Page_LoadMant(ByVal sender As Object, ByVal e As System.EventArgs) Handles pnlNuevoTipoPeriodoCorte.Load
-        If Not IsPostBack Then
-            LlenarCorrelativoTipoPeriodo()
-        End If
-    End Sub
-
     Protected Sub btnGuardar_Click(sender As Object, e As EventArgs) Handles btnGuardar.Click
         If btnGuardar.CommandName = "editar" Then
             If EditarTipoPeriodo(hfIdTipoPeriodoCorte.Value) Then
@@ -65,10 +59,6 @@ Public Class frmTipoPeriodo
 
 #Region "Funciones para capturar valores del formulario"
 
-    Function getIdCorrelativoTipoPeriodo() As Integer
-        Return Convert.ToInt32(txtIdTipoPeriodo.Text)
-    End Function
-
     Function getDescripcion() As String
         Return txtDescripcion.Text
     End Function
@@ -76,7 +66,6 @@ Public Class frmTipoPeriodo
     Function getObservaciones() As String
         Return txtObservaciones.Text
     End Function
-
 
 #End Region
 
@@ -109,7 +98,6 @@ Public Class frmTipoPeriodo
             Exit Sub
         Else
             If accion = "editar" Then
-                txtIdTipoPeriodo.Text = id_tipoPeriodo.ToString
                 txtDescripcion.Text = dtTipoPeriodo.Rows(0)("descripcion").ToString
                 txtObservaciones.Text = dtTipoPeriodo.Rows(0)("observaciones").ToString
             End If
@@ -125,7 +113,6 @@ Public Class frmTipoPeriodo
 
     'Procedimiento para limpiar editar tipo periodo
     Sub LimpiarEditarTipoPeriodo()
-        txtIdTipoPeriodo.Text = ""
         txtDescripcion.Text = ""
         txtObservaciones.Text = ""
     End Sub
@@ -141,18 +128,6 @@ Public Class frmTipoPeriodo
         End With
     End Sub
 
-    'Procedimiento para Llenar Correlativo Tipo periodo
-    Sub LlenarCorrelativoTipoPeriodo()
-        Dim CNPeriodoCorte As New cnGeneral
-        Dim nombreTabla As String
-        Dim llaveTable As String
-
-        nombreTabla = "IC_Tipo_Periodo_Corte"
-        llaveTable = " id_tipo_periodo "
-
-        txtIdTipoPeriodo.Text = CNPeriodoCorte.ObtenerCorrelativoId(nombreTabla, llaveTable).ToString
-    End Sub
-
     'Funcion para guardar nuevo tipo periodo
     Private Function GuardarTipoPeriodo() As Boolean
         'Declaro las variables de la capa de datos y entidad
@@ -160,7 +135,6 @@ Public Class frmTipoPeriodo
         Dim CNTipoPeriodo As New CNInstrumentosComerciales
 
         'Obtengo los valores de los controles
-        CEObj.id_tipo_periodo = getIdCorrelativoTipoPeriodo()
         CEObj.descripcion = getDescripcion()
         CEObj.observaciones = getObservaciones()
 

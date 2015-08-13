@@ -445,6 +445,14 @@ Public Class CDInstrumentosComerciales
     Public Function InsertTipoInstrumento(ByVal objTipoInstrumento As CETipoInstrumento) As Boolean
         Try
             Dim sql_query As String
+            Dim objGeneral As New General
+            Dim id_tipo_instrumento As Integer
+
+            Dim nombreTabla As String = "IC_Tipo_Instrumento"
+            Dim llaveTable As String = " id_tipo_instrumento "
+
+            'Obtengo correlativo a insertar
+            id_tipo_instrumento = objGeneral.ObtenerCorrelativoId(nombreTabla, llaveTable)
 
             sql_query = " INSERT INTO IC_Tipo_Instrumento " +
            " ([id_tipo_instrumento] " +
@@ -457,7 +465,7 @@ Public Class CDInstrumentosComerciales
 
             Using conexion = objConeccion.Conectar
                 Dim command As SqlCommand = New SqlCommand(sql_query, conexion)
-                command.Parameters.AddWithValue("id_tipo_instrumento", objTipoInstrumento.id_tipo_instrumento)
+                command.Parameters.AddWithValue("id_tipo_instrumento", id_tipo_instrumento)
                 command.Parameters.AddWithValue("descripcion", objTipoInstrumento.descripcion)
                 command.Parameters.AddWithValue("observaciones", objTipoInstrumento.observaciones)
 
@@ -640,6 +648,14 @@ Public Class CDInstrumentosComerciales
     Public Function InsertTipoDesgravacion(ByVal objTipoDesgravacion As CeTipoDesgravacion) As Boolean
         Try
             Dim sql_query As String
+            Dim objGeneral As New General
+            Dim id_tipo_desgravacion As Integer
+
+            Dim nombre_tabla As String = "IC_Tipo_Desgravacion"
+            Dim llave_table As String = " id_tipo_desgrava "
+
+            'Obtenco correlativo a insertar 
+            id_tipo_desgravacion = objGeneral.ObtenerCorrelativoId(nombre_tabla, llave_table)
 
             sql_query = " INSERT INTO IC_Tipo_Desgravacion " +
            " ([id_tipo_desgrava] " +
@@ -652,7 +668,7 @@ Public Class CDInstrumentosComerciales
 
             Using conexion = objConeccion.Conectar
                 Dim command As SqlCommand = New SqlCommand(sql_query, conexion)
-                command.Parameters.AddWithValue("id_tipo_desgrava", objTipoDesgravacion.id_tipo_desgravacion)
+                command.Parameters.AddWithValue("id_tipo_desgrava", id_tipo_desgravacion)
                 command.Parameters.AddWithValue("descripcion", objTipoDesgravacion.descripcion)
                 command.Parameters.AddWithValue("observaciones", objTipoDesgravacion.observaciones)
 
@@ -1134,7 +1150,7 @@ Public Class CDInstrumentosComerciales
             " CATEGO.CANTIDAD_CORTES " +
             " FROM " +
             " IC_Instrumentos I " +
-            " LEFT JOIN " +
+            " INNER JOIN " +
             " (SELECT " +
             " CD.id_instrumento, CD.id_categoria, " +
             " CD.codigo_categoria, TD.descripcion, " +
@@ -1371,6 +1387,14 @@ Public Class CDInstrumentosComerciales
     Public Function InsertTipoPeriodo(ByVal objTipoPeriodo As CETipoPeriodo) As Boolean
         Try
             Dim sql_query As String
+            Dim objGeneral As New General
+            Dim id_tipo_periodo As Integer
+
+            Dim nombreTabla As String = "IC_Tipo_Periodo_Corte"
+            Dim llaveTable As String = " id_tipo_periodo "
+
+            'Obtengo correlativo a insertar
+            id_tipo_periodo = objGeneral.ObtenerCorrelativoId(nombreTabla, llaveTable)
 
             sql_query = " INSERT INTO IC_Tipo_Periodo_Corte " +
            " ([id_tipo_periodo] " +
@@ -1383,7 +1407,7 @@ Public Class CDInstrumentosComerciales
 
             Using conexion = objConeccion.Conectar
                 Dim command As SqlCommand = New SqlCommand(sql_query, conexion)
-                command.Parameters.AddWithValue("id_tipo_periodo", objTipoPeriodo.id_tipo_periodo)
+                command.Parameters.AddWithValue("id_tipo_periodo", id_tipo_periodo)
                 command.Parameters.AddWithValue("descripcion", objTipoPeriodo.descripcion)
                 command.Parameters.AddWithValue("observaciones", objTipoPeriodo.observaciones)
 
