@@ -1,4 +1,6 @@
 ﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/General.Master" CodeBehind="frmCorrelacionSAC.aspx.vb" Inherits="Capa_Presentacion.frmCorrelacionSAC" %>
+
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style type="text/css">
         .ColumnaOculta {
@@ -147,6 +149,14 @@
                     </asp:LinkButton>
 
                 </div>
+
+                <cc1:ModalPopupExtender ID="lkBtt_Nuevo_ModalPopupExtender"
+                    BackgroundCssClass="modalBackground" BehaviorID="lkBtt_Nuevo_ModalPopupExtender"
+                    PopupControlID="pnlApertura" DynamicServicePath="" TargetControlID="lkBtn_Nuevo"
+                    runat="server">
+
+                </cc1:ModalPopupExtender>
+
             </div>
 
             <div class="table-responsive">
@@ -187,6 +197,111 @@
             <asp:Button ID="btn_Salir" CssClass="btn btn-default" runat="server" Text="Salir" />
         </div>
 
+    </div>
+
+    <%-- Panel para las aperturas --%>
+    <div>
+        <asp:Panel ID="pnlApertura" CssClass="panel panel-primary" 
+            BorderColor="Black" BackColor="White" BorderStyle="Inset" BorderWidth="1px"
+            Height="635" Width="30%" runat="server">
+            <div class="panel-heading">Datos de Apertura Arancelaria SAC </div>
+            <div class="panel-body form-horizontal">
+
+                <div class="form-group">
+                    <asp:Label ID="lbl_actual" CssClass="control-label col-xs-3" Text="Actual Version: " runat="server"></asp:Label>
+                    <div class="col-xs-2">
+                        <asp:TextBox ID="txt_anio_actual" type="text" CssClass="form-control" runat="server" disabled="disabled"></asp:TextBox>
+                    </div>
+                    <div class="col-xs-7">
+                        <asp:TextBox ID="txt_descripcion_actual" type="text" CssClass="form-control" runat="server" disabled="disabled"></asp:TextBox>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <asp:Label ID="lbl_nueva" CssClass="control-label col-xs-3" Text="Nueva Version: " runat="server"></asp:Label>
+                    <div class="col-xs-2">
+                        <asp:TextBox ID="txt_anio_nueva" type="text" CssClass="form-control" runat="server" disabled="disabled"></asp:TextBox>
+                    </div>
+                    <div class="col-xs-7">
+                        <asp:TextBox ID="txt_descripcion_nueva" type="text" CssClass="form-control" runat="server" disabled="disabled"></asp:TextBox>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <asp:Label ID="lbl_inciso_actual" CssClass="control-label col-xs-3" Text="Inciso Actual: " runat="server"></asp:Label>
+                    <div class="col-xs-3">
+                        <asp:TextBox ID="txt_inciso_actual" type="text" CssClass="form-control" runat="server" disabled="disabled"></asp:TextBox>
+                    </div>
+
+                    <asp:Label ID="lbl_dai_actual" CssClass="control-label col-xs-3" Text="DAI Actual:" runat="server"></asp:Label>
+                    <div class="col-xs-3">
+                        <asp:TextBox ID="txt_dai_actual" CssClass="form-control" runat="server" disabled="disabled"></asp:TextBox>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <asp:Label ID="lbl_descripcion_inciso" CssClass="control-label col-xs-3" Text="Descripcion Inciso:" runat="server"></asp:Label>
+                    <div class="col-xs-9">
+                        <asp:TextBox ID="txt_descripcion_inciso" CssClass="form-control" runat="server" disabled="disabled"></asp:TextBox>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <asp:Label ID="lbl_inciso_nuevo" CssClass="control-label col-xs-3" Text="Inciso Nuevo: " runat="server"></asp:Label>
+                    <div class="col-xs-3">
+                        <asp:TextBox ID="txt_inciso_nuevo" type="text" CssClass="form-control" runat="server"></asp:TextBox>
+                    </div>
+
+                    <asp:Label ID="lbl_dai_nuevo" CssClass="control-label col-xs-3" Text="DAI Nuevo:" runat="server"></asp:Label>
+                    <div class="col-xs-3">
+                        <asp:TextBox ID="txt_dai_nuevo" CssClass="form-control" runat="server"></asp:TextBox>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <asp:Label ID="lbl_descripcion_inciso_nuevo" CssClass="control-label col-xs-3" Text="Descripcion Nuevo Inciso:" runat="server"></asp:Label>
+                    <div class="col-xs-9">
+                        <asp:TextBox ID="txt_descripcion_inciso_nuevo" CssClass="form-control" runat="server"></asp:TextBox>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <asp:Label ID="lbl_fecha_inicio_vigencia" CssClass="control-label col-xs-3" runat="server" Text="Fecha Inicio Vigencia:"></asp:Label>
+                    <div class="col-xs-3">
+                        <asp:TextBox ID="txt_Fecha_Inicio_Vigencia" CssClass="form-control" runat="server"></asp:TextBox>
+                        <cc1:CalendarExtender ID="txt_Fecha_Inicio_Vigencia_CalendarExtender" runat="server" BehaviorID="txt_Fecha_Inicio_Vigencia_CalendarExtender" TargetControlID="txt_Fecha_Inicio_Vigencia" />
+                    </div>
+
+                    <asp:Label ID="lbl_fecha_fin_vigencia" CssClass="control-label col-xs-3" runat="server" Text="Fecha Fin de Vigencia:"></asp:Label>
+                    <div class="col-xs-3">
+                        <asp:TextBox ID="txt_Fecha_Fin_Vigencia" CssClass="form-control" runat="server"></asp:TextBox>
+                        <cc1:CalendarExtender ID="txt_Fecha_Fin_Vigencia_CalendarExtender" runat="server" BehaviorID="txt_Fecha_Fin_Vigencia_CalendarExtender" TargetControlID="txt_Fecha_Fin_Vigencia" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <asp:Label ID="lbl_base_normativa" CssClass="control-label col-xs-3" Text="Base Normativa:" runat="server"></asp:Label>
+                    <div class="col-xs-9">
+                        <asp:TextBox ID="txt_base_normativa" CssClass="form-control" runat="server"></asp:TextBox>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <asp:Label ID="lbl_observaciones" CssClass="control-label col-xs-3" Text="Observaciones:" runat="server"></asp:Label>
+                    <div class="col-xs-9">
+                        <asp:TextBox ID="txt_observaciones" CssClass="form-control" TextMode="MultiLine" runat="server"></asp:TextBox>
+                    </div>
+                </div>
+
+            </div>
+            
+            <div class="panel-footer">
+                <asp:Button ID="btnGuardar" CssClass="btn btn-primary" runat="server" Text="Guardar" />
+                <asp:Button ID="btnSalir" CssClass="btn btn-default" runat="server" Text="Salir" />
+            </div>
+
+        </asp:Panel>
     </div>
 
     <div>

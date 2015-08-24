@@ -1484,8 +1484,74 @@ Public Class CDInstrumentosComerciales
 
 #Region "Funciones y procedimientos para el Mantenimiento de Asignacion Categorias"
 
-    'Funcion para Insertar las Asociaciones de categoria
-    Public Function InsertAsignaCategoria(ByVal id_instrumento As Integer, ByVal id_categoria As Integer, ByVal dt_asocia As DataTable) As Boolean
+#Region "Funciones para incisos-categoria"
+
+    'Funcion que valida si el inciso a insertar ya existe
+    Public Function ValidaInciso(ByVal id_instrumento As Integer, ByVal codigo_inciso As String) As Boolean
+        Dim estado As Boolean = False
+        Try
+            Dim sql_query As String
+
+            sql_query = " SELECT " +
+                " VB.id_version, VB.anio_version  " +
+                " From " +
+                " SAC_Versiones_Bitacora VB " +
+                " WHERE " +
+                " VB.estado = 'A' "
+
+            Using conexion = objConeccion.Conectar
+                Dim command As SqlCommand = New SqlCommand(sql_query, conexion)
+                conexion.Open()
+                Dim valores As SqlDataReader = command.ExecuteReader()
+
+                If valores.Read() Then
+                    Dim id_version As Integer = valores("id_version")
+                    Dim anio_version As Integer = valores("anio_version")
+
+                    sql_query = " SELECT coalesce(count(codigo_inciso),0) " +
+                       " FROM " +
+                       " [SGSACDB].[dbo].[SAC_Asocia_Categoria] " +
+                       " WHERE " +
+                       " id_instrumento = @id_instrumento AND " +
+                       " id_version = @id_version AND " +
+                       " anio_version = @anio_version AND " +
+                       " codigo_inciso = @codigo_inciso "
+
+                    Using cn = objConeccion.Conectar
+                        Dim command1 As SqlCommand = New SqlCommand(sql_query, cn)
+                        command1.Parameters.AddWithValue("id_instrumento", id_instrumento)
+                        command1.Parameters.AddWithValue("id_version", id_version)
+                        command1.Parameters.AddWithValue("anio_version", anio_version)
+                        command1.Parameters.AddWithValue("codigo_inciso", codigo_inciso)
+
+                        cn.Open()
+
+                        If command1.ExecuteScalar() = 1 Then
+                            estado = True
+                        Else
+                            estado = False
+                        End If
+
+                    End Using
+
+
+                Else
+                    estado = False
+                End If
+
+            End Using
+
+        Catch ex As Exception
+            estado = False
+        Finally
+
+        End Try
+
+        Return estado
+    End Function
+
+    'Funcion que inserta correlacion inciso-categoria nuevo
+    Public Function InsertInciso(ByVal id_instrumento As Integer, ByVal id_categoria As Integer, ByVal codigo_inciso As String) As Boolean
         Dim estado As Boolean = False
         Try
             Dim sql_query As String
@@ -1510,21 +1576,102 @@ Public Class CDInstrumentosComerciales
                 " CD.id_instrumento = @id_instrumento AND " +
                 " VB.estado = 'A') "
 
-            For Each row As DataRow In dt_asocia.Rows
+            Using conexion = objConeccion.Conectar
+                Dim command As SqlCommand = New SqlCommand(sql_query, conexion)
+                command.Parameters.AddWithValue("id_instrumento", id_instrumento)
+                command.Parameters.AddWithValue("id_categoria", id_categoria)
+                command.Parameters.AddWithValue("codigo_inciso", codigo_inciso)
 
-                If row("Selected") = True Then
+                conexion.Open()
+                command.ExecuteScalar()
+                estado = True
+            End Using
 
-                    Using conexion = objConeccion.Conectar
-                        Dim command As SqlCommand = New SqlCommand(sql_query, conexion)
-                        command.Parameters.AddWithValue("id_instrumento", id_instrumento)
-                        command.Parameters.AddWithValue("id_categoria", id_categoria)
-                        command.Parameters.AddWithValue("codigo_inciso", row("codigo_inciso"))
+        Catch ex As Exception
+            estado = False
+        Finally
 
-                        conexion.Open()
-                        command.ExecuteScalar()
+        End Try
+
+
+        Return estado
+    End Function
+
+    'Funcion que actualiza categoria a inciso
+    Public Function UpdateInciso(ByVal id_instrumento As Integer, ByVal id_categoria As Integer, ByVal codigo_inciso As String) As Boolean
+        Dim estado As Boolean = False
+        Try
+            Dim sql_query As String
+
+            sql_query = " SELECT " +
+                " VB.id_version, VB.anio_version  " +
+                " From " +
+                " SAC_Versiones_Bitacora VB " +
+                " WHERE " +
+                " VB.estado = 'A' "
+            Using conexion = objConeccion.Conectar
+                Dim command As SqlCommand = New SqlCommand(sql_query, conexion)
+                conexion.Open()
+                Dim valores As SqlDataReader = command.ExecuteReader()
+
+                If valores.Read() Then
+                    Dim id_version As Integer = valores("id_version")
+                    Dim anio_version As Integer = valores("anio_version")
+
+                    sql_query = " UPDATE " +
+                        " SAC_Asocia_Categoria " +
+                        " SET " +
+                        " id_categoria = @id_categoria " +
+                        " WHERE " +
+                        " id_instrumento = @id_instrumento AND " +
+                        " id_version = @id_version AND " +
+                        " anio_version = @anio_version AND " +
+                        " codigo_inciso = @codigo_inciso "
+
+                    Using cn = objConeccion.Conectar
+                        Dim command2 As SqlCommand = New SqlCommand(sql_query, cn)
+                        command2.Parameters.AddWithValue("id_categoria", id_categoria)
+                        command2.Parameters.AddWithValue("id_instrumento", id_instrumento)
+                        command2.Parameters.AddWithValue("id_version", id_version)
+                        command2.Parameters.AddWithValue("anio_version", anio_version)
+                        command2.Parameters.AddWithValue("codigo_inciso", codigo_inciso)
+
+                        cn.Open()
+                        command2.ExecuteScalar()
                         estado = True
                     End Using
 
+                Else
+                    estado = False
+                End If
+            End Using
+
+
+
+        Catch ex As Exception
+
+        Finally
+
+        End Try
+        Return estado
+    End Function
+
+#End Region
+
+    'Funcion para Insertar las Asociaciones de categoria
+    Public Function InsertAsignaCategoria(ByVal id_instrumento As Integer, ByVal id_categoria As Integer, ByVal dt_asocia As DataTable) As Boolean
+        Dim estado As Boolean = False
+        Try
+            For Each row As DataRow In dt_asocia.Rows
+
+                If row("Selected") = True Then
+                    Dim codigo_inciso As String = row("codigo_inciso")
+
+                    If ValidaInciso(id_instrumento, codigo_inciso) Then
+                        estado = UpdateInciso(id_instrumento, id_categoria, codigo_inciso)
+                    Else
+                        estado = InsertInciso(id_instrumento, id_categoria, codigo_inciso)
+                    End If
                 End If
 
             Next
