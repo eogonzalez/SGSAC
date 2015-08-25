@@ -254,8 +254,8 @@ Public Class CNInstrumentosComerciales
     End Function
 
     'Funcion para obtener los datos del Mantenimiento de Correlacion 
-    Public Function SelectCorrelacionMant(ByVal id_version As Integer, ByVal anio_version As Integer) As DataSet
-        Return objCDInstrumentos.SelectCorrelacionMant(id_version, anio_version)
+    Public Function SelectCorrelacionMant() As DataSet
+        Return objCDInstrumentos.SelectCorrelacionMant()
     End Function
 
     'Metodo para Insertar nueva Version SAC
@@ -276,6 +276,21 @@ Public Class CNInstrumentosComerciales
     'Funcion para llenar el GridView de Enmiendas del SAC
     Public Function SelectEnmiendas() As DataSet
         Return objCDInstrumentos.SelectEnmiendas()
+    End Function
+
+    'Funcion que verifica si existe version pendiente de aprobar
+    Public Function ExisteVersionSACPendiente() As Boolean
+        Return objCDInstrumentos.ExisteVersionSACPendiente()
+    End Function
+
+    'Funcion que verifica cuantas versiones de sac pendiente existen
+    Public Function CantidadVersionesSACPendientes() As Integer
+        Return objCDInstrumentos.CantidadVersionesSACPendientes()
+    End Function
+
+    'Funcion que obtiene los datos para el mantenimiento de apertura arancelaria
+    Public Function SelectIncisoApertura(ByVal codigo_inciso As String) As DataTable
+        Return objCDInstrumentos.SelectIncisoApertura(codigo_inciso)
     End Function
 
 #End Region

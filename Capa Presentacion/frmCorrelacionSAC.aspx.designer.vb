@@ -113,13 +113,85 @@ Partial Public Class frmCorrelacionSAC
     Protected WithEvents Label2 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''Control ddl_version_nueva.
+    '''Control txt_nuevo_año_vigencia.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents ddl_version_nueva As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents txt_nuevo_año_vigencia As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Control Label3.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents Label3 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''Control txt_version_nueva_enmienda.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents txt_version_nueva_enmienda As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Control Label4.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents Label4 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''Control txt_nuevo_periodo_año_inicial.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents txt_nuevo_periodo_año_inicial As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Control Label5.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents Label5 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''Control txt_nuevo_periodo_año_final.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents txt_nuevo_periodo_año_final As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Control Label6.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents Label6 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''Control txt_descripcion_nueva_version.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents txt_descripcion_nueva_version As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''Control lbl_codigo_arancel.
@@ -228,6 +300,15 @@ Partial Public Class frmCorrelacionSAC
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
     Protected WithEvents lkBtn_Nuevo As Global.System.Web.UI.WebControls.LinkButton
+
+    '''<summary>
+    '''Control lkBtn_Hidden_Nuevo.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents lkBtn_Hidden_Nuevo As Global.System.Web.UI.WebControls.LinkButton
 
     '''<summary>
     '''Control lkBtt_Nuevo_ModalPopupExtender.
@@ -383,6 +464,60 @@ Partial Public Class frmCorrelacionSAC
     Protected WithEvents txt_descripcion_inciso As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''Control lbl_inciso_nuevo.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents lbl_inciso_nuevo As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''Control txt_inciso_nuevo.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents txt_inciso_nuevo As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Control lbl_dai_nuevo.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents lbl_dai_nuevo As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''Control txt_dai_nuevo.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents txt_dai_nuevo As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Control lbl_descripcion_inciso_nuevo.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents lbl_descripcion_inciso_nuevo As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''Control txt_descripcion_inciso_nuevo.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents txt_descripcion_inciso_nuevo As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
     '''Control lbl_fecha_inicio_vigencia.
     '''</summary>
     '''<remarks>
@@ -489,22 +624,4 @@ Partial Public Class frmCorrelacionSAC
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
     Protected WithEvents btnSalir As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
-    '''Control hfIdVersionSAC.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents hfIdVersionSAC As Global.System.Web.UI.WebControls.HiddenField
-
-    '''<summary>
-    '''Control hfAnioVersion.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents hfAnioVersion As Global.System.Web.UI.WebControls.HiddenField
 End Class

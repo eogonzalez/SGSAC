@@ -1597,7 +1597,9 @@ Public Class CDInstrumentosComerciales
         Return estado
     End Function
 
-    'Funcion que actualiza categoria a inciso
+    ''' <sumary>
+    ''' Funcion que actualiza categoria a inciso
+    ''' </sumary>
     Public Function UpdateInciso(ByVal id_instrumento As Integer, ByVal id_categoria As Integer, ByVal codigo_inciso As String) As Boolean
         Dim estado As Boolean = False
         Try
@@ -1662,14 +1664,21 @@ Public Class CDInstrumentosComerciales
     Public Function InsertAsignaCategoria(ByVal id_instrumento As Integer, ByVal id_categoria As Integer, ByVal dt_asocia As DataTable) As Boolean
         Dim estado As Boolean = False
         Try
+            'recorro DataTable 
             For Each row As DataRow In dt_asocia.Rows
 
+                'Si fila esta seleccionada
                 If row("Selected") = True Then
+
+                    'Obtengo Codigo Inciso
                     Dim codigo_inciso As String = row("codigo_inciso")
 
+                    'Se llama a la funcion valida inciso para verificar si inciso ya existe con otra categoria
                     If ValidaInciso(id_instrumento, codigo_inciso) Then
+                        'Si existe inciso, actuliza categoria para inciso
                         estado = UpdateInciso(id_instrumento, id_categoria, codigo_inciso)
                     Else
+                        'Si no existe inciso, inserta
                         estado = InsertInciso(id_instrumento, id_categoria, codigo_inciso)
                     End If
                 End If
@@ -2188,7 +2197,7 @@ Public Class CDInstrumentosComerciales
     End Function
 
     'Funcion para obtener los datos del Mantenimiento de Correlacion 
-    Public Function SelectCorrelacionMant(ByVal id_version As Integer, ByVal anio_version As Integer) As DataSet
+    Public Function SelectCorrelacionMant() As DataSet
         Try
             Dim sql_string As String
 
@@ -2196,22 +2205,15 @@ Public Class CDInstrumentosComerciales
                 " anio_inicia_enmienda,anio_fin_enmieda, " +
                 " 'Version '+enmienda+', Enero '+convert(varchar(10),anio_inicia_enmienda) as descripcion " +
                 " FROM SAC_VERSIONES_BITACORA " +
-                " WHERE id_version = @id_version AND " +
-                " anio_version = @anio_version;  " +
-                " select " +
-                " convert(varchar(10),anio_version) + '-'+convert(varchar(50),id_version) as id_version,  " +
+                " WHERE estado = 'A' " +
+                " SELECT anio_version, enmienda, " +
+                " anio_inicia_enmienda,anio_fin_enmieda, " +
                 " 'Version '+enmienda+', Enero '+convert(varchar(10),anio_inicia_enmienda) as descripcion " +
-                " from SAC_Versiones_Bitacora " +
-                " where estado <> 'A' " +
-                " AND id_version <> @id_version "
-
-            '" AND anio_version <> @anio_version "
+                " FROM SAC_VERSIONES_BITACORA" +
+                " WHERE estado Is NULL"
 
             Using cn = objConeccion.Conectar
                 Dim command As SqlCommand = New SqlCommand(sql_string, cn)
-                command.Parameters.AddWithValue("id_version", id_version)
-                command.Parameters.AddWithValue("anio_version", anio_version)
-
                 da = New SqlDataAdapter(command)
                 da.Fill(ds)
 
@@ -2384,6 +2386,89 @@ Public Class CDInstrumentosComerciales
             Return ds
 
         End Using
+    End Function
+
+    'Funcion que verifica si existe version pendiente de aprobar
+    Public Function ExisteVersionSACPendiente() As Boolean
+        Dim estado As Boolean = False
+        Try
+            Dim sql_query As String
+
+            sql_query = " SELECT coalesce(COUNT(id_version),0) " +
+                " from SAC_Versiones_Bitacora " +
+                " where estado is null "
+
+            Using cn = objConeccion.Conectar
+                Dim command As SqlCommand = New SqlCommand(sql_query, cn)
+                cn.Open()
+                If command.ExecuteScalar() >= 1 Then
+                    estado = True
+                Else
+                    estado = False
+                End If
+            End Using
+
+        Catch ex As Exception
+            estado = False
+        Finally
+
+        End Try
+
+        Return estado
+    End Function
+
+    'Funcion que verifica cuantas versiones de sac pendiente existen
+    Public Function CantidadVersionesSACPendientes() As Integer
+        Dim cantidad As Integer = 0
+        Try
+            Dim sql_query As String
+
+            sql_query = " SELECT COUNT(id_version) " +
+                " from SAC_Versiones_Bitacora " +
+                " where estado is null "
+
+            Using cn = objConeccion.Conectar
+                Dim command As SqlCommand = New SqlCommand(sql_query, cn)
+                cn.Open()
+                cantidad = command.ExecuteScalar()
+                
+            End Using
+
+        Catch ex As Exception
+
+        Finally
+
+        End Try
+
+        Return cantidad
+    End Function
+
+    'Funcion que obtiene los datos para el mantenimiento de apertura arancelaria
+    Public Function SelectIncisoApertura(ByVal codigo_inciso As String) As DataTable
+        Dim dt_inciso_apertura As New DataTable
+        Try
+            Dim sql_query As String
+            sql_query = " select cast(dai_base as numeric(8,2)) as dai_base, texto_inciso " +
+                " from SAC_Incisos " +
+                " where estado = 'A' AND  " +
+                " codigo_inciso = @codigo_inciso "
+
+            Using cn = objConeccion.Conectar
+                Dim command As SqlCommand = New SqlCommand(sql_query, cn)
+                command.Parameters.AddWithValue("codigo_inciso", codigo_inciso)
+
+                da = New SqlDataAdapter(command)
+                da.Fill(dt_inciso_apertura)
+
+            End Using
+
+        Catch ex As Exception
+
+        Finally
+
+        End Try
+
+        Return dt_inciso_apertura
     End Function
 
 #End Region

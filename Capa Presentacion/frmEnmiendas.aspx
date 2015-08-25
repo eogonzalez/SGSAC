@@ -33,9 +33,12 @@
         <div class="btn-group pull-right" role="group">
             <asp:LinkButton ID="lkBtt_nuevo" runat="server" CssClass="btn btn-primary"> <i aria-hidden="true" class="glyphicon glyphicon-pencil"></i> Nuevo </asp:LinkButton>
 
+            <asp:LinkButton ID="lkBtt_Hidden_nuevo" Style="display:hidden" runat="server">
+            </asp:LinkButton>
+
             <cc1:modalpopupextender id="lkBtt_nuevo_ModalPopupExtender" backgroundcssclass="modalBackground"
                 runat="server" behaviorid="lkBtt_nuevo_ModalPopupExtender" popupcontrolid="pnlNuevoSAC"
-                dynamicservicepath="" targetcontrolid="lkBtt_nuevo">
+                dynamicservicepath="" targetcontrolid="lkBtt_Hidden_nuevo">
             </cc1:modalpopupextender>
 
             <asp:LinkButton ID="lkBtt_editar" runat="server" CssClass="btn btn-primary"> <i aria-hidden="true" class="glyphicon glyphicon-edit"></i> Editar </asp:LinkButton>
@@ -119,6 +122,13 @@
                         <cc1:CalendarExtender ID="txtFechaFinVigencia_CalendarExtender" runat="server" BehaviorID="txtFechaRatifica_CalendarExtender" TargetControlID="txtFechaFinVigencia" />
                     </div>
                 </div>
+
+<%--                <div class="form-group">
+                    <asp:Label ID="lbl_estado" CssClass="control-label col-xs-3" text="Dar de baja:" runat="server"></asp:Label>
+                    <div class="col-xs-9">
+
+                    </div>
+                </div>--%>
 
                 <div class="form-group">
                     <asp:Label ID="Label7" CssClass="control-label col-xs-3" runat="server" Text="Base Normativa:"></asp:Label>

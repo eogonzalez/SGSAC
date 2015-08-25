@@ -31,7 +31,7 @@
         <div class="panel-body form-horizontal">
             <%-- Area de datos generales del la version de la enmienda SAC --%>
             <h5>
-                <span class="label label-primary">Datos Generales del SAC Vigente
+                <span class="label label-default">Datos Generales del SAC Vigente
                 </span>
             </h5>
 
@@ -68,11 +68,41 @@
 
             </div>
 
+            <h5>
+                <span class="label label-success"> Datos Generales del Nuevo SAC </span>
+            </h5>
+
             <div class="form-group">
-                <asp:Label ID="Label2" CssClass="control-label col-xs-2" Text="Descripcion Nueva Versión:" runat="server"> </asp:Label>
-                <div class="col-xs-10">
-                    <asp:DropDownList ID="ddl_version_nueva" CssClass="form-control" runat="server"> </asp:DropDownList>
+
+                <asp:Label ID="Label2" CssClass="control-label col-xs-2" Text="Año Vigencia SAC" runat="server"> </asp:Label>
+                <div class="col-xs-1">
+                    <asp:TextBox ID="txt_nuevo_año_vigencia" CssClass="form-control" runat="server" disabled> </asp:TextBox>
                 </div>
+
+                <asp:Label ID="Label3" CssClass="control-label col-xs-2" Text="Enmienda al SAC" runat="server"></asp:Label>
+                <div class="col-xs-2">
+                    <asp:TextBox ID="txt_version_nueva_enmienda" CssClass="form-control" runat="server" disabled> </asp:TextBox>
+                </div>
+
+                <asp:Label ID="Label4" CssClass="control-label col-xs-2" Text="Periodo Enmienda SAC del:" runat="server"></asp:Label>
+                <div class="col-xs-1">
+                    <asp:TextBox ID="txt_nuevo_periodo_año_inicial" CssClass="form-control" runat="server" disabled> </asp:TextBox>
+                </div>
+
+                <asp:Label ID="Label5" CssClass="control-label col-xs-1" Text=" Al:" runat="server"></asp:Label>
+                <div class="col-xs-1">
+                    <asp:TextBox ID="txt_nuevo_periodo_año_final" CssClass="form-control" runat="server" disabled> </asp:TextBox>
+                </div>
+
+            </div>
+
+            <div class="form-group">
+
+                <asp:Label ID="Label6" CssClass="control-label col-xs-2" Text="Descripción Nueva Versión:" runat="server"> </asp:Label>
+                <div class="col-xs-10">
+                    <asp:TextBox ID="txt_descripcion_nueva_version" CssClass="form-control" runat="server" disabled> </asp:TextBox>
+                </div>
+
             </div>
 
 
@@ -148,13 +178,15 @@
                 Apertura
                     </asp:LinkButton>
 
+                    <asp:LinkButton id="lkBtn_Hidden_Nuevo" Style="display:hidden" runat="server">
+                    </asp:LinkButton>
+
                 </div>
 
                 <cc1:ModalPopupExtender ID="lkBtt_Nuevo_ModalPopupExtender"
                     BackgroundCssClass="modalBackground" BehaviorID="lkBtt_Nuevo_ModalPopupExtender"
-                    PopupControlID="pnlApertura" DynamicServicePath="" TargetControlID="lkBtn_Nuevo"
+                    PopupControlID="pnlApertura" DynamicServicePath="" TargetControlID="lkBtn_Hidden_Nuevo"
                     runat="server">
-
                 </cc1:ModalPopupExtender>
 
             </div>
@@ -303,10 +335,4 @@
 
         </asp:Panel>
     </div>
-
-    <div>
-        <asp:HiddenField ID="hfIdVersionSAC" runat="server" />
-        <asp:HiddenField ID="hfAnioVersion" runat="server" />
-    </div>
-
 </asp:Content>
