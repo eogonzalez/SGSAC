@@ -5,6 +5,15 @@
     Private _fecha_inicia_vigencia As Date
     Private _fecha_fin_vigencia As Date
     Private _observaciones As String
+    'Variables adicionales para correlaciones
+    Private _inciso_origen As String
+    Private _inciso_nuevo As String
+    Private _texto_inciso As String
+    Private _normativa As String
+    Private _dai_base As Decimal
+    Private _dai_nuevo As Decimal
+    Private _anio_nueva_version As Integer
+
 
     Public Property id_version As Integer
         Get
@@ -33,7 +42,6 @@
         End Set
     End Property
 
-
     Public Property fecha_inicia_vigencia As Date
         Get
             Return _fecha_inicia_vigencia
@@ -61,4 +69,67 @@
         End Set
     End Property
 
+    Public Property inciso_origen As String
+        Get
+            Return _inciso_origen
+        End Get
+        Set(value As String)
+            _inciso_origen = value
+        End Set
+    End Property
+
+    Public Property inciso_nuevo As String
+        Get
+            Return _inciso_nuevo
+        End Get
+        Set(value As String)
+            _inciso_nuevo = value
+        End Set
+    End Property
+
+    Public Property texto_inciso As String
+        Get
+            Return _texto_inciso
+        End Get
+        Set(value As String)
+            _texto_inciso = value
+        End Set
+    End Property
+
+    Public Property normativa As String
+        Get
+            Return _normativa
+        End Get
+        Set(value As String)
+            _normativa = value
+        End Set
+    End Property
+
+    Public Property dai_base As Decimal
+        Get
+            Return _dai_base
+        End Get
+        Set(value As Decimal)
+            _dai_base = value
+        End Set
+    End Property
+
+
+    Public Property dai_nuevo As Decimal
+        Get
+            Return _dai_nuevo
+        End Get
+        Set(value As Decimal)
+            _dai_nuevo = value
+        End Set
+    End Property
+
+    Public Property anio_nueva_version As Integer
+        Get
+            Return _anio_nueva_version
+        End Get
+        Set(value As Integer)
+            _anio_nueva_version = value
+        End Set
+    End Property
 End Class

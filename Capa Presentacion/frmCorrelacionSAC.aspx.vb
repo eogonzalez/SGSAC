@@ -3,7 +3,13 @@ Imports Reglas_del_negocio
 Public Class frmCorrelacionSAC
     Inherits System.Web.UI.Page
 
+#Region "Varialbles locales"
     Private Shared _tabla_incisos As DataTable
+    Private Shared _id_version As Integer
+    Private Shared _anio_actual As Integer
+    Private Shared _anio_nueva As Integer
+    Private Shared _dai_actual As Decimal
+    Private Shared _inciso_origen As String
 
     Public Shared Property tabla_incisos As DataTable
         Get
@@ -13,6 +19,53 @@ Public Class frmCorrelacionSAC
             _tabla_incisos = tabla_incisos
         End Set
     End Property
+
+    Public Shared Property id_version As Integer
+        Get
+            Return _id_version
+        End Get
+        Set(value As Integer)
+            _id_version = value
+        End Set
+    End Property
+
+    Public Shared Property anio_actual As Integer
+        Get
+            Return _anio_actual
+        End Get
+        Set(value As Integer)
+            _anio_actual = value
+        End Set
+    End Property
+
+    Public Shared Property anio_nueva As Integer
+        Get
+            Return _anio_nueva
+        End Get
+        Set(value As Integer)
+            _anio_nueva = value
+        End Set
+    End Property
+
+    Public Shared Property dai_actual As Decimal
+        Get
+            Return _dai_actual
+        End Get
+        Set(value As Decimal)
+            _dai_actual = value
+        End Set
+    End Property
+
+    Public Shared Property inciso_origen As String
+        Get
+            Return _inciso_origen
+        End Get
+        Set(value As String)
+            _inciso_origen = value
+        End Set
+    End Property
+
+#End Region
 
 #Region "Funciones del sistema"
 
@@ -58,6 +111,95 @@ Public Class frmCorrelacionSAC
         End If
 
     End Sub
+
+    Protected Sub btnGuardar_Click(sender As Object, e As EventArgs) Handles btnGuardar.Click
+
+        If GuardarApertura() Then
+            Mensaje("Apertura realizada con éxito.")
+            LlenarCorrelacionMant()
+            LlenarSeleccionCodigoInciso(txt_codigo_arancel.Text)
+            LimpiarAperturaMant()
+
+        Else
+            Mensaje("Error al realizar apertura.")
+            lkBtt_Nuevo_ModalPopupExtender.Show()
+        End If
+    End Sub
+
+    Protected Sub lkBtn_Suprimir_Click(sender As Object, e As EventArgs) Handles lkBtn_Suprimir.Click
+        Dim codigo_inciso As String
+        codigo_inciso = getCodigoIncisoGridView()
+
+        If Not codigo_inciso = Nothing Then
+            If GuardarSupresion(codigo_inciso) Then
+                Mensaje("Se realizo supresion con éxito.")
+                LlenarSeleccionCodigoInciso(txt_codigo_arancel.Text)
+            Else
+                Mensaje("No se puede realizar supresión.")
+            End If
+        Else
+            Mensaje("Seleccione un inciso para realizar supresión.")
+            LlenarCorrelacionMant()
+        End If
+    End Sub
+
+#End Region
+
+#Region "Obtener valores de panel de apertura"
+    Private Function getVersionActual() As Integer
+        If anio_actual > 0 Then
+            Return anio_actual
+        Else
+            Return 0
+        End If
+        'Return Convert.ToInt32(txt_anio_actual.Text)
+    End Function
+
+    Private Function getNuevaVersion() As Integer
+        If anio_nueva > 0 Then
+            Return anio_nueva
+        Else
+            Return 0
+        End If
+        'Return Convert.ToInt32(txt_anio_nueva.Text)
+    End Function
+
+    Private Function getIncisoActual() As String
+        Return inciso_origen
+    End Function
+
+    Private Function getDaiActual() As Decimal
+        Return dai_actual
+        'Return Convert.ToDecimal(txt_dai_actual.Text)
+    End Function
+
+    Private Function getIncisoNuevo() As String
+        Return txt_inciso_nuevo.Text.ToString()
+    End Function
+
+    Private Function getDaiNuevo() As Decimal
+        Return Convert.ToDecimal(txt_dai_nuevo.Text)
+    End Function
+
+    Private Function getNuevaDescripcion() As String
+        Return txt_descripcion_inciso_nuevo.Text.ToString()
+    End Function
+
+    Private Function getFechaInicioVigencia() As Date
+        Return Convert.ToDateTime(txt_Fecha_Inicio_Vigencia.Text.ToString())
+    End Function
+
+    Private Function getFechaFinVigencia() As Date
+        Return Convert.ToDateTime(txt_Fecha_Fin_Vigencia.Text.ToString())
+    End Function
+
+    Private Function getNormativa() As String
+        Return txt_base_normativa.Text.ToString()
+    End Function
+
+    Private Function getObservaciones() As String
+        Return txt_observaciones.Text.ToString()
+    End Function
 
 #End Region
 
@@ -157,7 +299,9 @@ Public Class frmCorrelacionSAC
 
         With objCorrelacion.SelectCorrelacionMant()
             If Not .Tables(0).Rows.Count = 0 Then
+                id_version = Convert.ToInt32(.Tables(0).Rows(0)("id_version").ToString())
                 txt_anio_actual.Text = .Tables(0).Rows(0)("anio_version").ToString()
+                anio_actual = .Tables(0).Rows(0)("anio_version")
                 txt_descripcion_actual.Text = .Tables(0).Rows(0)("descripcion").ToString()
                 estado = True
             Else
@@ -166,6 +310,7 @@ Public Class frmCorrelacionSAC
 
             If Not .Tables(1).Rows.Count = 0 Then
                 txt_anio_nueva.Text = .Tables(1).Rows(0)("anio_version").ToString()
+                anio_nueva = .Tables(1).Rows(0)("anio_version")
                 txt_descripcion_nueva.Text = .Tables(1).Rows(0)("descripcion").ToString()
                 estado = True
             Else
@@ -176,7 +321,9 @@ Public Class frmCorrelacionSAC
         With objCorrelacion.SelectIncisoApertura(codigo_inciso)
             If Not .Rows.Count = 0 Then
                 txt_inciso_actual.Text = codigo_inciso
+                inciso_origen = codigo_inciso
                 txt_dai_actual.Text = .Rows(0)("dai_base").ToString()
+                dai_actual = .Rows(0)("dai_base")
                 txt_descripcion_inciso.Text = .Rows(0)("texto_inciso").ToString()
 
                 txt_inciso_nuevo.Text = codigo_inciso
@@ -190,6 +337,89 @@ Public Class frmCorrelacionSAC
 
         Return estado
     End Function
+
+    'Funcion que almacena la apertura arancelaria
+    Private Function GuardarApertura() As Boolean
+        Dim objEnmiendas As New CNInstrumentosComerciales
+        Dim objCorrelacion As New CEEnmiendas
+
+        objCorrelacion.inciso_origen = getIncisoActual()
+        objCorrelacion.inciso_nuevo = getIncisoNuevo()
+        objCorrelacion.texto_inciso = getNuevaDescripcion()
+        objCorrelacion.observaciones = getObservaciones()
+        objCorrelacion.normativa = getNormativa()
+        objCorrelacion.dai_base = getDaiActual()
+        objCorrelacion.dai_nuevo = getDaiNuevo()
+        objCorrelacion.anio_version = getVersionActual()
+        objCorrelacion.anio_nueva_version = getNuevaVersion()
+        objCorrelacion.id_version = id_version
+        objCorrelacion.fecha_fin_vigencia = getFechaFinVigencia()
+        objCorrelacion.fecha_inicia_vigencia = getFechaInicioVigencia()
+
+        Return objEnmiendas.InsertApertura(objCorrelacion)
+
+    End Function
+
+    Private Sub LimpiarAperturaMant()
+        txt_anio_actual.Text = ""
+        txt_descripcion_actual.Text = ""
+        txt_anio_nueva.Text = ""
+        txt_descripcion_nueva.Text = ""
+        txt_inciso_actual.Text = ""
+        txt_dai_actual.Text = ""
+        txt_descripcion_inciso.Text = ""
+        txt_dai_nuevo.Text = ""
+        txt_descripcion_inciso_nuevo.Text = ""
+        txt_Fecha_Inicio_Vigencia.Text = ""
+        txt_Fecha_Fin_Vigencia.Text = ""
+        txt_base_normativa.Text = ""
+        txt_observaciones.Text = ""
+    End Sub
+
+    Private Function GuardarSupresion(ByVal codigo_inciso As String) As Boolean
+        Dim estado As Boolean = False
+        If ObtieneValoresSuprimir(codigo_inciso) Then
+            Dim objEnmiendas As New CNInstrumentosComerciales
+            Dim objCorrelacion As New CEEnmiendas
+
+            objCorrelacion.inciso_origen = getIncisoActual()
+            objCorrelacion.dai_base = getDaiActual()
+            objCorrelacion.anio_version = getVersionActual()
+            objCorrelacion.id_version = id_version
+            
+            estado = objEnmiendas.InsertSupresion(objCorrelacion)
+        Else
+            estado = False
+        End If
+        Return estado
+    End Function
+
+    Private Function ObtieneValoresSuprimir(ByVal codigo_inciso As String) As Boolean
+        Dim estado As Boolean = False
+        Dim objCorrelacion As New CNInstrumentosComerciales
+
+        With objCorrelacion.SelectCorrelacionMant()
+            If Not .Tables(0).Rows.Count = 0 Then
+                id_version = Convert.ToInt32(.Tables(0).Rows(0)("id_version").ToString())
+                anio_actual = .Tables(0).Rows(0)("anio_version")
+                estado = True
+            Else
+                estado = False
+            End If
+        End With
+
+        With objCorrelacion.SelectIncisoApertura(codigo_inciso)
+            If Not .Rows.Count = 0 Then
+                inciso_origen = codigo_inciso
+                dai_actual = .Rows(0)("dai_base")
+                estado = True
+            Else
+                estado = False
+            End If
+        End With
+        Return estado
+    End Function
+
 #End Region
 
 End Class

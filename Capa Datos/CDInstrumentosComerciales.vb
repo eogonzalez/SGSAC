@@ -2201,7 +2201,7 @@ Public Class CDInstrumentosComerciales
         Try
             Dim sql_string As String
 
-            sql_string = "  SELECT anio_version, enmienda, " +
+            sql_string = "  SELECT id_version, anio_version, enmienda, " +
                 " anio_inicia_enmienda,anio_fin_enmieda, " +
                 " 'Version '+enmienda+', Enero '+convert(varchar(10),anio_inicia_enmienda) as descripcion " +
                 " FROM SAC_VERSIONES_BITACORA " +
@@ -2469,6 +2469,85 @@ Public Class CDInstrumentosComerciales
         End Try
 
         Return dt_inciso_apertura
+    End Function
+
+    'Funcion que almacena la correlacion del inciso seleccionado
+    Public Function InsertApertura(ByVal objCorrelacion As CEEnmiendas) As Boolean
+        Dim estado As Boolean = False
+        Try
+            Dim sql_query As String
+            sql_query = " INSERT INTO SAC_Correlacion " +
+                " ([inciso_origen] ,[inciso_nuevo] " +
+                " ,[texto_inciso] ,[comentarios] " +
+                " ,[normativa] ,[dai_base] " +
+                " ,[dai_nuevo] ,[anio_version] " +
+                " ,[anio_nueva_version] ,[version] " +
+                " ,[fin_vigencia] ,[inicio_vigencia]) " +
+                " VALUES " +
+                " (@inciso_origen ,@inciso_nuevo " +
+                " ,@texto_inciso ,@comentarios " +
+                " ,@normativa ,@dai_base " +
+                " ,@dai_nuevo ,@anio_version " +
+                " ,@anio_nueva_version ,@version " +
+                " ,@fin_vigencia ,@inicio_vigencia) "
+
+            Using cn = objConeccion.Conectar
+                Dim command As SqlCommand = New SqlCommand(sql_query, cn)
+                command.Parameters.AddWithValue("inciso_origen", objCorrelacion.inciso_origen)
+                command.Parameters.AddWithValue("inciso_nuevo", objCorrelacion.inciso_nuevo)
+                command.Parameters.AddWithValue("texto_inciso", objCorrelacion.texto_inciso)
+                command.Parameters.AddWithValue("comentarios", objCorrelacion.observaciones)
+                command.Parameters.AddWithValue("normativa", objCorrelacion.normativa)
+                command.Parameters.AddWithValue("dai_base", objCorrelacion.dai_base)
+                command.Parameters.AddWithValue("dai_nuevo", objCorrelacion.dai_nuevo)
+                command.Parameters.AddWithValue("anio_version", objCorrelacion.anio_version)
+                command.Parameters.AddWithValue("anio_nueva_version", objCorrelacion.anio_nueva_version)
+                command.Parameters.AddWithValue("version", objCorrelacion.id_version)
+                command.Parameters.AddWithValue("fin_vigencia", objCorrelacion.fecha_fin_vigencia.Year)
+                command.Parameters.AddWithValue("inicio_vigencia", objCorrelacion.fecha_inicia_vigencia.Year)
+                cn.Open()
+                command.ExecuteScalar()
+                estado = True
+            End Using
+
+
+        Catch ex As Exception
+            estado = False
+        Finally
+
+        End Try
+        Return estado
+    End Function
+
+    'Funcion para almacenar la supresion del iniciso seleccionado
+    Public Function InsertSupresion(ByVal objCorrelacion As CEEnmiendas) As Boolean
+        Dim estado As Boolean = False
+        Try
+            Dim sql_query As String
+            sql_query = " INSERT INTO SAC_Correlacion " +
+                " ([inciso_origen] ,[dai_base] " +
+                " ,[anio_version] ,[version])" +
+                " VALUES " +
+                " (@inciso_origen ,@dai_base " +
+                " ,@anio_version ,@version)  "
+                
+            Using cn = objConeccion.Conectar
+                Dim command As SqlCommand = New SqlCommand(sql_query, cn)
+                command.Parameters.AddWithValue("inciso_origen", objCorrelacion.inciso_origen)
+                command.Parameters.AddWithValue("dai_base", objCorrelacion.dai_base)
+                command.Parameters.AddWithValue("anio_version", objCorrelacion.anio_version)
+                command.Parameters.AddWithValue("version", objCorrelacion.id_version)
+
+                cn.Open()
+                command.ExecuteScalar()
+                estado = True
+            End Using
+        Catch ex As Exception
+            estado = False
+        Finally
+
+        End Try
+        Return estado
     End Function
 
 #End Region

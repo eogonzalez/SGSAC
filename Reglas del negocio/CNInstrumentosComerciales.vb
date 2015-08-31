@@ -293,6 +293,16 @@ Public Class CNInstrumentosComerciales
         Return objCDInstrumentos.SelectIncisoApertura(codigo_inciso)
     End Function
 
+    'Funcion que almacena la correlacion del inciso seleccionado
+    Public Function InsertApertura(ByVal objCorrelacion As CEEnmiendas) As Boolean
+        Return objCDInstrumentos.InsertApertura(objCorrelacion)
+    End Function
+
+    'Funcion para almacenar la supresion del iniciso seleccionado
+    Public Function InsertSupresion(ByVal objCorrelacion As CEEnmiendas) As Boolean
+        Return objCDInstrumentos.InsertSupresion(objCorrelacion)
+    End Function
+
 #End Region
 
 End Class
