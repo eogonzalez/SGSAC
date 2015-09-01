@@ -38,17 +38,17 @@ Public Class frmEnmiendas
     End Sub
 
     Protected Sub lkBtt_categorias_Click(sender As Object, e As EventArgs) Handles lkBtt_categorias.Click
-        Dim id_version_sac As Integer = 0
-        id_version_sac = Convert.ToInt32(getIdVersionGridView())
-        If id_version_sac = 0 Then
-            Mensaje("Seleccione una version del SAC.")
-            Exit Sub
-        Else
-            hfIdVersionSAC.Value = id_version_sac
-            hfAnioVersion.Value = getAnio_VersionGridView()
+        If objCapaNegocio.ExisteVersionSACPendiente() Then
+            If objCapaNegocio.CantidadVersionesSACPendientes > 1 Then
+                Mensaje("Solo puede existir una version pendiente.")
+            Else
+                Response.Redirect("~/frmCorrelacionSAC.aspx")
+            End If
 
-            Response.Redirect("~/frmCorrelacionSAC.aspx?id_vs=" + hfIdVersionSAC.Value + "&av=" + hfAnioVersion.Value)
+        Else
+            Mensaje("Cree una nueva version del SAC primero.")
         End If
+
     End Sub
 
     Protected Sub btn_Guardar_Click(sender As Object, e As EventArgs) Handles btn_Guardar.Click
@@ -74,6 +74,15 @@ Public Class frmEnmiendas
                 lkBtt_nuevo_ModalPopupExtender.Show()
             End If
 
+        End If
+    End Sub
+
+    Protected Sub lkBtt_nuevo_Click(sender As Object, e As EventArgs) Handles lkBtt_nuevo.Click
+        If ExisteVersionSAC() Then
+            Mensaje("No es posible agregar nueva version. Existe una version pendiente de aprobar.")
+            Exit Sub
+        Else
+            lkBtt_nuevo_ModalPopupExtender.Show()
         End If
     End Sub
 
@@ -226,6 +235,11 @@ Public Class frmEnmiendas
             .DataBind()
         End With
     End Sub
+
+    'Funcion para verificar si puede abrir nueva version
+    Private Function ExisteVersionSAC() As Boolean
+        Return objCapaNegocio.ExisteVersionSACPendiente()
+    End Function
 
 #End Region
 
