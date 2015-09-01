@@ -727,3 +727,34 @@ GO
 
 SET ANSI_PADDING OFF
 GO
+
+/****** Object:  Table [dbo].[SAC_Correlacion]    Script Date: 08/24/2015 18:48:45 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+SET ANSI_PADDING ON
+GO
+
+CREATE TABLE [dbo].[SAC_Correlacion](
+	[inciso_origen] [varchar](20) NULL,
+	[inciso_nuevo] [varchar](20) NULL,
+	[texto_inciso] [varchar](1000) NULL,
+	[comentarios] [varchar](500) NULL,
+	[normativa] [varchar](500) NULL,
+	[dai_base] [numeric](6, 2) NULL,
+	[dai_nuevo] [numeric](6, 2) NULL,
+	[anio_version] [smallint] NULL,
+	[anio_nueva_version] [smallint] NULL,
+	[version] [smallint] NULL,
+	[fin_vigencia] [smallint] NULL,
+	[inicio_vigencia] [smallint] NULL,
+	[estado] [nchar](10) NULL
+) ON [PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO
