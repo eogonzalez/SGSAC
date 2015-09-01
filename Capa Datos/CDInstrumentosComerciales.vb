@@ -2147,31 +2147,23 @@ Public Class CDInstrumentosComerciales
                 " activo = 'S'; " +
                 " SELECT " +
                 " ci.codigo_inciso, ci.texto_inciso, ci.dai_base, " +
-                "  null as estado, null as codigo_inciso_corr, " +
-                " null as texto_inciso_corr, null as dai_corr " +
+                " sc.estado, " +
+                " sc.inciso_nuevo as codigo_inciso_corr, " +
+                " sc.texto_inciso as texto_inciso_corr, sc.dai_nuevo as dai_corr " +
                 " FROM " +
                 " SAC_Incisos CI " +
-                " left outer join " +
+                " LEFT OUTER JOIN" +
                 " (SELECT " +
-                " AC.id_version, AC.anio_version, " +
-                " AC.codigo_inciso, " +
-                " AC.id_categoria, AC.id_instrumento," +
-                " AC.inciso_presicion, AC.texto_precision " +
+                " inciso_origen, inciso_nuevo, " +
+                " texto_inciso, dai_nuevo, " +
+                " anio_version, version," +
+                " CASE WHEN (inciso_nuevo IS NULL)  THEN 'SUPRIMIDA' ELSE 'APERTURA' END as estado " +
                 " FROM " +
-                " SAC_Asocia_Categoria AC, " +
-                " SAC_Versiones_Bitacora VB " +
-                " WHERE " +
-                " ac.id_version = vb.id_version AND " +
-                " ac.anio_version = vb.anio_version AND " +
-                " vb.estado = 'A') SAC on " +
-                " sac.id_version = ci.id_version And " +
-                " sac.anio_version = CI.anio_version And " +
-                " sac.codigo_inciso = ci.codigo_inciso " +
-                " LEFT OUTER JOIN " +
-                " IC_Categorias_Desgravacion ICD ON " +
-                " icd.id_categoria = sac.id_categoria And " +
-                " icd.id_instrumento = sac.id_instrumento " +
-                " WHERE " +
+                " SAC_Correlacion) SC ON " +
+                " sc.inciso_origen = ci.codigo_inciso And " +
+                " sc.version = ci.id_version And " +
+                " sc.anio_version = ci.anio_version " +
+                " WHERE "+
                 " CI.estado = 'A' AND  " +
                 " CI.codigo_inciso LIKE '" + str_codigo + "%' "
 
