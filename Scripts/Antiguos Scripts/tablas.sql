@@ -464,7 +464,7 @@ GO
 SET ANSI_PADDING OFF
 GO
 
-/****** Object:  Table [dbo].[SAC_Partidas]    Script Date: 05/24/2015 19:14:23 ******/
+****** Object:  Table [dbo].[SAC_Partidas]    Script Date: 09/03/2015 14:54:03 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -476,8 +476,8 @@ GO
 
 CREATE TABLE [dbo].[SAC_Partidas](
 	[Capitulo] [varchar](3) NOT NULL,
-	[Partida] [varchar](3) NOT NULL,
-	[Descripcion_Partida] [varchar](500) NULL,
+	[Partida] [varchar](10) NOT NULL,
+	[Descripcion_Partida] [varchar](1000) NULL,
 	[activo] [varchar](2) NULL,
 	[fecha_fin_vigencia] [date] NULL,
 	[usuario_modifica] [varchar](500) NULL,
