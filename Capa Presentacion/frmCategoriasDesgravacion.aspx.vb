@@ -1,6 +1,6 @@
 ﻿Imports Capa_Entidad
 Imports Reglas_del_negocio
-Imports System.Windows.Forms
+
 Public Class frmCategoriasDesgravacion
     Inherits System.Web.UI.Page
     Dim objCNInstrumentos As New CNInstrumentosComerciales
@@ -78,17 +78,15 @@ Public Class frmCategoriasDesgravacion
     Protected Sub btn_Aprobar_Click(sender As Object, e As EventArgs) Handles btn_Aprobar.Click
         'Verifica si es posible aprobar 
 
-        If MessageBox.Show("¿Esta seguro que desea Aprobar las Categorias de Desgravacion Previamente Seleccionadas?",
-                           "Confirmacion", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1
-                           ) = DialogResult.OK Then
-            If objCNInstrumentos.ApruebaCategoria(hfIdInstrumento.Value) Then
-                Mensaje("Categorias Aprobadas Con Exito")
-            Else
-                Mensaje("No es posible aprobar categorias")
-            End If
+        'If MessageBox.Show("¿Esta seguro que desea Aprobar las Categorias de Desgravacion Previamente Seleccionadas?",
+        '                   "Confirmacion", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1
+        '                   ) = DialogResult.OK Then
+        If objCNInstrumentos.ApruebaCategoria(hfIdInstrumento.Value) Then
+            Mensaje("Categorias Aprobadas Con Exito")
         Else
-            Exit Sub
+            Mensaje("No es posible aprobar categorias")
         End If
+
     End Sub
 
 #End Region

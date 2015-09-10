@@ -49,7 +49,8 @@
                 Configurar Tramos
             </asp:LinkButton>
 
-            <asp:LinkButton ID="lkBtn_Aprueba" runat="server" CssClass="btn btn-primary">
+            <asp:LinkButton ID="lkBtn_Aprueba" runat="server" CssClass="btn btn-primary" 
+                OnClientClick="return confirm(&quot;¿Esta seguro que desea Aprobar las Categorias de Desgravacion Previamente Seleccionadas?&quot;)">
                 <i aria-hidden="true" class="glyphicon glyphicon-check"></i>
                 Aprobar Categorias
             </asp:LinkButton>
