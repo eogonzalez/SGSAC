@@ -931,10 +931,10 @@ Public Class CDInstrumentosComerciales
         sql_query = "select II.nombre_instrumento , II.sigla, COUNT(ICD.id_categoria) as cantidad_categorias" +
             " from IC_Instrumentos II " +
             " left outer join " +
-            " IC_Categorias_Desgravacion_Tramos ICD on " +
+            " IC_Categorias_Desgravacion ICD on " +
             " II.id_instrumento = ICD.id_instrumento " +
             " where II.id_instrumento = @id_instrumento " +
-            " group by II.nombre_instrumento, II.sigla, ICD.id_categoria "
+            " group by II.nombre_instrumento, II.sigla "
 
         Using cn = objConeccion.Conectar
             Try
