@@ -193,8 +193,8 @@ Public Class CNInstrumentosComerciales
     End Function
 
     'Funcion para obtener los datos para los codigos seleccionados
-    Public Function SelectDatosCodigoInciso(ByVal str_codigo As String) As DataSet
-        Return objCDInstrumentos.SelectDatosCodigoInciso(str_codigo)
+    Public Function SelectDatosCodigoInciso(ByVal id_instrumento As Integer, ByVal str_codigo As String) As DataSet
+        Return objCDInstrumentos.SelectDatosCodigoInciso(id_instrumento, str_codigo)
     End Function
 
     'Funcion para obtener los datos del Mantenimiento de Asignacion de Categoria

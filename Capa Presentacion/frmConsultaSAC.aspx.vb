@@ -28,6 +28,12 @@ Public Class frmConsultaSAC
     Protected Sub btn_seleccionar_Click(sender As Object, e As EventArgs) Handles btn_seleccionar.Click
         llenar_gv_incisos_sac()
     End Sub
+
+    Protected Sub btn_genera_Click(sender As Object, e As EventArgs) Handles btn_genera.Click
+        DataTable_to_CSV(tabla_incisos, Server.MapPath("Reportes/ConsultaSAC/IncisosSAC.csv"), ",")
+        Response.Redirect("Reportes/ConsultaSAC/IncisosSAC.csv")
+    End Sub
+
 #End Region
 
 #Region "Mis Funciones"
@@ -58,7 +64,7 @@ Public Class frmConsultaSAC
     Private Sub llenar_gv_incisos_sac()
         Dim objCNAsignaCat As New CNInstrumentosComerciales
 
-        With objCNAsignaCat.SelectDatosCodigoInciso(txt_codigo_arancel.Text)
+        With objCNAsignaCat.SelectDatosCodigoInciso(hfIdInstrumento.Value, txt_codigo_arancel.Text)
 
             If .Tables(0).Rows.Count = 0 Then
                 'Esta vacia la tabla
@@ -130,8 +136,4 @@ Public Class frmConsultaSAC
     End Sub
 #End Region
 
-    Protected Sub btn_genera_Click(sender As Object, e As EventArgs) Handles btn_genera.Click
-        DataTable_to_CSV(tabla_incisos, Server.MapPath("Reportes/ConsultaSAC/IncisosSAC.csv"), ",")
-        Response.Redirect("Reportes/ConsultaSAC/IncisosSAC.csv")
-    End Sub
 End Class

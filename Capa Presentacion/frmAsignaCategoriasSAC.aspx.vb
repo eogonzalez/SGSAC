@@ -45,7 +45,7 @@ Public Class frmAsignaCategoriasSAC
         'Ver la manera de no llamar asigna categoria'
         categoria_id = getIdCategoria()
         LlenarAsignaCategoriaMant(hfIdInstrumento.Value)
-        LlenarSeleccionCodigoInciso(txt_codigo_arancel.Text)
+        LlenarSeleccionCodigoInciso(hfIdInstrumento.Value, txt_codigo_arancel.Text)
     End Sub
 
     'Metodo para cambiar el estado de los checkbox del gridview
@@ -155,7 +155,7 @@ Public Class frmAsignaCategoriasSAC
             gvAsignarCategorias.DataBind()
 
             LlenarAsignaCategoriaMant(hfIdInstrumento.Value)
-            LlenarSeleccionCodigoInciso(txt_codigo_arancel.Text)
+            LlenarSeleccionCodigoInciso(hfIdInstrumento.Value, txt_codigo_arancel.Text)
 
         Else
             Mensaje("Error al asignar categoria.")
@@ -183,10 +183,10 @@ Public Class frmAsignaCategoriasSAC
 #Region "Mis funciones"
 
     'Metodo para llenar controles de la seleccion del inciso
-    Sub LlenarSeleccionCodigoInciso(ByVal inciso As String)
+    Sub LlenarSeleccionCodigoInciso(ByVal id_instrumento As Integer, ByVal inciso As String)
         Dim objCNAsignaCat As New CNInstrumentosComerciales
 
-        With objCNAsignaCat.SelectDatosCodigoInciso(inciso)
+        With objCNAsignaCat.SelectDatosCodigoInciso(id_instrumento, inciso)
 
             If .Tables(0).Rows.Count = 0 Then
                 'Esta vacia la tabla

@@ -811,7 +811,7 @@ Public Class CDInstrumentosComerciales
                             codigo_categoria = dt_Categorias.Rows(0)("codigo_categoria").ToString
 
                             '@Cuenta
-                            contador = 1
+                            contador = 0
 
                             For Each Row As DataRow In dt_Categorias.Rows
                                 cantidad_cortes = Convert.ToInt32(Row("cantidad_cortes").ToString)
@@ -825,41 +825,47 @@ Public Class CDInstrumentosComerciales
                                         " SET " +
                                         " cortes_ejecutados = @cuenta " +
                                         " WHERE " +
-                                        " id_categoria = @id_categoria and " +
-                                        " id_tramo = @id_tramo "
+                                        " id_instrumento = @id_instrumento AND " +
+                                        " id_categoria = @id_categoria "
+
+                                    contador = contador + cantidad_cortes
 
                                     Using cn3 = objConeccion.Conectar
                                         Dim command3 As SqlCommand = New SqlCommand(sql_query, cn3)
+                                        command3.Parameters.AddWithValue("id_instrumento", id_instrumento)
                                         command3.Parameters.AddWithValue("cuenta", contador)
                                         command3.Parameters.AddWithValue("id_categoria", id_categoria)
-                                        command3.Parameters.AddWithValue("id_tramo", id_tramo)
+
                                         cn3.Open()
                                         command3.ExecuteScalar()
                                     End Using
 
-                                    contador = contador + cantidad_cortes
+                                    'contador = contador + cantidad_cortes
                                 Else
                                     codigo_categoria = Row("codigo_categoria").ToString
-                                    contador = 1
+                                    contador = 0
 
                                     sql_query = "UPDATE" +
                                         " IC_Categorias_Desgravacion_Tramos " +
                                         " SET " +
                                         " cortes_ejecutados = @cuenta " +
                                         " WHERE " +
-                                        " id_categoria = @id_categoria and " +
-                                        " id_tramo = @id_tramo "
+                                        " id_instrumento = @id_instrumento AND " +
+                                        " id_categoria = @id_categoria "
+
+                                    contador = contador + cantidad_cortes
 
                                     Using cn3 = objConeccion.Conectar
                                         Dim command3 As SqlCommand = New SqlCommand(sql_query, cn3)
+                                        command3.Parameters.AddWithValue("id_instrumento", id_instrumento)
                                         command3.Parameters.AddWithValue("cuenta", contador)
                                         command3.Parameters.AddWithValue("id_categoria", id_categoria)
-                                        command3.Parameters.AddWithValue("id_tramo", id_tramo)
+
                                         cn3.Open()
                                         command3.ExecuteScalar()
                                     End Using
 
-                                    contador = contador + cantidad_cortes
+                                    'contador = contador + cantidad_cortes
                                 End If
                             Next
                             Dim id_version As Integer = 0
@@ -1694,7 +1700,7 @@ Public Class CDInstrumentosComerciales
     End Function
 
     'Funcion para obtener los datos para los codigos seleccionados
-    Public Function SelectDatosCodigoInciso(ByVal str_codigo As String) As DataSet
+    Public Function SelectDatosCodigoInciso(ByVal id_instrumento As Integer, ByVal str_codigo As String) As DataSet
         Try
             Dim sql_string As String
             Dim capitulo As String = Nothing
@@ -1765,7 +1771,8 @@ Public Class CDInstrumentosComerciales
                 " WHERE " +
                 " ac.id_version = vb.id_version AND " +
                 " ac.anio_version = vb.anio_version AND " +
-                " vb.estado = 'A') SAC on " +
+                " vb.estado = 'A' AND " +
+                " ac.id_instrumento = @id_instrumento) SAC on " +
                 " sac.id_version = ci.id_version And " +
                 " sac.anio_version = CI.anio_version And " +
                 " sac.codigo_inciso = ci.codigo_inciso " +
@@ -1779,6 +1786,7 @@ Public Class CDInstrumentosComerciales
 
             Using cn = objConeccion.Conectar
                 Dim command As SqlCommand = New SqlCommand(sql_string, cn)
+                command.Parameters.AddWithValue("id_instrumento", id_instrumento)
                 command.Parameters.AddWithValue("capitulo", capitulo)
                 command.Parameters.AddWithValue("partida", partida)
                 command.Parameters.AddWithValue("subpartida", subpartida)
@@ -1809,9 +1817,40 @@ Public Class CDInstrumentosComerciales
                 " SELECT nombre_instrumento, sigla " +
                 " FROM IC_Instrumentos " +
                 " WHERE id_instrumento = @id_instrumento; " +
-                " select id_categoria, codigo_categoria " +
-                " from IC_Categorias_Desgravacion " +
-                " WHERE id_instrumento = @id_instrumento; "
+                " SELECT " +
+                " CATEGO.id_categoria," +
+                " (convert(varchar(max),CATEGO.codigo_categoria) + ' - ' + 'Cantidad Tramos: ' + CONVERT(VARCHAR(max),CATEGO.cantidad_tramos) + ' - ' + 'Cantidad Cortes: ' + CONVERT(VARCHAR(max),CATEGO.CANTIDAD_CORTES)) AS codigo_categoria " +
+                " FROM " +
+                " IC_Instrumentos I " +
+                " Left Join" +
+                " (SELECT  CD.id_instrumento, " +
+                " CD.id_categoria,  " +
+                " CD.codigo_categoria, " +
+                " TD.descripcion,  " +
+                " CD.cantidad_tramos, " +
+                " CDT.activo,  " +
+                " SUM(CDT.cantidad_cortes) AS CANTIDAD_CORTES  " +
+                " FROM " +
+                " IC_Categorias_Desgravacion CD,  " +
+                " IC_Categorias_Desgravacion_Tramos CDT,  " +
+                " IC_Tipo_Desgravacion TD " +
+                " WHERE " +
+                " CD.id_categoria = CDT.id_categoria AND " +
+                " CD.id_instrumento = CDT.id_instrumento AND" +
+                " CD.id_tipo_desgrava = TD.id_tipo_desgrava  AND " +
+                " cdt.activo = 'S' " +
+                " GROUP BY " +
+                " CD.id_instrumento, " +
+                " CD.id_categoria,  " +
+                " CD.codigo_categoria, " +
+                " TD.descripcion,  " +
+                " CD.cantidad_tramos, " +
+                " CDT.activo) CATEGO " +
+                " ON  " +
+                " I.id_instrumento = CATEGO.id_instrumento " +
+                " WHERE " +
+                " I.id_instrumento = @id_instrumento; "
+
 
             Using cn = objConeccion.Conectar
                 Dim command As SqlCommand = New SqlCommand(sql_string, cn)
