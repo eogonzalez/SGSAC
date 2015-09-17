@@ -113,13 +113,13 @@ Partial Public Class frmEnmiendas
     Protected WithEvents Label3 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''Control txtDescripcion.
+    '''Control txt_Descripcion_Enmienda.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents txtDescripcion As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents txt_Descripcion_Enmienda As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''Control Label9.

@@ -107,6 +107,21 @@ Public Class CNInstrumentosComerciales
 
 #Region "Funciones y procedimientos para el Mantenimiento de Categorias de Desgravacion "
 
+    'Funcion para verificar si categoria ya esta asociada
+    Public Function VerificaCategoriaAsocia(ByVal objCategoriaDesgrava As CECategoriaDesgravacion) As Boolean
+        Return objCDInstrumentos.VerificaCategoriaAsocia(objCategoriaDesgrava)
+    End Function
+
+    'Funcion para eliminar Categoria
+    Public Function DeleteCategoria(ByVal objCategoriaDesgrava As CECategoriaDesgravacion) As Boolean
+        Return objCDInstrumentos.DeleteCategoria(objCategoriaDesgrava)
+    End Function
+
+    'Funcion para verificar si las categorias han sido aprobadas
+    Public Function VerificaCategoriasEstado(ByVal id_instrumento As Integer) As Boolean
+        Return objCDInstrumentos.VerificaCategoriasEstado(id_instrumento)
+    End Function
+
     'Funcion para Aprobar Categoria
     Public Function ApruebaCategoria(ByVal id_instrumento As Integer) As Boolean
         Return objCDInstrumentos.ApruebaCategoria(id_instrumento)

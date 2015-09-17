@@ -136,12 +136,14 @@
 
 
                 <div class="form-group">
-                    <asp:Label ID="lbl_cantidad_cortes" CssClass="control-label col-xs-3" Enabled="false" runat="server" Text="Cantidad de cortes:"></asp:Label>
-                    <div class="col-xs-3">
-                        <asp:TextBox ID="txt_cantidad_cortes" CssClass="form-control" runat="server" OnKeyPress="CalculaFactor()" OnBlur="CalculaFactor()"></asp:TextBox>
+                    <div class="has-error has-error has-feedback">
+                        <asp:Label ID="lbl_cantidad_cortes" CssClass="control-label col-xs-3" Enabled="false" runat="server" Text="Cantidad de cortes:"></asp:Label>
+                        <div class="col-xs-3">
+                            <asp:TextBox ID="txt_cantidad_cortes" CssClass="form-control" runat="server" OnKeyPress="CalculaFactor()" OnBlur="CalculaFactor()"></asp:TextBox>
+                            <span class="help-block">El campo no puede quedar vacio.</span>
+                        </div>
                     </div>
 
-                     
                     <asp:Label ID="lbl_periodo_corte" CssClass="control-label col-xs-3" Enabled="false" runat="server" Text="Periodo del Corte:"></asp:Label>
                     <div class="col-xs-3">
                         <asp:DropDownList ID="ddl_tipo_periodo_corte" CssClass="form-control" runat="server"></asp:DropDownList>
@@ -182,7 +184,7 @@
             </div>
 
             <div class="panel-footer">
-                <asp:Button ID="btn_genera_cortes" CssClass="btn btn-primary" runat="server" Text="Generar Cortes" />
+                <asp:Button ID="btn_genera_cortes" CssClass="btn btn-primary disabled" runat="server" Text="Generar Cortes" />
                 <asp:Button ID="btn_Salir" CssClass="btn btn-default" runat="server" Text="Salir" />
             </div>
 

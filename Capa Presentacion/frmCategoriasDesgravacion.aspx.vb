@@ -4,6 +4,7 @@ Imports Reglas_del_negocio
 Public Class frmCategoriasDesgravacion
     Inherits System.Web.UI.Page
     Dim objCNInstrumentos As New CNInstrumentosComerciales
+
 #Region "Funciones del sistema"
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
@@ -25,10 +26,16 @@ Public Class frmCategoriasDesgravacion
             Mensaje("Seleccione una categoria.")
             Exit Sub
         Else
-            LlenarCategoriasMant("editar", id_categoria, hfIdInstrumento.Value)
-            btn_Guardar.CommandName = "editar"
-            hfIdCategoria.Value = id_categoria
-            lkBtt_Nuevo_ModalPopupExtender.Show()
+            If VerificaCategoriasEstado(hfIdInstrumento.Value) Then
+                Mensaje("No es posible editar categoria seleccionada, las categorias ya han sido aprobadas.")
+                Exit Sub
+            Else
+                LlenarCategoriasMant("editar", id_categoria, hfIdInstrumento.Value)
+                btn_Guardar.CommandName = "editar"
+                hfIdCategoria.Value = id_categoria
+                lkBtt_Nuevo_ModalPopupExtender.Show()
+                txtCategoria.Focus()
+            End If
         End If
 
     End Sub
@@ -61,7 +68,7 @@ Public Class frmCategoriasDesgravacion
         Dim id_categoria As Integer = 0
         id_categoria = Convert.ToInt32(getIdCategoriaGridView())
         If id_categoria = 0 Then
-            Mensaje("Seleccione una categoria")
+            Mensaje("Seleccione una categoria.")
             Exit Sub
         Else
 
@@ -71,22 +78,76 @@ Public Class frmCategoriasDesgravacion
     End Sub
 
     Protected Sub lkBtn_Aprueba_Click(sender As Object, e As EventArgs) Handles lkBtn_Aprueba.Click
-        LlenarApruebaMant(hfIdInstrumento.Value)
-        lkBtt_Aprueba_ModalPopupExtender.Show()
+        If VerificaCategoriasEstado(hfIdInstrumento.Value) Then
+            Mensaje("No es posible aprobar categorias, las categorias han sido aprobadas previamente.")
+            Exit Sub
+        Else
+            LlenarApruebaMant(hfIdInstrumento.Value)
+            lkBtt_Aprueba_ModalPopupExtender.Show()
+        End If
     End Sub
 
     Protected Sub btn_Aprobar_Click(sender As Object, e As EventArgs) Handles btn_Aprobar.Click
         'Verifica si es posible aprobar 
 
-        'If MessageBox.Show("¿Esta seguro que desea Aprobar las Categorias de Desgravacion Previamente Seleccionadas?",
-        '                   "Confirmacion", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1
-        '                   ) = DialogResult.OK Then
-        If objCNInstrumentos.ApruebaCategoria(hfIdInstrumento.Value) Then
-            Mensaje("Categorias Aprobadas Con Exito")
+        If VerificaCategoriasEstado(hfIdInstrumento.Value) Then
+            Mensaje("No es posible aprobar categorias, las categorias han sido aprobadas previamente.")
+            Exit Sub
         Else
-            Mensaje("No es posible aprobar categorias")
+            If objCNInstrumentos.ApruebaCategoria(hfIdInstrumento.Value) Then
+                Mensaje("Categorias Aprobadas Con Exito")
+            Else
+                Mensaje("No es posible aprobar categorias")
+            End If
         End If
 
+        
+
+    End Sub
+
+    'Metodo para agregar nueva categoria
+    Protected Sub lkBtn_Nuevo_Click(sender As Object, e As EventArgs) Handles lkBtn_Nuevo.Click
+
+        'Se verifica si es posible agregar categoria
+        If VerificaCategoriasEstado(hfIdInstrumento.Value) Then
+            Mensaje("No es posible agregar categorias, ya que las categorias ya han sido aprobadas.")
+        Else
+            lkBtt_Nuevo_ModalPopupExtender.Show()
+        End If
+    End Sub
+
+    'Metodo para borrar categoria
+    Protected Sub lkBtn_Borrar_Click(sender As Object, e As EventArgs) Handles lkBtn_Borrar.Click
+        Dim id_categoria As Integer = 0
+        id_categoria = Convert.ToInt32(getIdCategoriaGridView())
+        If id_categoria = 0 Then
+            Mensaje("Seleccione una categoria.")
+            Exit Sub
+        Else
+            hfIdCategoria.Value = id_categoria
+
+            If VerificaCategoriasEstado(hfIdInstrumento.Value) Then
+                Mensaje("No es posible eliminar categoria, las categorias ya han sido aprobadas.")
+            Else
+
+                Dim objCategoriasDesgrava As New CECategoriaDesgravacion
+                objCategoriasDesgrava.id_categoria = id_categoria
+                objCategoriasDesgrava.id_instrumento = hfIdInstrumento.Value
+
+                If VerificaCategoriaAsociacion(objCategoriasDesgrava) Then
+                    Mensaje("Categoria esta asociada, no es posible eliminar.")
+                Else
+                    If EliminaCategoria(objCategoriasDesgrava) Then
+                        Mensaje("Categoria eliminada con exito.")
+                        LlenargvCategorias()
+                    Else
+                        Mensaje("No es posible eliminar categoria, ha ocurrido un error.")
+                    End If
+                End If
+
+                
+            End If
+        End If
     End Sub
 
 #End Region
@@ -241,7 +302,23 @@ Public Class frmCategoriasDesgravacion
 
     End Sub
 
+    'Funcion que verifica si ya estan aprobadas las categorias
+    Protected Function VerificaCategoriasEstado(ByVal id_instrumento As Integer) As Boolean
+        'si retorna Verdadero las categorias ya estan aprobadas
+        Return objCNInstrumentos.VerificaCategoriasEstado(id_instrumento)
+    End Function
+
+    'Funcion para eliminar categoria
+    Protected Function EliminaCategoria(ByVal objCategoriasDesgravacion As CECategoriaDesgravacion) As Boolean
+        Return objCNInstrumentos.DeleteCategoria(objCategoriasDesgravacion)
+    End Function
+
+    'Funcion que verifica si categoria esta asociada
+    Protected Function VerificaCategoriaAsociacion(ByVal objCategoriasDesgravacion As CECategoriaDesgravacion) As Boolean
+        Return objCNInstrumentos.VerificaCategoriaAsocia(objCategoriasDesgravacion)
+    End Function
+
 #End Region
 
-
+    
 End Class

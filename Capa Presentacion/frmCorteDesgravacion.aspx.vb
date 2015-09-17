@@ -28,10 +28,15 @@ Public Class frmCorteDesgravacion
             Mensaje("Seleccione un tramo.")
             Exit Sub
         Else
-            LlenarTramoCategoriaMant("editar", hfIdInstrumento.Value, hfIdCategoria.Value, id_tramo)
-            btn_genera_cortes.CommandName = "editar"
-            hfIdTramo.Value = id_tramo
-            lkBtt_Configurar_ModalPopupExtender.Show()
+            If VerificaCategoriasEstado(hfIdInstrumento.Value) Then
+                Mensaje("No es posible configurar tramo, las categorias ya han sido aprobadas.")
+            Else
+                LlenarTramoCategoriaMant("editar", hfIdInstrumento.Value, hfIdCategoria.Value, id_tramo)
+                btn_genera_cortes.CommandName = "editar"
+                hfIdTramo.Value = id_tramo
+                lkBtt_Configurar_ModalPopupExtender.Show()
+            End If
+            
         End If
     End Sub
 
@@ -78,6 +83,7 @@ Public Class frmCorteDesgravacion
 #End Region
 
 #Region "Mis Funciones"
+
     'Funcion para actualizar el tramo
     Protected Function ConfigurarTramo(ByVal id_instrumento As Integer, ByVal id_categoria As Integer, ByVal id_tramos As Integer) As Boolean
         'Declaro las variables de la capa de datos y entidad
@@ -96,7 +102,6 @@ Public Class frmCorteDesgravacion
 
         Return CNTramo.UpdateTramoCategoriaMant(CEObjeto)
     End Function
-
 
     'Funcion para llenar los controles con el id_instrumento, id_categoria y id_tramo
     Sub LlenarTramoCategoriaMant(ByVal accion As String, ByVal id_instrumento As Integer, ByVal id_categoria As Integer, ByVal id_tramo As Integer)
@@ -187,6 +192,13 @@ Public Class frmCorteDesgravacion
 
 
     End Sub
+
+    'Funcion que verifica si ya estan aprobadas las categorias
+    Protected Function VerificaCategoriasEstado(ByVal id_instrumento As Integer) As Boolean
+        'si retorna Verdadero las categorias ya estan aprobadas
+        Return objCNInstrumentos.VerificaCategoriasEstado(id_instrumento)
+    End Function
+
 
 #End Region
 

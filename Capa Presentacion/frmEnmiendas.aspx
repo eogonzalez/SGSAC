@@ -96,17 +96,19 @@
             <div class="panel-heading">Datos Generales de Versiones SAC </div>
             <div class="panel-body form-horizontal">
 
-                <div class="form-group">
+                <div class="form-group has-error has-feedback">
                     <asp:Label ID="Label2" CssClass="control-label col-xs-3" runat="server" Text="Año Version: "></asp:Label>
                     <div class="col-xs-9">
                         <asp:TextBox ID="txtAñoVersion" type="text" CssClass="form-control" runat="server"></asp:TextBox>
+                        <span class="help-block">El campo no puede quedar vacio.</span>
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group has-error has-feedback">
                     <asp:Label ID="Label3" CssClass="control-label col-xs-3" runat="server" Text="Descripcion:"></asp:Label>
                     <div class="col-xs-9">
-                        <asp:TextBox ID="txtDescripcion" type="text" CssClass="form-control" runat="server"></asp:TextBox>
+                        <asp:TextBox ID="txt_Descripcion_Enmienda" type="text" CssClass="form-control" runat="server"></asp:TextBox>
+                        <span class="help-block">El campo no puede quedar vacio.</span>
                     </div>
                 </div>
                 <div class="form-group">
@@ -119,6 +121,7 @@
                     <asp:Label ID="Label10" CssClass="control-label col-xs-3" runat="server" Text="Fecha Fin Vigencia:"></asp:Label>
                     <div class="col-xs-3">
                         <asp:TextBox ID="txtFechaFinVigencia" CssClass="form-control" runat="server"></asp:TextBox>
+                        <span class="help-block"></span>
                         <cc1:CalendarExtender ID="txtFechaFinVigencia_CalendarExtender" runat="server" BehaviorID="txtFechaRatifica_CalendarExtender" TargetControlID="txtFechaFinVigencia" />
                     </div>
                 </div>
@@ -139,7 +142,7 @@
 
             </div>
             <div class="panel-footer">
-                <asp:Button ID="btn_Guardar" CssClass="btn btn-primary" runat="server" Text="Guardar" />
+                <asp:Button ID="btn_Guardar" CssClass="btn btn-primary disabled" runat="server" Text="Guardar" />
                 <asp:Button ID="btn_Salir" CssClass="btn btn-default" runat="server" Text="Salir" />
             </div>
         </asp:Panel>

@@ -745,6 +745,178 @@ Public Class CDInstrumentosComerciales
 
 #Region "Funciones y procedimientos para el Mantenimiento de Categorias de Desgravacion"
 
+    'Funcion para verificar si categoria ya esta asociada
+    Public Function VerificaCategoriaAsocia(ByVal objCategoriaDesgrava As CECategoriaDesgravacion) As Boolean
+        Dim estado As Boolean = False
+        Dim sql_query As String
+
+        sql_query = " select coalesce(COUNT(1),0) " +
+            " from SAC_Asocia_Categoria " +
+            " where id_instrumento = @id_instrumento AND " +
+            " id_categoria = @id_categoria "
+
+        Using cn = objConeccion.Conectar
+            Dim command As New SqlCommand(sql_query, cn)
+            command.Parameters.AddWithValue("id_instrumento", objCategoriaDesgrava.id_instrumento)
+            command.Parameters.AddWithValue("id_categoria", objCategoriaDesgrava.id_categoria)
+            cn.Open()
+            If command.ExecuteScalar > 0 Then
+                estado = True
+            Else
+                estado = False
+            End If
+        End Using
+
+        Return estado
+    End Function
+
+    'Funcion para eliminar Categoria
+    Public Function DeleteCategoria(ByVal objCategoriaDesgrava As CECategoriaDesgravacion) As Boolean
+        Dim estado As Boolean = False
+
+        Try
+            Dim sql_query As String
+
+            'Query elimina detalle
+            sql_query = " DELETE " +
+                " IC_Categorias_Desgravacion_Tramos " +
+                " WHERE " +
+                " id_instrumento = @id_instrumento And " +
+                " id_categoria = @id_categoria "
+
+            Using cn = objConeccion.Conectar
+                Dim command As New SqlCommand(sql_query, cn)
+                command.Parameters.AddWithValue("id_instrumento", objCategoriaDesgrava.id_instrumento)
+                command.Parameters.AddWithValue("id_categoria", objCategoriaDesgrava.id_categoria)
+                cn.Open()
+
+                If command.ExecuteNonQuery() > 0 Then
+
+                    'Si elimino detalles, elimina encabezado
+                    sql_query = " DELETE " +
+                        " IC_Categorias_Desgravacion " +
+                        " WHERE " +
+                        " id_instrumento = @id_instrumento AND " +
+                        " id_categoria = @id_categoria "
+                    Using cn2 = objConeccion.Conectar
+                        Dim command2 As New SqlCommand(sql_query, cn2)
+                        command2.Parameters.AddWithValue("id_instrumento", objCategoriaDesgrava.id_instrumento)
+                        command2.Parameters.AddWithValue("id_categoria", objCategoriaDesgrava.id_categoria)
+                        cn2.Open()
+
+                        If command2.ExecuteNonQuery() > 0 Then
+                            'Elimina encabezado
+                            estado = True
+                        Else
+                            'Error al eliminar encabezado
+                            estado = False
+                        End If
+
+                    End Using
+                Else
+                    'Sino devuelve error
+                    estado = False
+                End If
+
+            End Using
+
+
+        Catch ex As Exception
+            estado = False
+        Finally
+
+        End Try
+
+        Return estado
+    End Function
+
+    'Funcion para verificar si las categorias han sido aprobadas
+    Public Function VerificaCategoriasEstado(ByVal id_instrumento As Integer) As Boolean
+        Dim estado As Boolean = False
+
+        Dim sql_query As String
+        sql_query = " SELECT " +
+            " COALESCE(COUNT(1), 0) as estado " +
+            " FROM " +
+            " SAC_Tratados_Bitacora " +
+            " WHERE " +
+            " id_instrumento = @id_instrumento "
+
+        Using cn = objConeccion.Conectar
+            Dim command As New SqlCommand(sql_query, cn)
+            command.Parameters.AddWithValue("id_instrumento", id_instrumento)
+            cn.Open()
+
+            If command.ExecuteScalar() > 0 Then
+                'Categorias aprobadas
+                estado = True
+            Else
+                'Categorias no aprobadas
+                estado = False
+            End If
+
+        End Using
+
+        Return estado
+    End Function
+
+#Region "Funciones para aprobar categoria"
+
+    'Funcion para consultar correlativo sac tratados bitacora
+    Public Function SelectCorrelativoTratadosBitacora(ByVal id_instrumento As Integer) As Integer
+        Dim sql_query As String
+        Dim correlativo As Integer = 0
+
+        sql_query = "SELECT coalesce(count(1), 0) as aprobado " +
+            " FROM SAC_Tratados_Bitacora " +
+            " WHERE id_instrumento = @id_instrumento AND ESTADO ='A' "
+        Using cn = objConeccion.Conectar
+            Dim command As New SqlCommand(sql_query, cn)
+            command.Parameters.AddWithValue("id_instrumento", id_instrumento)
+            cn.Open()
+            correlativo = command.ExecuteScalar() + 1
+
+        End Using
+        Return correlativo
+    End Function
+
+    'Funcion para obtener cantidad de categorias aprobar por tratado
+    Public Function CantidadCategoriasInstrumento(ByVal id_instrumento As Integer) As Integer
+        Dim cantidad As Integer = 0
+        Dim sql_query As String
+
+        sql_query = " SELECT " +
+            " COUNT(cd.id_categoria) AS cantidad_Categorias " +
+            " FROM " +
+            " IC_Instrumentos II " +
+            " INNER Join " +
+            " (SELECT " +
+            " icd.id_instrumento, icd.id_categoria " +
+            " FROM " +
+            " IC_Categorias_Desgravacion ICD, " +
+            " IC_Categorias_Desgravacion_Tramos ICDT " +
+            " WHERE " +
+            " ICD.id_categoria = icdt.id_categoria And " +
+            " ICD.id_instrumento = ICDT.id_instrumento " +
+            " GROUP by icd.id_instrumento, ICD.id_categoria) as CD ON " +
+            " II.id_instrumento = CD.id_instrumento " +
+            " WHERE " +
+            " II.id_instrumento = @id_instrumento "
+
+        Using cn = objConeccion.Conectar
+            Dim command As New SqlCommand(sql_query, cn)
+            command.Parameters.AddWithValue("id_instrumento", id_instrumento)
+            cn.Open()
+
+            cantidad = command.ExecuteScalar()
+        End Using
+
+        Return cantidad
+    End Function
+
+
+#End Region
+
     'Funcion para Aprobar Categoria
     Public Function ApruebaCategoria(ByVal id_instrumento As Integer) As Boolean
         Dim estado As Boolean = False
@@ -868,23 +1040,16 @@ Public Class CDInstrumentosComerciales
                                     'contador = contador + cantidad_cortes
                                 End If
                             Next
+
+
+
+                            'Consultar la ultima version
                             Dim id_version As Integer = 0
-                            'Dim dt_Version As New DataTable
+                            Dim cantidad_categoria As Integer = 0
 
-                            ''Consultar la ultima version
-                            'sql_query = " SELECT count(1) as aprobado " +
-                            '    " FROM SAC_Tratados_Bitacora " +
-                            '    " WHERE id_instrumento = @id_instrumento AND ESTADO ='A' "
+                            id_version = SelectCorrelativoTratadosBitacora(id_instrumento)
+                            cantidad_categoria = CantidadCategoriasInstrumento(id_instrumento)
 
-
-                            'Using cn3 = objConeccion.Conectar
-                            '    Dim command3 As SqlCommand = New SqlCommand(sql_query, cn3)
-                            '    command3.Parameters.AddWithValue("id_instrumento", id_instrumento)
-                            '    da = New SqlDataAdapter(command)
-                            '    da.Fill(dt_Version)
-                            'End Using
-
-                            'id_version = Convert.ToInt32(dt_Version.Rows().ToString)
 
                             'Insertar en la bitacora tratado el primer registro
                             sql_query = "INSERT INTO SAC_Tratados_Bitacora" +
@@ -898,7 +1063,7 @@ Public Class CDInstrumentosComerciales
                                 " (@id_version " +
                                 " ,0 " +
                                 " ,@id_instrumento " +
-                                " ,0 " +
+                                " ,@cantidad_categoria " +
                                 " ,SYSDATETIME()" +
                                 " ,'A')"
 
@@ -906,6 +1071,8 @@ Public Class CDInstrumentosComerciales
                                 Dim command3 As SqlCommand = New SqlCommand(sql_query, cn3)
                                 command3.Parameters.AddWithValue("id_version", id_version)
                                 command3.Parameters.AddWithValue("id_instrumento", id_instrumento)
+                                command3.Parameters.AddWithValue("cantidad_categoria", cantidad_categoria)
+
                                 cn3.Open()
                                 command3.ExecuteScalar()
                             End Using
@@ -934,13 +1101,24 @@ Public Class CDInstrumentosComerciales
         Dim sql_query As String
         Dim dtInstrumentoCategoria As New DataTable
 
-        sql_query = "select II.nombre_instrumento , II.sigla, COUNT(ICD.id_categoria) as cantidad_categorias" +
-            " from IC_Instrumentos II " +
-            " left outer join " +
-            " IC_Categorias_Desgravacion ICD on " +
-            " II.id_instrumento = ICD.id_instrumento " +
-            " where II.id_instrumento = @id_instrumento " +
-            " group by II.nombre_instrumento, II.sigla "
+        sql_query = " SELECT " +
+            " II.nombre_instrumento, ii.sigla, COUNT(cd.id_categoria) AS cantidad_Categorias " +
+            " FROM " +
+            " IC_Instrumentos II " +
+            " INNER Join " +
+            " (SELECT " +
+            " icd.id_instrumento, icd.id_categoria " +
+            " FROM " +
+            " IC_Categorias_Desgravacion ICD," +
+            " IC_Categorias_Desgravacion_Tramos ICDT " +
+            " WHERE " +
+            " ICD.id_categoria = icdt.id_categoria And " +
+            " ICD.id_instrumento = ICDT.id_instrumento " +
+            " GROUP by icd.id_instrumento, ICD.id_categoria) as CD ON " +
+            " II.id_instrumento = CD.id_instrumento " +
+            " WHERE " +
+            " II.id_instrumento =  @id_instrumento " +
+            " GROUP by ii.nombre_instrumento, II.sigla "
 
         Using cn = objConeccion.Conectar
             Try

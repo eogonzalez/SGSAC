@@ -34,14 +34,23 @@
                 Nuevo
             </asp:LinkButton>
 
+            <asp:LinkButton id="lkBtn_Hidden_Nuevo" runat="server" style="display:hidden">
+            </asp:LinkButton>
+
             <cc1:ModalPopupExtender ID="lkBtt_Nuevo_ModalPopupExtender" BackgroundCssClass="modalBackground"
                 runat="server" BehaviorID="lkBtt_nuevo_ModalPopupExtender" PopupControlID="pnlNuevaCategoria"
-                DynamicServicePath="" TargetControlID="lkBtn_Nuevo">
+                DynamicServicePath="" TargetControlID="lkBtn_Hidden_Nuevo">
             </cc1:ModalPopupExtender>
 
             <asp:LinkButton ID="lkBtn_Editar" runat="server" CssClass="btn btn-primary">
                 <i aria-hidden="true" class="glyphicon glyphicon-edit"></i>
                 Editar
+            </asp:LinkButton>
+
+            <asp:LinkButton ID="lkBtn_Borrar" runat="server" CssClass="btn btn-primary"
+                OnClientClick="return confirm(&quot;¿Esta seguro que desea eliminar la categoria Seleccionada?&quot;)">
+                <i aria-hidden="true" class="glyphicon glyphicon-erase"></i>
+                Eliminar
             </asp:LinkButton>
 
             <asp:LinkButton ID="lkBtn_Config" runat="server" CssClass="btn btn-primary">
@@ -50,7 +59,7 @@
             </asp:LinkButton>
 
             <asp:LinkButton ID="lkBtn_Aprueba" runat="server" CssClass="btn btn-primary" 
-                OnClientClick="return confirm(&quot;¿Esta seguro que desea Aprobar las Categorias de Desgravacion Previamente Seleccionadas?&quot;)">
+                OnClientClick="return confirm(&quot;¿Esta seguro que desea Aprobar todas las Categorias de Desgravación del Instrumento Comercial Seleccionado?&quot;)">
                 <i aria-hidden="true" class="glyphicon glyphicon-check"></i>
                 Aprobar Categorias
             </asp:LinkButton>
@@ -103,10 +112,11 @@
 
             <div class="panel-body form-horizontal">
 
-                <div class="form-group">
+                <div class="form-group has-error has-feedback">
                     <asp:Label ID="lbl_codidgo_Categoria" CssClass="control-label col-xs-4" Enabled="false" runat="server" Text="Categoria: "></asp:Label>
                     <div class="col-xs-8">
                         <asp:TextBox ID="txtCategoria" type="text" CssClass="form-control" runat="server"></asp:TextBox>
+                        <span class="help-block">El campo no puede quedar vacio.</span>
                     </div>
                 </div>
 
@@ -117,10 +127,11 @@
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group has-error has-feedback">
                     <asp:Label ID="lbl_cantidad_tramos" CssClass="control-label col-xs-4" Enabled="false" runat="server" Text="Cantidad de Tramos:"></asp:Label>
                     <div class="col-xs-8">
                         <asp:TextBox ID="txtCantidadTramos" type="text" CssClass="form-control" runat="server"></asp:TextBox>
+                        <span class="help-block">El campo no puede quedar vacio.</span>
                     </div>
                 </div>
 
@@ -133,7 +144,7 @@
 
             </div>
             <div class="panel-footer">
-                <asp:Button ID="btn_Guardar" CssClass="btn btn-primary" Text="Guardar" runat="server" />
+                <asp:Button ID="btn_Guardar" CssClass="btn btn-primary disabled" Text="Guardar" runat="server" />
                 <asp:Button ID="btn_Salir" CssClass="btn btn-default" Text="Salir" runat="server" />
             </div>
 

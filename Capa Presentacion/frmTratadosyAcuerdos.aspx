@@ -117,10 +117,11 @@
             <div class="panel-heading">Mantenimiento de Instrumentos Comerciales</div>
             <div class="panel-body form-horizontal">
 
-                <div class="form-group">
+                <div class="form-group has-error has-feedback">
                     <asp:Label ID="Label2" CssClass="control-label col-xs-4" runat="server" Text="Nombre: "></asp:Label>
                     <div class="col-xs-8">
                         <asp:TextBox ID="txtNombreInstrumento" type="text" CssClass="form-control" runat="server"></asp:TextBox>
+                        <span class="help-block">El campo no puede quedar vacio.</span>
                     </div>
                 </div>
 
@@ -132,10 +133,11 @@
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group has-error has-feedback">
                     <asp:Label ID="Label4" CssClass="control-label col-xs-4" runat="server" Text="Sigla:"></asp:Label>
                     <div class="col-xs-8">
                         <asp:TextBox ID="txtSigla" type="text" CssClass="form-control" runat="server"></asp:TextBox>
+                        <span class="help-block">El campo no puede quedar vacio.</span>
                     </div>
                 </div>
 
@@ -189,7 +191,7 @@
                 </div>
             </div>
             <div class="panel-footer">
-                <asp:Button ID="btn_Guardar" CssClass="btn btn-primary" runat="server" Text="Guardar" />
+                <asp:Button ID="btn_Guardar" CssClass="btn btn-primary disabled" runat="server" Text="Guardar" />
                 <asp:Button ID="btn_Salir" CssClass="btn btn-default" runat="server" Text="Salir" />
             </div>
         </asp:Panel>

@@ -114,12 +114,16 @@
 
             <div class="form-group">
 
-                <asp:Label ID="lbl_codigo_arancel" CssClass="control-label col-xs-2" Text="Código Arancelario:" runat="server"></asp:Label>
-                <div class="col-xs-5">
-                    <asp:TextBox ID="txt_codigo_arancel" CssClass="form-control" runat="server"></asp:TextBox>
+                <div>
+                    <asp:Label ID="lbl_codigo_arancel" CssClass="control-label col-xs-2" Text="Código Arancelario:" runat="server"></asp:Label>
+                    <div class="col-xs-5">
+                        <asp:TextBox ID="txt_codigo_arancel" CssClass="form-control" runat="server"></asp:TextBox>
+                        <span class="help-block"></span>
+                    </div>
                 </div>
+
                 <div class="col-xs-5">
-                    <asp:Button ID="btn_seleccionar" CssClass="btn btn-primary" Text="Seleccionar" runat="server" />
+                    <asp:Button ID="btn_seleccionar" CssClass="btn btn-primary disabled" Text="Seleccionar" runat="server" />
                 </div>
                 
             </div>

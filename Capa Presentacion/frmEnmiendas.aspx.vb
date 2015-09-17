@@ -94,7 +94,7 @@ Public Class frmEnmiendas
     End Function
 
     Function getDescripcion() As String
-        Return txtDescripcion.Text
+        Return txt_Descripcion_Enmienda.Text
     End Function
 
     Function getFechaInicia() As Date
@@ -150,7 +150,7 @@ Public Class frmEnmiendas
     'Limpiar formulario
     Sub LimpiarFormulario()
         txtAñoVersion.Text = ""
-        txtDescripcion.Text = ""
+        txt_Descripcion_Enmienda.Text = ""
         txtFechaFinVigencia.Text = ""
         txtFechaInicioVigencia.Text = ""
         txtObservaciones.Text = ""
@@ -169,7 +169,7 @@ Public Class frmEnmiendas
                 txtAñoVersion.Text = datosVersionSac.Rows(0)("anio_version").ToString
 
                 If Not IsDBNull(datosVersionSac.Rows(0)("enmienda")) Then
-                    txtDescripcion.Text = datosVersionSac.Rows(0)("enmienda").ToString
+                    txt_Descripcion_Enmienda.Text = datosVersionSac.Rows(0)("enmienda").ToString
                 End If
 
                 If Not IsDBNull(datosVersionSac.Rows(0)("fecha_inicia_vigencia")) Then

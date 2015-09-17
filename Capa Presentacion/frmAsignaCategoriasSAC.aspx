@@ -121,12 +121,16 @@
                     <asp:DropDownList ID="ddl_categoria_asignar" CssClass="form-control" runat="server"></asp:DropDownList>
                 </div>
 
-                <asp:Label ID="lbl_codigo_arancel" CssClass="control-label col-xs-2" Text="Código Arancelario:" runat="server"></asp:Label>
-                <div class="col-xs-3">
-                    <asp:TextBox ID="txt_codigo_arancel" CssClass="form-control" runat="server"></asp:TextBox>
+                <div>
+                    <asp:Label ID="lbl_codigo_arancel" CssClass="control-label col-xs-2" Text="Código Arancelario:" runat="server"></asp:Label>
+                    <div class="col-xs-3">
+                        <asp:TextBox ID="txt_codigo_arancel" CssClass="form-control" runat="server"></asp:TextBox>
+                        <span class="help-block"></span>
+                    </div>
                 </div>
+
                 <div class="col-xs-3">
-                    <asp:Button ID="btn_seleccionar" CssClass="btn btn-primary" Text="Seleccionar" runat="server" />
+                    <asp:Button ID="btn_seleccionar" CssClass="btn btn-primary disabled" Text="Seleccionar" runat="server" />
                 </div>
                 
             </div>
@@ -206,7 +210,7 @@
 
         <%-- Pie de formulario --%>
         <div class="panel-footer">
-            <asp:Button ID="btn_asigna_categoria" CssClass="btn btn-primary" runat="server" Text="Asignar Categoria" />
+            <asp:Button ID="btn_asigna_categoria" CssClass="btn btn-primary disabled" runat="server" Text="Asignar Categoria" />
             <asp:Button ID="btn_Salir" CssClass="btn btn-default" runat="server" Text="Salir" />
         </div>
 
