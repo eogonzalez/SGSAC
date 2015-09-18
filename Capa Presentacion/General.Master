@@ -73,6 +73,7 @@
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     
     <script src="Script/jQuery/jquery-1.11.3.js"></script>
+    <script src="Script/jQuery/jquery.validate.js"></script>
     <script src="Style/bootstrap/js/bootstrap.js"></script>
     <script src="Script/Validaciones.js"></script>
 </body>

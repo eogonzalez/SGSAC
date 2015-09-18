@@ -141,10 +141,11 @@
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group has-error has-feedback">
                     <asp:Label ID="Label5" CssClass="control-label col-xs-4" runat="server" Text="Sigla alterna:"></asp:Label>
                     <div class="col-xs-8">
                         <asp:TextBox ID="txtSiglaAlterna" type="text" CssClass="form-control" runat="server"></asp:TextBox>
+                        <span class="help-block">El campo no puede quedar vacio.</span>
                     </div>
                 </div>
 
@@ -156,10 +157,11 @@
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group has-error has-feedback">
                     <asp:Label ID="Label7" CssClass="control-label col-xs-4" runat="server" Text="Observaciones:"></asp:Label>
                     <div class="col-xs-8">
                         <asp:TextBox ID="txtObservaciones" type="text" CssClass="form-control" runat="server" TextMode="MultiLine"></asp:TextBox>
+                        <span class="help-block">El campo no puede quedar vacio.</span>
                     </div>
                 </div>
 
@@ -168,24 +170,27 @@
                     </span>
                 </h5>
 
-                <div class="form-group">
+                <div class="form-group has-error has-feedback">
                     <asp:Label ID="Label9" CssClass="control-label col-xs-4" runat="server" Text="Fecha Firma:"></asp:Label>
                     <div class="col-xs-8">
                         <asp:TextBox ID="txtFechaFirma" CssClass="form-control" runat="server"></asp:TextBox>
+                        <span class="help-block">El campo no puede quedar vacio.</span>
                         <cc1:CalendarExtender ID="txtFechaFirma_CalendarExtender" runat="server" BehaviorID="txtFechaFirma_CalendarExtender" TargetControlID="txtFechaFirma" />
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group has-error has-feedback">
                     <asp:Label ID="Label10" CssClass="control-label col-xs-4" runat="server" Text="Fecha Ratificación:"></asp:Label>
                     <div class="col-xs-8">
                         <asp:TextBox ID="txtFechaRatifica" CssClass="form-control" runat="server"></asp:TextBox>
+                        <span class="help-block">El campo no puede quedar vacio.</span>
                         <cc1:CalendarExtender ID="txtFechaRatifica_CalendarExtender" runat="server" BehaviorID="txtFechaRatifica_CalendarExtender" TargetControlID="txtFechaRatifica" />
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group has-error has-feedback">
                     <asp:Label ID="Label11" CssClass="control-label col-xs-4" runat="server" Text="Fecha Vigencia:"></asp:Label>
                     <div class="col-xs-8">
                         <asp:TextBox ID="txtFechaVigencia" CssClass="form-control" runat="server"></asp:TextBox>
+                        <span class="help-block">El campo no puede quedar vacio.</span>
                         <cc1:CalendarExtender ID="txtFechaVigencia_CalendarExtender" runat="server" BehaviorID="txtFechaVigencia_CalendarExtender" TargetControlID="txtFechaVigencia" />
                     </div>
                 </div>

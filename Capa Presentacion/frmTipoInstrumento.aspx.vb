@@ -51,7 +51,6 @@ Public Class frmTipoInstrumento
             btnGuardar.CommandName = "editar"
             hfIdTipoInstrumento.Value = id_tipo_instrumento
             lkBtt_Nuevo_ModalPopupExtender.Show()
-
         End If
     End Sub
 

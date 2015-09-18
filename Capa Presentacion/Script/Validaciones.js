@@ -9,16 +9,50 @@ function inicio() {
     $("#ContentPlaceHolder1_txtDescripcion").keyup(validarCatalogo);
     $("#ContentPlaceHolder1_txtDescripcion").focus(validarCatalogo);
 
+    var contenidoCatalogo = $("#ContentPlaceHolder1_txtDescripcion").val();
+    if (contenidoCatalogo != null){
+        validarCatalogo();
+    };
+
     //Aplicar validacion formulario instrumento comercial
     $("#ContentPlaceHolder1_txtNombreInstrumento").keyup(validarInstrumento);
     $("#ContentPlaceHolder1_txtNombreInstrumento").focus(validarInstrumento);
 
     $("#ContentPlaceHolder1_txtSigla").keyup(validarInstrumento);
+    $("#ContentPlaceHolder1_txtSigla").focus(validarInstrumento);
+
+    $("#ContentPlaceHolder1_txtSiglaAlterna").keyup(validarInstrumento);
+    $("#ContentPlaceHolder1_txtSiglaAlterna").focus(validarInstrumento);
+
+    $("#ContentPlaceHolder1_txtObservaciones").keyup(validarInstrumento);
+    $("#ContentPlaceHolder1_txtObservaciones").focus(validarInstrumento);
+
+    $("#ContentPlaceHolder1_txtFechaFirma").keyup(validarInstrumento);
+    $("#ContentPlaceHolder1_txtFechaFirma").focus(validarInstrumento);
+    $("#ContentPlaceHolder1_txtFechaFirma").change(validarInstrumento);
+    
+    $("#ContentPlaceHolder1_txtFechaRatifica").keyup(validarInstrumento);
+    $("#ContentPlaceHolder1_txtFechaRatifica").focus(validarInstrumento);
+    $("#ContentPlaceHolder1_txtFechaRatifica").change(validarInstrumento);
+    
+    $("#ContentPlaceHolder1_txtFechaVigencia").keyup(validarInstrumento);
+    $("#ContentPlaceHolder1_txtFechaVigencia").focus(validarInstrumento);
+    $("#ContentPlaceHolder1_txtFechaVigencia").change(validarInstrumento);
+
+    var contenidoInstrumento = $("#ContentPlaceHolder1_txtNombreInstrumento").val();
+    if (contenidoInstrumento != null) {
+        validarInstrumento();
+    }
 
     //Aplicar validacion formulario Categorias
     $("#ContentPlaceHolder1_txtCategoria").keyup(validarCategoria);
     $("#ContentPlaceHolder1_txtCategoria").focus(validarCategoria);
     $("#ContentPlaceHolder1_txtCategoria").focusout(validarCategoria);
+
+    var contenidoCategorias = $("#ContentPlaceHolder1_txtCategoria").val();
+    if (contenidoCategorias != null) {
+        validarCategoria();
+    }
 
     $("#ContentPlaceHolder1_txtCantidadTramos").keyup(validarCategoria);
     
@@ -27,9 +61,19 @@ function inicio() {
     $("#ContentPlaceHolder1_txt_cantidad_cortes").focus(validarTramo);
     $("#ContentPlaceHolder1_txt_cantidad_cortes").focusout(validarTramo);
 
+    var contenidoConftramo = $("#ContentPlaceHolder1_txt_cantidad_cortes").val();
+    if (contenidoConftramo != null) {
+        validarTramo();
+    }
+
     //Aplicar validacion asigna categoria
     $("#ContentPlaceHolder1_txt_codigo_arancel").keyup(validarAsigna);
     $("#ContentPlaceHolder1_txt_codigo_arancel").focus(validarAsigna);
+
+    var contenidoAsigCat = $("#ContentPlaceHolder1_txt_codigo_arancel").val();
+    if (contenidoAsigCat != null) {
+        validarAsigna();
+    }
     
     //$("#ContentPlaceHolder1_btn_seleccionar").click(function () {
     //    $("#ContentPlaceHolder1_btn_asigna_categoria").attr("Class", "btn btn-primary");
@@ -38,6 +82,11 @@ function inicio() {
     //Aplicar validacion enmienda SAC
     $("#ContentPlaceHolder1_txtAñoVersion").keyup(validarEnmienda);
     $("#ContentPlaceHolder1_txtAñoVersion").focus(validarEnmienda);
+
+    var contenidoEnmienda = $("#ContentPlaceHolder1_txtAñoVersion").val();
+    if (contenidoEnmienda != null) {
+        validarEnmienda();
+    }
 
     $("#ContentPlaceHolder1_txt_Descripcion_Enmienda").keyup(validarEnmienda);
     $("#ContentPlaceHolder1_txt_Descripcion_Enmienda").focus(validarEnmienda);
@@ -77,6 +126,11 @@ function validarCatalogo() {
 function validarInstrumento() {
     var nombre_instrumento = document.getElementById("ContentPlaceHolder1_txtNombreInstrumento").value;
     var sigla = document.getElementById("ContentPlaceHolder1_txtSigla").value;
+    var sigla_alterna = document.getElementById("ContentPlaceHolder1_txtSiglaAlterna").value;
+    var observaciones = document.getElementById("ContentPlaceHolder1_txtObservaciones").value;
+    var fecha_firma = document.getElementById("ContentPlaceHolder1_txtFechaFirma").value;
+    var fecha_ratifica = document.getElementById("ContentPlaceHolder1_txtFechaRatifica").value;
+    var fecha_vigencia = document.getElementById("ContentPlaceHolder1_txtFechaVigencia").value;
 
     if (nombre_instrumento == null || nombre_instrumento.length == 0 || /^\s+$/.test(nombre_instrumento)) {
         //Si esta vacio el campo
@@ -111,6 +165,96 @@ function validarInstrumento() {
         $("#ContentPlaceHolder1_txtSigla").parent().parent().attr("class", "form-group has-success has-feedback");
         $("#ContentPlaceHolder1_txtSigla").parent().children("span").text("").hide();
         $("#ContentPlaceHolder1_txtSigla").parent().append("<span id='iconotextosigla' class='glyphicon glyphicon-ok form-control-feedback'>");
+        $("#ContentPlaceHolder1_btn_Guardar").attr("Class", "btn btn-primary");
+    }
+
+    if (sigla_alterna == null || sigla_alterna.length == 0 || /^\s+$/.test(sigla_alterna)) {
+        //Si esta vacio el campo
+        $("#iconotextosigla_alt").remove();
+        $("#ContentPlaceHolder1_txtSiglaAlterna").parent().parent().attr("class", "form-group has-error has-feedback");
+        $("#ContentPlaceHolder1_txtSiglaAlterna").parent().children("span").text("El campo no puede quedar vacio.").show();
+        $("#ContentPlaceHolder1_txtSiglaAlterna").parent().append("<span id='iconotextosigla_alt' class='glyphicon glyphicon-remove form-control-feedback'>");
+        $("#ContentPlaceHolder1_btn_Guardar").attr("Class", "btn btn-primary disabled");
+        return false;
+    }
+    else {
+        //Si no esta vacio
+        $("#iconotextosigla_alt").remove();
+        $("#ContentPlaceHolder1_txtSiglaAlterna").parent().parent().attr("class", "form-group has-success has-feedback");
+        $("#ContentPlaceHolder1_txtSiglaAlterna").parent().children("span").text("").hide();
+        $("#ContentPlaceHolder1_txtSiglaAlterna").parent().append("<span id='iconotextosigla_alt' class='glyphicon glyphicon-ok form-control-feedback'>");
+        $("#ContentPlaceHolder1_btn_Guardar").attr("Class", "btn btn-primary");
+    }
+
+    if (observaciones == null || observaciones.length == 0 || /^\s+$/.test(observaciones)) {
+        //Si esta vacio el campo
+        $("#iconotextoobs").remove();
+        $("#ContentPlaceHolder1_txtObservaciones").parent().parent().attr("class", "form-group has-error has-feedback");
+        $("#ContentPlaceHolder1_txtObservaciones").parent().children("span").text("El campo no puede quedar vacio.").show();
+        $("#ContentPlaceHolder1_txtObservaciones").parent().append("<span id='iconotextoobs' class='glyphicon glyphicon-remove form-control-feedback'>");
+        $("#ContentPlaceHolder1_btn_Guardar").attr("Class", "btn btn-primary disabled");
+        return false;
+    }
+    else {
+        //Si no esta vacio
+        $("#iconotextoobs").remove();
+        $("#ContentPlaceHolder1_txtObservaciones").parent().parent().attr("class", "form-group has-success has-feedback");
+        $("#ContentPlaceHolder1_txtObservaciones").parent().children("span").text("").hide();
+        $("#ContentPlaceHolder1_txtObservaciones").parent().append("<span id='iconotextoobs' class='glyphicon glyphicon-ok form-control-feedback'>");
+        $("#ContentPlaceHolder1_btn_Guardar").attr("Class", "btn btn-primary");
+    }
+
+    if (fecha_firma == null || fecha_firma.length == 0 || /^\s+$/.test(fecha_firma)) {
+        //Si esta vacio el campo
+        $("#iconotextofechafirma").remove();
+        $("#ContentPlaceHolder1_txtFechaFirma").parent().parent().attr("class", "form-group has-error has-feedback");
+        $("#ContentPlaceHolder1_txtFechaFirma").parent().children("span").text("El campo no puede quedar vacio.").show();
+        $("#ContentPlaceHolder1_txtFechaFirma").parent().append("<span id='iconotextofechafirma' class='glyphicon glyphicon-remove form-control-feedback'>");
+        $("#ContentPlaceHolder1_btn_Guardar").attr("Class", "btn btn-primary disabled");
+        return false;
+    }
+    else {
+        //Si no esta vacio
+        $("#iconotextofechafirma").remove();
+        $("#ContentPlaceHolder1_txtFechaFirma").parent().parent().attr("class", "form-group has-success has-feedback");
+        $("#ContentPlaceHolder1_txtFechaFirma").parent().children("span").text("").hide();
+        $("#ContentPlaceHolder1_txtFechaFirma").parent().append("<span id='iconotextofechafirma' class='glyphicon glyphicon-ok form-control-feedback'>");
+        $("#ContentPlaceHolder1_btn_Guardar").attr("Class", "btn btn-primary");
+    }
+
+    if (fecha_ratifica == null || fecha_ratifica.length == 0 || /^\s+$/.test(fecha_ratifica)) {
+        //Si esta vacio el campo
+        $("#iconotextofecharatifica").remove();
+        $("#ContentPlaceHolder1_txtFechaRatifica").parent().parent().attr("class", "form-group has-error has-feedback");
+        $("#ContentPlaceHolder1_txtFechaRatifica").parent().children("span").text("El campo no puede quedar vacio.").show();
+        $("#ContentPlaceHolder1_txtFechaRatifica").parent().append("<span id='iconotextofecharatifica' class='glyphicon glyphicon-remove form-control-feedback'>");
+        $("#ContentPlaceHolder1_btn_Guardar").attr("Class", "btn btn-primary disabled");
+        return false;
+    }
+    else {
+        //Si no esta vacio
+        $("#iconotextofecharatifica").remove();
+        $("#ContentPlaceHolder1_txtFechaRatifica").parent().parent().attr("class", "form-group has-success has-feedback");
+        $("#ContentPlaceHolder1_txtFechaRatifica").parent().children("span").text("").hide();
+        $("#ContentPlaceHolder1_txtFechaRatifica").parent().append("<span id='iconotextofecharatifica' class='glyphicon glyphicon-ok form-control-feedback'>");
+        $("#ContentPlaceHolder1_btn_Guardar").attr("Class", "btn btn-primary");
+    }
+
+    if (fecha_vigencia == null || fecha_vigencia.length == 0 || /^\s+$/.test(fecha_vigencia)) {
+        //Si esta vacio el campo
+        $("#iconotextofechavigencia").remove();
+        $("#ContentPlaceHolder1_txtFechaVigencia").parent().parent().attr("class", "form-group has-error has-feedback");
+        $("#ContentPlaceHolder1_txtFechaVigencia").parent().children("span").text("El campo no puede quedar vacio.").show();
+        $("#ContentPlaceHolder1_txtFechaVigencia").parent().append("<span id='iconotextofechavigencia' class='glyphicon glyphicon-remove form-control-feedback'>");
+        $("#ContentPlaceHolder1_btn_Guardar").attr("Class", "btn btn-primary disabled");
+        return false;
+    }
+    else {
+        //Si no esta vacio
+        $("#iconotextofechavigencia").remove();
+        $("#ContentPlaceHolder1_txtFechaVigencia").parent().parent().attr("class", "form-group has-success has-feedback");
+        $("#ContentPlaceHolder1_txtFechaVigencia").parent().children("span").text("").hide();
+        $("#ContentPlaceHolder1_txtFechaVigencia").parent().append("<span id='iconotextofechavigencia' class='glyphicon glyphicon-ok form-control-feedback'>");
         $("#ContentPlaceHolder1_btn_Guardar").attr("Class", "btn btn-primary");
     }
 }

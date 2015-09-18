@@ -210,7 +210,7 @@
 
         <%-- Pie de formulario --%>
         <div class="panel-footer">
-            <asp:Button ID="btn_asigna_categoria" CssClass="btn btn-primary disabled" runat="server" Text="Asignar Categoria" />
+            <asp:Button ID="btn_asigna_categoria" CssClass="btn btn-primary" runat="server" Text="Asignar Categoria" />
             <asp:Button ID="btn_Salir" CssClass="btn btn-default" runat="server" Text="Salir" />
         </div>
 

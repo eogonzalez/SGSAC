@@ -119,6 +119,7 @@
     <Content Include="Login.aspx" />
     <Content Include="Logout.aspx" />
     <Content Include="Script\jQuery\jquery-1.11.3.js" />
+    <Content Include="Script\jQuery\jquery.validate.js" />
     <Content Include="Script\Validaciones.js" />
     <Content Include="Style\bootstrap\css\bootstrap-theme.css" />
     <Content Include="Style\bootstrap\css\bootstrap-theme.min.css" />

@@ -76,7 +76,7 @@
                 <div class="form-group has-error has-feedback">
                     <asp:Label ID="lbl_Descripcion" CssClass="control-label col-xs-4" runat="server" Text="Tipo Instrumento:"></asp:Label>
                     <div class="col-xs-8">
-                        <asp:TextBox ID="txtDescripcion" type="text" CssClass="form-control" runat="server"></asp:TextBox>
+                        <asp:TextBox ID="txtDescripcion" type="text" CssClass="form-control validate[required]" runat="server"></asp:TextBox>
                         <span class="help-block">El campo no puede quedar vacio.</span>
                     </div>
                 </div>

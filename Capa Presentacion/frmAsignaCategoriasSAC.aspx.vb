@@ -43,7 +43,10 @@ Public Class frmAsignaCategoriasSAC
 
     Protected Sub btn_seleccionar_Click(sender As Object, e As EventArgs) Handles btn_seleccionar.Click
         'Ver la manera de no llamar asigna categoria'
+
+        'Asigno Categoria_id
         categoria_id = getIdCategoria()
+
         LlenarAsignaCategoriaMant(hfIdInstrumento.Value)
         LlenarSeleccionCodigoInciso(hfIdInstrumento.Value, txt_codigo_arancel.Text)
     End Sub
@@ -153,6 +156,9 @@ Public Class frmAsignaCategoriasSAC
             tabla_incisos = Nothing
             gvAsignarCategorias.DataSource = Nothing
             gvAsignarCategorias.DataBind()
+
+            'Asigno categoria_id
+            categoria_id = getIdCategoria()
 
             LlenarAsignaCategoriaMant(hfIdInstrumento.Value)
             LlenarSeleccionCodigoInciso(hfIdInstrumento.Value, txt_codigo_arancel.Text)
