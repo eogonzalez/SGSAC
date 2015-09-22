@@ -246,22 +246,4 @@ Partial Public Class frmAsignaCategoriasSAC
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
     Protected WithEvents btn_Salir As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
-    '''Control hfIdInstrumento.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents hfIdInstrumento As Global.System.Web.UI.WebControls.HiddenField
-
-    '''<summary>
-    '''Control hfCheckInciso.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents hfCheckInciso As Global.System.Web.UI.WebControls.HiddenField
 End Class

@@ -216,8 +216,8 @@
 
     </div>
 
-    <div>
+<%--    <div>
         <asp:HiddenField ID="hfIdInstrumento" runat="server" />
         <asp:HiddenField ID="hfCheckInciso" runat="server" />
-    </div>
+    </div>--%>
 </asp:Content>

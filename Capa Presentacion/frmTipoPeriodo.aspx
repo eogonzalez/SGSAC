@@ -67,11 +67,11 @@
 
             <div class="panel-body form-horizontal">
 
-                <div class="form-group has-error has-feedback">
+                <div class="form-group">
                     <asp:Label ID="lbl_Descripcion" CssClass="control-label col-xs-4" runat="server" Text="Tipo Instrumento:"></asp:Label>
                     <div class="col-xs-8">
                         <asp:TextBox ID="txtDescripcion" type="text" CssClass="form-control" runat="server"></asp:TextBox>
-                        <span class="help-block">El campo no puede quedar vacio.</span>
+                        <span class="help-block"></span>
                     </div>
                 </div>
 
@@ -86,7 +86,7 @@
 
 
             <div class="panel-footer">
-                <asp:Button ID="btnGuardar" CssClass="btn btn-primary disabled" runat="server" Text="Guardar" />
+                <asp:Button ID="btnGuardar" CssClass="btn btn-primary" runat="server" Text="Guardar" disabled="true"/>
                 <asp:Button ID="btnSalir" CssClass="btn btn-default" runat="server" Text="Salir" />
             </div>
         </asp:Panel>

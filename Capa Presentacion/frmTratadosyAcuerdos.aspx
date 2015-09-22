@@ -196,7 +196,7 @@
                 </div>
             </div>
             <div class="panel-footer">
-                <asp:Button ID="btn_Guardar" CssClass="btn btn-primary disabled" runat="server" Text="Guardar" />
+                <asp:Button ID="btn_Guardar" CssClass="btn btn-primary" runat="server" Text="Guardar" disabled="disabled"/>
                 <asp:Button ID="btn_Salir" CssClass="btn btn-default" runat="server" Text="Salir" />
             </div>
         </asp:Panel>

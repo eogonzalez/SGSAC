@@ -9,6 +9,17 @@ function inicio() {
     $("#ContentPlaceHolder1_txtDescripcion").keyup(validarCatalogo);
     $("#ContentPlaceHolder1_txtDescripcion").focus(validarCatalogo);
 
+    //$("#ContentPlaceHolder1_btnGuardar").click(function () {
+    //    if (validarCatalogo() == true) {
+    //        $("#ContentPlaceHolder1_btnGuardar").attr("disabled", "disabled");
+    //        this.value = "Guardando espere...";
+    //        return true;
+    //    }
+    //    else {
+    //        return false;
+    //    }
+    //});
+
     var contenidoCatalogo = $("#ContentPlaceHolder1_txtDescripcion").val();
     if (contenidoCatalogo != null){
         validarCatalogo();
@@ -39,6 +50,9 @@ function inicio() {
     $("#ContentPlaceHolder1_txtFechaVigencia").focus(validarInstrumento);
     $("#ContentPlaceHolder1_txtFechaVigencia").change(validarInstrumento);
 
+    $("#ContentPlaceHolder1_btn_Guardar").click(validarInstrumento);
+    //$("#ContentPlaceHolder1_btn_Guardar").enterKey(validarInstrumento);
+
     var contenidoInstrumento = $("#ContentPlaceHolder1_txtNombreInstrumento").val();
     if (contenidoInstrumento != null) {
         validarInstrumento();
@@ -61,10 +75,28 @@ function inicio() {
     $("#ContentPlaceHolder1_txt_cantidad_cortes").focus(validarTramo);
     $("#ContentPlaceHolder1_txt_cantidad_cortes").focusout(validarTramo);
 
+    $("#ContentPlaceHolder1_txt_porcen_desgrava_anterior").keyup(validarTramo);
+    $("#ContentPlaceHolder1_txt_porcen_desgrava_anterior").focus(validarTramo);
+    $("#ContentPlaceHolder1_txt_porcen_desgrava_anterior").focusout(validarTramo);
+
+    $("#ContentPlaceHolder1_txt_porcen_desgrava_final").keyup(validarTramo);
+    $("#ContentPlaceHolder1_txt_porcen_desgrava_final").focus(validarTramo);
+    $("#ContentPlaceHolder1_txt_porcen_desgrava_final").focusout(validarTramo);
+
     var contenidoConftramo = $("#ContentPlaceHolder1_txt_cantidad_cortes").val();
     if (contenidoConftramo != null) {
         validarTramo();
     }
+
+    //var contenidoDAnt = $("#ContentPlaceHolder1_txt_porcen_desgrava_anteriors").val();
+    //if (contenidoDAnt != null) {
+    //    validarTramo();
+    //}
+
+    //var contenidoDFinal = $("#ContentPlaceHolder1_txt_porcen_desgrava_final").val();
+    //if (contenidoDFinal != null) {
+    //    validarTramo();
+    //}
 
     //Aplicar validacion asigna categoria
     $("#ContentPlaceHolder1_txt_codigo_arancel").keyup(validarAsigna);
@@ -111,15 +143,19 @@ function validarCatalogo() {
         $("#ContentPlaceHolder1_txtDescripcion").parent().children("span").text("El campo no puede quedar vacio.").show();
         $("#ContentPlaceHolder1_txtDescripcion").parent().append("<span id='iconotexto' class='glyphicon glyphicon-remove form-control-feedback'>");
         $("#ContentPlaceHolder1_btnGuardar").attr("Class", "btn btn-primary disabled");
+        $("#ContentPlaceHolder1_btnGuardar").prop("disabled", true);
         return false;
     }
     else {
         //Si no esta vacio
         $("#iconotexto").remove();
+        $("#ContentPlaceHolder1_btnGuardar").removeProp("disabled");
         $("#ContentPlaceHolder1_txtDescripcion").parent().parent().attr("class", "form-group has-success has-feedback");
         $("#ContentPlaceHolder1_txtDescripcion").parent().children("span").text("").hide();
         $("#ContentPlaceHolder1_txtDescripcion").parent().append("<span id='iconotexto' class='glyphicon glyphicon-ok form-control-feedback'>");
+        //$("#ContentPlaceHolder1_btnGuardar").prop("disabled", false);
         $("#ContentPlaceHolder1_btnGuardar").attr("Class", "btn btn-primary");
+        return true
     }
 }
 
@@ -139,11 +175,13 @@ function validarInstrumento() {
         $("#ContentPlaceHolder1_txtNombreInstrumento").parent().children("span").text("El campo no puede quedar vacio.").show();
         $("#ContentPlaceHolder1_txtNombreInstrumento").parent().append("<span id='iconotexto' class='glyphicon glyphicon-remove form-control-feedback'>");
         $("#ContentPlaceHolder1_btn_Guardar").attr("Class", "btn btn-primary disabled");
+        $("#ContentPlaceHolder1_btn_Guardar").prop("disabled", true);
         return false;
     }
     else {
         //Si no esta vacio
         $("#iconotexto").remove();
+        $("#ContentPlaceHolder1_btn_Guardar").removeProp("disabled");
         $("#ContentPlaceHolder1_txtNombreInstrumento").parent().parent().attr("class", "form-group has-success has-feedback");
         $("#ContentPlaceHolder1_txtNombreInstrumento").parent().children("span").text("").hide();
         $("#ContentPlaceHolder1_txtNombreInstrumento").parent().append("<span id='iconotexto' class='glyphicon glyphicon-ok form-control-feedback'>");
@@ -157,11 +195,13 @@ function validarInstrumento() {
         $("#ContentPlaceHolder1_txtSigla").parent().children("span").text("El campo no puede quedar vacio.").show();
         $("#ContentPlaceHolder1_txtSigla").parent().append("<span id='iconotextosigla' class='glyphicon glyphicon-remove form-control-feedback'>");
         $("#ContentPlaceHolder1_btn_Guardar").attr("Class", "btn btn-primary disabled");
+        $("#ContentPlaceHolder1_btn_Guardar").prop("disabled", true);
         return false;
     }
     else {
         //Si no esta vacio
         $("#iconotextosigla").remove();
+        $("#ContentPlaceHolder1_btn_Guardar").removeProp("disabled");
         $("#ContentPlaceHolder1_txtSigla").parent().parent().attr("class", "form-group has-success has-feedback");
         $("#ContentPlaceHolder1_txtSigla").parent().children("span").text("").hide();
         $("#ContentPlaceHolder1_txtSigla").parent().append("<span id='iconotextosigla' class='glyphicon glyphicon-ok form-control-feedback'>");
@@ -175,11 +215,13 @@ function validarInstrumento() {
         $("#ContentPlaceHolder1_txtSiglaAlterna").parent().children("span").text("El campo no puede quedar vacio.").show();
         $("#ContentPlaceHolder1_txtSiglaAlterna").parent().append("<span id='iconotextosigla_alt' class='glyphicon glyphicon-remove form-control-feedback'>");
         $("#ContentPlaceHolder1_btn_Guardar").attr("Class", "btn btn-primary disabled");
+        $("#ContentPlaceHolder1_btn_Guardar").prop("disabled", true);
         return false;
     }
     else {
         //Si no esta vacio
         $("#iconotextosigla_alt").remove();
+        $("#ContentPlaceHolder1_btn_Guardar").removeProp("disabled");
         $("#ContentPlaceHolder1_txtSiglaAlterna").parent().parent().attr("class", "form-group has-success has-feedback");
         $("#ContentPlaceHolder1_txtSiglaAlterna").parent().children("span").text("").hide();
         $("#ContentPlaceHolder1_txtSiglaAlterna").parent().append("<span id='iconotextosigla_alt' class='glyphicon glyphicon-ok form-control-feedback'>");
@@ -193,11 +235,13 @@ function validarInstrumento() {
         $("#ContentPlaceHolder1_txtObservaciones").parent().children("span").text("El campo no puede quedar vacio.").show();
         $("#ContentPlaceHolder1_txtObservaciones").parent().append("<span id='iconotextoobs' class='glyphicon glyphicon-remove form-control-feedback'>");
         $("#ContentPlaceHolder1_btn_Guardar").attr("Class", "btn btn-primary disabled");
+        $("#ContentPlaceHolder1_btn_Guardar").prop("disabled", true);
         return false;
     }
     else {
         //Si no esta vacio
         $("#iconotextoobs").remove();
+        $("#ContentPlaceHolder1_btn_Guardar").removeProp("disabled");
         $("#ContentPlaceHolder1_txtObservaciones").parent().parent().attr("class", "form-group has-success has-feedback");
         $("#ContentPlaceHolder1_txtObservaciones").parent().children("span").text("").hide();
         $("#ContentPlaceHolder1_txtObservaciones").parent().append("<span id='iconotextoobs' class='glyphicon glyphicon-ok form-control-feedback'>");
@@ -211,11 +255,13 @@ function validarInstrumento() {
         $("#ContentPlaceHolder1_txtFechaFirma").parent().children("span").text("El campo no puede quedar vacio.").show();
         $("#ContentPlaceHolder1_txtFechaFirma").parent().append("<span id='iconotextofechafirma' class='glyphicon glyphicon-remove form-control-feedback'>");
         $("#ContentPlaceHolder1_btn_Guardar").attr("Class", "btn btn-primary disabled");
+        $("#ContentPlaceHolder1_btn_Guardar").prop("disabled", true);
         return false;
     }
     else {
         //Si no esta vacio
         $("#iconotextofechafirma").remove();
+        $("#ContentPlaceHolder1_btn_Guardar").removeProp("disabled");
         $("#ContentPlaceHolder1_txtFechaFirma").parent().parent().attr("class", "form-group has-success has-feedback");
         $("#ContentPlaceHolder1_txtFechaFirma").parent().children("span").text("").hide();
         $("#ContentPlaceHolder1_txtFechaFirma").parent().append("<span id='iconotextofechafirma' class='glyphicon glyphicon-ok form-control-feedback'>");
@@ -229,11 +275,13 @@ function validarInstrumento() {
         $("#ContentPlaceHolder1_txtFechaRatifica").parent().children("span").text("El campo no puede quedar vacio.").show();
         $("#ContentPlaceHolder1_txtFechaRatifica").parent().append("<span id='iconotextofecharatifica' class='glyphicon glyphicon-remove form-control-feedback'>");
         $("#ContentPlaceHolder1_btn_Guardar").attr("Class", "btn btn-primary disabled");
+        $("#ContentPlaceHolder1_btn_Guardar").prop("disabled", true);
         return false;
     }
     else {
         //Si no esta vacio
         $("#iconotextofecharatifica").remove();
+        $("#ContentPlaceHolder1_btn_Guardar").removeProp("disabled");
         $("#ContentPlaceHolder1_txtFechaRatifica").parent().parent().attr("class", "form-group has-success has-feedback");
         $("#ContentPlaceHolder1_txtFechaRatifica").parent().children("span").text("").hide();
         $("#ContentPlaceHolder1_txtFechaRatifica").parent().append("<span id='iconotextofecharatifica' class='glyphicon glyphicon-ok form-control-feedback'>");
@@ -247,11 +295,13 @@ function validarInstrumento() {
         $("#ContentPlaceHolder1_txtFechaVigencia").parent().children("span").text("El campo no puede quedar vacio.").show();
         $("#ContentPlaceHolder1_txtFechaVigencia").parent().append("<span id='iconotextofechavigencia' class='glyphicon glyphicon-remove form-control-feedback'>");
         $("#ContentPlaceHolder1_btn_Guardar").attr("Class", "btn btn-primary disabled");
+        $("#ContentPlaceHolder1_btn_Guardar").prop("disabled", true);
         return false;
     }
     else {
         //Si no esta vacio
         $("#iconotextofechavigencia").remove();
+        $("#ContentPlaceHolder1_btn_Guardar").removeProp("disabled");
         $("#ContentPlaceHolder1_txtFechaVigencia").parent().parent().attr("class", "form-group has-success has-feedback");
         $("#ContentPlaceHolder1_txtFechaVigencia").parent().children("span").text("").hide();
         $("#ContentPlaceHolder1_txtFechaVigencia").parent().append("<span id='iconotextofechavigencia' class='glyphicon glyphicon-ok form-control-feedback'>");
@@ -270,11 +320,13 @@ function validarCategoria() {
         $("#ContentPlaceHolder1_txtCategoria").parent().children("span").text("El campo no puede quedar vacio.").show();
         $("#ContentPlaceHolder1_txtCategoria").parent().append("<span id='iconotextocat' class='glyphicon glyphicon-remove form-control-feedback'>");
         $("#ContentPlaceHolder1_btn_Guardar").attr("Class", "btn btn-primary disabled");
+        $("#ContentPlaceHolder1_btn_Guardar").prop("disabled", true);
         return false;
     }
     else {
         //Si no esta vacio
         $("#iconotextocat").remove();
+        $("#ContentPlaceHolder1_btn_Guardar").removeProp("disabled");
         $("#ContentPlaceHolder1_txtCategoria").parent().parent().attr("class", "form-group has-success has-feedback");
         $("#ContentPlaceHolder1_txtCategoria").parent().children("span").text("").hide();
         $("#ContentPlaceHolder1_txtCategoria").parent().append("<span id='iconotextocat' class='glyphicon glyphicon-ok form-control-feedback'>");
@@ -288,6 +340,7 @@ function validarCategoria() {
         $("#ContentPlaceHolder1_txtCantidadTramos").parent().children("span").text("El campo no puede quedar vacio.").show();
         $("#ContentPlaceHolder1_txtCantidadTramos").parent().append("<span id='iconotextocantidadtramos' class='glyphicon glyphicon-remove form-control-feedback'>");
         $("#ContentPlaceHolder1_btn_Guardar").attr("Class", "btn btn-primary disabled");
+        $("#ContentPlaceHolder1_btn_Guardar").prop("disabled", true);
         return false;
     }
     else if (cantidad_tramos == 0){
@@ -296,6 +349,7 @@ function validarCategoria() {
         $("#ContentPlaceHolder1_txtCantidadTramos").parent().children("span").text("La cantidad de tramos debe ser mayor a cero.").show();
         $("#ContentPlaceHolder1_txtCantidadTramos").parent().append("<span id='iconotextocantidadtramos' class='glyphicon glyphicon-remove form-control-feedback'>");
         $("#ContentPlaceHolder1_btn_Guardar").attr("Class", "btn btn-primary disabled");
+        $("#ContentPlaceHolder1_btn_Guardar").prop("disabled", true);
         return false;
     }
     else if(isNaN(cantidad_tramos)){
@@ -304,11 +358,13 @@ function validarCategoria() {
         $("#ContentPlaceHolder1_txtCantidadTramos").parent().children("span").text("Debe ingresar caracteres numericos.").show();
         $("#ContentPlaceHolder1_txtCantidadTramos").parent().append("<span id='iconotextocantidadtramos' class='glyphicon glyphicon-remove form-control-feedback'>");
         $("#ContentPlaceHolder1_btn_Guardar").attr("Class", "btn btn-primary disabled");
+        $("#ContentPlaceHolder1_btn_Guardar").prop("disabled", true);
         return false;
     }
     else {
         //Si no esta vacio
         $("#iconotextocantidadtramos").remove();
+        $("#ContentPlaceHolder1_btn_Guardar").removeProp("disabled");
         $("#ContentPlaceHolder1_txtCantidadTramos").parent().parent().attr("class", "form-group has-success has-feedback");
         $("#ContentPlaceHolder1_txtCantidadTramos").parent().children("span").text("").hide();
         $("#ContentPlaceHolder1_txtCantidadTramos").parent().append("<span id='iconotextocantidadtramos' class='glyphicon glyphicon-ok form-control-feedback'>");
@@ -318,6 +374,8 @@ function validarCategoria() {
 
 function validarTramo() {
     var cantidad_cortes = document.getElementById("ContentPlaceHolder1_txt_cantidad_cortes").value;
+    var periodo_anterior = document.getElementById("ContentPlaceHolder1_txt_porcen_desgrava_anterior").value;
+    var periodo_final = document.getElementById("ContentPlaceHolder1_txt_porcen_desgrava_final").value;
 
     if (cantidad_cortes == null || cantidad_cortes.length == 0 || /^\s+$/.test(cantidad_cortes)) {
         //Si esta vacio el campo
@@ -326,6 +384,7 @@ function validarTramo() {
         $("#ContentPlaceHolder1_txt_cantidad_cortes").parent().children("span").text("El campo no puede quedar vacio.").show();
         $("#ContentPlaceHolder1_txt_cantidad_cortes").parent().append("<span id='iconotextocantidadcortes' class='glyphicon glyphicon-remove form-control-feedback'>");
         $("#ContentPlaceHolder1_btn_genera_cortes").attr("Class", "btn btn-primary disabled");
+        $("#ContentPlaceHolder1_btn_genera_cortes").prop("disabled", true);
         return false;
     }
     else if (cantidad_cortes == 0) {
@@ -335,6 +394,7 @@ function validarTramo() {
         $("#ContentPlaceHolder1_txt_cantidad_cortes").parent().children("span").text("La cantidad de cortes debe ser mayor a cero.").show();
         $("#ContentPlaceHolder1_txt_cantidad_cortes").parent().append("<span id='iconotextocantidadcortes' class='glyphicon glyphicon-remove form-control-feedback'>");
         $("#ContentPlaceHolder1_btn_genera_cortes").attr("Class", "btn btn-primary disabled");
+        $("#ContentPlaceHolder1_btn_genera_cortes").prop("disabled", true);
         return false;
     }
     else if (isNaN(cantidad_cortes)) {
@@ -344,14 +404,76 @@ function validarTramo() {
         $("#ContentPlaceHolder1_txt_cantidad_cortes").parent().children("span").text("Debe ingresar caracteres numericos.").show();
         $("#ContentPlaceHolder1_txt_cantidad_cortes").parent().append("<span id='iconotextocantidadcortes' class='glyphicon glyphicon-remove form-control-feedback'>");
         $("#ContentPlaceHolder1_btn_genera_cortes").attr("Class", "btn btn-primary disabled");
+        $("#ContentPlaceHolder1_btn_genera_cortes").prop("disabled", true);
         return false;
     }
     else {
         //Si no esta vacio
         $("#iconotextocantidadcortes").remove();
+        $("#ContentPlaceHolder1_btn_genera_cortes").removeProp("disabled");
         $("#ContentPlaceHolder1_txt_cantidad_cortes").parent().parent().attr("class", "has-success has-feedback");
         $("#ContentPlaceHolder1_txt_cantidad_cortes").parent().children("span").text("").hide();
         $("#ContentPlaceHolder1_txt_cantidad_cortes").parent().append("<span id='iconotextocantidadcortes' class='glyphicon glyphicon-ok form-control-feedback'>");
+        $("#ContentPlaceHolder1_btn_genera_cortes").attr("Class", "btn btn-primary");
+    }
+
+    if (periodo_anterior == null || periodo_anterior.length == 0 || /^\s+$/.test(periodo_anterior)) {
+        //Si esta vacio el campo
+        $("#iconotexto_periodo_anterior").remove();
+        $("#ContentPlaceHolder1_txt_porcen_desgrava_anterior").parent().parent().attr("class", "has-error has-feedback");
+        $("#ContentPlaceHolder1_txt_porcen_desgrava_anterior").parent().children("span").text("El campo no puede quedar vacio.").show();
+        $("#ContentPlaceHolder1_txt_porcen_desgrava_anterior").parent().append("<span id='iconotexto_periodo_anterior' class='glyphicon glyphicon-remove form-control-feedback'>");
+        $("#ContentPlaceHolder1_btn_genera_cortes").attr("Class", "btn btn-primary disabled");
+        $("#ContentPlaceHolder1_btn_genera_cortes").prop("disabled", true);
+        return false;
+    }
+    else if (isNaN(periodo_anterior)) {
+        //El campo debe de ser numerico
+        $("#iconotexto_periodo_anterior").remove();
+        $("#ContentPlaceHolder1_txt_porcen_desgrava_anterior").parent().parent().attr("class", "has-error has-feedback");
+        $("#ContentPlaceHolder1_txt_porcen_desgrava_anterior").parent().children("span").text("Debe ingresar caracteres numericos.").show();
+        $("#ContentPlaceHolder1_txt_porcen_desgrava_anterior").parent().append("<span id='iconotexto_periodo_anterior' class='glyphicon glyphicon-remove form-control-feedback'>");
+        $("#ContentPlaceHolder1_btn_genera_cortes").attr("Class", "btn btn-primary disabled");
+        $("#ContentPlaceHolder1_btn_genera_cortes").prop("disabled", true);
+        return false;
+    }
+    else {
+        //Si no esta vacio
+        $("#iconotexto_periodo_anterior").remove();
+        $("#ContentPlaceHolder1_btn_genera_cortes").removeProp("disabled");
+        $("#ContentPlaceHolder1_txt_porcen_desgrava_anterior").parent().parent().attr("class", "has-success has-feedback");
+        $("#ContentPlaceHolder1_txt_porcen_desgrava_anterior").parent().children("span").text("").hide();
+        $("#ContentPlaceHolder1_txt_porcen_desgrava_anterior").parent().append("<span id='iconotexto_periodo_anterior' class='glyphicon glyphicon-ok form-control-feedback'>");
+        $("#ContentPlaceHolder1_btn_genera_cortes").attr("Class", "btn btn-primary");
+    }
+
+    if (periodo_final == null || periodo_final.length == 0 || /^\s+$/.test(periodo_final)) {
+        //Si esta vacio el campo
+        $("#iconotexto_periodo_final").remove();
+        $("#ContentPlaceHolder1_txt_porcen_desgrava_final").parent().parent().attr("class", "has-error has-feedback");
+        $("#ContentPlaceHolder1_txt_porcen_desgrava_final").parent().children("span").text("El campo no puede quedar vacio.").show();
+        $("#ContentPlaceHolder1_txt_porcen_desgrava_final").parent().append("<span id='iconotexto_periodo_final' class='glyphicon glyphicon-remove form-control-feedback'>");
+        $("#ContentPlaceHolder1_btn_genera_cortes").attr("Class", "btn btn-primary disabled");
+        $("#ContentPlaceHolder1_btn_genera_cortes").prop("disabled", true);
+        return false;
+    }
+    else if (isNaN(periodo_final)) {
+        //El campo debe de ser numerico
+        $("#iconotexto_periodo_final").remove();
+        $("#ContentPlaceHolder1_txt_porcen_desgrava_final").parent().parent().attr("class", "has-error has-feedback");
+        $("#ContentPlaceHolder1_txt_porcen_desgrava_final").parent().children("span").text("Debe ingresar caracteres numericos.").show();
+        $("#ContentPlaceHolder1_txt_porcen_desgrava_final").parent().append("<span id='iconotexto_periodo_final' class='glyphicon glyphicon-remove form-control-feedback'>");
+        $("#ContentPlaceHolder1_btn_genera_cortes").attr("Class", "btn btn-primary disabled");
+        $("#ContentPlaceHolder1_btn_genera_cortes").prop("disabled", true);
+        return false;
+    }
+    else {
+        //Si no esta vacio
+        $("#iconotexto_periodo_final").remove();
+        $("#ContentPlaceHolder1_btn_genera_cortes").removeProp("disabled");
+        $("#ContentPlaceHolder1_txt_porcen_desgrava_final").parent().parent().attr("class", "has-success has-feedback");
+        $("#ContentPlaceHolder1_txt_porcen_desgrava_final").parent().children("span").text("").hide();
+        $("#ContentPlaceHolder1_txt_porcen_desgrava_final").parent().append("<span id='iconotexto_periodo_final' class='glyphicon glyphicon-ok form-control-feedback'>");
         $("#ContentPlaceHolder1_btn_genera_cortes").attr("Class", "btn btn-primary");
     }
 }

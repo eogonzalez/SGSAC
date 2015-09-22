@@ -2,18 +2,22 @@
 Imports Reglas_del_negocio
 Public Class frmAsignaCategoriasSAC
     Inherits System.Web.UI.Page
-    Shared _tabla_incisos As DataTable
+    'Shared _tabla_incisos As DataTable
     Shared _categoria_id As Integer
-    Public Shared Property tabla_incisos As DataTable
-        Get
-            Return _tabla_incisos
-        End Get
-        Set(value As DataTable)
-            _tabla_incisos = value
-        End Set
-    End Property
+    Shared _codigo_arancel As String
+    Shared _id_instrumento As Integer
 
-    Public Shared Property categoria_id As Integer
+#Region "Variables Globales"
+    'Private Property tabla_incisos As DataTable
+    '    Get
+    '        Return _tabla_incisos
+    '    End Get
+    '    Set(value As DataTable)
+    '        _tabla_incisos = value
+    '    End Set
+    'End Property
+
+    Private Property categoria_id As Integer
         Get
             Return _categoria_id
         End Get
@@ -22,14 +26,37 @@ Public Class frmAsignaCategoriasSAC
         End Set
     End Property
 
+    Private Property codigo_arancel As String
+        Get
+            Return _codigo_arancel
+        End Get
+        Set(value As String)
+            _codigo_arancel = value
+        End Set
+    End Property
+
+    Private Property id_instrumento As Integer
+        Get
+            Return _id_instrumento
+        End Get
+        Set(value As Integer)
+            _id_instrumento = value
+        End Set
+    End Property
+#End Region
+    
+
+
 
 #Region "Funciones del sistema"
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not IsPostBack Then
-            hfIdInstrumento.Value = Request.QueryString("id_inst").ToString
+            id_instrumento = Request.QueryString("id_inst").ToString
 
-            LlenarAsignaCategoriaMant(hfIdInstrumento.Value)
+            categoria_id = 0
+
+            LlenarAsignaCategoriaMant(id_instrumento)
 
             'With gvAsignarCategorias
             '    .DataSource = tabla_incisos
@@ -46,13 +73,16 @@ Public Class frmAsignaCategoriasSAC
 
         'Asigno Categoria_id
         categoria_id = getIdCategoria()
+        codigo_arancel = txt_codigo_arancel.Text
 
-        LlenarAsignaCategoriaMant(hfIdInstrumento.Value)
-        LlenarSeleccionCodigoInciso(hfIdInstrumento.Value, txt_codigo_arancel.Text)
+        LlenarAsignaCategoriaMant(id_instrumento)
+        LlenarSeleccionCodigoInciso(id_instrumento, codigo_arancel)
     End Sub
 
     'Metodo para cambiar el estado de los checkbox del gridview
     Protected Sub cb_seleccionar_todo_CheckedChanged(sender As Object, e As EventArgs)
+        Dim tabla_incisos As DataTable
+        tabla_incisos = Session("tabla_incisos")
 
         Dim check_all As System.Web.UI.WebControls.CheckBox = sender
 
@@ -70,6 +100,7 @@ Public Class frmAsignaCategoriasSAC
 
                     'Recorro tabla incisos que almacena la seleccion local
                     'Para chequear en tabla local
+
                     For Each enc As DataRow In tabla_incisos.Rows
                         If enc("codigo_inciso") = codigo_inciso Then
                             enc("selected") = 1
@@ -112,6 +143,8 @@ Public Class frmAsignaCategoriasSAC
         Dim check As CheckBox = CType(sender, CheckBox)
         Dim fila As GridViewRow = CType(check.NamingContainer, GridViewRow)
         Dim CodigoInciso As String = ""
+        Dim tabla_incisos As DataTable
+        tabla_incisos = Session("tabla_incisos")
 
         CodigoInciso = fila.Cells(1).Text
 
@@ -132,24 +165,30 @@ Public Class frmAsignaCategoriasSAC
             Next
 
         End If
-
+        Session("tabla_incisos") = tabla_incisos
     End Sub
 
     'Metodo para manejar gridview cuando se cambia de pagina
     Protected Sub gvAsignarCategorias_PageIndexChanging(ByVal sender As Object, ByVal e As System.Web.UI.WebControls.GridViewPageEventArgs) Handles gvAsignarCategorias.PageIndexChanging
         gvAsignarCategorias.PageIndex = e.NewPageIndex
+        Dim tabla_incisos As DataTable
+        tabla_incisos = Session("tabla_incisos")
+
         With gvAsignarCategorias
             .DataSource = tabla_incisos
             .DataBind()
         End With
         'Metodo para marcar checkbox del gridview cuando cambia de pagina
         Check_GridVew()
+
     End Sub
 
     Protected Sub btn_asigna_categoria_Click(sender As Object, e As EventArgs) Handles btn_asigna_categoria.Click
         Dim obj_asigna As New CNInstrumentosComerciales
+        Dim tabla_incisos As DataTable
+        tabla_incisos = Session("tabla_incisos")
 
-        If obj_asigna.InsertAsignaCategoria(hfIdInstrumento.Value, getIdCategoria, tabla_incisos) Then
+        If obj_asigna.InsertAsignaCategoria(id_instrumento, getIdCategoria, tabla_incisos) Then
 
             Mensaje("Se asigno categoria con exito.")
 
@@ -160,8 +199,8 @@ Public Class frmAsignaCategoriasSAC
             'Asigno categoria_id
             categoria_id = getIdCategoria()
 
-            LlenarAsignaCategoriaMant(hfIdInstrumento.Value)
-            LlenarSeleccionCodigoInciso(hfIdInstrumento.Value, txt_codigo_arancel.Text)
+            LlenarAsignaCategoriaMant(id_instrumento)
+            LlenarSeleccionCodigoInciso(id_instrumento, codigo_arancel)
 
         Else
             Mensaje("Error al asignar categoria.")
@@ -192,6 +231,7 @@ Public Class frmAsignaCategoriasSAC
     Sub LlenarSeleccionCodigoInciso(ByVal id_instrumento As Integer, ByVal inciso As String)
         Dim objCNAsignaCat As New CNInstrumentosComerciales
 
+
         With objCNAsignaCat.SelectDatosCodigoInciso(id_instrumento, inciso)
 
             If .Tables(0).Rows.Count = 0 Then
@@ -217,16 +257,32 @@ Public Class frmAsignaCategoriasSAC
             Else
                 Dim tbl As New DataTable
                 Dim column As New DataColumn
+                Dim tabla_incisos = New DataTable
 
                 tbl = .Tables(3)
                 tabla_incisos = .Tables(3)
-
                 With column
                     .ColumnName = "Selected"
                     .DataType = GetType(Boolean)
                     .DefaultValue = False
                 End With
                 tabla_incisos.Columns.Add(column)
+
+
+                Session.Add("tabla_incisos", tabla_incisos)
+
+
+
+
+
+                'tabla_incisos = .Tables(3)
+
+                'With column
+                '    .ColumnName = "Selected"
+                '    .DataType = GetType(Boolean)
+                '    .DefaultValue = False
+                'End With
+                'tabla_incisos.Columns.Add(column)
                 'tabla_incisos.Columns.Add(New DataColumn("Selected", GetType(Boolean)))
 
                 With gvAsignarCategorias
@@ -290,6 +346,9 @@ Public Class frmAsignaCategoriasSAC
 
     'Metodo para marcar check del gridview cuando cambia de pagina
     Sub Check_GridVew()
+        Dim tabla_incisos As DataTable
+        tabla_incisos = Session("tabla_incisos")
+
         With gvAsignarCategorias
             'Recorro datatable
             For Each row As DataRow In tabla_incisos.Rows
@@ -307,6 +366,7 @@ Public Class frmAsignaCategoriasSAC
                         'Si el el codigo del datatable es igual al del grid view marcar y salir
                         If codigo_dt = codigo_gv Then
                             check.Checked = True
+                            Session("tabla_incisos") = tabla_incisos
                             Exit For
                         End If
                     Next

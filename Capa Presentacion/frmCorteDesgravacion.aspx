@@ -111,19 +111,19 @@
                 <div class="form-group">
                     <asp:Label ID="lbl_codidgo_Categoria" CssClass="control-label col-xs-3" Enabled="false" runat="server" Text="Categoria: "></asp:Label>
                     <div class="col-xs-3">
-                        <asp:TextBox ID="txtCategoria" type="text" CssClass="form-control" runat="server" disabled></asp:TextBox>
+                        <asp:TextBox ID="txt_Categoria" type="text" CssClass="form-control" runat="server" disabled="true"></asp:TextBox>
                     </div>
 
                     <asp:Label ID="lbl_id_etapa" CssClass="control-label col-xs-3" Enabled="false" runat="server" Text="Orden de Etapa: "></asp:Label>
                     <div class="col-xs-3">
-                        <asp:TextBox ID="txtIdEtapa" type="text" CssClass="form-control" runat="server" disabled></asp:TextBox>
+                        <asp:TextBox ID="txtIdEtapa" type="text" CssClass="form-control" runat="server" disabled="true"></asp:TextBox>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <asp:Label ID="lbl_tipo_desgravacion" CssClass="control-label col-xs-3 " Enabled="false" runat="server" Text="Tipo de Desgravación:"></asp:Label>
                     <div class="col-xs-3">
-                        <asp:DropDownList ID="ddl_tipo_desgravacion" CssClass="form-control" runat="server" disabled></asp:DropDownList>
+                        <asp:DropDownList ID="ddl_tipo_desgravacion" CssClass="form-control" runat="server" disabled="true"></asp:DropDownList>
                     </div>
                 </div>
 
@@ -158,21 +158,26 @@
                 <section class="well">
 
                     <div class="form-group">
-                        <asp:Label ID="lbl_porcen_desgravacion_anterior" CssClass="control-label col-xs-3" Enabled="false" runat="server" Text="Periodo Anterior:"></asp:Label>
-                        <div class="col-xs-3">
-                            <asp:TextBox ID="txt_porcen_desgrava_anterior" CssClass="form-control" runat="server" OnKeyPress="CalculaFactor()" OnBlur="CalculaFactor()"></asp:TextBox>
+                        <div class="has-error has-feedback">
+                            <asp:Label ID="lbl_porcen_desgravacion_anterior" CssClass="control-label col-xs-3" Enabled="false" runat="server" Text="Periodo Anterior:"></asp:Label>
+                            <div class="col-xs-3">
+                                <asp:TextBox ID="txt_porcen_desgrava_anterior" CssClass="form-control" runat="server" OnKeyPress="CalculaFactor()" OnBlur="CalculaFactor()"></asp:TextBox>
+                                <span class="help-block">El campo no puede quedar vacio.</span>
+                            </div>
                         </div>
-
-                        <asp:Label ID="lbl_porcen_desgravacion_final" CssClass="control-label col-xs-3" Enabled="false" runat="server" Text="Periodo Final:"></asp:Label>
-                        <div class="col-xs-3">
-                            <asp:TextBox ID="txt_porcen_desgrava_final" CssClass="form-control" runat="server" OnKeyPress="CalculaFactor()" OnBlur="CalculaFactor()"></asp:TextBox>
+                        <div class="has-error has-feedback">
+                            <asp:Label ID="lbl_porcen_desgravacion_final" CssClass="control-label col-xs-3" Enabled="false" runat="server" Text="Periodo Final:"></asp:Label>
+                            <div class="col-xs-3">
+                                <asp:TextBox ID="txt_porcen_desgrava_final" CssClass="form-control" runat="server" OnKeyPress="CalculaFactor()" OnBlur="CalculaFactor()"></asp:TextBox>
+                                <span class="help-block">El campo no puede quedar vacio.</span>
+                            </div>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <asp:Label ID="lbl_factor_desgravacion" CssClass="control-label col-xs-3" Enabled="false" runat="server" Text="Factor de Desgravación"></asp:Label>
                         <div class="col-xs-3">
-                            <asp:textbox ID="txt_factor_desgravacion"  CssClass="form-control" runat="server" disabled></asp:textbox>
+                            <asp:textbox ID="txt_factor_desgravacion"  CssClass="form-control" runat="server" disabled="true"></asp:textbox>
                         </div>
                     </div>
 
@@ -184,7 +189,7 @@
             </div>
 
             <div class="panel-footer">
-                <asp:Button ID="btn_genera_cortes" CssClass="btn btn-primary disabled" runat="server" Text="Generar Cortes" />
+                <asp:Button ID="btn_genera_cortes" CssClass="btn btn-primary" runat="server" Text="Generar Cortes" disabled="true"/>
                 <asp:Button ID="btn_Salir" CssClass="btn btn-default" runat="server" Text="Salir" />
             </div>
 
