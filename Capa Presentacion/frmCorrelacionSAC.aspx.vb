@@ -3,82 +3,20 @@ Imports Reglas_del_negocio
 Public Class frmCorrelacionSAC
     Inherits System.Web.UI.Page
 
-#Region "Varialbles locales"
-    Private Shared _tabla_incisos As DataTable
-    Private Shared _id_version As Integer
-    Private Shared _anio_actual As Integer
-    Private Shared _anio_nueva As Integer
-    Private Shared _dai_actual As Decimal
-    Private Shared _inciso_origen As String
-
-    Public Shared Property tabla_incisos As DataTable
-        Get
-            Return _tabla_incisos
-        End Get
-        Set(value As DataTable)
-            _tabla_incisos = tabla_incisos
-        End Set
-    End Property
-
-    Public Shared Property id_version As Integer
-        Get
-            Return _id_version
-        End Get
-        Set(value As Integer)
-            _id_version = value
-        End Set
-    End Property
-
-    Public Shared Property anio_actual As Integer
-        Get
-            Return _anio_actual
-        End Get
-        Set(value As Integer)
-            _anio_actual = value
-        End Set
-    End Property
-
-    Public Shared Property anio_nueva As Integer
-        Get
-            Return _anio_nueva
-        End Get
-        Set(value As Integer)
-            _anio_nueva = value
-        End Set
-    End Property
-
-    Public Shared Property dai_actual As Decimal
-        Get
-            Return _dai_actual
-        End Get
-        Set(value As Decimal)
-            _dai_actual = value
-        End Set
-    End Property
-
-    Public Shared Property inciso_origen As String
-        Get
-            Return _inciso_origen
-        End Get
-        Set(value As String)
-            _inciso_origen = value
-        End Set
-    End Property
-
-#End Region
-
 #Region "Funciones del sistema"
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not IsPostBack Then
             
-            tabla_incisos = Nothing
-            With gvAsignarCategorias
-                .DataSource = tabla_incisos
-                .DataBind()
-            End With
+            'tabla_incisos = Nothing
+            'With gvAsignarCategorias
+            '    .DataSource = tabla_incisos
+            '    .DataBind()
+            'End With
 
             LlenarCorrelacionMant()
+
+            btnGuardar.Attributes.Add("onclick", "this.value='Guardando Espere...';this.disabled=true;" & ClientScript.GetPostBackEventReference(btnGuardar, ""))
         End If
 
     End Sub
@@ -143,10 +81,26 @@ Public Class frmCorrelacionSAC
         End If
     End Sub
 
+    Protected Sub gvCorrelacion_PageIndexChanging(ByVal sender As Object, ByVal e As System.Web.UI.WebControls.GridViewPageEventArgs) Handles gvAsignarCategorias.PageIndexChanging
+        gvAsignarCategorias.PageIndex = e.NewPageIndex
+        Dim tabla_incisos As DataTable
+        tabla_incisos = Session("tabla_incisos")
+
+        With gvAsignarCategorias
+            .DataSource = tabla_incisos
+            .DataBind()
+        End With
+
+    End Sub
+
 #End Region
 
 #Region "Obtener valores de panel de apertura"
+
     Private Function getVersionActual() As Integer
+        Dim anio_actual As Integer
+        anio_actual = Session("anio_actual")
+
         If anio_actual > 0 Then
             Return anio_actual
         Else
@@ -156,6 +110,9 @@ Public Class frmCorrelacionSAC
     End Function
 
     Private Function getNuevaVersion() As Integer
+        Dim anio_nueva As Integer
+        anio_nueva = Session("anio_nueva")
+
         If anio_nueva > 0 Then
             Return anio_nueva
         Else
@@ -165,10 +122,16 @@ Public Class frmCorrelacionSAC
     End Function
 
     Private Function getIncisoActual() As String
+        Dim inciso_origen As String
+        inciso_origen = Session("inciso_origen")
+
         Return inciso_origen
     End Function
 
     Private Function getDaiActual() As Decimal
+        Dim dai_actual As Decimal
+        dai_actual = Session("dai_actual")
+
         Return dai_actual
         'Return Convert.ToDecimal(txt_dai_actual.Text)
     End Function
@@ -232,8 +195,11 @@ Public Class frmCorrelacionSAC
 
             Else
                 Dim tbl As New DataTable
+                Dim tabla_incisos As New DataTable
 
                 tbl = .Tables(3)
+                tabla_incisos = .Tables(3)
+                Session.Add("tabla_incisos", tabla_incisos)
 
                 With gvAsignarCategorias
                     .DataSource = tbl
@@ -296,12 +262,21 @@ Public Class frmCorrelacionSAC
     Private Function LlenarEncabezadoApertura(ByVal codigo_inciso As String) As Boolean
         Dim estado As Boolean = False
         Dim objCorrelacion As New CNInstrumentosComerciales
+        Dim id_version As Integer
+        Dim anio_actual As Integer
+        Dim anio_nueva As Integer
+        Dim dai_actual As Decimal
 
         With objCorrelacion.SelectCorrelacionMant()
             If Not .Tables(0).Rows.Count = 0 Then
                 id_version = Convert.ToInt32(.Tables(0).Rows(0)("id_version").ToString())
+                Session.Add("id_version", id_version)
+
                 txt_anio_actual.Text = .Tables(0).Rows(0)("anio_version").ToString()
+
                 anio_actual = .Tables(0).Rows(0)("anio_version")
+                Session.Add("anio_actual", anio_actual)
+
                 txt_descripcion_actual.Text = .Tables(0).Rows(0)("descripcion").ToString()
                 estado = True
             Else
@@ -311,6 +286,8 @@ Public Class frmCorrelacionSAC
             If Not .Tables(1).Rows.Count = 0 Then
                 txt_anio_nueva.Text = .Tables(1).Rows(0)("anio_version").ToString()
                 anio_nueva = .Tables(1).Rows(0)("anio_version")
+                Session.Add("anio_nueva", anio_nueva)
+
                 txt_descripcion_nueva.Text = .Tables(1).Rows(0)("descripcion").ToString()
                 estado = True
             Else
@@ -321,9 +298,12 @@ Public Class frmCorrelacionSAC
         With objCorrelacion.SelectIncisoApertura(codigo_inciso)
             If Not .Rows.Count = 0 Then
                 txt_inciso_actual.Text = codigo_inciso
-                inciso_origen = codigo_inciso
+                Session.Add("inciso_origen", codigo_inciso)
+
                 txt_dai_actual.Text = .Rows(0)("dai_base").ToString()
                 dai_actual = .Rows(0)("dai_base")
+                Session.Add("dai_actual", dai_actual)
+
                 txt_descripcion_inciso.Text = .Rows(0)("texto_inciso").ToString()
 
                 txt_inciso_nuevo.Text = codigo_inciso
@@ -352,7 +332,7 @@ Public Class frmCorrelacionSAC
         objCorrelacion.dai_nuevo = getDaiNuevo()
         objCorrelacion.anio_version = getVersionActual()
         objCorrelacion.anio_nueva_version = getNuevaVersion()
-        objCorrelacion.id_version = id_version
+        objCorrelacion.id_version = Session("id_version")
         objCorrelacion.fecha_fin_vigencia = getFechaFinVigencia()
         objCorrelacion.fecha_inicia_vigencia = getFechaInicioVigencia()
 
@@ -385,8 +365,8 @@ Public Class frmCorrelacionSAC
             objCorrelacion.inciso_origen = getIncisoActual()
             objCorrelacion.dai_base = getDaiActual()
             objCorrelacion.anio_version = getVersionActual()
-            objCorrelacion.id_version = id_version
-            
+            objCorrelacion.id_version = Session("id_version")
+
             estado = objEnmiendas.InsertSupresion(objCorrelacion)
         Else
             estado = False
@@ -397,11 +377,18 @@ Public Class frmCorrelacionSAC
     Private Function ObtieneValoresSuprimir(ByVal codigo_inciso As String) As Boolean
         Dim estado As Boolean = False
         Dim objCorrelacion As New CNInstrumentosComerciales
+        Dim id_version As Integer
+        Dim anio_actual As Integer
+        Dim dai_actual As Decimal
 
         With objCorrelacion.SelectCorrelacionMant()
             If Not .Tables(0).Rows.Count = 0 Then
                 id_version = Convert.ToInt32(.Tables(0).Rows(0)("id_version").ToString())
+                Session.Add("id_version", id_version)
+
                 anio_actual = .Tables(0).Rows(0)("anio_version")
+                Session.Add("anio_actual", anio_actual)
+
                 estado = True
             Else
                 estado = False
@@ -410,8 +397,12 @@ Public Class frmCorrelacionSAC
 
         With objCorrelacion.SelectIncisoApertura(codigo_inciso)
             If Not .Rows.Count = 0 Then
-                inciso_origen = codigo_inciso
+
+                Session.Add("inciso_origen", codigo_inciso)
+
                 dai_actual = .Rows(0)("dai_base")
+                Session.Add("dai_actual", dai_actual)
+
                 estado = True
             Else
                 estado = False

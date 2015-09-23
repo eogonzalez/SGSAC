@@ -10,6 +10,7 @@ Public Class frmPaisesIntrumento
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not IsPostBack Then
             PaisesInstrumento(Request.QueryString("id_inst"))
+            btnGuardar.Attributes.Add("onclick", "this.value='Guardando Espere...';this.disabled=true;" & ClientScript.GetPostBackEventReference(btnGuardar, ""))
         End If
     End Sub
 
@@ -54,6 +55,63 @@ Public Class frmPaisesIntrumento
 
     Protected Sub btnSalir_Click(sender As Object, e As EventArgs) Handles btnSalir.Click
         LimpiarFormulario()
+    End Sub
+
+    Protected Sub lkBtt_editar_Click(sender As Object, e As EventArgs) Handles lkBtt_editar.Click
+        Dim Datos As String
+        Dim DatosSplit As String()
+        Dim idInstrumento As New Integer
+        Dim idPais As New Integer
+        Dim idTipoSocio As New Integer
+
+        Datos = getIdInstrumentoGridView()
+        DatosSplit = Datos.Split(New Char() {","c})
+
+        For i As Integer = 0 To DatosSplit.Count - 1
+            If i = 0 Then
+                idInstrumento = DatosSplit(i)
+            End If
+            If i = 1 Then
+                idPais = DatosSplit(i)
+            End If
+            If i = 2 Then
+                idTipoSocio = DatosSplit(i)
+            End If
+        Next
+
+        If idInstrumento = 0 Then
+            MsgBox("Seleccione un instrumeto")
+            Exit Sub
+        Else
+
+            DatosInstrumento(Request.QueryString("id_inst"))
+            Llenar_Paises()
+            mpePaises.Show()
+            llenar_TipoSocio()
+            llenar_RegionPais()
+
+            Dim tbl As New DataTable
+            tbl = objCapaNegocio.PaisesInstrumentoMant(idInstrumento, idPais, idTipoSocio).Tables("PaisesInstrumentoMant")
+
+            For Each enc As DataRow In tbl.Rows
+                ddlPaises.SelectedValue = enc("ID_PAIS")
+                ddlRegionPais.SelectedValue = enc("CODIGO_BLOQUE_PAIS")
+                ddlTipoSocio.SelectedValue = enc("ID_TIPO_SOCIO")
+                txtFechaFirma.Text = enc("FECHA_FIRMA")
+                txtFechaRatificacion.Text = enc("FECHA_RATIFICACION")
+                txtFechaVigencia.Text = enc("FECHA_VIGENCIA")
+                txtObservaciones.Text = enc("OBSERVACIONES")
+
+                hfIdInstrumento.Value = enc("ID_INSTRUMENTO")
+                hfIdPais.Value = enc("ID_PAIS")
+                hfBloquePais.Value = enc("CODIGO_BLOQUE_PAIS")
+                hfTipoSocio.Value = enc("ID_TIPO_SOCIO")
+            Next
+
+            btnGuardar.CommandName = "editar"
+            mpePaises.Show()
+
+        End If
     End Sub
 
 #End Region
@@ -283,60 +341,4 @@ Public Class frmPaisesIntrumento
 
 #End Region
 
-    Protected Sub lkBtt_editar_Click(sender As Object, e As EventArgs) Handles lkBtt_editar.Click
-        Dim Datos As String
-        Dim DatosSplit As String()
-        Dim idInstrumento As New Integer
-        Dim idPais As New Integer
-        Dim idTipoSocio As New Integer
-
-        Datos = getIdInstrumentoGridView()
-        DatosSplit = Datos.Split(New Char() {","c})
-
-        For i As Integer = 0 To DatosSplit.Count - 1
-            If i = 0 Then
-                idInstrumento = DatosSplit(i)
-            End If
-            If i = 1 Then
-                idPais = DatosSplit(i)
-            End If
-            If i = 2 Then
-                idTipoSocio = DatosSplit(i)
-            End If
-        Next
-
-        If idInstrumento = 0 Then
-            MsgBox("Seleccione un instrumeto")
-            Exit Sub
-        Else
-
-            DatosInstrumento(Request.QueryString("id_inst"))
-            Llenar_Paises()
-            mpePaises.Show()
-            llenar_TipoSocio()
-            llenar_RegionPais()
-
-            Dim tbl As New DataTable
-            tbl = objCapaNegocio.PaisesInstrumentoMant(idInstrumento, idPais, idTipoSocio).Tables("PaisesInstrumentoMant")
-
-            For Each enc As DataRow In tbl.Rows
-                ddlPaises.SelectedValue = enc("ID_PAIS")
-                ddlRegionPais.SelectedValue = enc("CODIGO_BLOQUE_PAIS")
-                ddlTipoSocio.SelectedValue = enc("ID_TIPO_SOCIO")
-                txtFechaFirma.Text = enc("FECHA_FIRMA")
-                txtFechaRatificacion.Text = enc("FECHA_RATIFICACION")
-                txtFechaVigencia.Text = enc("FECHA_VIGENCIA")
-                txtObservaciones.Text = enc("OBSERVACIONES")
-
-                hfIdInstrumento.Value = enc("ID_INSTRUMENTO")
-                hfIdPais.Value = enc("ID_PAIS")
-                hfBloquePais.Value = enc("CODIGO_BLOQUE_PAIS")
-                hfTipoSocio.Value = enc("ID_TIPO_SOCIO")
-            Next
-
-            btnGuardar.CommandName = "editar"
-            mpePaises.Show()
-
-        End If
-    End Sub
 End Class

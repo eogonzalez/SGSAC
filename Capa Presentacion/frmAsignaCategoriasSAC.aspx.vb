@@ -2,59 +2,19 @@
 Imports Reglas_del_negocio
 Public Class frmAsignaCategoriasSAC
     Inherits System.Web.UI.Page
-    'Shared _tabla_incisos As DataTable
-    Shared _categoria_id As Integer
-    Shared _codigo_arancel As String
-    Shared _id_instrumento As Integer
-
-#Region "Variables Globales"
-    'Private Property tabla_incisos As DataTable
-    '    Get
-    '        Return _tabla_incisos
-    '    End Get
-    '    Set(value As DataTable)
-    '        _tabla_incisos = value
-    '    End Set
-    'End Property
-
-    Private Property categoria_id As Integer
-        Get
-            Return _categoria_id
-        End Get
-        Set(value As Integer)
-            _categoria_id = value
-        End Set
-    End Property
-
-    Private Property codigo_arancel As String
-        Get
-            Return _codigo_arancel
-        End Get
-        Set(value As String)
-            _codigo_arancel = value
-        End Set
-    End Property
-
-    Private Property id_instrumento As Integer
-        Get
-            Return _id_instrumento
-        End Get
-        Set(value As Integer)
-            _id_instrumento = value
-        End Set
-    End Property
-#End Region
-    
-
-
 
 #Region "Funciones del sistema"
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        Dim categoria_id As Integer
+        Dim id_instrumento As Integer
+
         If Not IsPostBack Then
             id_instrumento = Request.QueryString("id_inst").ToString
+            Session.Add("id_instrumento", id_instrumento)
 
             categoria_id = 0
+            Session.Add("categoria_id", categoria_id)
 
             LlenarAsignaCategoriaMant(id_instrumento)
 
@@ -63,17 +23,26 @@ Public Class frmAsignaCategoriasSAC
             '    .DataBind()
             'End With
 
-            Me.btn_asigna_categoria.Attributes.Add("onclick", "this.vale='Guardando Espere...';this.disabled=true;" & Me.GetPostBackEventReference(Me.btn_asigna_categoria))
+            Me.btn_asigna_categoria.Attributes.Add("onclick", "this.vale='Guardando Espere...';this.disabled=true;" & ClientScript.GetPostBackEventReference(btn_asigna_categoria, ""))
         End If
 
     End Sub
 
     Protected Sub btn_seleccionar_Click(sender As Object, e As EventArgs) Handles btn_seleccionar.Click
+        Dim categoria_id As Integer
+        Dim codigo_arancel As String
+        Dim id_instrumento As Integer
+
         'Ver la manera de no llamar asigna categoria'
 
         'Asigno Categoria_id
         categoria_id = getIdCategoria()
+        Session("categoria_id") = categoria_id
+
         codigo_arancel = txt_codigo_arancel.Text
+        Session.Add("codigo_arancel", codigo_arancel)
+
+        id_instrumento = Session("id_instrumento")
 
         LlenarAsignaCategoriaMant(id_instrumento)
         LlenarSeleccionCodigoInciso(id_instrumento, codigo_arancel)
@@ -186,7 +155,12 @@ Public Class frmAsignaCategoriasSAC
     Protected Sub btn_asigna_categoria_Click(sender As Object, e As EventArgs) Handles btn_asigna_categoria.Click
         Dim obj_asigna As New CNInstrumentosComerciales
         Dim tabla_incisos As DataTable
+        Dim categoria_id As Integer
+        Dim codigo_arancel As String
+        Dim id_instrumento As Integer
+
         tabla_incisos = Session("tabla_incisos")
+        id_instrumento = Session("id_instrumento")
 
         If obj_asigna.InsertAsignaCategoria(id_instrumento, getIdCategoria, tabla_incisos) Then
 
@@ -198,6 +172,8 @@ Public Class frmAsignaCategoriasSAC
 
             'Asigno categoria_id
             categoria_id = getIdCategoria()
+            Session("categoria_id") = categoria_id
+            codigo_arancel = Session("codigo_arancel")
 
             LlenarAsignaCategoriaMant(id_instrumento)
             LlenarSeleccionCodigoInciso(id_instrumento, codigo_arancel)
@@ -301,6 +277,7 @@ Public Class frmAsignaCategoriasSAC
     'Metodo para llenar los controles del Mantenimiento
     Sub LlenarAsignaCategoriaMant(ByVal id_instrumento As Integer)
         Dim objCNAsignaCat As New CNInstrumentosComerciales
+        Dim categoria_id As Integer
 
         With objCNAsignaCat.SelectDatosAsignaCategoriaMant(id_instrumento)
 
@@ -332,6 +309,8 @@ Public Class frmAsignaCategoriasSAC
                 ddl_categoria_asignar.DataValueField = .Tables(2).Columns("id_categoria").ToString()
 
                 'Obtiene categoria seleccionada
+                categoria_id = Session("categoria_id")
+
                 If categoria_id > 0 Then
                     ddl_categoria_asignar.SelectedValue = categoria_id
                 End If

@@ -14,7 +14,7 @@ Public Class frmCategoriasDesgravacion
             LlenargvCategorias()
             LlenarTipoDesgravacion()
 
-            Me.btn_Guardar.Attributes.Add("onclick", "this.value='Guardando Espere...';this.disabled=true;" & Me.GetPostBackEventReference(Me.btn_Guardar))
+            Me.btn_Guardar.Attributes.Add("onclick", "this.value='Guardando Espere...';this.disabled=true;" & ClientScript.GetPostBackEventReference(btn_Guardar, ""))
         End If
     End Sub
 

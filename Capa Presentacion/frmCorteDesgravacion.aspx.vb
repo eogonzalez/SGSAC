@@ -17,6 +17,8 @@ Public Class frmCorteDesgravacion
             LlenarTipoDesgravacion()
             LlenarTipoPeriodo()
 
+            btn_genera_cortes.Attributes.Add("onclick", "this.value='Guardando Espere...';this.disabled=true;" & ClientScript.GetPostBackEventReference(btn_genera_cortes, ""))
+
         End If
     End Sub
 

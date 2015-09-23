@@ -8,7 +8,7 @@ Public Class frmTipoRelacionInstrumento
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not IsPostBack Then
             Llenar_gvTipoRelacionInstrumento()
-            Me.btnGuardar.Attributes.Add("onclick", "this.vale='Guardando Espere...';this.disabled=true;" & Me.GetPostBackEventReference(Me.btnGuardar))
+            Me.btnGuardar.Attributes.Add("onclick", "this.vale='Guardando Espere...';this.disabled=true;" & ClientScript.GetPostBackEventReference(btnGuardar, ""))
 
         End If
     End Sub
