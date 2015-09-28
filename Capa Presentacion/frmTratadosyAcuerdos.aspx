@@ -61,6 +61,11 @@
                         Paises 
             </asp:LinkButton>
 
+            <asp:LinkButton ID="lkBtn_asignar_precision" runat="server" CssClass="btn btn-primary"> 
+                        <i aria-hidden="true" class="glyphicon glyphicon-th-list"></i> 
+                        Asignar Precisión
+            </asp:LinkButton>
+
             <asp:LinkButton ID="lkBtn_asignar_categorias" runat="server" CssClass="btn btn-primary"> 
                         <i aria-hidden="true" class="glyphicon glyphicon-indent-left"></i> 
                         Asignar Categorias

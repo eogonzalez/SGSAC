@@ -2761,4 +2761,35 @@ Public Class CDInstrumentosComerciales
 
 #End Region
 
+#Region "Funciones y procedimientos para el Mantenimiento de Asignacion de Precision"
+
+    Public Function SelectIncisoPrecision(ByVal id_instrumento As Integer, ByVal codigo_inciso As String) As DataTable
+        Dim dt_inciso_precision As New DataTable
+        Try
+            Dim sql_query As String
+            sql_query = " select cast(dai_base as numeric(8,2)) as dai_base, texto_inciso " +
+                " from SAC_Incisos " +
+                " where estado = 'A' AND  " +
+                " codigo_inciso = @codigo_inciso "
+
+            Using cn = objConeccion.Conectar
+                Dim command As SqlCommand = New SqlCommand(sql_query, cn)
+                command.Parameters.AddWithValue("id_instrumento", id_instrumento)
+                command.Parameters.AddWithValue("codigo_inciso", codigo_inciso)
+
+                da = New SqlDataAdapter(command)
+                da.Fill(dt_inciso_precision)
+
+            End Using
+
+        Catch ex As Exception
+
+        Finally
+
+        End Try
+
+        Return dt_inciso_precision
+    End Function
+#End Region
+
 End Class

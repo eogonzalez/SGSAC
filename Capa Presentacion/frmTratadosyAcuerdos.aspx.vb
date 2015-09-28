@@ -135,6 +135,20 @@ Public Class frmTratadosyAcuerdos
 
     End Sub
 
+    Protected Sub lkBtn_asignar_precision_Click(sender As Object, e As EventArgs) Handles lkBtn_asignar_precision.Click
+        Dim id_instrumento As Integer = 0
+        id_instrumento = Convert.ToInt32(getIdInstrumentoGridView())
+
+        If id_instrumento = 0 Then
+            Mensaje("Seleccione un instrumento.")
+            Exit Sub
+        Else
+            hfIdInstrumento.Value = id_instrumento
+            Response.Redirect("~/frmAsignaPrecision.aspx?id_inst=" + hfIdInstrumento.Value)
+        End If
+
+    End Sub
+
 #End Region
 
 #Region "Funciones para capturar valores del formulario"
@@ -385,6 +399,5 @@ Public Class frmTratadosyAcuerdos
     End Function
 
 #End Region
-
 
 End Class

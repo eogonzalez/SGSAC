@@ -320,4 +320,20 @@ Public Class CNInstrumentosComerciales
 
 #End Region
 
+#Region "Funciones y procedimientos para el Mantenimiento de Asignacion de Precision"
+
+    'Funcion para obtener los datos del Mantenimiento de Asigna Precision
+    Public Function SelectDatosAsignaPrecisionMant(ByVal id_instrumento As Integer) As DataSet
+        'Se reutiliza ws del mantenimiento Asignacion de categoria 
+        Return objCDInstrumentos.SelectDatosAsignaCategoriaMant(id_instrumento)
+    End Function
+
+    'Funcion para obtener los datos para el mantenimiento de precision
+    Public Function SelectDatosEncabezadoPrecisionMant(ByVal id_instrumento As Integer) As DataSet
+        'Se reutiliza ws del mantenimiento de asignacion de categoria
+        Return objCDInstrumentos.SelectDatosAsignaCategoriaMant(id_instrumento)
+    End Function
+
+#End Region
+
 End Class

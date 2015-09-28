@@ -210,27 +210,19 @@ Public Class frmAsignaCategoriasSAC
 
         With objCNAsignaCat.SelectDatosCodigoInciso(id_instrumento, inciso)
 
-            If .Tables(0).Rows.Count = 0 Then
-                'Esta vacia la tabla
-            Else
+            If Not .Tables(0).Rows.Count = 0 Then
                 txt_descripcion_capitulo.Text = .Tables(0).Rows(0)("descripcion_capitulo").ToString()
             End If
 
-            If .Tables(1).Rows.Count = 0 Then
-
-            Else
+            If Not .Tables(1).Rows.Count = 0 Then
                 txt_descripcion_partida.Text = .Tables(1).Rows(0)("Descripcion_Partida").ToString()
             End If
 
-            If .Tables(2).Rows.Count = 0 Then
-
-            Else
+            If Not .Tables(2).Rows.Count = 0 Then
                 txt_descripcion_sub_partida.Text = .Tables(2).Rows(0)("texto_subpartida").ToString()
             End If
 
-            If .Tables(3).Rows.Count = 0 Then
-
-            Else
+            If Not .Tables(3).Rows.Count = 0 Then
                 Dim tbl As New DataTable
                 Dim column As New DataColumn
                 Dim tabla_incisos = New DataTable
@@ -247,20 +239,6 @@ Public Class frmAsignaCategoriasSAC
 
                 Session.Add("tabla_incisos", tabla_incisos)
 
-
-
-
-
-                'tabla_incisos = .Tables(3)
-
-                'With column
-                '    .ColumnName = "Selected"
-                '    .DataType = GetType(Boolean)
-                '    .DefaultValue = False
-                'End With
-                'tabla_incisos.Columns.Add(column)
-                'tabla_incisos.Columns.Add(New DataColumn("Selected", GetType(Boolean)))
-
                 With gvAsignarCategorias
                     .DataSource = tbl
                     .DataBind()
@@ -269,9 +247,6 @@ Public Class frmAsignaCategoriasSAC
             End If
 
         End With
-
-
-
     End Sub
 
     'Metodo para llenar los controles del Mantenimiento
@@ -281,30 +256,21 @@ Public Class frmAsignaCategoriasSAC
 
         With objCNAsignaCat.SelectDatosAsignaCategoriaMant(id_instrumento)
 
-            If .Tables(0).Rows.Count = 0 Then
-                'Esta vacia la tabla
-
-            Else
+            If Not .Tables(0).Rows.Count = 0 Then
                 txt_año_vigencia.Text = .Tables(0).Rows(0)("anio_version").ToString()
-
                 txt_version_enmienda.Text = .Tables(0).Rows(0)("enmienda").ToString()
                 txt_periodo_año_inicial.Text = .Tables(0).Rows(0)("anio_inicia_enmienda").ToString()
                 txt_periodo_año_final.Text = .Tables(0).Rows(0)("anio_fin_enmieda").ToString()
-
             End If
 
-            If .Tables(1).Rows.Count = 0 Then
-                'Esta vacia la tabla
-            Else
+            If Not .Tables(1).Rows.Count = 0 Then
                 Dim nombre_instrumento As String = .Tables(1).Rows(0)("nombre_instrumento").ToString()
                 Dim sigla As String = .Tables(1).Rows(0)("sigla").ToString()
-
                 txt_nombre_instrumento.Text = nombre_instrumento + " - " + sigla
             End If
 
-            If .Tables(2).Rows.Count = 0 Then
-                'Esta vacia la tabla
-            Else
+            If Not .Tables(2).Rows.Count = 0 Then
+
                 ddl_categoria_asignar.DataTextField = .Tables(2).Columns("codigo_categoria").ToString()
                 ddl_categoria_asignar.DataValueField = .Tables(2).Columns("id_categoria").ToString()
 
@@ -318,7 +284,6 @@ Public Class frmAsignaCategoriasSAC
                 ddl_categoria_asignar.DataSource = .Tables(2)
                 ddl_categoria_asignar.DataBind()
             End If
-
 
         End With
     End Sub

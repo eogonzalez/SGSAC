@@ -11,313 +11,232 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class frmTratadosyAcuerdos
+Partial Public Class frmAsignaPrecisionTLC
 
     '''<summary>
-    '''Control lkBtt_nuevo.
+    '''Control lbl_año_vigencia.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents lkBtt_nuevo As Global.System.Web.UI.WebControls.LinkButton
+    Protected WithEvents lbl_año_vigencia As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''Control lkBtt_nuevo_ModalPopupExtender.
+    '''Control txt_año_vigencia.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents lkBtt_nuevo_ModalPopupExtender As Global.AjaxControlToolkit.ModalPopupExtender
+    Protected WithEvents txt_año_vigencia As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''Control lkBtt_editar.
+    '''Control lbl_version_enmienda.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents lkBtt_editar As Global.System.Web.UI.WebControls.LinkButton
+    Protected WithEvents lbl_version_enmienda As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''Control lkBtt_categorias.
+    '''Control txt_version_enmienda.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents lkBtt_categorias As Global.System.Web.UI.WebControls.LinkButton
+    Protected WithEvents txt_version_enmienda As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''Control lkBtt_paises.
+    '''Control lbl_periodo_enmienda_sac.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents lkBtt_paises As Global.System.Web.UI.WebControls.LinkButton
+    Protected WithEvents lbl_periodo_enmienda_sac As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''Control lkBtn_asignar_precision.
+    '''Control txt_periodo_año_inicial.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents lkBtn_asignar_precision As Global.System.Web.UI.WebControls.LinkButton
+    Protected WithEvents txt_periodo_año_inicial As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''Control lkBtn_asignar_categorias.
+    '''Control lbl_al.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents lkBtn_asignar_categorias As Global.System.Web.UI.WebControls.LinkButton
+    Protected WithEvents lbl_al As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''Control lkBtb_calcula_dai.
+    '''Control txt_periodo_año_final.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents lkBtb_calcula_dai As Global.System.Web.UI.WebControls.LinkButton
+    Protected WithEvents txt_periodo_año_final As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''Control lkBtn_Hidden_Calcula_Dai.
+    '''Control lbl_nombre_insrumento.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents lkBtn_Hidden_Calcula_Dai As Global.System.Web.UI.WebControls.LinkButton
+    Protected WithEvents lbl_nombre_insrumento As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''Control lkBtt_Calcula_Dai_ModalPopupExtender.
+    '''Control txt_nombre_instrumento.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents lkBtt_Calcula_Dai_ModalPopupExtender As Global.AjaxControlToolkit.ModalPopupExtender
+    Protected WithEvents txt_nombre_instrumento As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''Control gvInstrumentos.
+    '''Control lbl_codigo_arancel.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents gvInstrumentos As Global.System.Web.UI.WebControls.GridView
+    Protected WithEvents lbl_codigo_arancel As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''Control pnlNuevoInstrumento.
+    '''Control txt_codigo_arancel.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents pnlNuevoInstrumento As Global.System.Web.UI.WebControls.Panel
+    Protected WithEvents txt_codigo_arancel As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''Control Label2.
+    '''Control btn_seleccionar.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents Label2 As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents btn_seleccionar As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''Control txtNombreInstrumento.
+    '''Control Datos_SAC.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents txtNombreInstrumento As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents Datos_SAC As Global.System.Web.UI.UpdatePanel
 
     '''<summary>
-    '''Control Label3.
+    '''Control lbl_descripcion_capitulo.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents Label3 As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents lbl_descripcion_capitulo As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''Control ddlstTipoInstrumento.
+    '''Control txt_descripcion_capitulo.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents ddlstTipoInstrumento As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents txt_descripcion_capitulo As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''Control Label4.
+    '''Control lbl_descripcion_partida.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents Label4 As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents lbl_descripcion_partida As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''Control txtSigla.
+    '''Control txt_descripcion_partida.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents txtSigla As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents txt_descripcion_partida As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''Control Label5.
+    '''Control lbl_descripcion_sub_partida.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents Label5 As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents lbl_descripcion_sub_partida As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''Control txtSiglaAlterna.
+    '''Control txt_descripcion_sub_partida.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents txtSiglaAlterna As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents txt_descripcion_sub_partida As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''Control Label6.
+    '''Control lkBtn_precision.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents Label6 As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents lkBtn_precision As Global.System.Web.UI.WebControls.LinkButton
 
     '''<summary>
-    '''Control ddlstTipoRelacion.
+    '''Control lkBtn_Hidden_precision.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents ddlstTipoRelacion As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents lkBtn_Hidden_precision As Global.System.Web.UI.WebControls.LinkButton
 
     '''<summary>
-    '''Control Label7.
+    '''Control lkBtn_Precision_ModalPopupExtender.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents Label7 As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents lkBtn_Precision_ModalPopupExtender As Global.AjaxControlToolkit.ModalPopupExtender
 
     '''<summary>
-    '''Control txtObservaciones.
+    '''Control Datos_GridView.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents txtObservaciones As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents Datos_GridView As Global.System.Web.UI.UpdatePanel
 
     '''<summary>
-    '''Control Label9.
+    '''Control gvAsignarPrecision.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents Label9 As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''Control txtFechaFirma.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents txtFechaFirma As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''Control txtFechaFirma_CalendarExtender.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents txtFechaFirma_CalendarExtender As Global.AjaxControlToolkit.CalendarExtender
-
-    '''<summary>
-    '''Control Label10.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents Label10 As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''Control txtFechaRatifica.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents txtFechaRatifica As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''Control txtFechaRatifica_CalendarExtender.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents txtFechaRatifica_CalendarExtender As Global.AjaxControlToolkit.CalendarExtender
-
-    '''<summary>
-    '''Control Label11.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents Label11 As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''Control txtFechaVigencia.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents txtFechaVigencia As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''Control txtFechaVigencia_CalendarExtender.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents txtFechaVigencia_CalendarExtender As Global.AjaxControlToolkit.CalendarExtender
-
-    '''<summary>
-    '''Control btn_Guardar.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents btn_Guardar As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents gvAsignarPrecision As Global.System.Web.UI.WebControls.GridView
 
     '''<summary>
     '''Control btn_Salir.
@@ -329,191 +248,227 @@ Partial Public Class frmTratadosyAcuerdos
     Protected WithEvents btn_Salir As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''Control pnl_Calcula_Dai.
+    '''Control pnlPrecision.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents pnl_Calcula_Dai As Global.System.Web.UI.WebControls.Panel
+    Protected WithEvents pnlPrecision As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
-    '''Control lbl_nombre.
+    '''Control Label3.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents lbl_nombre As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents Label3 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''Control txt_nombre.
+    '''Control txt_version_enmienda_pnl.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents txt_nombre As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents txt_version_enmienda_pnl As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''Control lbl_tipo.
+    '''Control Label4.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents lbl_tipo As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents Label4 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''Control txt_tipo.
+    '''Control txt_periodo_año_inicial_pnl.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents txt_tipo As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents txt_periodo_año_inicial_pnl As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''Control lbl_cantidad_incisos_calcular.
+    '''Control Label5.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents lbl_cantidad_incisos_calcular As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents Label5 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''Control txt_cantidad_incisos_calcular.
+    '''Control txt_periodo_año_final_pnl.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents txt_cantidad_incisos_calcular As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents txt_periodo_año_final_pnl As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''Control lbl_sigla.
+    '''Control Label1.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents lbl_sigla As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents Label1 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''Control txt_sigla.
+    '''Control txt_nombre_instrumento_pnl.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents txt_sigla As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents txt_nombre_instrumento_pnl As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''Control lbl_Inicio_Vigencia.
+    '''Control lbl_inciso_actual.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents lbl_Inicio_Vigencia As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents lbl_inciso_actual As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''Control txt_inicio_vigencia.
+    '''Control txt_inciso_actual_pnl.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents txt_inicio_vigencia As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents txt_inciso_actual_pnl As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''Control cal_inicio_vigencia.
+    '''Control lbl_dai_actual.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents cal_inicio_vigencia As Global.AjaxControlToolkit.CalendarExtender
+    Protected WithEvents lbl_dai_actual As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''Control lbl_cantidad_cortes_ejecutados.
+    '''Control txt_dai_actual_pnl.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents lbl_cantidad_cortes_ejecutados As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents txt_dai_actual_pnl As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''Control txt_cantidad_cortes_ejecutados.
+    '''Control lbl_descripcion_inciso.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents txt_cantidad_cortes_ejecutados As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents lbl_descripcion_inciso As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''Control lbl_ultimo_corte_ejecutado.
+    '''Control txt_descripcion_inciso_pnl.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents lbl_ultimo_corte_ejecutado As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents txt_descripcion_inciso_pnl As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''Control txt_ultimo_corte_ejecutado.
+    '''Control lbl_categoria_asignar.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents txt_ultimo_corte_ejecutado As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents lbl_categoria_asignar As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''Control lbl_corte_ejecutar.
+    '''Control ddl_categoria_asignar_pnl.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents lbl_corte_ejecutar As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents ddl_categoria_asignar_pnl As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
-    '''Control txt_corte_ejecutar.
+    '''Control lbl_codigo_precision.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents txt_corte_ejecutar As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents lbl_codigo_precision As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''Control btn_Calcular.
+    '''Control txt_codigo_precision_pnl.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents btn_Calcular As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents txt_codigo_precision_pnl As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''Control btn_Cancelar.
+    '''Control lbl_precision.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents btn_Cancelar As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents lbl_precision As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''Control hfIdInstrumento.
+    '''Control txt_precision_pnl.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents hfIdInstrumento As Global.System.Web.UI.WebControls.HiddenField
+    Protected WithEvents txt_precision_pnl As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Control lbl_observaciones.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents lbl_observaciones As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''Control txt_observaciones_pnl.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents txt_observaciones_pnl As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Control btnGuardar.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents btnGuardar As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''Control btnSalir.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents btnSalir As Global.System.Web.UI.WebControls.Button
 End Class

@@ -23,7 +23,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-        <%-- Panel principal --%>
+    <%-- Panel principal --%>
     <div class="panel panel-primary">
         <div class="panel-heading"> Configurar Correlaciones </div>
 
@@ -68,6 +68,7 @@
 
             </div>
 
+            <%-- Area de datos generales del nuevo SAC --%>
             <h5>
                 <span class="label label-success"> Datos Generales del Nuevo SAC </span>
             </h5>
@@ -160,15 +161,13 @@
                 </ContentTemplate>
             </asp:UpdatePanel>
 
-
-
-
-            <%-- Grid para asignar categoria --%>
+            <%-- Area del Grid para correlacion del SAC --%>
             <h5>
                 <span class="label label-primary">Correlación de Incisos
                 </span>
             </h5>
 
+            <%-- Botones de Suprecion y Apertura --%>
             <div class="form-group">
                 <div class="btn-group pull-right">
 
@@ -182,7 +181,7 @@
                 Apertura
                     </asp:LinkButton>
 
-                    <asp:LinkButton id="lkBtn_Hidden_Nuevo" Style="display:hidden" runat="server">
+                    <asp:LinkButton ID="lkBtn_Hidden_Nuevo" Style="display: hidden" runat="server">
                     </asp:LinkButton>
 
                 </div>
@@ -195,6 +194,7 @@
 
             </div>
 
+            <%-- Grid de correlacion del SAC --%>
             <div class="table-responsive">
                 <asp:UpdatePanel ID="Datos_GridView" runat="server">
                     <ContentTemplate>
