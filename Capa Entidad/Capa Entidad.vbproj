@@ -65,6 +65,7 @@
     <Compile Include="CECategoriaDesgravacion.vb" />
     <Compile Include="CECorteDesgravacion.vb" />
     <Compile Include="CEEnmiendas.vb" />
+    <Compile Include="CEIncisoAsociaCategoria.vb" />
     <Compile Include="CeInstrumentoPais.vb" />
     <Compile Include="CeInstrumentoPaisMant.vb" />
     <Compile Include="CEInstrumentosMant.vb" />

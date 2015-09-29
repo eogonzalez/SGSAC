@@ -93,6 +93,10 @@ Public Class frmCorrelacionSAC
 
     End Sub
 
+    Protected Sub btnSalir_Click(sender As Object, e As EventArgs) Handles btnSalir.Click
+        LlenarCorrelacionMant()
+    End Sub
+
 #End Region
 
 #Region "Obtener valores de panel de apertura"
@@ -413,4 +417,5 @@ Public Class frmCorrelacionSAC
 
 #End Region
 
+    
 End Class

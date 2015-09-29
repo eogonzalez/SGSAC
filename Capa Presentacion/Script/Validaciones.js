@@ -99,6 +99,7 @@ function inicio() {
     //}
 
     //Aplicar validacion asigna categoria
+    //Aplicar validacion asigna precision
     $("#ContentPlaceHolder1_txt_codigo_arancel").keyup(validarAsigna);
     $("#ContentPlaceHolder1_txt_codigo_arancel").focus(validarAsigna);
 
@@ -107,6 +108,18 @@ function inicio() {
         validarAsigna();
     }
     
+    //Aplicar validacion asigna precision
+    $("#ContentPlaceHolder1_txt_codigo_precision_pnl").keyup(validarAsignaPrecision);
+    $("#ContentPlaceHolder1_txt_codigo_precision_pnl").focus(validarAsignaPrecision);
+
+    $("#ContentPlaceHolder1_txt_precision_pnl").keyup(validarAsignaPrecision);
+    $("#ContentPlaceHolder1_txt_precision_pnl").focus(validarAsignaPrecision);
+
+    var contenidoAsigPrecision = $("#ContentPlaceHolder1_txt_codigo_precision_pnl").val();
+    if (contenidoAsigPrecision != null) {
+        validarAsignaPrecision();
+    }
+
     //$("#ContentPlaceHolder1_btn_seleccionar").click(function () {
     //    $("#ContentPlaceHolder1_btn_asigna_categoria").attr("Class", "btn btn-primary");
     //});
@@ -508,6 +521,51 @@ function validarAsigna() {
         $("#ContentPlaceHolder1_txt_codigo_arancel").parent().children("span").text("").hide();
         $("#ContentPlaceHolder1_txt_codigo_arancel").parent().append("<span id='iconotextocodigo' class='glyphicon glyphicon-ok form-control-feedback'>");
         $("#ContentPlaceHolder1_btn_seleccionar").attr("Class", "btn btn-primary");
+    }
+}
+
+function validarAsignaPrecision() {
+    var codigo = document.getElementById("ContentPlaceHolder1_txt_codigo_precision_pnl").value;
+    var texto = document.getElementById("ContentPlaceHolder1_txt_precision_pnl").value;
+
+    if (codigo == null || codigo.length == 0 || /^\s+$/.test(codigo)) {
+        //Si esta vacio el campo
+        $("#iconotextocodigo").remove();
+        $("#ContentPlaceHolder1_txt_codigo_precision_pnl").parent().parent().attr("class", "has-error has-feedback");
+        $("#ContentPlaceHolder1_txt_codigo_precision_pnl").parent().children("span").text("El campo no puede quedar vacio.").show();
+        $("#ContentPlaceHolder1_txt_codigo_precision_pnl").parent().append("<span id='iconotextocodigo' class='glyphicon glyphicon-remove form-control-feedback'>");
+        $("#ContentPlaceHolder1_btnGuardar").attr("Class", "btn btn-primary disabled");
+        $("#ContentPlaceHolder1_btnGuardar").prop("disabled", true);
+        return false;
+    }
+    else {
+        //Si no esta vacio
+        $("#iconotextocodigo").remove();
+        $("#ContentPlaceHolder1_btnGuardar").removeProp("disabled");
+        $("#ContentPlaceHolder1_txt_codigo_precision_pnl").parent().parent().attr("class", "has-success has-feedback");
+        $("#ContentPlaceHolder1_txt_codigo_precision_pnl").parent().children("span").text("").hide();
+        $("#ContentPlaceHolder1_txt_codigo_precision_pnl").parent().append("<span id='iconotextocodigo' class='glyphicon glyphicon-ok form-control-feedback'>");
+        $("#ContentPlaceHolder1_btnGuardar").attr("Class", "btn btn-primary");
+    }
+
+    if (texto == null || texto.length == 0 || /^\s+$/.test(texto)) {
+        //Si esta vacio el campo
+        $("#iconotexto").remove();
+        $("#ContentPlaceHolder1_txt_precision_pnl").parent().parent().attr("class", "form-group has-error has-feedback");
+        $("#ContentPlaceHolder1_txt_precision_pnl").parent().children("span").text("El campo no puede quedar vacio.").show();
+        $("#ContentPlaceHolder1_txt_precision_pnl").parent().append("<span id='iconotexto' class='glyphicon glyphicon-remove form-control-feedback'>");
+        $("#ContentPlaceHolder1_btnGuardar").attr("Class", "btn btn-primary disabled");
+        $("#ContentPlaceHolder1_btnGuardar").prop("disabled", true);
+        return false;
+    }
+    else {
+        //Si no esta vacio
+        $("#iconotexto").remove();
+        $("#ContentPlaceHolder1_btnGuardar").removeProp("disabled");
+        $("#ContentPlaceHolder1_txt_precision_pnl").parent().parent().attr("class", "form-group has-success has-feedback");
+        $("#ContentPlaceHolder1_txt_precision_pnl").parent().children("span").text("").hide();
+        $("#ContentPlaceHolder1_txt_precision_pnl").parent().append("<span id='iconotexto' class='glyphicon glyphicon-ok form-control-feedback'>");
+        $("#ContentPlaceHolder1_btnGuardar").attr("Class", "btn btn-primary");
     }
 }
 

@@ -127,13 +127,9 @@
             <%-- Boton para agregar precision --%>
             <div class="form-group">
                 <div class="btn-group pull-right">
-                    <asp:LinkButton ID="lkBtn_precision" runat="server" CssClass="btn btn-primary">
-                        <i aria-hidden="true" class="glyphicon glyphicon-pencil"></i>
-                        Agregar Precisión
-                    </asp:LinkButton>
+                    <asp:LinkButton ID="lkBtn_precision" runat="server" CssClass="btn btn-primary"> <i aria-hidden="true" class="glyphicon glyphicon-pencil"></i>Agregar Precisión </asp:LinkButton>
 
-                    <asp:LinkButton ID="lkBtn_Hidden_precision" Style="display: hidden" runat="server">
-                    </asp:LinkButton>
+                    <asp:LinkButton ID="lkBtn_Hidden_precision" Style="display: hidden" runat="server"> </asp:LinkButton>
 
                     <cc1:ModalPopupExtender ID="lkBtn_Precision_ModalPopupExtender"
                         BackgroundCssClass="modalBackground" BehaviorID="lkBtn_Precision_ModalPopupExtender"
@@ -267,9 +263,12 @@
                         <asp:DropDownList ID="ddl_categoria_asignar_pnl" CssClass="form-control" runat="server"></asp:DropDownList>
                     </div>
 
-                    <asp:Label ID="lbl_codigo_precision" CssClass="control-label col-xs-2" Text="Código Precisión:" runat="server"></asp:Label>
-                    <div class="col-xs-3">
-                        <asp:TextBox ID="txt_codigo_precision_pnl" CssClass="form-control" runat="server"></asp:TextBox>
+                    <div>
+                        <asp:Label ID="lbl_codigo_precision" CssClass="control-label col-xs-2" Text="Código Precisión:" runat="server"></asp:Label>
+                        <div class="col-xs-3">
+                            <asp:TextBox ID="txt_codigo_precision_pnl" CssClass="form-control" runat="server"></asp:TextBox>
+                            <span class="help-block"></span>
+                        </div>
                     </div>
 
                 </div>
@@ -278,20 +277,21 @@
                     <asp:Label ID="lbl_precision" CssClass="control-label col-xs-2" Text="Texto Precisión:" runat="server"></asp:Label>
                     <div class="col-xs-10">
                         <asp:TextBox ID="txt_precision_pnl" CssClass="form-control" runat="server"></asp:TextBox>
+                        <span class="help-block"></span>
                     </div>
                 </div>
 
-                <div class="form-group">
+<%--                <div class="form-group">
                     <asp:Label ID="lbl_observaciones" CssClass="control-label col-xs-2" Text="Observaciones:" runat="server"></asp:Label>
                     <div class="col-xs-10">
                         <asp:TextBox ID="txt_observaciones_pnl" CssClass="form-control" TextMode="MultiLine" runat="server"></asp:TextBox>
                     </div>
-                </div>
+                </div>--%>
 
             </div>
             
             <div class="panel-footer">
-                <asp:Button ID="btnGuardar" CssClass="btn btn-primary" runat="server" Text="Guardar" />
+                <asp:Button ID="btnGuardar" CssClass="btn btn-primary" runat="server" Text="Guardar" disabled="true"/>
                 <asp:Button ID="btnSalir" CssClass="btn btn-default" runat="server" Text="Salir" />
             </div>
 

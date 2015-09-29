@@ -203,8 +203,8 @@ Public Class CNInstrumentosComerciales
 #Region "Funciones y procedimientos para el Mantenimiento de Asignacion Categorias"
 
     'Funcion para Insertar las Asociaciones de categoria
-    Public Function InsertAsignaCategoria(ByVal id_instrumento As Integer, ByVal id_categoria As Integer, ByVal dt_asocia As DataTable) As Boolean
-        Return objCDInstrumentos.InsertAsignaCategoria(id_instrumento, id_categoria, dt_asocia)
+    Public Function InsertAsignaCategoria(ByVal objCEAsigna As CEIncisoAsociaCategoria) As Boolean
+        Return objCDInstrumentos.InsertAsignaCategoria(objCEAsigna)
     End Function
 
     'Funcion para obtener los datos para los codigos seleccionados
@@ -321,6 +321,16 @@ Public Class CNInstrumentosComerciales
 #End Region
 
 #Region "Funciones y procedimientos para el Mantenimiento de Asignacion de Precision"
+
+    'Funcion que almacena precision 
+    Public Function InsertPrecision(ByVal objCEPrecision As CEIncisoAsociaCategoria) As Boolean
+        Return objCDInstrumentos.InsertPrecision(objCEPrecision)
+    End Function
+
+    'Funcion que devuelve datos del inciso precision
+    Public Function SelectIncisoPrecision(ByVal id_instrumento As Integer, ByVal codigo_inciso As String) As DataTable
+        Return objCDInstrumentos.SelectIncisoPrecision(id_instrumento, codigo_inciso)
+    End Function
 
     'Funcion para obtener los datos del Mantenimiento de Asigna Precision
     Public Function SelectDatosAsignaPrecisionMant(ByVal id_instrumento As Integer) As DataSet

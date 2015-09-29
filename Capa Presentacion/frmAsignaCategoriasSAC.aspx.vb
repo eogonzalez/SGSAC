@@ -153,16 +153,26 @@ Public Class frmAsignaCategoriasSAC
     End Sub
 
     Protected Sub btn_asigna_categoria_Click(sender As Object, e As EventArgs) Handles btn_asigna_categoria.Click
-        Dim obj_asigna As New CNInstrumentosComerciales
+        Dim objCN_asigna As New CNInstrumentosComerciales
+        Dim objCEAsigna As New CEIncisoAsociaCategoria
+
         Dim tabla_incisos As DataTable
-        Dim categoria_id As Integer
-        Dim codigo_arancel As String
         Dim id_instrumento As Integer
 
-        tabla_incisos = Session("tabla_incisos")
-        id_instrumento = Session("id_instrumento")
+        Dim categoria_id As Integer
+        Dim codigo_arancel As String
 
-        If obj_asigna.InsertAsignaCategoria(id_instrumento, getIdCategoria, tabla_incisos) Then
+
+        tabla_incisos = Session("tabla_incisos")
+        objCEAsigna.lista_incisos = tabla_incisos
+
+        id_instrumento = Session("id_instrumento")
+        objCEAsigna.id_instrumento = id_instrumento
+
+        objCEAsigna.id_categoria = getIdCategoria()
+
+
+        If objCN_asigna.InsertAsignaCategoria(objCEAsigna) Then
 
             Mensaje("Se asigno categoria con exito.")
 

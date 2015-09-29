@@ -1,4 +1,5 @@
 ﻿Imports Reglas_del_negocio
+Imports Capa_Entidad
 
 Public Class frmAsignaPrecisionTLC
     Inherits System.Web.UI.Page
@@ -36,6 +37,8 @@ Public Class frmAsignaPrecisionTLC
         Dim id_instrumento As Integer
 
         codigo_inciso = getCodigoIncisoGridView()
+        Session.Add("codigo_inciso", codigo_inciso)
+
         id_instrumento = Session("id_instrumento")
 
         If codigo_inciso = Nothing Then
@@ -50,6 +53,38 @@ Public Class frmAsignaPrecisionTLC
             End If
         End If
 
+    End Sub
+
+    Protected Sub gvAsignarPrecision_PageIndexChanging(ByVal sender As Object, ByVal e As System.Web.UI.WebControls.GridViewPageEventArgs) Handles gvAsignarPrecision.PageIndexChanging
+        gvAsignarPrecision.PageIndex = e.NewPageIndex
+        Dim tabla_incisos As DataTable
+        tabla_incisos = Session("tabla_incisos")
+
+        With gvAsignarPrecision
+            .DataSource = tabla_incisos
+            .DataBind()
+        End With
+
+    End Sub
+
+    Protected Sub btnSalir_Click(sender As Object, e As EventArgs) Handles btnSalir.Click
+        LlenarPrecisionMant(Session("id_instrumento"))
+    End Sub
+
+    Protected Sub btnGuardar_Click(sender As Object, e As EventArgs) Handles btnGuardar.Click
+        If GuardarPrecision() Then
+            Mensaje("Precision agregada con éxito.")
+            LlenarPrecisionMant(Session("id_instrumento"))
+            LlenarSeleccionCodigoInciso(Session("id_instrumento"), txt_codigo_arancel.Text)
+            LimpiarPrecisionMant()
+        Else
+            Mensaje("Error al agregar precision.")
+            lkBtn_Precision_ModalPopupExtender.Show()
+        End If
+    End Sub
+
+    Protected Sub btn_Salir_Click(sender As Object, e As EventArgs) Handles btn_Salir.Click
+        Response.Redirect("~/frmTratadosyAcuerdos.aspx")
     End Sub
 
 #End Region
@@ -67,6 +102,21 @@ Public Class frmAsignaPrecisionTLC
         Next
 
         Return codigo_inciso
+    End Function
+
+    Function getIdCategoria() As Integer
+        Dim id_categoria As Integer
+        id_categoria = ddl_categoria_asignar_pnl.SelectedValue
+
+        Return id_categoria
+    End Function
+
+    Function getCodigoPrecision() As String
+        Return txt_codigo_precision_pnl.Text
+    End Function
+
+    Function getTextoPrecision() As String
+        Return txt_precision_pnl.Text
     End Function
 
 #End Region
@@ -147,6 +197,7 @@ Public Class frmAsignaPrecisionTLC
         ScriptManager.RegisterClientScriptBlock(Me, GetType(Page), "alert", jv, False)
     End Sub
 
+    'Metodo que llena el panel de asignacion de precision
     Private Function LlenarEncabezadoPrecision(ByVal id_instrumento As Integer, ByVal codigo_inciso As String) As Boolean
         Dim estado As Boolean = False
 
@@ -185,10 +236,68 @@ Public Class frmAsignaPrecisionTLC
 
         End With
 
+        With objEncabezadoPrecision.SelectIncisoPrecision(id_instrumento, codigo_inciso)
+            Dim id_categoria As Integer = 0
+            Dim codigo_precision As String = Nothing
+            Dim texto_precision As String = Nothing
+
+            If Not .Rows.Count = 0 Then
+                txt_inciso_actual_pnl.Text = codigo_inciso
+                txt_dai_actual_pnl.Text = .Rows(0)("dai_base").ToString()
+                txt_descripcion_inciso_pnl.Text = .Rows(0)("texto_inciso").ToString()
+
+
+                If Not IsDBNull(.Rows(0)("id_categoria")) Then
+                    id_categoria = .Rows(0)("id_categoria")
+                    ddl_categoria_asignar_pnl.SelectedValue = id_categoria
+                End If
+
+
+                If Not IsDBNull(.Rows(0)("inciso_presicion")) Then
+                    codigo_inciso = .Rows(0)("inciso_presicion")
+                    txt_codigo_precision_pnl.Text = codigo_inciso
+                End If
+
+
+                If Not IsDBNull(.Rows(0)("texto_precision")) Then
+                    texto_precision = .Rows(0)("texto_precision")
+                    txt_precision_pnl.Text = texto_precision
+                End If
+
+            End If
+        End With
+
         Return estado
     End Function
+
+    'Funcion para almacenar la precision
+    Private Function GuardarPrecision() As Boolean
+        Dim objCNPrecision As New CNInstrumentosComerciales
+        Dim objCEPrecision As New CEIncisoAsociaCategoria
+
+        objCEPrecision.id_instrumento = Session("id_instrumento")
+        objCEPrecision.codigo_inciso = Session("codigo_inciso")
+        objCEPrecision.id_categoria = getIdCategoria()
+        objCEPrecision.codigo_precision = getCodigoPrecision()
+        objCEPrecision.texto_precision = getTextoPrecision()
+
+        Return objCNPrecision.InsertPrecision(objCEPrecision)
+    End Function
+
+    'Metodo que limpia panel de precision
+    Private Sub LimpiarPrecisionMant()       
+        txt_version_enmienda_pnl.Text = ""
+        txt_periodo_año_inicial_pnl.Text = ""
+        txt_periodo_año_final_pnl.Text = ""
+        txt_nombre_instrumento_pnl.Text = ""
+        txt_inciso_actual_pnl.Text = ""
+        txt_dai_actual_pnl.Text = ""
+        txt_descripcion_inciso_pnl.Text = ""
+        txt_codigo_precision_pnl.Text = ""
+        txt_precision_pnl.Text = ""
+        'txt_observaciones_pnl.Text = ""
+    End Sub
+
 #End Region
 
-
-    
 End Class

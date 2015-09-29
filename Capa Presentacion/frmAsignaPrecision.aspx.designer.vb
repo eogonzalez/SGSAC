@@ -437,24 +437,6 @@ Partial Public Class frmAsignaPrecisionTLC
     Protected WithEvents txt_precision_pnl As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''Control lbl_observaciones.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents lbl_observaciones As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''Control txt_observaciones_pnl.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents txt_observaciones_pnl As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
     '''Control btnGuardar.
     '''</summary>
     '''<remarks>
