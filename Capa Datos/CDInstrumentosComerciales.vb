@@ -1671,59 +1671,114 @@ Public Class CDInstrumentosComerciales
 #Region "Funciones para incisos-categoria"
 
     'Funcion que valida si el inciso a insertar ya existe
-    Public Function ValidaInciso(ByVal id_instrumento As Integer, ByVal codigo_inciso As String) As Boolean
+    Public Function ValidaInciso(ByVal id_instrumento As Integer, ByVal codigo_inciso As String, Optional inciso_presicion As String = Nothing) As Boolean
         Dim estado As Boolean = False
         Try
             Dim sql_query As String
 
-            sql_query = " SELECT " +
+            If inciso_presicion Is Nothing Then
+                sql_query = " SELECT " +
                 " VB.id_version, VB.anio_version  " +
                 " From " +
                 " SAC_Versiones_Bitacora VB " +
                 " WHERE " +
                 " VB.estado = 'A' "
 
-            Using conexion = objConeccion.Conectar
-                Dim command As SqlCommand = New SqlCommand(sql_query, conexion)
-                conexion.Open()
-                Dim valores As SqlDataReader = command.ExecuteReader()
+                Using conexion = objConeccion.Conectar
+                    Dim command As SqlCommand = New SqlCommand(sql_query, conexion)
+                    conexion.Open()
+                    Dim valores As SqlDataReader = command.ExecuteReader()
 
-                If valores.Read() Then
-                    Dim id_version As Integer = valores("id_version")
-                    Dim anio_version As Integer = valores("anio_version")
+                    If valores.Read() Then
+                        Dim id_version As Integer = valores("id_version")
+                        Dim anio_version As Integer = valores("anio_version")
 
-                    sql_query = " SELECT coalesce(count(codigo_inciso),0) " +
-                       " FROM " +
-                       " [SGSACDB].[dbo].[SAC_Asocia_Categoria] " +
-                       " WHERE " +
-                       " id_instrumento = @id_instrumento AND " +
-                       " id_version = @id_version AND " +
-                       " anio_version = @anio_version AND " +
-                       " codigo_inciso = @codigo_inciso "
+                        sql_query = " SELECT coalesce(count(codigo_inciso),0) " +
+                           " FROM " +
+                           " [SGSACDB].[dbo].[SAC_Asocia_Categoria] " +
+                           " WHERE " +
+                           " id_instrumento = @id_instrumento AND " +
+                           " id_version = @id_version AND " +
+                           " anio_version = @anio_version AND " +
+                           " codigo_inciso = @codigo_inciso AND " +
+                           " inciso_presicion IS NULL "
 
-                    Using cn = objConeccion.Conectar
-                        Dim command1 As SqlCommand = New SqlCommand(sql_query, cn)
-                        command1.Parameters.AddWithValue("id_instrumento", id_instrumento)
-                        command1.Parameters.AddWithValue("id_version", id_version)
-                        command1.Parameters.AddWithValue("anio_version", anio_version)
-                        command1.Parameters.AddWithValue("codigo_inciso", codigo_inciso)
+                        Using cn = objConeccion.Conectar
+                            Dim command1 As SqlCommand = New SqlCommand(sql_query, cn)
+                            command1.Parameters.AddWithValue("id_instrumento", id_instrumento)
+                            command1.Parameters.AddWithValue("id_version", id_version)
+                            command1.Parameters.AddWithValue("anio_version", anio_version)
+                            command1.Parameters.AddWithValue("codigo_inciso", codigo_inciso)
 
-                        cn.Open()
+                            cn.Open()
 
-                        If command1.ExecuteScalar() = 1 Then
-                            estado = True
-                        Else
-                            estado = False
-                        End If
+                            If command1.ExecuteScalar() = 1 Then
+                                estado = True
+                            Else
+                                estado = False
+                            End If
 
-                    End Using
+                        End Using
+                    Else
+                        estado = False
+                    End If
+
+                End Using
+            Else
+                sql_query = " SELECT " +
+                " VB.id_version, VB.anio_version  " +
+                " From " +
+                " SAC_Versiones_Bitacora VB " +
+                " WHERE " +
+                " VB.estado = 'A' "
+
+                Using conexion = objConeccion.Conectar
+                    Dim command As SqlCommand = New SqlCommand(sql_query, conexion)
+                    conexion.Open()
+                    Dim valores As SqlDataReader = command.ExecuteReader()
+
+                    If valores.Read() Then
 
 
-                Else
-                    estado = False
-                End If
+                        Dim id_version As Integer = valores("id_version")
+                        Dim anio_version As Integer = valores("anio_version")
 
-            End Using
+                        sql_query = " SELECT coalesce(count(codigo_inciso),0) " +
+                           " FROM " +
+                           " [SGSACDB].[dbo].[SAC_Asocia_Categoria] " +
+                           " WHERE " +
+                           " id_instrumento = @id_instrumento AND " +
+                           " id_version = @id_version AND " +
+                           " anio_version = @anio_version AND " +
+                           " codigo_inciso = @codigo_inciso AND " +
+                           " inciso_presicion = @inciso_presicion "
+
+                        Using cn = objConeccion.Conectar
+                            Dim command1 As SqlCommand = New SqlCommand(sql_query, cn)
+                            command1.Parameters.AddWithValue("id_instrumento", id_instrumento)
+                            command1.Parameters.AddWithValue("id_version", id_version)
+                            command1.Parameters.AddWithValue("anio_version", anio_version)
+                            command1.Parameters.AddWithValue("codigo_inciso", codigo_inciso)
+                            command1.Parameters.AddWithValue("inciso_presicion", inciso_presicion)
+
+                            cn.Open()
+
+                            If command1.ExecuteScalar() = 1 Then
+                                estado = True
+                            Else
+                                estado = False
+                            End If
+
+                        End Using
+
+                    Else
+                        estado = False
+                    End If
+
+                End Using
+            End If
+
+
 
         Catch ex As Exception
             estado = False
@@ -1855,7 +1910,8 @@ Public Class CDInstrumentosComerciales
                         " id_instrumento = @id_instrumento AND " +
                         " id_version = @id_version AND " +
                         " anio_version = @anio_version AND " +
-                        " codigo_inciso = @codigo_inciso "
+                        " codigo_inciso = @codigo_inciso AND " +
+                        " inciso_presicion IS NULL "
 
                         Using cn = objConeccion.Conectar
                             Dim command2 As SqlCommand = New SqlCommand(sql_query, cn)
@@ -1870,33 +1926,62 @@ Public Class CDInstrumentosComerciales
                             estado = True
                         End Using
                     Else
-                        'si no esta vacio codigo precision
-                        sql_query = " UPDATE " +
-                        " SAC_Asocia_Categoria " +
-                        " SET " +
-                        " id_categoria = @id_categoria, " +
-                        " inciso_presicion = @codigo_precision, " +
-                        " texto_precision = @texto_precision " +
-                        " WHERE " +
-                        " id_instrumento = @id_instrumento AND " +
-                        " id_version = @id_version AND " +
-                        " anio_version = @anio_version AND " +
-                        " codigo_inciso = @codigo_inciso "
+                        If Not texto_precision Is Nothing Then
+                            'si no esta vacio codigo precision
+                            sql_query = " UPDATE " +
+                            " SAC_Asocia_Categoria " +
+                            " SET " +
+                            " id_categoria = @id_categoria, " +
+                            " texto_precision = @texto_precision " +
+                            " WHERE " +
+                            " id_instrumento = @id_instrumento AND " +
+                            " id_version = @id_version AND " +
+                            " anio_version = @anio_version AND " +
+                            " inciso_presicion = @codigo_precision "
 
-                        Using cn = objConeccion.Conectar
-                            Dim command2 As SqlCommand = New SqlCommand(sql_query, cn)
-                            command2.Parameters.AddWithValue("id_categoria", id_categoria)
-                            command2.Parameters.AddWithValue("id_instrumento", id_instrumento)
-                            command2.Parameters.AddWithValue("id_version", id_version)
-                            command2.Parameters.AddWithValue("anio_version", anio_version)
-                            command2.Parameters.AddWithValue("codigo_inciso", codigo_inciso)
-                            command2.Parameters.AddWithValue("codigo_precision", codigo_precision)
-                            command2.Parameters.AddWithValue("texto_precision", texto_precision)
+                            Using cn = objConeccion.Conectar
+                                Dim command2 As SqlCommand = New SqlCommand(sql_query, cn)
+                                command2.Parameters.AddWithValue("id_categoria", id_categoria)
+                                command2.Parameters.AddWithValue("id_instrumento", id_instrumento)
+                                command2.Parameters.AddWithValue("id_version", id_version)
+                                command2.Parameters.AddWithValue("anio_version", anio_version)
+                                'command2.Parameters.AddWithValue("codigo_inciso", codigo_inciso)
+                                command2.Parameters.AddWithValue("codigo_precision", codigo_precision)
+                                command2.Parameters.AddWithValue("texto_precision", texto_precision)
 
-                            cn.Open()
-                            command2.ExecuteScalar()
-                            estado = True
-                        End Using
+                                cn.Open()
+                                command2.ExecuteScalar()
+                                estado = True
+                            End Using
+                        Else
+                            'si no esta vacio codigo precision
+                            sql_query = " UPDATE " +
+                            " SAC_Asocia_Categoria " +
+                            " SET " +
+                            " id_categoria = @id_categoria " +
+                            " WHERE " +
+                            " id_instrumento = @id_instrumento AND " +
+                            " id_version = @id_version AND " +
+                            " anio_version = @anio_version AND " +
+                            " inciso_presicion = @codigo_precision "
+
+                            Using cn = objConeccion.Conectar
+                                Dim command2 As SqlCommand = New SqlCommand(sql_query, cn)
+                                command2.Parameters.AddWithValue("id_categoria", id_categoria)
+                                command2.Parameters.AddWithValue("id_instrumento", id_instrumento)
+                                command2.Parameters.AddWithValue("id_version", id_version)
+                                command2.Parameters.AddWithValue("anio_version", anio_version)
+                                'command2.Parameters.AddWithValue("codigo_inciso", codigo_inciso)
+                                command2.Parameters.AddWithValue("codigo_precision", codigo_precision)
+                                'command2.Parameters.AddWithValue("texto_precision", texto_precision)
+
+                                cn.Open()
+                                command2.ExecuteScalar()
+                                estado = True
+                            End Using
+                        End If
+
+
                     End If
 
 
@@ -1928,20 +2013,54 @@ Public Class CDInstrumentosComerciales
             'recorro DataTable 
             For Each row As DataRow In dt_asocia.Rows
 
+
                 'Si fila esta seleccionada
                 If row("Selected") = True Then
 
                     'Obtengo Codigo Inciso
                     Dim codigo_inciso As String = row("codigo_inciso")
 
-                    'Se llama a la funcion valida inciso para verificar si inciso ya existe con otra categoria
-                    If ValidaInciso(id_instrumento, codigo_inciso) Then
-                        'Si existe inciso, actuliza categoria para inciso
-                        estado = UpdateInciso(id_instrumento, id_categoria, codigo_inciso)
+                    If IsDBNull(row("inciso_presicion")) Then
+
+                        'Se llama a la funcion valida inciso para verificar si inciso ya existe con otra categoria
+                        If ValidaInciso(id_instrumento, codigo_inciso) Then
+                            'Si existe inciso, actuliza categoria para inciso
+                            estado = UpdateInciso(id_instrumento, id_categoria, codigo_inciso)
+                        Else
+                            'Si no existe inciso, inserta
+                            estado = InsertInciso(id_instrumento, id_categoria, codigo_inciso)
+                        End If
+
                     Else
-                        'Si no existe inciso, inserta
-                        estado = InsertInciso(id_instrumento, id_categoria, codigo_inciso)
+                        Dim logitud As Integer = row("inciso_presicion").ToString.Length
+
+                        If (logitud = 0) Then
+
+                            'Se llama a la funcion valida inciso para verificar si inciso ya existe con otra categoria
+                            If ValidaInciso(id_instrumento, codigo_inciso) Then
+                                'Si existe inciso, actuliza categoria para inciso
+                                estado = UpdateInciso(id_instrumento, id_categoria, codigo_inciso)
+                            Else
+                                'Si no existe inciso, inserta
+                                estado = InsertInciso(id_instrumento, id_categoria, codigo_inciso)
+                            End If
+                        Else
+
+                            Dim inciso_presicion As String = row("inciso_presicion")
+
+                            'Se llama a la funcion valida inciso para verificar si inciso_presicion ya existe con otra categoria
+                            If ValidaInciso(id_instrumento, codigo_inciso, inciso_presicion) Then
+                                'Si existe inciso, actuliza categoria para inciso
+                                estado = UpdateInciso(id_instrumento, id_categoria, codigo_inciso, inciso_presicion)
+                            Else
+                                'Si no existe inciso, inserta
+                                estado = InsertInciso(id_instrumento, id_categoria, codigo_inciso, inciso_presicion)
+                            End If
+                        End If
+
                     End If
+
+                        
                 End If
 
             Next
@@ -2027,7 +2146,8 @@ Public Class CDInstrumentosComerciales
                 " ac.id_version = vb.id_version AND " +
                 " ac.anio_version = vb.anio_version AND " +
                 " vb.estado = 'A' AND " +
-                " ac.id_instrumento = @id_instrumento) SAC on " +
+                " ac.id_instrumento = @id_instrumento" +
+                " ) SAC on " +
                 " sac.id_version = ci.id_version And " +
                 " sac.anio_version = CI.anio_version And " +
                 " sac.codigo_inciso = ci.codigo_inciso " +
@@ -2848,16 +2968,17 @@ Public Class CDInstrumentosComerciales
         Dim id_categoria As Integer = objCEPrecision.id_categoria
         Dim codigo_precision As String = objCEPrecision.codigo_precision
         Dim texto_precision As String = objCEPrecision.texto_precision
+        Dim inciso_presicion As String = codigo_inciso + codigo_precision
 
         Try
 
             'Se llama a la funcion valida inciso para verificar si inciso ya existe con otra categoria
-            If ValidaInciso(id_instrumento, codigo_inciso) Then
+            If ValidaInciso(id_instrumento, codigo_inciso, inciso_presicion) Then
                 'Si existe inciso, actuliza categoria para inciso
-                estado = UpdateInciso(id_instrumento, id_categoria, codigo_inciso, codigo_precision, texto_precision)
+                estado = UpdateInciso(id_instrumento, id_categoria, codigo_inciso, inciso_presicion, texto_precision)
             Else
                 'Si no existe inciso, inserta
-                estado = InsertInciso(id_instrumento, id_categoria, codigo_inciso, codigo_precision, texto_precision)
+                estado = InsertInciso(id_instrumento, id_categoria, codigo_inciso, inciso_presicion, texto_precision)
             End If
 
         Catch ex As Exception
@@ -2869,11 +2990,42 @@ Public Class CDInstrumentosComerciales
     End Function
 
     'Funcion que devuelve datos del inciso precision
-    Public Function SelectIncisoPrecision(ByVal id_instrumento As Integer, ByVal codigo_inciso As String) As DataTable
+    Public Function SelectIncisoPrecision(ByVal id_instrumento As Integer, ByVal codigo_inciso As String, ByVal inciso_presicion As String) As DataTable
         Dim dt_inciso_precision As New DataTable
         Try
             Dim sql_query As String
-            sql_query = "  select " +
+
+            If inciso_presicion Is Nothing Then
+                sql_query = "  select " +
+                " cast(dai_base as numeric(8,2)) as dai_base, texto_inciso, " +
+                " SAC.id_categoria, sac.texto_precision, sac.inciso_presicion " +
+                " from " +
+                " SAC_Incisos SI " +
+                " Left Join " +
+                " (SELECT " +
+                " id_instrumento, id_categoria, codigo_inciso, texto_precision, inciso_presicion " +
+                " FROM " +
+                " SAC_Asocia_Categoria " +
+                " where " +
+                " id_instrumento = @id_instrumento AND " +
+                " inciso_presicion is NULL)	as SAC ON " +
+                " SAC.codigo_inciso = SI.codigo_inciso " +
+                " where " +
+                " estado = 'A' AND  " +
+                " SI.codigo_inciso = @codigo_inciso "
+
+
+                Using cn = objConeccion.Conectar
+                    Dim command As SqlCommand = New SqlCommand(sql_query, cn)
+                    command.Parameters.AddWithValue("id_instrumento", id_instrumento)
+                    command.Parameters.AddWithValue("codigo_inciso", codigo_inciso)
+
+                    da = New SqlDataAdapter(command)
+                    da.Fill(dt_inciso_precision)
+
+                End Using
+            Else
+                sql_query = "  select " +
                 " cast(dai_base as numeric(8,2)) as dai_base, texto_inciso, " +
                 " SAC.id_categoria, sac.texto_precision, sac.inciso_presicion " +
                 " from " +
@@ -2888,17 +3040,22 @@ Public Class CDInstrumentosComerciales
                 " SAC.codigo_inciso = SI.codigo_inciso " +
                 " where " +
                 " estado = 'A' AND  " +
-                " SI.codigo_inciso = @codigo_inciso  "
+                " SI.codigo_inciso = @codigo_inciso AND " +
+                " SAC.inciso_presicion = @inciso_presicion "
 
-            Using cn = objConeccion.Conectar
-                Dim command As SqlCommand = New SqlCommand(sql_query, cn)
-                command.Parameters.AddWithValue("id_instrumento", id_instrumento)
-                command.Parameters.AddWithValue("codigo_inciso", codigo_inciso)
+                Using cn = objConeccion.Conectar
+                    Dim command As SqlCommand = New SqlCommand(sql_query, cn)
+                    command.Parameters.AddWithValue("id_instrumento", id_instrumento)
+                    command.Parameters.AddWithValue("codigo_inciso", codigo_inciso)
+                    command.Parameters.AddWithValue("inciso_presicion", inciso_presicion)
 
-                da = New SqlDataAdapter(command)
-                da.Fill(dt_inciso_precision)
+                    da = New SqlDataAdapter(command)
+                    da.Fill(dt_inciso_precision)
 
-            End Using
+                End Using
+            End If
+
+            
 
         Catch ex As Exception
 

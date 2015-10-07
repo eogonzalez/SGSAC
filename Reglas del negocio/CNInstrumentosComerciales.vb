@@ -328,8 +328,8 @@ Public Class CNInstrumentosComerciales
     End Function
 
     'Funcion que devuelve datos del inciso precision
-    Public Function SelectIncisoPrecision(ByVal id_instrumento As Integer, ByVal codigo_inciso As String) As DataTable
-        Return objCDInstrumentos.SelectIncisoPrecision(id_instrumento, codigo_inciso)
+    Public Function SelectIncisoPrecision(ByVal id_instrumento As Integer, ByVal codigo_inciso As String, ByVal inciso_presicion As String) As DataTable
+        Return objCDInstrumentos.SelectIncisoPrecision(id_instrumento, codigo_inciso, inciso_presicion)
     End Function
 
     'Funcion para obtener los datos del Mantenimiento de Asigna Precision

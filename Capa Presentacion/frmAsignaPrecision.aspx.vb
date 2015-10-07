@@ -35,9 +35,12 @@ Public Class frmAsignaPrecisionTLC
     Protected Sub lkBtn_precision_Click(sender As Object, e As EventArgs) Handles lkBtn_precision.Click
         Dim codigo_inciso As String
         Dim id_instrumento As Integer
+        Dim inciso_presicion As String = Nothing
 
         codigo_inciso = getCodigoIncisoGridView()
         Session.Add("codigo_inciso", codigo_inciso)
+        inciso_presicion = getIncisoPresicionGridView()
+
 
         id_instrumento = Session("id_instrumento")
 
@@ -45,7 +48,8 @@ Public Class frmAsignaPrecisionTLC
             Mensaje("Seleccione un inciso para asignar precision.")
             LlenarPrecisionMant(id_instrumento)
         Else
-            If LlenarEncabezadoPrecision(id_instrumento, codigo_inciso) Then
+
+            If LlenarEncabezadoPrecision(id_instrumento, codigo_inciso, inciso_presicion) Then
                 lkBtn_Precision_ModalPopupExtender.Show()
                 'LlenarPrecisionMant(id_instrumento)
             Else
@@ -68,17 +72,19 @@ Public Class frmAsignaPrecisionTLC
     End Sub
 
     Protected Sub btnSalir_Click(sender As Object, e As EventArgs) Handles btnSalir.Click
+        LimpiarPrecisionMant()
+        LlenarSeleccionCodigoInciso(Session("id_instrumento"), Session("codigo_arancel"))
         LlenarPrecisionMant(Session("id_instrumento"))
     End Sub
 
     Protected Sub btnGuardar_Click(sender As Object, e As EventArgs) Handles btnGuardar.Click
         If GuardarPrecision() Then
-            Mensaje("Precision agregada con éxito.")
+            Mensaje("Precisión agregada con éxito.")
             LlenarPrecisionMant(Session("id_instrumento"))
             LlenarSeleccionCodigoInciso(Session("id_instrumento"), txt_codigo_arancel.Text)
             LimpiarPrecisionMant()
         Else
-            Mensaje("Error al agregar precision.")
+            Mensaje("Error al agregar precisión.")
             lkBtn_Precision_ModalPopupExtender.Show()
         End If
     End Sub
@@ -102,6 +108,23 @@ Public Class frmAsignaPrecisionTLC
         Next
 
         Return codigo_inciso
+    End Function
+
+    Function getIncisoPresicionGridView() As String
+        Dim inciso_presicion As String = Nothing
+
+        For i As Integer = 0 To gvAsignarPrecision.Rows.Count - 1
+            Dim rbutton As RadioButton = gvAsignarPrecision.Rows(i).FindControl("rb_inciso")
+            If rbutton.Checked Then
+
+                If Not gvAsignarPrecision.Rows(i).Cells(5).Text = "&nbsp;" Then
+                    inciso_presicion = gvAsignarPrecision.Rows(i).Cells(5).Text
+                End If
+                Exit For
+            End If
+        Next
+
+        Return inciso_presicion
     End Function
 
     Function getIdCategoria() As Integer
@@ -198,7 +221,7 @@ Public Class frmAsignaPrecisionTLC
     End Sub
 
     'Metodo que llena el panel de asignacion de precision
-    Private Function LlenarEncabezadoPrecision(ByVal id_instrumento As Integer, ByVal codigo_inciso As String) As Boolean
+    Private Function LlenarEncabezadoPrecision(ByVal id_instrumento As Integer, ByVal codigo_inciso As String, ByVal inciso_presicion As String) As Boolean
         Dim estado As Boolean = False
 
         Dim objEncabezadoPrecision As New CNInstrumentosComerciales
@@ -236,7 +259,7 @@ Public Class frmAsignaPrecisionTLC
 
         End With
 
-        With objEncabezadoPrecision.SelectIncisoPrecision(id_instrumento, codigo_inciso)
+        With objEncabezadoPrecision.SelectIncisoPrecision(id_instrumento, codigo_inciso, inciso_presicion)
             Dim id_categoria As Integer = 0
             Dim codigo_precision As String = Nothing
             Dim texto_precision As String = Nothing
@@ -255,7 +278,8 @@ Public Class frmAsignaPrecisionTLC
 
                 If Not IsDBNull(.Rows(0)("inciso_presicion")) Then
                     codigo_inciso = .Rows(0)("inciso_presicion")
-                    txt_codigo_precision_pnl.Text = codigo_inciso
+                    txt_codigo_precision_pnl.Text = codigo_inciso.Substring(8)
+                    'txt_codigo_precision_pnl.Enabled = False
                 End If
 
 

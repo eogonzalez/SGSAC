@@ -127,7 +127,7 @@
             <%-- Boton para agregar precision --%>
             <div class="form-group">
                 <div class="btn-group pull-right">
-                    <asp:LinkButton ID="lkBtn_precision" runat="server" CssClass="btn btn-primary"> <i aria-hidden="true" class="glyphicon glyphicon-pencil"></i>Agregar Precisión </asp:LinkButton>
+                    <asp:LinkButton ID="lkBtn_precision" runat="server" CssClass="btn btn-primary"> <i aria-hidden="true" class="glyphicon glyphicon-pencil"></i>Agregar/Editar Precisión </asp:LinkButton>
 
                     <asp:LinkButton ID="lkBtn_Hidden_precision" Style="display: hidden" runat="server"> </asp:LinkButton>
 
@@ -164,7 +164,7 @@
                                 <asp:BoundField DataField="texto_inciso" HeaderText="Descripcion Inciso Arancelario" />
                                 <asp:BoundField DataField="dai_base" HeaderText="DAI SAC(Base)" />
                                 <asp:BoundField DataField="codigo_categoria" HeaderText="Categoria" />
-                                <asp:BoundField DataField="inciso_presicion" HeaderText="Código Precision" />
+                                <asp:BoundField DataField="inciso_presicion" HeaderText="Inciso Precision" />
                                 <asp:BoundField DataField="texto_precision" HeaderText="Descripcion Precision" />
                             </Columns>
                         </asp:GridView>

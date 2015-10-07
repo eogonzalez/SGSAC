@@ -61,8 +61,13 @@ Public Class frmAsignaCategoriasSAC
 
                 Dim fila As GridViewRow = CType(check_inciso.NamingContainer, GridViewRow)
                 Dim codigo_inciso As String = ""
+                Dim inciso_presicion As String = ""
+
 
                 codigo_inciso = fila.Cells(1).Text
+                inciso_presicion = fila.Cells(5).Text.Replace("&nbsp;", "")
+                Dim longitud_inciso_presicion As Integer = inciso_presicion.Length
+
 
                 If Not check_inciso.Checked Then
                     check_inciso.Checked = True
@@ -71,9 +76,24 @@ Public Class frmAsignaCategoriasSAC
                     'Para chequear en tabla local
 
                     For Each enc As DataRow In tabla_incisos.Rows
-                        If enc("codigo_inciso") = codigo_inciso Then
-                            enc("selected") = 1
-                            Exit For
+                        'Recorro datatable en memoria
+                        If longitud_inciso_presicion = 0 Then
+                            'Si el inciso seleccionado no tiene presicion
+                            If IsDBNull(enc("inciso_presicion")) Then
+                                If enc("codigo_inciso") = codigo_inciso Then
+                                    enc("selected") = 1
+                                    Exit For
+                                End If
+                            End If
+                        Else
+                            'Si el inciso seleccionado tiene presicion
+                            If Not IsDBNull(enc("inciso_presicion")) Then
+                                If enc("codigo_inciso") = codigo_inciso And enc("inciso_presicion") = inciso_presicion Then
+                                    enc("selected") = 1
+                                    Exit For
+                                End If
+                            End If
+
                         End If
                     Next
 
@@ -85,25 +105,44 @@ Public Class frmAsignaCategoriasSAC
 
                 Dim fila As GridViewRow = CType(check_inciso.NamingContainer, GridViewRow)
                 Dim codigo_inciso As String = ""
+                Dim inciso_presicion As String = ""
 
                 codigo_inciso = fila.Cells(1).Text
+                inciso_presicion = fila.Cells(5).Text.Replace("&nbsp;", "")
+                Dim longitud_inciso_presicion As Integer = inciso_presicion.Length
 
                 If check_inciso.Checked Then
                     check_inciso.Checked = False
-
-                    'Recorro tabla incisos que almacena la seleccion local
                     'Para des chequear en tabla local
-                    For Each enc As DataRow In tabla_incisos.Rows
-                        If enc("codigo_inciso") = codigo_inciso Then
-                            enc("selected") = 0
-                            Exit For
-                        End If
-                    Next
 
+                    For Each enc As DataRow In tabla_incisos.Rows
+                        'Recorro tabla incisos que almacena la seleccion local
+
+                        If longitud_inciso_presicion = 0 Then
+                            'si inciso des seleccionado no tiene presicion
+                            If IsDBNull(enc("inciso_presicion")) Then
+                                If enc("codigo_inciso") = codigo_inciso Then
+                                    enc("selected") = 0
+                                    Exit For
+                                End If
+                            End If
+                        Else
+                            'Si inciso des seleccionado tiene presicion
+                            If Not IsDBNull(enc("inciso_presicion")) Then
+                                If enc("codigo_inciso") = codigo_inciso And enc("inciso_presicion") = inciso_presicion Then
+                                    enc("selected") = 0
+                                    Exit For
+                                End If
+                            End If
+                        End If
+
+                    Next
                 End If
+
             Next
         End If
 
+        Session("tabla_incisos") = tabla_incisos
 
     End Sub
 
@@ -112,25 +151,64 @@ Public Class frmAsignaCategoriasSAC
         Dim check As CheckBox = CType(sender, CheckBox)
         Dim fila As GridViewRow = CType(check.NamingContainer, GridViewRow)
         Dim CodigoInciso As String = ""
+        Dim inciso_presicion As String = ""
+
         Dim tabla_incisos As DataTable
         tabla_incisos = Session("tabla_incisos")
 
         CodigoInciso = fila.Cells(1).Text
+        inciso_presicion = fila.Cells(5).Text.Replace("&nbsp;", "")
+        Dim longitud_inciso_presicion As Integer = inciso_presicion.Length
 
         If check.Checked Then
-
+            'Si se chequea en el grid
             For Each enc As DataRow In tabla_incisos.Rows
-                If enc("codigo_inciso") = CodigoInciso Then
-                    enc("Selected") = 1
+                'Recorro datatable en memoria
+                If longitud_inciso_presicion = 0 Then
+                    'Si el inciso seleccionado no tiene presicion
+                    If IsDBNull(enc("inciso_presicion")) Then
+                        If enc("codigo_inciso") = CodigoInciso Then
+                            enc("Selected") = 1
+                            Exit For
+                        End If
+                    End If
+
+                Else
+                    'si el inciso seleccionado tiene presicion
+                    If Not IsDBNull(enc("inciso_presicion")) Then
+                        If enc("codigo_inciso") = CodigoInciso And enc("inciso_presicion") = inciso_presicion Then
+                            enc("Selected") = 1
+                            Exit For
+                        End If
+                    End If
                 End If
+
             Next
 
         Else
+            'Si se deschequea en el grid
 
             For Each enc As DataRow In tabla_incisos.Rows
-                If enc("codigo_inciso") = CodigoInciso Then
-                    enc("Selected") = 0
+
+                If longitud_inciso_presicion = 0 Then
+                    'Si el inciso seleccionado no tiene presicion
+                    If IsDBNull(enc("inciso_presicion")) Then
+                        If enc("codigo_inciso") = CodigoInciso Then
+                            enc("Selected") = 0
+                            Exit For
+                        End If
+                    End If
+
+                Else
+                    'Si el inciso seleccionado tiene presicion
+                    If Not IsDBNull(enc("inciso_presicion")) Then
+                        If enc("codigo_inciso") = CodigoInciso And enc("inciso_presicion") = inciso_presicion Then
+                            enc("Selected") = 0
+                            Exit For
+                        End If
+                    End If
                 End If
+
             Next
 
         End If
