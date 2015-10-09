@@ -322,6 +322,11 @@ Public Class CNInstrumentosComerciales
 
 #Region "Funciones y procedimientos para el Mantenimiento de Asignacion de Precision"
 
+    'Funcion que elimina la precision asociada al inciso
+    Public Function DeletePrecision(ByVal objCEIncisoAsocia As CEIncisoAsociaCategoria) As Boolean
+        Return objCDInstrumentos.DeletePrecision(objCEIncisoAsocia)
+    End Function
+
     'Funcion que almacena precision 
     Public Function InsertPrecision(ByVal objCEPrecision As CEIncisoAsociaCategoria) As Boolean
         Return objCDInstrumentos.InsertPrecision(objCEPrecision)

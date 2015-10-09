@@ -194,6 +194,15 @@ Partial Public Class frmAsignaPrecisionTLC
     Protected WithEvents txt_descripcion_sub_partida As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''Control lkBtn_Agregar_Precision.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents lkBtn_Agregar_Precision As Global.System.Web.UI.WebControls.LinkButton
+
+    '''<summary>
     '''Control lkBtn_precision.
     '''</summary>
     '''<remarks>
@@ -219,6 +228,15 @@ Partial Public Class frmAsignaPrecisionTLC
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
     Protected WithEvents lkBtn_Precision_ModalPopupExtender As Global.AjaxControlToolkit.ModalPopupExtender
+
+    '''<summary>
+    '''Control lkBtn_Eliminar_Precision.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents lkBtn_Eliminar_Precision As Global.System.Web.UI.WebControls.LinkButton
 
     '''<summary>
     '''Control Datos_GridView.

@@ -127,7 +127,9 @@
             <%-- Boton para agregar precision --%>
             <div class="form-group">
                 <div class="btn-group pull-right">
-                    <asp:LinkButton ID="lkBtn_precision" runat="server" CssClass="btn btn-primary"> <i aria-hidden="true" class="glyphicon glyphicon-pencil"></i>Agregar/Editar Precisión </asp:LinkButton>
+                    <asp:LinkButton ID="lkBtn_Agregar_Precision" runat="server" CssClass="btn btn-primary"> <i aria-hidden="true" class="glyphicon glyphicon-ok"></i>Agregar Precisión </asp:LinkButton>
+
+                    <asp:LinkButton ID="lkBtn_precision" runat="server" CssClass="btn btn-primary"> <i aria-hidden="true" class="glyphicon glyphicon-pencil"></i>Editar Precisión </asp:LinkButton>
 
                     <asp:LinkButton ID="lkBtn_Hidden_precision" Style="display: hidden" runat="server"> </asp:LinkButton>
 
@@ -136,6 +138,9 @@
                         PopupControlID="pnlPrecision" DynamicServicePath="" TargetControlID="lkBtn_Hidden_precision"
                         runat="server">
                     </cc1:ModalPopupExtender>
+
+                    
+                    <asp:LinkButton ID="lkBtn_Eliminar_Precision" runat="server" CssClass="btn btn-primary"> <i aria-hidden="true" class="glyphicon glyphicon-remove"></i>Eliminar Precisión </asp:LinkButton>
 
                 </div>
             </div>

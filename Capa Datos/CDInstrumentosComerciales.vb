@@ -114,6 +114,7 @@ Public Class CDInstrumentosComerciales
                                 " IC_Instrumentos AS C ON " +
                                 " A.id_instrumento = C.id_instrumento " +
                                 " WHERE " +
+                                " A.id_instrumento = @id_instrumento And " +
                                 " I.estado = 'A' AND " +
                                 " B.activo = 'S' AND " +
                                 " B.cortes_ejecutados <= @id_corte_nuevo And " +
@@ -971,7 +972,7 @@ Public Class CDInstrumentosComerciales
                             " icd.id_categoria = icdt.id_categoria And " +
                             " icd.id_instrumento = icdt.id_instrumento " +
                             " where icdt.id_instrumento = @id_instrumento " +
-                            " ORDER BY icd.codigo_categoria "
+                            " ORDER BY icd.codigo_categoria, icdt.id_tramo "
 
                         Using cn2 = objConeccion.Conectar
                             Dim command2 As SqlCommand = New SqlCommand(sql_query, cn2)
@@ -998,7 +999,8 @@ Public Class CDInstrumentosComerciales
                                         " cortes_ejecutados = @cuenta " +
                                         " WHERE " +
                                         " id_instrumento = @id_instrumento AND " +
-                                        " id_categoria = @id_categoria "
+                                        " id_categoria = @id_categoria AND " +
+                                        " id_tramo = @id_tramo "
 
                                     contador = contador + cantidad_cortes
 
@@ -1007,6 +1009,7 @@ Public Class CDInstrumentosComerciales
                                         command3.Parameters.AddWithValue("id_instrumento", id_instrumento)
                                         command3.Parameters.AddWithValue("cuenta", contador)
                                         command3.Parameters.AddWithValue("id_categoria", id_categoria)
+                                        command3.Parameters.AddWithValue("id_tramo", id_tramo)
 
                                         cn3.Open()
                                         command3.ExecuteScalar()
@@ -1023,7 +1026,8 @@ Public Class CDInstrumentosComerciales
                                         " cortes_ejecutados = @cuenta " +
                                         " WHERE " +
                                         " id_instrumento = @id_instrumento AND " +
-                                        " id_categoria = @id_categoria "
+                                        " id_categoria = @id_categoria AND " +
+                                        " id_tramo = @id_tramo "
 
                                     contador = contador + cantidad_cortes
 
@@ -1032,6 +1036,7 @@ Public Class CDInstrumentosComerciales
                                         command3.Parameters.AddWithValue("id_instrumento", id_instrumento)
                                         command3.Parameters.AddWithValue("cuenta", contador)
                                         command3.Parameters.AddWithValue("id_categoria", id_categoria)
+                                        command3.Parameters.AddWithValue("id_tramo", id_tramo)
 
                                         cn3.Open()
                                         command3.ExecuteScalar()
@@ -1065,7 +1070,7 @@ Public Class CDInstrumentosComerciales
                                 " ,@id_instrumento " +
                                 " ,@cantidad_categoria " +
                                 " ,SYSDATETIME()" +
-                                " ,'A')"
+                                " ,'A') "
 
                             Using cn3 = objConeccion.Conectar
                                 Dim command3 As SqlCommand = New SqlCommand(sql_query, cn3)
@@ -2960,6 +2965,74 @@ Public Class CDInstrumentosComerciales
 
 #Region "Funciones y procedimientos para el Mantenimiento de Asignacion de Precision"
 
+    'Funcion que elimina la precision asociada al inciso
+    Public Function DeletePrecision(ByVal objCEIncisoAsocia As CEIncisoAsociaCategoria) As Boolean
+        Dim estado As Boolean = False
+
+        Try
+            Dim sql_query As String
+
+            sql_query = " SELECT " +
+                " VB.id_version, VB.anio_version  " +
+                " From " +
+                " SAC_Versiones_Bitacora VB " +
+                " WHERE " +
+                " VB.estado = 'A' "
+
+            Using conexion = objConeccion.Conectar
+                Dim command As SqlCommand = New SqlCommand(sql_query, conexion)
+                conexion.Open()
+                Dim valores As SqlDataReader = command.ExecuteReader()
+
+                If valores.Read() Then
+                    Dim id_version As Integer = valores("id_version")
+                    Dim anio_version As Integer = valores("anio_version")
+
+                    'Query elimina detalle
+                    sql_query = " DELETE " +
+                        " SAC_Asocia_Categoria " +
+                        " WHERE " +
+                        " id_instrumento = @id_instrumento AND " +
+                        " id_version = @id_version AND" +
+                        " anio_version =  @anio_version AND " +
+                        " codigo_inciso = @codigo_inciso AND " +
+                        " inciso_presicion = @inciso_presicion "
+
+                    Using cn = objConeccion.Conectar
+                        Dim command1 As New SqlCommand(sql_query, cn)
+                        command1.Parameters.AddWithValue("id_instrumento", objCEIncisoAsocia.id_instrumento)
+                        'command1.Parameters.AddWithValue("id_categoria", objCEIncisoAsocia.id_categoria)
+                        command1.Parameters.AddWithValue("codigo_inciso", objCEIncisoAsocia.codigo_inciso)
+                        command1.Parameters.AddWithValue("inciso_presicion", objCEIncisoAsocia.codigo_precision)
+                        command1.Parameters.AddWithValue("id_version", id_version)
+                        command1.Parameters.AddWithValue("anio_version", anio_version)
+                        cn.Open()
+
+                        If command1.ExecuteNonQuery() > 0 Then
+                            'Si elimina inciso categoria
+                            estado = True
+                        Else
+                            'Si ocurre error
+                            estado = False
+                        End If
+
+                    End Using
+
+                Else
+                    estado = False
+                End If
+
+            End Using
+
+        Catch ex As Exception
+            estado = False
+        Finally
+
+        End Try
+
+        Return estado
+    End Function
+
     'Funcion que almacena precision 
     Public Function InsertPrecision(ByVal objCEPrecision As CEIncisoAsociaCategoria) As Boolean
         Dim estado As Boolean = False
@@ -3066,7 +3139,6 @@ Public Class CDInstrumentosComerciales
         Return dt_inciso_precision
     End Function
 
-    
 #End Region
 
 End Class
