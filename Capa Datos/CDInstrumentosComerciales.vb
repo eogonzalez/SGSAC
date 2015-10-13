@@ -75,6 +75,7 @@ Public Class CDInstrumentosComerciales
                         " WHERE id_instrumento = @id_instrumento " +
                         " AND activo = 'S' " +
                         " GROUP BY id_categoria "
+
                     Using cn = objConeccion.Conectar
                         Dim cuenta As Integer = 0
                         Dim id_catego As Integer = 0
@@ -121,10 +122,12 @@ Public Class CDInstrumentosComerciales
                                 command2.Parameters.AddWithValue("id_categoria", id_catego)
 
                                 cn2.Open()
-                                command2.ExecuteScalar()
+                                If command2.ExecuteNonQuery() > 0 Then
+                                    cuenta = cuenta + 1
+                                End If
                             End Using
 
-                            cuenta = cuenta + 1
+
 
                         Next
 
@@ -152,14 +155,14 @@ Public Class CDInstrumentosComerciales
                             " VALUES " +
                             " (@id_version, @id_corte_version, @id_instrumento, @cuenta, 'A',SYSDATETIME()) "
 
-                        Using cn2 = objConeccion.Conectar
-                            Dim command2 As SqlCommand = New SqlCommand(sql_query, cn2)
+                        Using cn3 = objConeccion.Conectar
+                            Dim command2 As SqlCommand = New SqlCommand(sql_query, cn3)
                             command2.Parameters.AddWithValue("id_instrumento", id_instrumento)
                             command2.Parameters.AddWithValue("id_corte_version", corte_version)
                             command2.Parameters.AddWithValue("id_version", id_version)
                             command2.Parameters.AddWithValue("cuenta", cuenta)
 
-                            cn2.Open()
+                            cn3.Open()
                             command2.ExecuteScalar()
                         End Using
                     End Using
