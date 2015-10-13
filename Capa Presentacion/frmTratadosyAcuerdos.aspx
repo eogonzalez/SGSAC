@@ -250,19 +250,19 @@
 
                 <div class="form-group">
                     <asp:Label ID="lbl_cantidad_cortes_ejecutados" CssClass="control-label col-xs-1" Enabled="false" runat="server" Text="Cantidad Cortes Ejecutados:"></asp:Label>
-                    <div class="col-xs-2">
+                    <div class="col-xs-4">
                         <asp:TextBox ID="txt_cantidad_cortes_ejecutados" type="text" CssClass="form-control" runat="server" disabled></asp:TextBox>
                     </div>
 
-                    <asp:Label ID="lbl_ultimo_corte_ejecutado" CssClass="control-label col-xs-3" Enabled="false" runat="server" Text="Ultimo corte ejecutado:"></asp:Label>
-                    <div class="col-xs-2">
+                    <asp:Label ID="lbl_ultimo_corte_ejecutado" CssClass="control-label col-xs-4" Enabled="false" runat="server" Text="Ultimo corte ejecutado:"></asp:Label>
+                    <div class="col-xs-3">
                         <asp:TextBox ID="txt_ultimo_corte_ejecutado" type="text" CssClass="form-control" runat="server" disabled></asp:TextBox>
                     </div>
 
-                    <asp:Label ID="lbl_corte_ejecutar" CssClass="control-label col-xs-2" Enabled="false" runat="server" Text="Corte a Ejecutar:"></asp:Label>
+                    <%--<asp:Label ID="lbl_corte_ejecutar" CssClass="control-label col-xs-2" Enabled="false" runat="server" Text="Corte a Ejecutar:"></asp:Label>
                     <div class="col-xs-2">
                         <asp:TextBox ID="txt_corte_ejecutar" type="text" CssClass="form-control" runat="server"></asp:TextBox>
-                    </div>
+                    </div>--%>
                 </div>
             </div>
 

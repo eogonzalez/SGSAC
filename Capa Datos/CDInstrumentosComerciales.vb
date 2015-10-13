@@ -73,7 +73,8 @@ Public Class CDInstrumentosComerciales
                     sql_query = "SELECT id_categoria " +
                         " FROM IC_Categorias_Desgravacion_Tramos " +
                         " WHERE id_instrumento = @id_instrumento " +
-                        " AND activo = 'S' "
+                        " AND activo = 'S' " +
+                        " GROUP BY id_categoria "
                     Using cn = objConeccion.Conectar
                         Dim cuenta As Integer = 0
                         Dim id_catego As Integer = 0
@@ -88,39 +89,30 @@ Public Class CDInstrumentosComerciales
                         For Each Row As DataRow In dt_Categorias.Rows
                             id_catego = Convert.ToInt32(Row("id_categoria").ToString)
 
-                            sql_query = " INSERT INTO " +
-                                " SAC_Dai_Instrumento(id_instrumento, INCISO, CATEGORIA, " +
-                                " FACTOR_DESGRAVA, DESGRAVA_TRAMOS_ANTES, " +
-                                " DAI_CALC_ABSOLUTO, DAI_BASE, sigla1_instrumento, " +
+                            sql_query = " INSERT INTO SAC_Dai_Instrumento(id_instrumento, INCISO, CATEGORIA," +
+                                " FACTOR_DESGRAVA, DESGRAVA_TRAMOS_ANTES," +
+                                " DAI_CALC_ABSOLUTO, DAI_BASE, sigla1_instrumento," +
                                 " ID_CORTE_NUEVO, USUARIO_GENERO, FECHA_GENERADA, estado) " +
-                                " SELECT " +
-                                " @id_instrumento, A.codigo_inciso, A.id_categoria," +
+                                " SELECT @id_instrumento, A.codigo_inciso, A.id_categoria, " +
                                 " B.factor_desgrava,B.desgrava_tramo_anterior, " +
-                                " (I.dai_base-((((((@id_corte_nuevo-B.cortes_ejecutados)+1)*B.factor_desgrava)+B.desgrava_tramo_anterior)/100)*I.dai_base)), " +
-                                " I.dai_base,C.sigla, " +
-                                " @id_corte_nuevo, " +
-                                " 'ADMIN',SYSDATETIME(),'CALC1' " +
-                                " FROM " +
-                                " SAC_Asocia_Categoria AS A " +
-                                " LEFT OUTER JOIN " +
-                                " SAC_Incisos AS I ON " +
-                                " A.codigo_inciso = I.codigo_inciso AND " +
-                                " A.id_categoria = @id_categoria " +
-                                " LEFT OUTER JOIN " +
-                                " IC_Categorias_Desgravacion_Tramos AS B ON " +
-                                " A.id_instrumento = B.id_instrumento And " +
-                                " A.id_categoria = B.id_categoria " +
-                                " LEFT OUTER JOIN " +
-                                " IC_Instrumentos AS C ON " +
-                                " A.id_instrumento = C.id_instrumento " +
-                                " WHERE " +
-                                " A.id_instrumento = @id_instrumento And " +
-                                " I.estado = 'A' AND " +
-                                " B.activo = 'S' AND " +
-                                " B.cortes_ejecutados <= @id_corte_nuevo And " +
-                                " @id_corte_nuevo < (B.cortes_ejecutados + B.cantidad_cortes) " +
-                                " ORDER BY " +
-                                " A.codigo_inciso, B.id_tramo "
+                                " (i.dai_base -(((( @id_corte_nuevo * B.factor_desgrava)+B.desgrava_tramo_anterior)/100)* I.dai_base))," +
+                                "  I.dai_base, C.sigla, @id_corte_nuevo,'ADMIN',SYSDATETIME(),'CALC1' " +
+                                "  FROM SAC_Asocia_Categoria AS A" +
+                                "  LEFT OUTER JOIN  SAC_Incisos AS I" +
+                                " ON A.codigo_inciso = I.codigo_inciso" +
+                                "    AND A.id_categoria = @id_categoria " +
+                                "   LEFT OUTER JOIN   IC_Categorias_Desgravacion_Tramos AS B " +
+                                " ON A.id_instrumento = @id_instrumento " +
+                                "  AND A.id_instrumento = B.id_instrumento " +
+                                "  And  A.id_categoria = B.id_categoria " +
+                                "   LEFT OUTER JOIN   IC_Instrumentos AS C " +
+                                " ON  A.id_instrumento = C.id_instrumento " +
+                                " WHERE  I.estado = 'A' AND B.activo = 'S' " +
+                                "  AND (B.CORTES_EJECUTADOS - (B.CANTIDAD_CORTES - 1)) <= @id_corte_nuevo " +
+                                " AND @id_corte_nuevo <= B.CORTES_EJECUTADOS " +
+                                " AND A.ID_CATEGORIA = @id_categoria  AND A.id_instrumento = @id_instrumento " +
+                                " ORDER BY  A.codigo_inciso, B.id_tramo "
+
 
                             Using cn2 = objConeccion.Conectar
                                 Dim command2 As SqlCommand = New SqlCommand(sql_query, cn2)
@@ -136,15 +128,35 @@ Public Class CDInstrumentosComerciales
 
                         Next
 
+                        Dim dt_Corr As New DataTable
+                        Dim id_version As Integer
+                        'Query para obtener el ultimo numero de correlativo
+                        sql_query = " SELECT COALESCE(( " +
+                            " SELECT MAX(ID_VERSION)  " +
+                            " FROM SAC_TRATADOS_BITACORA " +
+                            " WHERE id_instrumento = @id_instrumento " +
+                            " AND ESTADO ='A'),0) version "
+                        Using cn2 = objConeccion.Conectar
+
+                            Dim command1 As SqlCommand = New SqlCommand(sql_query, cn2)
+                            command1.Parameters.AddWithValue("id_instrumento", id_instrumento)
+                            da = New SqlDataAdapter(command1)
+                            da.Fill(dt_Corr)
+
+                        End Using
+
+                        id_version = Convert.ToInt32(dt_Corr.Rows(0)("version").ToString()) + 1
+
                         sql_query = " INSERT INTO " +
                             " SAC_TRATADOS_BITACORA(id_version, id_corte_version, id_instrumento, CANTIDAD_CATEGORIA, estado, FECHA_GENERADA)  " +
                             " VALUES " +
-                            " (0, @id_instrumento, @id_corte_nuevo, @cuenta, 'A',SYSDATETIME()) "
+                            " (@id_version, @id_corte_version, @id_instrumento, @cuenta, 'A',SYSDATETIME()) "
 
                         Using cn2 = objConeccion.Conectar
                             Dim command2 As SqlCommand = New SqlCommand(sql_query, cn2)
                             command2.Parameters.AddWithValue("id_instrumento", id_instrumento)
-                            command2.Parameters.AddWithValue("id_corte_nuevo", corte_version)
+                            command2.Parameters.AddWithValue("id_corte_version", corte_version)
+                            command2.Parameters.AddWithValue("id_version", id_version)
                             command2.Parameters.AddWithValue("cuenta", cuenta)
 
                             cn2.Open()
