@@ -311,6 +311,15 @@ Partial Public Class frmCorrelacionSAC
     Protected WithEvents lkBtn_Hidden_Nuevo As Global.System.Web.UI.WebControls.LinkButton
 
     '''<summary>
+    '''Control lkBtn_Elimar.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents lkBtn_Elimar As Global.System.Web.UI.WebControls.LinkButton
+
+    '''<summary>
     '''Control lkBtt_Nuevo_ModalPopupExtender.
     '''</summary>
     '''<remarks>

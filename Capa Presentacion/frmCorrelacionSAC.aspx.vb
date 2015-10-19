@@ -71,6 +71,7 @@ Public Class frmCorrelacionSAC
         If Not codigo_inciso = Nothing Then
             If GuardarSupresion(codigo_inciso) Then
                 Mensaje("Se realizo supresion con éxito.")
+                LlenarCorrelacionMant()
                 LlenarSeleccionCodigoInciso(txt_codigo_arancel.Text)
             Else
                 Mensaje("No se puede realizar supresión.")
@@ -95,6 +96,27 @@ Public Class frmCorrelacionSAC
 
     Protected Sub btnSalir_Click(sender As Object, e As EventArgs) Handles btnSalir.Click
         LlenarCorrelacionMant()
+    End Sub
+
+    Protected Sub lkBtn_Elimar_Click(sender As Object, e As EventArgs) Handles lkBtn_Elimar.Click
+        Dim codigo_inciso As String
+        Dim inciso_correlacion As String
+        codigo_inciso = getCodigoIncisoGridView()
+        inciso_correlacion = getIncisoCorrelacionGridView().Replace("&nbsp;", "")
+
+
+        If Not codigo_inciso = Nothing Then
+            If EliminarAccion(codigo_inciso, inciso_correlacion) Then
+                Mensaje("Se elimino accion con éxito.")
+                LlenarCorrelacionMant()
+                LlenarSeleccionCodigoInciso(txt_codigo_arancel.Text)
+            Else
+                Mensaje("No se puede realizar eliminacion de accion.")
+            End If
+        Else
+            Mensaje("Seleccione un inciso para realizar supresion.")
+            LlenarCorrelacionMant()
+        End If
     End Sub
 
 #End Region
@@ -256,6 +278,20 @@ Public Class frmCorrelacionSAC
         Return codigo_inciso
     End Function
 
+    'Funcion que obtiene el inciso correlacion del gridview
+    Function getIncisoCorrelacionGridView() As String
+        Dim inciso_correlacion As String = Nothing
+
+        For i As Integer = 0 To gvAsignarCategorias.Rows.Count - 1
+            Dim rbutton As RadioButton = gvAsignarCategorias.Rows(i).FindControl("rb_inciso")
+            If rbutton.Checked Then
+                inciso_correlacion = gvAsignarCategorias.Rows(i).Cells(5).Text
+            End If
+        Next
+
+        Return inciso_correlacion
+    End Function
+
     'Mensajes en el formulario
     Sub Mensaje(ByVal texto As String)
         Dim jv As String = "<script>alert('" & texto & "');</script>"
@@ -415,7 +451,11 @@ Public Class frmCorrelacionSAC
         Return estado
     End Function
 
+    Private Function EliminarAccion(ByVal codigo_inciso As String, ByVal inciso_correlacion As String) As Boolean
+        Dim objCNCorrelacion As New CNInstrumentosComerciales
+        Return objCNCorrelacion.DeleteAccion(codigo_inciso, inciso_correlacion)
+    End Function
+
 #End Region
 
-    
 End Class

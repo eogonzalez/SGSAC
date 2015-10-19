@@ -2976,6 +2976,77 @@ Public Class CDInstrumentosComerciales
         Return estado
     End Function
 
+    'Funcion para borrar accion de enmienda
+    Public Function DeleteAccion(ByVal codigo_inciso As String, ByVal inciso_correlacion As String) As Boolean
+        Dim estado As Boolean = False
+
+        Try
+            Dim sql_query As String
+            Dim longitud_inciso_corr As Integer
+            longitud_inciso_corr = inciso_correlacion.Length
+
+            If longitud_inciso_corr > 0 Then
+                'Si inciso correlacion no esta vacio
+
+                'Query elimina detalle
+                sql_query = " DELETE " +
+                    " SAC_Correlacion " +
+                    " where " +
+                    " inciso_origen = @codigo_inciso AND " +
+                    " inciso_nuevo = @inciso_correlacion "
+
+                Using cn = objConeccion.Conectar
+                    Dim command1 As New SqlCommand(sql_query, cn)
+                    command1.Parameters.AddWithValue("codigo_inciso", codigo_inciso)
+                    command1.Parameters.AddWithValue("inciso_correlacion", inciso_correlacion)
+                    cn.Open()
+
+                    If command1.ExecuteNonQuery() > 0 Then
+                        'Si elimina inciso categoria
+                        estado = True
+                    Else
+                        'Si ocurre error
+                        estado = False
+                    End If
+
+                End Using
+
+            Else
+                'Si inciso correlacion esta vacio
+
+                'Query elimina detalle
+                sql_query = " DELETE " +
+                    " SAC_Correlacion " +
+                    " where " +
+                    " inciso_origen = @codigo_inciso AND " +
+                    " inciso_nuevo Is NULL "
+
+                Using cn = objConeccion.Conectar
+                    Dim command1 As New SqlCommand(sql_query, cn)
+                    command1.Parameters.AddWithValue("codigo_inciso", codigo_inciso)
+                    cn.Open()
+
+                    If command1.ExecuteNonQuery() > 0 Then
+                        'Si elimina inciso categoria
+                        estado = True
+                    Else
+                        'Si ocurre error
+                        estado = False
+                    End If
+
+                End Using
+
+            End If
+
+        Catch ex As Exception
+            estado = False
+        Finally
+
+        End Try
+
+        Return estado
+    End Function
+
 #End Region
 
 #Region "Funciones y procedimientos para el Mantenimiento de Asignacion de Precision"

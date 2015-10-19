@@ -172,16 +172,21 @@
                 <div class="btn-group pull-right">
 
                     <asp:LinkButton ID="lkBtn_Suprimir" runat="server" CssClass="btn btn-primary">
-                <i aria-hidden="true" class="glyphicon glyphicon-remove"></i>
-                Suprimir
+                        <i aria-hidden="true" class="glyphicon glyphicon-remove"></i>
+                        Suprimir
                     </asp:LinkButton>
 
                     <asp:LinkButton ID="lkBtn_Nuevo" runat="server" CssClass="btn btn-primary">
-                <i aria-hidden="true" class="glyphicon glyphicon-th-list"></i>
-                Apertura
+                        <i aria-hidden="true" class="glyphicon glyphicon-th-list"></i>
+                        Apertura
                     </asp:LinkButton>
 
                     <asp:LinkButton ID="lkBtn_Hidden_Nuevo" Style="display: hidden" runat="server">
+                    </asp:LinkButton>
+
+                    <asp:LinkButton ID="lkBtn_Elimar" runat="server" CssClass="btn btn-primary">
+                        <i aria-hidden="true" class="glyphicon glyphicon-remove"></i>
+                        Eliminar Accion
                     </asp:LinkButton>
 
                 </div>

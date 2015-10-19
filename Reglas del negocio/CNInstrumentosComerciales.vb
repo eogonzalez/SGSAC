@@ -318,6 +318,11 @@ Public Class CNInstrumentosComerciales
         Return objCDInstrumentos.InsertSupresion(objCorrelacion)
     End Function
 
+    'Funcion para borrar accion de enmienda
+    Public Function DeleteAccion(ByVal codigo_inciso As String, ByVal inciso_correlacion As String) As Boolean
+        Return objCDInstrumentos.DeleteAccion(codigo_inciso, inciso_correlacion)
+    End Function
+
 #End Region
 
 #Region "Funciones y procedimientos para el Mantenimiento de Asignacion de Precision"
