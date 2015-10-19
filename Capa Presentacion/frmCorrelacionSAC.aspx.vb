@@ -104,7 +104,6 @@ Public Class frmCorrelacionSAC
         codigo_inciso = getCodigoIncisoGridView()
         inciso_correlacion = getIncisoCorrelacionGridView().Replace("&nbsp;", "")
 
-
         If Not codigo_inciso = Nothing Then
             If EliminarAccion(codigo_inciso, inciso_correlacion) Then
                 Mensaje("Se elimino accion con éxito.")
@@ -405,6 +404,7 @@ Public Class frmCorrelacionSAC
             objCorrelacion.inciso_origen = getIncisoActual()
             objCorrelacion.dai_base = getDaiActual()
             objCorrelacion.anio_version = getVersionActual()
+            objCorrelacion.anio_nueva_version = getNuevaVersion()
             objCorrelacion.id_version = Session("id_version")
 
             estado = objEnmiendas.InsertSupresion(objCorrelacion)
@@ -419,6 +419,7 @@ Public Class frmCorrelacionSAC
         Dim objCorrelacion As New CNInstrumentosComerciales
         Dim id_version As Integer
         Dim anio_actual As Integer
+        Dim anio_nueva_version As Integer
         Dim dai_actual As Decimal
 
         With objCorrelacion.SelectCorrelacionMant()
@@ -432,7 +433,18 @@ Public Class frmCorrelacionSAC
                 estado = True
             Else
                 estado = False
+
             End If
+
+            If Not .Tables(1).Rows.Count = 0 Then
+                anio_nueva_version = Convert.ToInt32(.Tables(1).Rows(0)("anio_version").ToString())
+                Session.Add("anio_nueva", anio_nueva_version)
+
+                estado = True
+            Else
+                estado = False
+            End If
+
         End With
 
         With objCorrelacion.SelectIncisoApertura(codigo_inciso)
@@ -452,8 +464,23 @@ Public Class frmCorrelacionSAC
     End Function
 
     Private Function EliminarAccion(ByVal codigo_inciso As String, ByVal inciso_correlacion As String) As Boolean
-        Dim objCNCorrelacion As New CNInstrumentosComerciales
-        Return objCNCorrelacion.DeleteAccion(codigo_inciso, inciso_correlacion)
+        Dim estado As Boolean = False
+
+        If ObtieneValoresSuprimir(codigo_inciso) Then
+            Dim objCNCorrelacion As New CNInstrumentosComerciales
+            Dim objCECorrelacion As New CEEnmiendas
+            objCECorrelacion.inciso_origen = getIncisoActual()
+            objCECorrelacion.inciso_nuevo = inciso_correlacion
+            objCECorrelacion.anio_version = getVersionActual()
+            objCECorrelacion.anio_nueva_version = getNuevaVersion()
+            objCECorrelacion.id_version = Session("id_version")
+
+            estado = objCNCorrelacion.DeleteAccion(objCECorrelacion)
+        Else
+            estado = False
+        End If
+        Return estado
+
     End Function
 
 #End Region

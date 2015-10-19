@@ -2952,16 +2952,17 @@ Public Class CDInstrumentosComerciales
             Dim sql_query As String
             sql_query = " INSERT INTO SAC_Correlacion " +
                 " ([inciso_origen] ,[dai_base] " +
-                " ,[anio_version] ,[version])" +
+                " ,[anio_version], [anio_nueva_version] ,[version])" +
                 " VALUES " +
                 " (@inciso_origen ,@dai_base " +
-                " ,@anio_version ,@version)  "
+                " ,@anio_version, @anio_nueva_version, @version)  "
                 
             Using cn = objConeccion.Conectar
                 Dim command As SqlCommand = New SqlCommand(sql_query, cn)
                 command.Parameters.AddWithValue("inciso_origen", objCorrelacion.inciso_origen)
                 command.Parameters.AddWithValue("dai_base", objCorrelacion.dai_base)
                 command.Parameters.AddWithValue("anio_version", objCorrelacion.anio_version)
+                command.Parameters.AddWithValue("anio_nueva_version", objCorrelacion.anio_nueva_version)
                 command.Parameters.AddWithValue("version", objCorrelacion.id_version)
 
                 cn.Open()
@@ -2977,13 +2978,14 @@ Public Class CDInstrumentosComerciales
     End Function
 
     'Funcion para borrar accion de enmienda
-    Public Function DeleteAccion(ByVal codigo_inciso As String, ByVal inciso_correlacion As String) As Boolean
+    Public Function DeleteAccion(ByVal objCECorrelacion As CEEnmiendas) As Boolean
         Dim estado As Boolean = False
 
         Try
             Dim sql_query As String
             Dim longitud_inciso_corr As Integer
-            longitud_inciso_corr = inciso_correlacion.Length
+
+            longitud_inciso_corr = objCECorrelacion.inciso_nuevo.Length
 
             If longitud_inciso_corr > 0 Then
                 'Si inciso correlacion no esta vacio
@@ -2992,13 +2994,19 @@ Public Class CDInstrumentosComerciales
                 sql_query = " DELETE " +
                     " SAC_Correlacion " +
                     " where " +
+                    " anio_version = @anio_version AND " +
+                    " anio_nueva_version = @anio_nueva_version AND " +
+                    " version = @version AND " +
                     " inciso_origen = @codigo_inciso AND " +
                     " inciso_nuevo = @inciso_correlacion "
 
                 Using cn = objConeccion.Conectar
                     Dim command1 As New SqlCommand(sql_query, cn)
-                    command1.Parameters.AddWithValue("codigo_inciso", codigo_inciso)
-                    command1.Parameters.AddWithValue("inciso_correlacion", inciso_correlacion)
+                    command1.Parameters.AddWithValue("anio_version", objCECorrelacion.anio_version)
+                    command1.Parameters.AddWithValue("anio_nueva_version", objCECorrelacion.anio_nueva_version)
+                    command1.Parameters.AddWithValue("version", objCECorrelacion.id_version)
+                    command1.Parameters.AddWithValue("codigo_inciso", objCECorrelacion.inciso_origen)
+                    command1.Parameters.AddWithValue("inciso_correlacion", objCECorrelacion.inciso_nuevo)
                     cn.Open()
 
                     If command1.ExecuteNonQuery() > 0 Then
@@ -3018,12 +3026,18 @@ Public Class CDInstrumentosComerciales
                 sql_query = " DELETE " +
                     " SAC_Correlacion " +
                     " where " +
+                    " anio_version = @anio_version AND " +
+                    " anio_nueva_version = @anio_nueva_version AND " +
+                    " version = @version AND " +
                     " inciso_origen = @codigo_inciso AND " +
                     " inciso_nuevo Is NULL "
 
                 Using cn = objConeccion.Conectar
                     Dim command1 As New SqlCommand(sql_query, cn)
-                    command1.Parameters.AddWithValue("codigo_inciso", codigo_inciso)
+                    command1.Parameters.AddWithValue("anio_version", objCECorrelacion.anio_version)
+                    command1.Parameters.AddWithValue("anio_nueva_version", objCECorrelacion.anio_nueva_version)
+                    command1.Parameters.AddWithValue("version", objCECorrelacion.id_version)
+                    command1.Parameters.AddWithValue("codigo_inciso", objCECorrelacion.inciso_origen)
                     cn.Open()
 
                     If command1.ExecuteNonQuery() > 0 Then
