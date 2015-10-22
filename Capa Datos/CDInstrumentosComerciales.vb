@@ -9,13 +9,15 @@ Public Class CDInstrumentosComerciales
 
 #Region "Funciones y procedimientos para el Mantenimiento de Instrumentos"
 
-    'Funcion para calcular el DAI 
-    Public Function CalcularDAI(ByVal id_instrumento As Integer) As Boolean
-        Dim estado As Boolean = False
-        Try
-            Dim sql_query As String
-            Dim dt_RegistroActivo As New DataTable
+#Region "Funciones para calculo de DAI"
 
+    'Funcion que devuelve registros activos
+    Private Function Select_Registro_Activo(ByVal id_instrumento As Integer) As Integer
+        Dim registro_activo As Integer = 0
+        Dim sql_query As String
+        Dim dt_RegistroActivo As New DataTable
+
+        Try
             'Query para obtener registros activos
             sql_query = "SELECT COALESCE(( " +
                 " Select count(1) " +
@@ -29,45 +31,208 @@ Public Class CDInstrumentosComerciales
                 da = New SqlDataAdapter(command)
                 da.Fill(dt_RegistroActivo)
             End Using
+            registro_activo = dt_RegistroActivo.Rows(0)("registro_activo")
 
-            If dt_RegistroActivo.Rows(0)("registro_activo") = 0 Then
+        Catch ex As Exception
+
+        Finally
+
+        End Try
+        Return registro_activo
+    End Function
+
+    'Funcion que devuelve cantidad de incisos asociados
+    Private Function Select_CantidadIncisos(ByVal id_instrumento As Integer) As Integer
+        Dim sql_query As Integer
+        Dim dt_Asociadas As New DataTable
+        Dim cant_asociadas As Integer = 0
+        Try
+
+            'Query para obtener cantidad de incisos asociados
+            sql_query = "SELECT COALESCE((" +
+                " SELECT COUNT(1) FROM SAC_ASOCIA_CATEGORIA " +
+                " WHERE id_instrumento = @id_instrumento " +
+                " AND ESTADO ='A'),0) as asociadas "
+
+            Using cn = objConeccion.Conectar
+                Dim command As SqlCommand = New SqlCommand(sql_query, cn)
+                command.Parameters.AddWithValue("id_instrumento", id_instrumento)
+                da = New SqlDataAdapter(command)
+                da.Fill(dt_Asociadas)
+            End Using
+            cant_asociadas = dt_Asociadas.Rows(0)("asociadas")
+
+        Catch ex As Exception
+
+        Finally
+
+        End Try
+        Return cant_asociadas
+    End Function
+
+    'Funcion que devuelve el id_corte_version
+    Private Function Select_Id_Corte_Version(ByVal id_instrumento As Integer) As Integer
+        Dim sql_query As String
+        Dim dt_Correlativo As New DataTable
+        Dim corte_version As Integer
+        Try
+
+            'Query para obtener el ultimo numero de correlativo
+            sql_query = " SELECT COALESCE(( " +
+                " SELECT MAX(ID_CORTE_VERSION)  " +
+                " FROM SAC_TRATADOS_BITACORA " +
+                " WHERE id_instrumento = @id_instrumento " +
+                " AND ESTADO ='A'),0) version "
+            Using cn = objConeccion.Conectar
+                Dim command As SqlCommand = New SqlCommand(sql_query, cn)
+                command.Parameters.AddWithValue("id_instrumento", id_instrumento)
+                da = New SqlDataAdapter(command)
+                da.Fill(dt_Correlativo)
+
+            End Using
+            corte_version = Convert.ToInt32(dt_Correlativo.Rows(0)("version").ToString())
+
+        Catch ex As Exception
+
+        Finally
+
+        End Try
+        Return corte_version
+    End Function
+
+    'Funcion que devuelve el id_version 
+    Private Function Select_Id_Version(ByVal id_instrumento As Integer) As Integer
+        Dim sql_query As String
+        Dim id_version As Integer = 0
+
+        Try
+            Dim dt_Corr As New DataTable
+
+            'Query para obtener el ultimo numero de correlativo
+            sql_query = " SELECT COALESCE(( " +
+                " SELECT MAX(ID_VERSION)  " +
+                " FROM SAC_TRATADOS_BITACORA " +
+                " WHERE id_instrumento = @id_instrumento " +
+                " AND ESTADO ='A'),0) version "
+            Using cn2 = objConeccion.Conectar
+
+                Dim command1 As SqlCommand = New SqlCommand(sql_query, cn2)
+                command1.Parameters.AddWithValue("id_instrumento", id_instrumento)
+                da = New SqlDataAdapter(command1)
+                da.Fill(dt_Corr)
+
+            End Using
+
+            id_version = Convert.ToInt32(dt_Corr.Rows(0)("version").ToString())
+
+        Catch ex As Exception
+
+        Finally
+
+        End Try
+        Return id_version
+    End Function
+
+    'Funcion para actualizar version A a C en SAC_Tratados_Bitacora
+    Private Function Update_Tratados_Bitacora(ByVal id_instrumento As Integer) As Boolean
+        Dim estado As Boolean = False
+        Dim sql_query As String
+
+        Try
+            'Query para actualizar ultimo registro A de tratados bitacora para el instrumento
+            sql_query = " UPDATE " +
+                " SAC_Tratados_Bitacora " +
+                " SET " +
+                " estado = 'C' " +
+                " WHERE " +
+                " id_instrumento = @id_instrumento AND " +
+                " estado = 'A' "
+            Using cn_up = objConeccion.Conectar
+                Dim command_up As SqlCommand = New SqlCommand(sql_query, cn_up)
+                command_up.Parameters.AddWithValue("id_instrumento", id_instrumento)
+                cn_up.Open()
+
+                If command_up.ExecuteNonQuery() > 0 Then
+                    'Si actualiza un registro
+                    estado = True
+                Else
+                    'Si no actualiza un registro
+                    estado = False
+                End If
+
+            End Using
+        Catch ex As Exception
+            estado = False
+        Finally
+
+        End Try
+        Return estado
+    End Function
+
+    'Funcion que inserta nueva version del calculo en SAC_Tratados_Bitacora
+    Private Function Insert_Tratados_Bitacora(ByVal id_instrumento As Integer, ByVal corte_version As Integer, ByVal id_version As Integer, ByVal cuenta As Integer) As Boolean
+        Dim estado As Boolean = False
+        Dim sql_query As String
+        Try
+            sql_query = " INSERT INTO " +
+                " SAC_TRATADOS_BITACORA(id_version, id_corte_version, id_instrumento, CANTIDAD_CATEGORIA, estado, FECHA_GENERADA)  " +
+                " VALUES " +
+                " (@id_version, @id_corte_version, @id_instrumento, @cuenta, 'A',SYSDATETIME()) "
+
+            Using cn3 = objConeccion.Conectar
+                Dim command2 As SqlCommand = New SqlCommand(sql_query, cn3)
+                command2.Parameters.AddWithValue("id_instrumento", id_instrumento)
+                command2.Parameters.AddWithValue("id_corte_version", corte_version)
+                command2.Parameters.AddWithValue("id_version", id_version)
+                command2.Parameters.AddWithValue("cuenta", cuenta)
+
+                cn3.Open()
+                If command2.ExecuteNonQuery() > 0 Then
+                    estado = True
+                Else
+                    estado = False
+                End If
+
+            End Using
+
+        Catch ex As Exception
+            estado = False
+        Finally
+
+        End Try
+        Return estado
+    End Function
+
+#End Region
+
+    'Funcion para calcular el DAI 
+    Public Function CalcularDAI(ByVal id_instrumento As Integer) As Boolean
+        Dim estado As Boolean = False
+        Try
+            Dim sql_query As String
+            Dim registro_activo As Integer = 0
+            'Funcion para obtener registros activos
+            registro_activo = Select_Registro_Activo(id_instrumento)
+
+            If registro_activo = 0 Then
                 estado = False
+                Exit Try
             Else
-                Dim dt_Asociadas As New DataTable
-                'Query para obtener cantidad de incisos asociados
-                sql_query = "SELECT COALESCE((" +
-                    " SELECT COUNT(1) FROM SAC_ASOCIA_CATEGORIA " +
-                    " WHERE id_instrumento = @id_instrumento " +
-                    " AND ESTADO ='A'),0) as asociadas "
+                Dim cant_incisos_asociados As Integer = 0
+                'Funcion para obtener cantidad de incisos asociados
+                cant_incisos_asociados = Select_CantidadIncisos(id_instrumento)
 
-                Using cn = objConeccion.Conectar
-                    Dim command As SqlCommand = New SqlCommand(sql_query, cn)
-                    command.Parameters.AddWithValue("id_instrumento", id_instrumento)
-                    da = New SqlDataAdapter(command)
-                    da.Fill(dt_Asociadas)
-                End Using
                 'If Not (dt_Asociadas.Rows(0)("asociadas") > 99) Then
 
-                If Not (dt_Asociadas.Rows(0)("asociadas") >= 0) Then
+                If Not (cant_incisos_asociados >= 0) Then
                     estado = False
+                    Exit Try
                 Else
-                    Dim dt_Correlativo As New DataTable
+
                     Dim corte_version As Integer
-                    'Query para obtener el ultimo numero de correlativo
-                    sql_query = " SELECT COALESCE(( " +
-                        " SELECT MAX(ID_CORTE_VERSION)  " +
-                        " FROM SAC_TRATADOS_BITACORA " +
-                        " WHERE id_instrumento = @id_instrumento " +
-                        " AND ESTADO ='A'),0) version "
-                    Using cn = objConeccion.Conectar
-                        Dim command As SqlCommand = New SqlCommand(sql_query, cn)
-                        command.Parameters.AddWithValue("id_instrumento", id_instrumento)
-                        da = New SqlDataAdapter(command)
-                        da.Fill(dt_Correlativo)
+                    'Funcion para obtener el ultimo numero de id_corrte_version
+                    corte_version = Select_Id_Corte_Version(id_instrumento) + 1
 
-                    End Using
-
-                    corte_version = Convert.ToInt32(dt_Correlativo.Rows(0)("version").ToString()) + 1
                     Dim dt_Categorias As New DataTable
                     'Query que consulta los tramos por categoria e instrumento
                     sql_query = "SELECT id_categoria " +
@@ -127,44 +292,29 @@ Public Class CDInstrumentosComerciales
                                 End If
                             End Using
 
-
-
                         Next
 
-                        Dim dt_Corr As New DataTable
                         Dim id_version As Integer
-                        'Query para obtener el ultimo numero de correlativo
-                        sql_query = " SELECT COALESCE(( " +
-                            " SELECT MAX(ID_VERSION)  " +
-                            " FROM SAC_TRATADOS_BITACORA " +
-                            " WHERE id_instrumento = @id_instrumento " +
-                            " AND ESTADO ='A'),0) version "
-                        Using cn2 = objConeccion.Conectar
+                        'Funcion para obtener el ultimo numero de correlativo
+                        id_version = Select_Id_Version(id_instrumento) + 1
 
-                            Dim command1 As SqlCommand = New SqlCommand(sql_query, cn2)
-                            command1.Parameters.AddWithValue("id_instrumento", id_instrumento)
-                            da = New SqlDataAdapter(command1)
-                            da.Fill(dt_Corr)
+                        'Actualizo registro A a C de Sac_Tratados_Bitacora
+                        If Update_Tratados_Bitacora(id_instrumento) Then
+                            estado = True
+                        Else
+                            estado = False
+                            Exit Try
+                        End If
 
-                        End Using
 
-                        id_version = Convert.ToInt32(dt_Corr.Rows(0)("version").ToString()) + 1
 
-                        sql_query = " INSERT INTO " +
-                            " SAC_TRATADOS_BITACORA(id_version, id_corte_version, id_instrumento, CANTIDAD_CATEGORIA, estado, FECHA_GENERADA)  " +
-                            " VALUES " +
-                            " (@id_version, @id_corte_version, @id_instrumento, @cuenta, 'A',SYSDATETIME()) "
+                        If Insert_Tratados_Bitacora(id_instrumento, corte_version, id_version, cuenta) Then
+                            estado = True
+                        Else
+                            estado = False
+                            Exit Try
+                        End If
 
-                        Using cn3 = objConeccion.Conectar
-                            Dim command2 As SqlCommand = New SqlCommand(sql_query, cn3)
-                            command2.Parameters.AddWithValue("id_instrumento", id_instrumento)
-                            command2.Parameters.AddWithValue("id_corte_version", corte_version)
-                            command2.Parameters.AddWithValue("id_version", id_version)
-                            command2.Parameters.AddWithValue("cuenta", cuenta)
-
-                            cn3.Open()
-                            command2.ExecuteScalar()
-                        End Using
                     End Using
 
                     estado = True
@@ -1691,7 +1841,7 @@ Public Class CDInstrumentosComerciales
 #Region "Funciones para incisos-categoria"
 
     'Funcion que valida si el inciso a insertar ya existe
-    Public Function ValidaInciso(ByVal id_instrumento As Integer, ByVal codigo_inciso As String, Optional inciso_presicion As String = Nothing) As Boolean
+    Private Function ValidaInciso(ByVal id_instrumento As Integer, ByVal codigo_inciso As String, Optional inciso_presicion As String = Nothing) As Boolean
         Dim estado As Boolean = False
         Try
             Dim sql_query As String
@@ -1810,7 +1960,7 @@ Public Class CDInstrumentosComerciales
     End Function
 
     'Funcion que inserta correlacion inciso-categoria nuevo
-    Public Function InsertInciso(ByVal id_instrumento As Integer, ByVal id_categoria As Integer, ByVal codigo_inciso As String, Optional codigo_precision As String = Nothing, Optional texto_precision As String = Nothing) As Boolean
+    Private Function InsertInciso(ByVal id_instrumento As Integer, ByVal id_categoria As Integer, ByVal codigo_inciso As String, Optional codigo_precision As String = Nothing, Optional texto_precision As String = Nothing) As Boolean
         Dim estado As Boolean = False
         Try
             Dim sql_query As String
@@ -1900,7 +2050,7 @@ Public Class CDInstrumentosComerciales
     ''' <sumary>
     ''' Funcion que actualiza categoria a inciso
     ''' </sumary>
-    Public Function UpdateInciso(ByVal id_instrumento As Integer, ByVal id_categoria As Integer, ByVal codigo_inciso As String, Optional codigo_precision As String = Nothing, Optional texto_precision As String = Nothing) As Boolean
+    Private Function UpdateInciso(ByVal id_instrumento As Integer, ByVal id_categoria As Integer, ByVal codigo_inciso As String, Optional codigo_precision As String = Nothing, Optional texto_precision As String = Nothing) As Boolean
         Dim estado As Boolean = False
         Try
             Dim sql_query As String
