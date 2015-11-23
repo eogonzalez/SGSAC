@@ -52,15 +52,19 @@ Public Class frmCorrelacionSAC
 
     Protected Sub btnGuardar_Click(sender As Object, e As EventArgs) Handles btnGuardar.Click
 
-        If GuardarApertura() Then
-            Mensaje("Apertura realizada con éxito.")
-            LlenarCorrelacionMant()
-            LlenarSeleccionCodigoInciso(txt_codigo_arancel.Text)
-            LimpiarAperturaMant()
-
+        If ValidaIncisoNuevo() Then
+            Mensaje("El codigo de inciso aperturado, ya existe en la version actual verifique.")
         Else
-            Mensaje("Error al realizar apertura.")
-            lkBtt_Nuevo_ModalPopupExtender.Show()
+            If GuardarApertura() Then
+                Mensaje("Apertura realizada con éxito.")
+                LlenarCorrelacionMant()
+                LlenarSeleccionCodigoInciso(txt_codigo_arancel.Text)
+                LimpiarAperturaMant()
+
+            Else
+                Mensaje("Error al realizar apertura.")
+                lkBtt_Nuevo_ModalPopupExtender.Show()
+            End If
         End If
     End Sub
 
@@ -376,6 +380,18 @@ Public Class frmCorrelacionSAC
         objCorrelacion.fecha_inicia_vigencia = getFechaInicioVigencia()
 
         Return objEnmiendas.InsertApertura(objCorrelacion)
+
+    End Function
+
+    Private Function ValidaIncisoNuevo() As Boolean
+        Dim objEnmiendas As New CNInstrumentosComerciales
+        Dim objCorrelacion As New CEEnmiendas
+
+        objCorrelacion.id_version = Session("id_version")
+        objCorrelacion.anio_version = getVersionActual()
+        objCorrelacion.inciso_nuevo = getIncisoNuevo()
+
+        Return objEnmiendas.ValidaIncisoNuevo(objCorrelacion)
 
     End Function
 

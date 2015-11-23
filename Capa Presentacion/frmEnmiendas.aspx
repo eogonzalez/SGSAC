@@ -136,7 +136,7 @@
                 <div class="form-group">
                     <asp:Label ID="Label7" CssClass="control-label col-xs-3" runat="server" Text="Base Normativa:"></asp:Label>
                     <div class="col-xs-9">
-                        <asp:TextBox ID="txtObservaciones" type="text" CssClass="form-control" runat="server" TextMode="MultiLine"></asp:TextBox>
+                        <asp:TextBox ID="txt_Observaciones_En" type="text" CssClass="form-control" runat="server" TextMode="MultiLine"></asp:TextBox>
                     </div>
                 </div>
 

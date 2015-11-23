@@ -15,27 +15,32 @@
 </head>
 
 <body>
-    <table style="margin: 0 auto 0 auto; text-align: center; width: 100%; background-color: #054795">
+    <table style="margin: 0 auto 0 auto; text-align: center; width: 100%; background-color: #FFFFFF">
         <tr>
             <td>
                 <br />
             </td>
         </tr>
         <tr>
-            <td style="text-align: left">
-                <asp:Image ID="imgLogo" runat="server" ImageUrl="~/Images/Logo.jpg" />
+            <td style="text-align: center">
+                <asp:Image ID="imgLogo" runat="server" ImageUrl="~/Images/LogoNew.jpg" Height="65px" Width="310px"  />
             </td>
             <%--<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</td>--%>
             <td style="text-align: center">
-                <asp:Label ID="lblTitulo" runat="server" Text="Sistema de Gestión del SAC <br /> Ministerio de Economía" ForeColor="White" Font-Names="Verdana" Font-Bold="true" Font-Size="Large"></asp:Label>
+                <asp:Label ID="lblTitulo" runat="server" Text="Sistema de Gestión del SAC <br /> Ministerio de Economía" ForeColor="#054795" Font-Names="Verdana" Font-Bold="true" Font-Size="Large"></asp:Label>
             </td>
             <td style="text-align: right">
-                <asp:Label ID="txtFecha" runat="server" ForeColor="White" Font-Names="Verdana" Font-Bold="true" Font-Size="Medium"></asp:Label>
+                <asp:Label ID="txtFecha" runat="server" ForeColor="#054795" Font-Names="Verdana" Font-Bold="true" Font-Size="Medium"></asp:Label>
             </td>
         </tr>
         <tr>
             <td colspan="3">
                 <hr />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3" style="text-align: left; width: 100%; background-color: #054795"">
+                <br />
             </td>
         </tr>
     </table>

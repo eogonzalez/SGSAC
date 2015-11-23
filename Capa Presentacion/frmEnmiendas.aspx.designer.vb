@@ -185,13 +185,13 @@ Partial Public Class frmEnmiendas
     Protected WithEvents Label7 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''Control txtObservaciones.
+    '''Control txt_Observaciones_En.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents txtObservaciones As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents txt_Observaciones_En As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''Control btn_Guardar.

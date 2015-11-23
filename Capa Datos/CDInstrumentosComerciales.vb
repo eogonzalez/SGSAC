@@ -3211,6 +3211,39 @@ Public Class CDInstrumentosComerciales
         Return estado
     End Function
 
+    'Funcion que valida si inciso nuevo ya existe
+    Public Function ValidaIncisoNuevo(ByVal objCeCorrelacion As CEEnmiendas) As Boolean
+        Dim estado As Boolean = True
+        Try
+            Dim sql_query As String
+            sql_query = " SELECT " +
+                " COALESCE(count(1), 0) " +
+                " FROM " +
+                " SAC_Incisos " +
+                " where " +
+                " id_version = @id_version AND anio_version = @anio_version and codigo_inciso = @codigo_inciso " +
+                " AND estado = 'A' "
+
+            Using cn = objConeccion.Conectar
+                Dim command As SqlCommand = New SqlCommand(sql_query, cn)
+                command.Parameters.AddWithValue("id_version", objCeCorrelacion.id_version)
+                command.Parameters.AddWithValue("anio_version", objCeCorrelacion.anio_version)
+                command.Parameters.AddWithValue("codigo_inciso", objCeCorrelacion.inciso_nuevo)
+                cn.Open()
+
+                If command.ExecuteScalar() > 0 Then
+                    estado = True
+                Else
+                    estado = False
+                End If
+            End Using
+
+        Catch ex As Exception
+
+        End Try
+        Return estado
+    End Function
+
 #End Region
 
 #Region "Funciones y procedimientos para el Mantenimiento de Asignacion de Precision"

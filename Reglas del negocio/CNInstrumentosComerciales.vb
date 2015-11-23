@@ -323,6 +323,10 @@ Public Class CNInstrumentosComerciales
         Return objCDInstrumentos.DeleteAccion(objCECorrelacion)
     End Function
 
+    'Funcion que valida si inciso nuevo ya existe
+    Public Function ValidaIncisoNuevo(ByVal objCeCorrelacion As CEEnmiendas) As Boolean
+        Return objCDInstrumentos.ValidaIncisoNuevo(objCeCorrelacion)
+    End Function
 #End Region
 
 #Region "Funciones y procedimientos para el Mantenimiento de Asignacion de Precision"

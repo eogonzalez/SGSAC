@@ -106,7 +106,7 @@ Public Class frmEnmiendas
     End Function
 
     Function getBaseNormativa() As String
-        Return txtObservaciones.Text
+        Return txt_Observaciones_En.Text
     End Function
 
 #End Region
@@ -153,7 +153,8 @@ Public Class frmEnmiendas
         txt_Descripcion_Enmienda.Text = ""
         txtFechaFinVigencia.Text = ""
         txtFechaInicioVigencia.Text = ""
-        txtObservaciones.Text = ""
+        txt_Observaciones_En.Text = ""
+
     End Sub
 
     'Procedimiento para llenar formulario con el id de la version del sac seleccionado
@@ -181,7 +182,7 @@ Public Class frmEnmiendas
                 End If
 
                 If Not IsDBNull(datosVersionSac.Rows(0)("observaciones")) Then
-                    txtObservaciones.Text = datosVersionSac.Rows(0)("observaciones").ToString
+                    txt_Observaciones_En.Text = datosVersionSac.Rows(0)("observaciones").ToString
                 End If
 
             End If
