@@ -129,7 +129,7 @@ Public Class frmTratadosyAcuerdos
                 Mensaje("Calculo se realizo con éxito.")
             Else
                 'No se realizo el calculo
-                Mensaje("Calculo se no se pudo realizar.")
+                Mensaje("Calculo no se pudo realizar.")
             End If
         End If
 

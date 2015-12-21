@@ -244,7 +244,7 @@
     <div>
         <asp:Panel ID="pnlApertura" CssClass="panel panel-primary" 
             BorderColor="Black" BackColor="White" BorderStyle="Inset" BorderWidth="1px"
-            Height="635" Width="30%" runat="server">
+            Height="765" Width="40%" runat="server">
             <div class="panel-heading">Datos de Apertura Arancelaria SAC </div>
             <div class="panel-body form-horizontal">
 
@@ -280,6 +280,8 @@
                     </div>
                 </div>
 
+
+
                 <div class="form-group">
                     <asp:Label ID="lbl_descripcion_inciso" CssClass="control-label col-xs-3" Text="Descripcion Inciso:" runat="server"></asp:Label>
                     <div class="col-xs-9">
@@ -288,11 +290,15 @@
                 </div>
 
                 <div class="form-group">
-                    <asp:Label ID="lbl_inciso_nuevo" CssClass="control-label col-xs-3" Text="Inciso Nuevo: " runat="server"></asp:Label>
-                    <div class="col-xs-3">
-                        <asp:TextBox ID="txt_inciso_nuevo" type="text" CssClass="form-control" runat="server"></asp:TextBox>
-                    </div>
 
+                    <asp:Label ID="lbl_inciso_nuevo" CssClass="control-label col-xs-3" Text="Inciso Nuevo: " runat="server"></asp:Label>
+                    <div class="col-xs-9">
+                        <asp:TextBox ID="txt_inciso_nuevo" type="text" CssClass="form-control" runat="server"></asp:TextBox>
+                        <span class="help-block"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
                     <asp:Label ID="lbl_dai_nuevo" CssClass="control-label col-xs-3" Text="DAI Nuevo:" runat="server"></asp:Label>
                     <div class="col-xs-3">
                         <asp:TextBox ID="txt_dai_nuevo" CssClass="form-control" runat="server"></asp:TextBox>
@@ -306,6 +312,27 @@
                     </div>
                 </div>
 
+                <div class="form-group">
+                    <asp:Label ID="lbl_descripcion_partida_apertura" CssClass="control-label col-xs-3" Text="Descripcion Partida:" runat="server"></asp:Label>
+                    <div class="col-xs-3">
+                        <asp:TextBox ID="txt_codigo_partida_apertura" CssClass="form-control" runat="server" disabled="disabled"></asp:TextBox>
+                    </div>
+                    <div class="col-xs-6">
+                        <asp:TextBox ID="txt_descripcion_partida_apertura" CssClass="form-control" runat="server"></asp:TextBox>
+                        <span class="help-block"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <asp:Label ID="lbl_descripcion_subpartida_apertura" CssClass="control-label col-xs-3" Text="Descripcion Sub Partida:" runat="server"></asp:Label>
+                    <div class="col-xs-3">
+                        <asp:TextBox ID="txt_codigo_subpartida_apertura" CssClass="form-control" runat="server" disabled="disabled"></asp:TextBox>
+                    </div>
+                    <div class="col-xs-6">
+                        <asp:TextBox ID="txt_descripcion_subpartida_apertura" CssClass="form-control" runat="server"></asp:TextBox>
+                        <span class="help-block"></span>
+                    </div>
+                </div>
 
                 <div class="form-group">
                     <asp:Label ID="lbl_fecha_inicio_vigencia" CssClass="control-label col-xs-3" runat="server" Text="Fecha Inicio Vigencia:"></asp:Label>

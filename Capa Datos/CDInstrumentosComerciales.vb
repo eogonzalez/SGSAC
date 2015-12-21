@@ -3024,14 +3024,30 @@ Public Class CDInstrumentosComerciales
         Dim dt_inciso_apertura As New DataTable
         Try
             Dim sql_query As String
-            sql_query = " select cast(dai_base as numeric(8,2)) as dai_base, texto_inciso " +
-                " from SAC_Incisos " +
-                " where estado = 'A' AND  " +
-                " codigo_inciso = @codigo_inciso "
+
+            Dim codigo_partida As String = codigo_inciso.Substring(0, 4)
+            Dim codigo_subpartida As String = codigo_inciso.Substring(0, 5)
+
+            sql_query = " select cast(SI.dai_base as numeric(8,2)) as dai_base, " +
+                " si.texto_inciso, @codigo_partida as partida, sp.descripcion_partida, " +
+                " '84798' as subpartida, ss.texto_subpartida " +
+                " from SAC_Incisos SI " +
+                " Join " +
+                " SAC_Partidas sp ON " +
+                " sp.Partida = @codigo_partida AND " +
+                " sp.activo = 'S' " +
+                " Join " +
+                " SAC_Subpartidas ss ON " +
+                " ss.subpartida = @codigo_subpartida AND " +
+                " ss.activo = 'S' " +
+                " where si.estado = 'A' AND  " +
+                " si.codigo_inciso = @codigo_inciso "
 
             Using cn = objConeccion.Conectar
                 Dim command As SqlCommand = New SqlCommand(sql_query, cn)
                 command.Parameters.AddWithValue("codigo_inciso", codigo_inciso)
+                command.Parameters.AddWithValue("codigo_partida", codigo_partida)
+                command.Parameters.AddWithValue("codigo_subpartida", codigo_subpartida)
 
                 da = New SqlDataAdapter(command)
                 da.Fill(dt_inciso_apertura)

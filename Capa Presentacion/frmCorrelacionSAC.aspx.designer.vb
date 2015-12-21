@@ -527,6 +527,60 @@ Partial Public Class frmCorrelacionSAC
     Protected WithEvents txt_descripcion_inciso_nuevo As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''Control lbl_descripcion_partida_apertura.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents lbl_descripcion_partida_apertura As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''Control txt_codigo_partida_apertura.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents txt_codigo_partida_apertura As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Control txt_descripcion_partida_apertura.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents txt_descripcion_partida_apertura As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Control lbl_descripcion_subpartida_apertura.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents lbl_descripcion_subpartida_apertura As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''Control txt_codigo_subpartida_apertura.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents txt_codigo_subpartida_apertura As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Control txt_descripcion_subpartida_apertura.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents txt_descripcion_subpartida_apertura As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
     '''Control lbl_fecha_inicio_vigencia.
     '''</summary>
     '''<remarks>

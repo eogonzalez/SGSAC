@@ -349,6 +349,13 @@ Public Class frmCorrelacionSAC
 
                 txt_descripcion_inciso.Text = .Rows(0)("texto_inciso").ToString()
 
+                txt_codigo_partida_apertura.Text = .Rows(0)("partida").ToString()
+                txt_descripcion_partida_apertura.Text = .Rows(0)("descripcion_partida").ToString()
+
+                txt_codigo_subpartida_apertura.Text = .Rows(0)("subpartida").ToString()
+                txt_descripcion_subpartida_apertura.Text = .Rows(0)("texto_subpartida").ToString()
+
+
                 txt_inciso_nuevo.Text = codigo_inciso
                 txt_dai_nuevo.Text = .Rows(0)("dai_base").ToString()
                 txt_descripcion_inciso_nuevo.Text = .Rows(0)("texto_inciso").ToString()
