@@ -37,6 +37,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
+    <%-- Panel principal --%>
     <div class="panel panel-primary">
         <div class="panel-heading">Instrumentos Comerciales</div>
         <br />
@@ -116,6 +117,7 @@
 
     </div>
 
+    <%-- Panel de mantenimiento de instrumentos --%>
     <div>
         <asp:Panel ID="pnlNuevoInstrumento" CssClass="panel panel-primary" runat="server" BorderColor="Black" BackColor="White"
             BorderStyle="Inset" BorderWidth="1px" heigth="600" Width="35%">

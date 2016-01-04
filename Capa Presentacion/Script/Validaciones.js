@@ -163,6 +163,31 @@ function inicio() {
     if (contenido_subpartida_apertura != null) {
         validarApertura();
     }
+
+    //Aplicar validacion a Opciones del menu
+    $("#ContentPlaceHolder1_txtNombreOpcion").keyup(validarOpcion);
+    $("#ContentPlaceHolder1_txtNombreOpcion").focus(validarOpcion);
+
+    $("#ContentPlaceHolder1_txtURL").keyup(validarOpcion);
+    $("#ContentPlaceHolder1_txtURL").focus(validarOpcion);
+
+    $("#ContentPlaceHolder1_txtOrden").keyup(validarOpcion);
+    $("#ContentPlaceHolder1_txtOrden").focus(validarOpcion);
+
+    var contenidoNombreOpcion = $("#ContentPlaceHolder1_txtNombreOpcion").val();
+    if (contenidoNombreOpcion != null) {
+        validarOpcion();
+    }
+    
+    var contenidoURL = $("#ContentPlaceHolder1_txtURL").val();
+    if (contenidoNombreOpcion != null) {
+        validarOpcion();
+    }
+
+    var contenidoOrden = $("#ContentPlaceHolder1_txtOrden").val();
+    if (contenidoNombreOpcion != null) {
+        validarOpcion();
+    }
 }
 
 function validarCatalogo() {
@@ -738,5 +763,66 @@ function validarApertura(){
         $("#ContentPlaceHolder1_txt_descripcion_subpartida_apertura").parent().children("span").text("").hide();
         $("#ContentPlaceHolder1_txt_descripcion_subpartida_apertura").parent().append("<span id='iconotexto_subpartida' class='glyphicon glyphicon-ok form-control-feedback'>");
         $("#ContentPlaceHolder1_btnGuardar").attr("Class", "btn btn-primary");
+    }
+}
+
+function validarOpcion() {
+    var nombre = document.getElementById("ContentPlaceHolder1_txtNombreOpcion").value;
+    var URL= document.getElementById("ContentPlaceHolder1_txtURL").value;
+    var orden = document.getElementById("ContentPlaceHolder1_txtOrden").value;
+
+
+    if (nombre == null || nombre.length == 0 || /^\s+$/.test(nombre)) {
+        //Si esta vacio el campo
+        $("#iconotextonombrem").remove();
+        $("#ContentPlaceHolder1_txtNombreOpcion").parent().parent().attr("class", "form-group has-error has-feedback");
+        $("#ContentPlaceHolder1_txtNombreOpcion").parent().children("span").text("El campo no puede quedar vacio.").show();
+        $("#ContentPlaceHolder1_txtNombreOpcion").parent().append("<span id='iconotextonombrem' class='glyphicon glyphicon-remove form-control-feedback'>");
+        $("#ContentPlaceHolder1_btn_Guardar").attr("Class", "btn btn-primary disabled");
+        return false;
+    }
+    else {
+        //Si no esta vacio
+        $("#iconotextonombrem").remove();
+        $("#ContentPlaceHolder1_txtNombreOpcion").parent().parent().attr("class", "form-group has-success has-feedback");
+        $("#ContentPlaceHolder1_txtNombreOpcion").parent().children("span").text("").hide();
+        $("#ContentPlaceHolder1_txtNombreOpcion").parent().append("<span id='iconotextonombrem' class='glyphicon glyphicon-ok form-control-feedback'>");
+        $("#ContentPlaceHolder1_btn_Guardar").attr("Class", "btn btn-primary");
+    }
+
+    if (URL == null || URL.length == 0 || /^\s+$/.test(URL)) {
+        //Si esta vacio el campo
+        $("#iconotextoURL").remove();
+        $("#ContentPlaceHolder1_txtURL").parent().parent().attr("class", "form-group has-error has-feedback");
+        $("#ContentPlaceHolder1_txtURL").parent().children("span").text("El campo no puede quedar vacio.").show();
+        $("#ContentPlaceHolder1_txtURL").parent().append("<span id='iconotextoURL' class='glyphicon glyphicon-remove form-control-feedback'>");
+        $("#ContentPlaceHolder1_btn_Guardar").attr("Class", "btn btn-primary disabled");
+        return false;
+    }
+    else {
+        //Si no esta vacio
+        $("#iconotextoURL").remove();
+        $("#ContentPlaceHolder1_txtURL").parent().parent().attr("class", "form-group has-success has-feedback");
+        $("#ContentPlaceHolder1_txtURL").parent().children("span").text("").hide();
+        $("#ContentPlaceHolder1_txtURL").parent().append("<span id='iconotextoURL' class='glyphicon glyphicon-ok form-control-feedback'>");
+        $("#ContentPlaceHolder1_btnGuardar").attr("Class", "btn btn-primary");
+    }
+
+    if (orden == null || orden.length == 0 || /^\s+$/.test(orden)) {
+        //Si esta vacio el campo
+        $("#iconotextoOrden").remove();
+        $("#ContentPlaceHolder1_txtOrden").parent().parent().attr("class", "form-group has-error has-feedback");
+        $("#ContentPlaceHolder1_txtOrden").parent().children("span").text("El campo no puede quedar vacio.").show();
+        $("#ContentPlaceHolder1_txtOrden").parent().append("<span id='iconotextoOrden' class='glyphicon glyphicon-remove form-control-feedback'>");
+        $("#ContentPlaceHolder1_btn_Guardar").attr("Class", "btn btn-primary disabled");
+        return false;
+    }
+    else {
+        //Si no esta vacio
+        $("#iconotextoOrden").remove();
+        $("#ContentPlaceHolder1_txtOrden").parent().parent().attr("class", "form-group has-success has-feedback");
+        $("#ContentPlaceHolder1_txtOrden").parent().children("span").text("").hide();
+        $("#ContentPlaceHolder1_txtOrden").parent().append("<span id='iconotextoOrden' class='glyphicon glyphicon-ok form-control-feedback'>");
+        $("#ContentPlaceHolder1_btn_Guardar").attr("Class", "btn btn-primary");
     }
 }

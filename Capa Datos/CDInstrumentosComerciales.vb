@@ -492,7 +492,7 @@ Public Class CDInstrumentosComerciales
                 cn.Close()
 
             Catch ex As Exception
-                MsgBox("ERROR CONSULTARUSUARIO = " + ex.Message.ToString)
+                MsgBox("ERROR CONSULTAR INSTRUMENTO = " + ex.Message.ToString)
             Finally
                 objConeccion.Conectar.Dispose()
                 cn.Dispose()
@@ -3436,6 +3436,83 @@ Public Class CDInstrumentosComerciales
         End Try
 
         Return dt_inciso_precision
+    End Function
+
+#End Region
+
+#Region "Funciones y procedimientos para el Mantenimiento de Configuracion del Menu "
+
+    'Funcion que obtiene listado de opciones del menu
+    Public Function SelectOpcionesMenu() As DataTable
+        'Se Llena el Data Set por medio consulta
+        Dim sql_query As String
+        Dim dt As New DataTable
+
+        sql_query = " SELECT [id_opcion] " +
+            " ,[nombre] " +
+            " ,[descripcion] " +
+            " ,[url] " +
+            " FROM [SGSACDB].[dbo].[g_menu_opcion] " +
+            " where id_padre is NULL " +
+            " order by orden "
+
+        Using cn = objConeccion.Conectar
+
+            Try
+
+                Dim command As SqlCommand = New SqlCommand(sql_query, cn)
+                da = New SqlDataAdapter(sql_query, cn)
+                da.Fill(dt)
+
+            Catch ex As Exception
+                MsgBox("ERROR CONSULTA OPCIONES DEL MENU = " + ex.Message.ToString)
+            Finally
+                objConeccion.Conectar.Dispose()
+                cn.Dispose()
+                da.Dispose()
+            End Try
+
+            Return dt
+
+        End Using
+    End Function
+
+    'Funcion que obtiene los valores de la opcion del menu seleccionada
+    Public Function SelectOpcionMant(ByVal id_menu_opcion As Integer) As DataTable
+        Dim sql_query As String
+        Dim dtOpcion As New DataTable
+
+        sql_query = " SELECT [nombre] " +
+            " ,[descripcion] " +
+            " ,[url] " +
+            " ,[orden] " +
+            " ,[visible] " +
+            " ,[obligatorio] " +
+            " FROM [SGSACDB].[dbo].[g_menu_opcion] " +
+            " where " +
+            " id_padre is NULL AND " +
+            " id_opcion =  @id_opcion "
+
+        Using cn = objConeccion.Conectar
+            Try
+
+                Dim command As SqlCommand = New SqlCommand(sql_query, cn)
+                command.Parameters.AddWithValue("id_opcion", id_menu_opcion)
+                da = New SqlDataAdapter(command)
+
+                da.Fill(dtOpcion)
+                cn.Close()
+
+            Catch ex As Exception
+                MsgBox("ERROR CONSULTAR OPCION = " + ex.Message.ToString)
+            Finally
+                objConeccion.Conectar.Dispose()
+                cn.Dispose()
+            End Try
+
+            Return dtOpcion
+
+        End Using
     End Function
 
 #End Region

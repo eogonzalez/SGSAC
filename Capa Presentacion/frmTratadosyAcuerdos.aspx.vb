@@ -75,7 +75,7 @@ Public Class frmTratadosyAcuerdos
 
     End Sub
 
-    Protected Sub lkBtt_paises_Click(sender As Object, e As EventArgs) Handles lkBtt_paises.Click
+    Protected Sub lkBtt_pai_Click(sender As Object, e As EventArgs) Handles lkBtt_paises.Click
         Dim id_intrumento As Integer = 0
         id_intrumento = Convert.ToInt32(getIdInstrumentoGridView())
         If id_intrumento = 0 Then
@@ -331,7 +331,7 @@ Public Class frmTratadosyAcuerdos
         datosInstrumentos = ObjCNInstrumentoMant.SelectInstrumentoMant(id_instrumento)
 
         If datosInstrumentos.Rows.Count = 0 Then
-            MsgBox("El usuario no existe")
+            MsgBox("El instrumento no existe")
             Exit Sub
         Else
             If accion = "editar" Then

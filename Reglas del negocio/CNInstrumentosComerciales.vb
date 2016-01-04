@@ -360,4 +360,19 @@ Public Class CNInstrumentosComerciales
 
 #End Region
 
+#Region "Funciones y procedimientos para el Mantenimiento de Configuracion del Menu"
+
+    'Funcion que obtiene listado de opciones del menu
+    Public Function SelectOpcionesMenu() As DataTable
+        Return objCDInstrumentos.SelectOpcionesMenu()
+    End Function
+
+    'Funcion que obtiene los valores de la opcion del menu seleccionada
+    Public Function SelectOpcionMant(ByVal id_menu_opcion As Integer) As DataTable
+        Return objCDInstrumentos.SelectOpcionMant(id_menu_opcion)
+    End Function
+
+#End Region
+
+
 End Class
