@@ -69,6 +69,7 @@
     <Compile Include="CeInstrumentoPais.vb" />
     <Compile Include="CeInstrumentoPaisMant.vb" />
     <Compile Include="CEInstrumentosMant.vb" />
+    <Compile Include="CEOpcionMenu.vb" />
     <Compile Include="CeTipoDesgravacion.vb" />
     <Compile Include="CETipoInstrumento.vb" />
     <Compile Include="CETipoPeriodo.vb" />
