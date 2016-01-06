@@ -21,7 +21,7 @@ Public Class General
     Public Sub LlenarMenu()
         Dim CapaNegocios As New cnGeneral
         Dim tbl As New DataTable
-        tbl = CapaNegocios.MenuPrincipal.Tables("Menu")
+        tbl = CapaNegocios.MenuPrincipal.Tables(0)
 
         'Recorer la tabla para llenar los items del Menu principal
         For Each enc As DataRow In tbl.Rows

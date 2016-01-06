@@ -27,18 +27,33 @@ Public Class General
     End Function
 
     Public Function MunuPrincipal() As DataSet
-
-        'Se Llena el Data Set por medio del procedimiento almacenado y se retorna el mismo
+        Dim sql_query As String
         Dim ds As New DataSet
-        cn = objConeccion.Conectar
-        da = New SqlDataAdapter("dbo.SP_SEL_MENU", cn)
-        da.Fill(ds, "Menu")
-        Return ds
 
-        'Desechar
-        ds.Dispose()
-        da.Dispose()
-        cn.Dispose()
+        Try
+            sql_query = " SELECT id_opcion " +
+                " ,nombre ,descripcion " +
+                " ,url ,id_padre " +
+                " FROM dbo.g_menu_opcion " +
+                " where obligatorio = 1 Or visible = 1 " +
+                " order by orden "
+
+            Using cn = objConeccion.Conectar
+                Dim command As SqlCommand = New SqlCommand(sql_query, cn)
+                da = New SqlDataAdapter(command)
+                da.Fill(ds)
+                cn.Close()
+
+            End Using
+
+        Catch ex As Exception
+
+        Finally
+            objConeccion.Conectar.Dispose()
+            cn.Dispose()
+
+        End Try
+        Return ds
     End Function
 
     Public Function ObtenerCorrelativoId(ByVal nombreTabla As String, ByVal llave_tabla As String, Optional ByVal TieneEstado As Boolean = False, Optional ByVal llave_filtro As String = Nothing, Optional ByVal valor_llave_filtro As Integer = 0) As Integer

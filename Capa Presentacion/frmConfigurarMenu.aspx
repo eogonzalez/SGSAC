@@ -64,6 +64,8 @@
                     <asp:BoundField DataField="nombre" HeaderText="Nombre" />
                     <asp:BoundField DataField="descripcion" HeaderText="Descripción" />
                     <asp:BoundField DataField="url" HeaderText="URL" />
+                    <asp:BoundField DataField="obligatorio" HeaderText="Obligatorio" />
+                    <asp:BoundField DataField="visible" HeaderText="Visible" />
 
 
 

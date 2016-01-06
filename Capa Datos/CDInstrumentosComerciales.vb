@@ -3454,6 +3454,8 @@ Public Class CDInstrumentosComerciales
             " ,[nombre] " +
             " ,[descripcion] " +
             " ,[url] " +
+            " ,obligatorio " +
+            " ,visible " +
             " FROM [SGSACDB].[dbo].[g_menu_opcion] " +
             " where id_padre = @id_padre " +
             " order by orden "
@@ -3463,6 +3465,8 @@ Public Class CDInstrumentosComerciales
             " ,[nombre] " +
             " ,[descripcion] " +
             " ,[url] " +
+            " ,obligatorio " +
+            " ,visible " +
             " FROM [SGSACDB].[dbo].[g_menu_opcion] " +
             " where id_padre is null " +
             " order by orden "
