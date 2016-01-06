@@ -778,7 +778,7 @@ function validarOpcion() {
         $("#ContentPlaceHolder1_txtNombreOpcion").parent().parent().attr("class", "form-group has-error has-feedback");
         $("#ContentPlaceHolder1_txtNombreOpcion").parent().children("span").text("El campo no puede quedar vacio.").show();
         $("#ContentPlaceHolder1_txtNombreOpcion").parent().append("<span id='iconotextonombrem' class='glyphicon glyphicon-remove form-control-feedback'>");
-        $("#ContentPlaceHolder1_btn_Guardar").attr("Class", "btn btn-primary disabled");
+        $("#ContentPlaceHolder1_btnGuardar").attr("Class", "btn btn-primary disabled");
         return false;
     }
     else {
@@ -787,7 +787,7 @@ function validarOpcion() {
         $("#ContentPlaceHolder1_txtNombreOpcion").parent().parent().attr("class", "form-group has-success has-feedback");
         $("#ContentPlaceHolder1_txtNombreOpcion").parent().children("span").text("").hide();
         $("#ContentPlaceHolder1_txtNombreOpcion").parent().append("<span id='iconotextonombrem' class='glyphicon glyphicon-ok form-control-feedback'>");
-        $("#ContentPlaceHolder1_btn_Guardar").attr("Class", "btn btn-primary");
+        $("#ContentPlaceHolder1_btnGuardar").attr("Class", "btn btn-primary");
     }
 
     if (URL == null || URL.length == 0 || /^\s+$/.test(URL)) {
@@ -796,7 +796,7 @@ function validarOpcion() {
         $("#ContentPlaceHolder1_txtURL").parent().parent().attr("class", "form-group has-error has-feedback");
         $("#ContentPlaceHolder1_txtURL").parent().children("span").text("El campo no puede quedar vacio.").show();
         $("#ContentPlaceHolder1_txtURL").parent().append("<span id='iconotextoURL' class='glyphicon glyphicon-remove form-control-feedback'>");
-        $("#ContentPlaceHolder1_btn_Guardar").attr("Class", "btn btn-primary disabled");
+        $("#ContentPlaceHolder1_btnGuardar").attr("Class", "btn btn-primary disabled");
         return false;
     }
     else {
@@ -814,7 +814,7 @@ function validarOpcion() {
         $("#ContentPlaceHolder1_txtOrden").parent().parent().attr("class", "form-group has-error has-feedback");
         $("#ContentPlaceHolder1_txtOrden").parent().children("span").text("El campo no puede quedar vacio.").show();
         $("#ContentPlaceHolder1_txtOrden").parent().append("<span id='iconotextoOrden' class='glyphicon glyphicon-remove form-control-feedback'>");
-        $("#ContentPlaceHolder1_btn_Guardar").attr("Class", "btn btn-primary disabled");
+        $("#ContentPlaceHolder1_btnGuardar").attr("Class", "btn btn-primary disabled");
         return false;
     }
     else {
@@ -823,6 +823,6 @@ function validarOpcion() {
         $("#ContentPlaceHolder1_txtOrden").parent().parent().attr("class", "form-group has-success has-feedback");
         $("#ContentPlaceHolder1_txtOrden").parent().children("span").text("").hide();
         $("#ContentPlaceHolder1_txtOrden").parent().append("<span id='iconotextoOrden' class='glyphicon glyphicon-ok form-control-feedback'>");
-        $("#ContentPlaceHolder1_btn_Guardar").attr("Class", "btn btn-primary");
+        $("#ContentPlaceHolder1_btnGuardar").attr("Class", "btn btn-primary");
     }
 }

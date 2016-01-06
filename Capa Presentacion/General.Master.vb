@@ -18,7 +18,7 @@ Public Class General
 
     End Sub
 
-    Private Sub LlenarMenu()
+    Public Sub LlenarMenu()
         Dim CapaNegocios As New cnGeneral
         Dim tbl As New DataTable
         tbl = CapaNegocios.MenuPrincipal.Tables("Menu")

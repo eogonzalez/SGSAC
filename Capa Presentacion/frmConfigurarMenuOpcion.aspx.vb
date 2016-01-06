@@ -1,14 +1,17 @@
 ﻿Imports Reglas_del_negocio
 Imports Capa_Entidad
-Public Class frmConfigurarMenu
+Public Class frmConfigurarMenuOpcion
     Inherits System.Web.UI.Page
     Dim objCN As New CNInstrumentosComerciales
 
 #Region "Funciones del Sistema"
-
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not IsPostBack Then
-            Llenar_gvOpcionesMenu()
+            Dim id_padre As Integer
+            id_padre = Request.QueryString("id_om").ToString
+            Session.Add("id_padre", id_padre)
+
+            Llenar_gvOpcionesMenu(id_padre)
 
             'Valores por defecto si es nuevo
             txtOrden.Text = 0
@@ -17,7 +20,6 @@ Public Class frmConfigurarMenu
 
             Me.btnGuardar.Attributes.Add("onclick", "this.value='Guardando Espere...';this.disabled=true;" & ClientScript.GetPostBackEventReference(btnGuardar, ""))
         End If
-
     End Sub
 
     Protected Sub lkBtt_editar_Click(sender As Object, e As EventArgs) Handles lkBtt_editar.Click
@@ -48,7 +50,7 @@ Public Class frmConfigurarMenu
             'Cuando el cambio se da por edicion
             If EditarOpcion(Session("id_menu_opcion")) Then
                 Mensaje("Opcion actualizada con exito.")
-                Llenar_gvOpcionesMenu()
+                Llenar_gvOpcionesMenu(Session("id_padre"))
                 btnGuardar.CommandName = ""
                 LimpiarEditarOpcion()
             Else
@@ -61,7 +63,7 @@ Public Class frmConfigurarMenu
                 Mensaje("Opcion guardada con exito.")
                 Dim objGeneral As New General
                 'objGeneral.LlenarMenu()
-                Llenar_gvOpcionesMenu()
+                Llenar_gvOpcionesMenu(Session("id_padre"))
                 LimpiarEditarOpcion()
             Else
                 Mensaje("Error al guardar opcion.")
@@ -70,20 +72,12 @@ Public Class frmConfigurarMenu
         End If
     End Sub
 
-    Protected Sub lkBtt_opcionesMenu_Click(sender As Object, e As EventArgs) Handles lkBtt_opcionesMenu.Click
-        Dim id_menu_opcion As Integer
-        id_menu_opcion = getIdMenuOpcionGridView()
-        Session.Add("id_menu_opcion", id_menu_opcion)
-
-        If id_menu_opcion = 0 Then
-            Mensaje("Seleccione una opcion.")
-            Exit Sub
-        Else
-            Response.Redirect("~/frmConfigurarMenuOpcion.aspx?id_om=" + id_menu_opcion.ToString)
-        End If
+    Protected Sub lkBtt_Regresar_Click(sender As Object, e As EventArgs) Handles lkBtt_Regresar.Click
+        Response.Redirect("~/frmConfigurarMenu.aspx")
     End Sub
 
 #End Region
+
 
 #Region "Funciones para capturar valores del formulario"
     Function getNombreOpcion() As String
@@ -114,10 +108,10 @@ Public Class frmConfigurarMenu
 
 #Region "Mis Funciones"
 
-    Protected Sub Llenar_gvOpcionesMenu()
+    Protected Sub Llenar_gvOpcionesMenu(ByVal id_padre As Integer)
         Dim tbl As New DataTable
 
-        tbl = objCN.SelectOpcionesMenu()
+        tbl = objCN.SelectOpcionesMenu(id_padre)
 
         With gvOpcionesMenu
             .DataSource = tbl
@@ -148,7 +142,7 @@ Public Class frmConfigurarMenu
     Sub LlenarMenuOpcionMant(ByVal id_menu_opcion As Integer)
         Dim dtOpcion As New DataTable
 
-        dtOpcion = objCN.SelectOpcionMant(id_menu_opcion)
+        dtOpcion = objCN.SelectOpcionMant(id_menu_opcion, Session("id_padre"))
 
         If dtOpcion.Rows.Count = 0 Then
             Mensaje("La opcion no existe.")
@@ -251,7 +245,7 @@ Public Class frmConfigurarMenu
         obj_CEOpcion.orden = getOrden()
         obj_CEOpcion.obligatorio = getObligatorio()
         obj_CEOpcion.visible = getVisible()
-        obj_CEOpcion.id_padre = Nothing
+        obj_CEOpcion.id_padre = Session("id_padre")
 
 
         Return objCN.SaveOpcionMenu(obj_CEOpcion)
@@ -268,11 +262,12 @@ Public Class frmConfigurarMenu
         obj_CeOpcion.orden = getOrden()
         obj_CeOpcion.obligatorio = getObligatorio()
         obj_CeOpcion.visible = getVisible()
-        obj_CeOpcion.id_padre = Nothing
+        obj_CeOpcion.id_padre = Session("id_padre")
 
         Return objCN.UpdateOpcionMenu(obj_CeOpcion)
     End Function
 
 #End Region
 
+    
 End Class

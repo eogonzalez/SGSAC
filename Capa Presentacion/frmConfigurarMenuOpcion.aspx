@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/General.Master" CodeBehind="frmConfigurarMenu.aspx.vb" Inherits="Capa_Presentacion.frmConfigurarMenu" %>
+﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/General.Master" CodeBehind="frmConfigurarMenuOpcion.aspx.vb" Inherits="Capa_Presentacion.frmConfigurarMenuOpcion" %>
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
@@ -23,9 +23,9 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-    <%-- Panel principal --%>
+        <%-- Panel principal --%>
     <div class="panel panel-primary">
-        <div class="panel-heading">Configuracion del Menu</div>
+        <div class="panel-heading">Configuracion del Menu de Opciones</div>
         <br />
 
         <div class="btn-group pull-right" role="group">
@@ -36,10 +36,9 @@
                 DynamicServicePath="" TargetControlID="lkBtt_nuevo">
             </cc1:ModalPopupExtender>
 
-
             <asp:LinkButton ID="lkBtt_editar" runat="server" CssClass="btn btn-primary"> <i aria-hidden="true" class="glyphicon glyphicon-edit"></i> Editar Opción </asp:LinkButton>
 
-            <asp:LinkButton ID="lkBtt_opcionesMenu" runat="server" CssClass="btn btn-primary"> <i aria-hidden="true" class="glyphicon glyphicon-th-list"></i> Opciones del Menu </asp:LinkButton>
+            <asp:LinkButton ID="lkBtt_Regresar" runat="server" CssClass="btn btn-primary"> <i aria-hidden="true" class="glyphicon glyphicon-arrow-left"></i> Regresar </asp:LinkButton>
 
         </div>
 
@@ -130,5 +129,6 @@
             </div>
         </asp:Panel>
     </div>
+
 
 </asp:Content>
