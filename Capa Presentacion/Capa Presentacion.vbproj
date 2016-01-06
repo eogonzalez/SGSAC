@@ -96,6 +96,7 @@
     <Import Include="System.Web.UI.HtmlControls" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="frmApruebaSAC.aspx" />
     <Content Include="frmAsignaCategoriasSAC.aspx" />
     <Content Include="frmAsignaPrecision.aspx" />
     <Content Include="frmCategoriasDesgravacion.aspx" />
@@ -140,6 +141,13 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="frmApruebaSAC.aspx.designer.vb">
+      <DependentUpon>frmApruebaSAC.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="frmApruebaSAC.aspx.vb">
+      <DependentUpon>frmApruebaSAC.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="frmAsignaCategoriasSAC.aspx.designer.vb">
       <DependentUpon>frmAsignaCategoriasSAC.aspx</DependentUpon>
     </Compile>

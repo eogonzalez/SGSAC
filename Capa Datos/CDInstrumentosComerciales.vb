@@ -3617,8 +3617,8 @@ Public Class CDInstrumentosComerciales
             Dim objGeneral As New General
 
             sql_query = " UPDATE [SGSACDB].[dbo].[g_menu_opcion] " +
-                " set nombre =@nombre,  descripcion = @descripcion, " +
-                " visible = @visible, obligatorio = @obligatorio, " +
+                " set nombre = @nombre,  descripcion = @descripcion, " +
+                " url = @url, visible = @visible, obligatorio = @obligatorio, " +
                 " orden = @orden "
 
             If Not obj_CeOpcion.id_padre = Nothing Then
