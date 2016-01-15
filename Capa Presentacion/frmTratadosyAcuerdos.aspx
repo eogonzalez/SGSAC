@@ -136,6 +136,11 @@
                     <asp:Label ID="Label3" CssClass="control-label col-xs-4" runat="server" Text="Tipo Instrumento:"></asp:Label>
                     <div class="col-xs-8">
                         <asp:DropDownList ID="ddlstTipoInstrumento" CssClass="form-control" runat="server">
+                            <asp:ListItem Value="H0">HS1988</asp:ListItem>
+                            <asp:ListItem Value="H1">HS1996</asp:ListItem>
+                            <asp:ListItem Value="H2">HS2002</asp:ListItem>
+                            <asp:ListItem Value="H3">HS2007</asp:ListItem>
+                            <asp:ListItem Value="H4">HS2012</asp:ListItem>
                         </asp:DropDownList>
                     </div>
                 </div>

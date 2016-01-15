@@ -212,11 +212,110 @@ Partial Public Class frmApruebaSAC
     Protected WithEvents txt_observaciones As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''Control btn_Salir.
+    '''Control lkb_firmas.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents btn_Salir As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents lkb_firmas As Global.System.Web.UI.WebControls.LinkButton
+
+    '''<summary>
+    '''Control lkb_cancelar.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents lkb_cancelar As Global.System.Web.UI.WebControls.LinkButton
+
+    '''<summary>
+    '''Control lkb_aprobar.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents lkb_aprobar As Global.System.Web.UI.WebControls.LinkButton
+
+    '''<summary>
+    '''Control lbl_primer_usuario.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents lbl_primer_usuario As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''Control txt_primer_usuario.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents txt_primer_usuario As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Control lbl_primer_contraseña.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents lbl_primer_contraseña As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''Control txt_primer_contraseña.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents txt_primer_contraseña As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Control Label8.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents Label8 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''Control txt_segundo_usuario.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents txt_segundo_usuario As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Control Label9.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents Label9 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''Control txt_segunda_contraseña.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents txt_segunda_contraseña As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Control btn_salir.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents btn_salir As Global.System.Web.UI.WebControls.Button
 End Class

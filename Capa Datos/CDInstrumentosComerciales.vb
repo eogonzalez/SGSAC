@@ -3659,4 +3659,38 @@ Public Class CDInstrumentosComerciales
 
 #End Region
 
+#Region "Funcion y procedimientos para los procesos de Aprobacion"
+
+    'Funcion que aprueba 
+    Public Function ApruebaSAC() As Boolean
+        Dim estado As Boolean = True
+
+
+        Try
+            Using connexion = objConeccion.Conectar
+                Dim command = New SqlCommand("dbo.APRUEBA_SAC", connexion)
+                connexion.Open()
+
+                If command.ExecuteScalar() > 0 Then
+                    estado = True
+                Else
+                    estado = False
+                End If
+
+
+            End Using
+
+
+        Catch ex As SqlException
+
+        Catch ex As Exception
+
+        End Try
+
+
+        Return estado
+    End Function
+
+#End Region
+
 End Class
