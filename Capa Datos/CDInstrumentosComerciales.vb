@@ -3682,11 +3682,283 @@ Public Class CDInstrumentosComerciales
 
 
         Catch ex As SqlException
+            estado = False
+        Catch ex As Exception
+            estado = False
+        End Try
+
+        Return estado
+    End Function
+
+    Public Function VerificaApruebaSAC(ByVal anio_version As Integer, ByVal anio_inicia_enmienda As Integer) As Boolean
+        Dim estado As Boolean = True
+        Dim sql_query As String
+
+        Try
+            sql_query = " select " +
+                " count(1) " +
+                " FROM " +
+                " SAC_Versiones_Bitacora " +
+                " where " +
+                " anio_version = @anio_version AND " +
+                " anio_inicia_enmienda = @anio_inicia_enmienda AND " +
+                " estado is null "
+
+            Using conn = objConeccion.Conectar
+                Dim command = New SqlCommand(sql_query, conn)
+                command.Parameters.AddWithValue("anio_version", anio_version)
+                command.Parameters.AddWithValue("anio_inicia_enmienda", anio_inicia_enmienda)
+                conn.Open()
+
+                If command.ExecuteScalar() > 0 Then
+                    estado = True
+                Else
+                    estado = False
+                End If
+
+
+            End Using
+
+        Catch ex As SqlException
+            estado = False
+        Catch ex As Exception
+            estado = False
+        End Try
+
+        Return estado
+    End Function
+
+    Public Function ApruebaSACF(ByVal anio_version As Integer, ByVal anio_inicia_enmienda As Integer) As Boolean
+        Dim estado As Boolean = True
+        Dim sql_query As String
+        Try
+            '      Se Verifica que no este previamente "APROBADA" la Correlacio
+            '       @AnioProcesa es pasado como parametro de la Versión del SAC por Aprobar
+
+            If VerificaApruebaSAC(anio_version, anio_inicia_enmienda) Then
+
+
+                'a) De SAC_Versiones_Bitacora obtener Anio_version y Anio_inicia_enmienda activa "ESTADO= 'A' 
+                sql_query = " SELECT Anio_version, Anio_inicia_enmienda, Anio_fin_enmieda " +
+                    " FROM SAC_Versiones_Bitacora " +
+                    " WHERE  ESTADO = 'A' "
+                Dim AnioVERCorAct As Integer
+                Dim AnioIniciaEnmienda As Integer
+                Dim AnioFinEnmienda As Integer
+
+                'aa) De SAC_Versiones_Bitacora obtener Anio_version DE NUEVA CORRELACION "ESTADO= NULL 
+
+                sql_query = " SELECT  id_version,Anio_version " +
+                    " FROM SAC_Versiones_Bitacora " +
+                    " WHERE estado Is NULL "
+                Dim id_verCorNew As Integer
+                Dim AnioVerCorNew As Integer
+
+                'b) VERIFICA Y ELIMINA TODOS LOS REGISTROS DE LA TABLA: TEMP_INCISOS
+
+                Dim CanReg As Integer = 0
+
+                sql_query = "DELETE TEM_Incisos"
+
+                'c) COPIA de SAC_INCISOS los INCISOS con ESTADO = 'A'  a LA TABLA: TEMP_INCISOS 
+
+                sql_query = " INSERT INTO TEM_Incisos (ID_Version, Anio_Version,Codigo_inciso,texto_inciso, dai_base, Estado ) " +
+                    " SELECT(ID_Version, anio_version, Codigo_inciso, texto_inciso, dai_base, estado) " +
+                    " FROM SAC_Incisos " +
+                    " WHERE Estado = 'A'  "
+
+                'd) Elimina de la tabla: TEMP_INCISOS, los incisos que en SAC_CORRELACION tienen Inciso_nuevo IS NULL
+                sql_query = " SELECT distinct Inciso_origen " +
+                    " FROM SAC_CORRELACION " +
+                    " WHERE Inciso_nuevo Is NULL " +
+                    " AND estado Is NULL "
+
+                CanReg = 0
+
+                Dim IncisoOrigen As String
+
+                'For index = 1 To 10
+
+                sql_query = " DELETE TEM_Incisos " +
+                    " WHERE  Codigo_inciso = @IncisoOrigen; "
+
+                CanReg = CanReg + 1
+
+                'Next
+
+                'e) Inserta en tabla: TEMP_INCISOS todos los INCISOS  de correlacion con 
+                '    "Inciso_Nuevo" IS NOT NULL en SAC_CORRELACION
+
+                sql_query = " SELECT version,anio_nueva_version,Inciso_nuevo, texto_inciso, dai_nuevo " +
+                    " FROM SAC_CORRELACION " +
+                    " WHERE Inciso_nuevo Is Not NULL " +
+                    " AND estado Is NULL " +
+                    " AND Anio_Nueva_version =  @AnioVerCorNew " +
+                    " ORDER BY Inciso_nuevo "
+
+                Dim Id_Version As Integer
+                Dim AnioNuevaVer As Integer
+                Dim IncisoNuevo As String
+                Dim Texto_Inciso As String
+                Dim DAI As Integer
+                Dim inciso As String
+
+                'For index = 1 To 10
+                If  inciso != IncisoNuevo then
+                    sql_query = "  INSERT INTO TEM_Incisos (ID_Version, Anio_Version,Codigo_inciso,texto_inciso, dai_base ) " +
+                        " VALUES (@ID_Version,@AnioNuevaVer,@IncisoNuevo, @Texto_Inciso,@DAI); "
+                    IncisoNuevo = inciso
+                End If
+
+                'Next
+
+                'Elimina Incisos Repetidos en TEM_INCISOS
+                sql_query = " SELECT CODIGO_INCISO, COUNT(1) AS TT FROM TEM_Incisos " +
+                    " GROUP BY CODIGO_INCISO " +
+                    " ORDER BY TT  DESC "
+
+                'For index = 1 To 10
+                sql_query = " DELETE TEM_Incisos " +
+                    " WHERE  CODIGO_INCISO = @Codi " +
+                    " AND ESTADO ='A' "
+
+                'Next
+
+                ' G) Verifica en cada Instrumentode Impacto generado por la Correlación e Ingresa los
+                ' registros en tabla CORRELACION_INSTRUMENTOS con "INCISO_ORIGEN" de la tabla SAC_CORRELACION 
+
+                'f1)Identifica incisos Aperturados que afecten a un Instrumento
+                sql_query = " SELECT Inciso_origen " +
+                    " FROM SAC_CORRELACION " +
+                    " WHERE estado Is NULL " +
+                    " GROUP BY Inciso_origen " +
+                    " ORDER BY Inciso_origen "
+
+                '/**	BUSCA AFECTACION EN INSTRUMENTOS  **/
+                'For index = 1 To 10
+                '/**	CONTEO DE APERTURAS DE CADA INCISO CORRELACION **/
+                Dim situacion As String
+                sql_query = " SELECT count(1)  FROM SAC_Correlacion " +
+                    " WHERE INCISO_ORIGEN =@IncisoOrigen " +
+                    " AND estado Is NULL " +
+                    " AND(INCISO_NUEVO Is Not NULL Or DATALENGTH(INCISO_NUEVO) > 0) "
+                If CanReg > 0 Then
+                    situacion = " -APERTURADO-"
+                End If
+
+                '/**	IDETIFICA SI EL INCISO SE SUPRIME O NO EN LA CORRELACION **/
+                Dim suprime As Integer
+                sql_query = " (SELECT count(1) FROM SAC_Correlacion " +
+                    " WHERE INCISO_ORIGEN = @IncisoOrigen " +
+                    " AND estado Is NULL " +
+                    " AND (INCISO_NUEVO IS NULL OR DATALENGTH(INCISO_NUEVO)= 0)) "
+                If suprime > 0 Then
+                    situacion = situacion + " -SUPRIMIDO- "
+                End If
+
+                '/**	OBTIENE DATOS DEL INCISO ORIGINAL  **/
+                sql_query = " SELECT texto_inciso,dai_base " +
+                    " FROM SAC_Incisos " +
+                    " WHERE Estado = 'A' " +
+                    " AND CODIGO_INCISO = @IncisoOrigen "
+
+                '/**	OBTIENE DATOS DE LA CORRELACION  **/
+
+                sql_query = " (SELECT max(dai_nuevo) FROM SAC_Correlacion " +
+                    " WHERE INCISO_ORIGEN =@IncisoOrigen " +
+                    " AND estado Is NULL " +
+                    " AND (INCISO_NUEVO IS NOT NULL OR DATALENGTH(INCISO_NUEVO)> 0)) "
+                Dim dai_max As Integer
+
+                sql_query = " (SELECT min(dai_nuevo) FROM SAC_Correlacion " +
+                    " WHERE INCISO_ORIGEN =@IncisoOrigen " +
+                    " AND estado Is NULL " +
+                    " AND (INCISO_NUEVO IS NOT NULL OR DATALENGTH(INCISO_NUEVO)> 0)) "
+
+                Dim dai_min As Integer
+
+                '/**	OBTIENE DATOS DE LOS TRATADOS  E INSERTA DATOS EN TABLA DE AFECTA TRATADO   **/
+
+                sql_query = " SELECT CODIGO_INCISO,id_instrumento,id_categoria " +
+                    " FROM SAC_Asocia_Categoria " +
+                    " WHERE estado = 'A' " +
+                    " AND  CODIGO_INCISO =  @IncisoOrigen " +
+                    " GROUP BY CODIGO_INCISO,id_instrumento,id_categoria; "
+
+                Dim Codigo_Inciso_Inst As String
+                If Codigo_Inciso_Inst.Length > 4 Then
+                    Dim nombre_instrumento As String
+                    Dim codigo_categoria As String
+
+                    sql_query = " SELECT Nombre_Instrumento FROM IC_INSTRUMENTOS " +
+                        " WHERE id_instrumento = @ID_Instrumento "
+
+                    sql_query = " SELECT  Codigo_Categoria FROM IC_Categorias_Desgravacion  " +
+                        " WHERE id_instrumento = @ID_Instrumento " +
+                        " AND ID_Categoria   = @ID_Categoria "
+
+                    sql_query = " INSERT INTO Correlacion_Instrumentos " +
+                        " (inciso_original,situacion, id_instrumento, " +
+                        " texto_original, dai_original, " +
+                        " anio_anterior_cor, canti_aperturas, " +
+                        " nombre_instrumento,id_categoria,codigo_categoria, " +
+                        " ver_nueva_cor, anio_nueva_cor, " +
+                        " dai_max_nuevo,dai_min_nuevo, " +
+                        " estado,accion_propuesta, " +
+                        " fecha_generada,usuario_generada )   " +
+                        " VALUES (@Codigo_Inciso_Inst,@Situacion,@ID_Instrumento, " +
+                        " @Texto_Inciso, @DAI_Ori," +
+                        " @AnioVerCorAct,@CanReg, " +
+                        " @Nombre_Instrumento,@ID_Categoria,@Codigo_Categoria, " +
+                        " @ID_VerCorNew, @AnioVerCorNew, " +
+                        " @DAI_Max,@DAI_Min, " +
+                        " 'PENDIENTE', 'Revisar lista de nuevos incisos aperturados y definir si requiere de asociar la respectiva categoría de desgravación para el tratado o acuerdo', " +
+                        " SYSDATETIME(),'USER') "
+
+
+
+                End If
+
+
+                'Next
+
+                'h) En SAC_INCISOS cambia "el estado" de los registros CON ESTADO = 'I' al ESTADO='H'(historico)**/
+
+                sql_query = " UPDATE SAC_INCISOS SET ESTADO = 'H' "+
+                    " WHERE  ESTADO = 'I' "
+
+                '/** I) En SAC_INCISOS cambia "el estado" de los registros CON ESTADO = 'A' al ESTADO='I'(Inactivo)**/
+                sql_query = " UPDATE SAC_INCISOS SET ESTADO = 'I' " +
+                    " WHERE  ESTADO = 'A' "
+
+                '/** J) SE INSERTAN EN SAC_INCISOS los registros de nueva Version y cambia ESTADO = 'A' (Activo) **/
+
+
+                '                328.	    UPDATE TEM_INCISOS SET ID_VERSION = @ID_VerCorNew, anio_version = @AnioVerCorNew;
+                '329.	   INSERT INTO SAC_Incisos (ID_Version, Anio_Version,Codigo_inciso,texto_inciso, dai_base, Estado )
+                '330.	   SELECT ID_Version, Anio_Version,Codigo_inciso,texto_inciso, dai_base, 'A' 
+                '331:            .FROM TEM_Incisos
+                '332.	   
+                '333.	   UPDATE SAC_Versiones_Bitacora SET ESTADO = 'I'
+                '334.	    WHERE  ESTADO = 'A' 
+                '335.	
+                '336.	   UPDATE SAC_Versiones_Bitacora SET ESTADO = 'A'
+                '337:            .WHERE estado Is NULL
+
+
+            Else
+                estado = False
+            End If
+
+
+
+
+
+        Catch ex As SqlException
 
         Catch ex As Exception
 
         End Try
-
 
         Return estado
     End Function
@@ -3694,3 +3966,4 @@ Public Class CDInstrumentosComerciales
 #End Region
 
 End Class
+
