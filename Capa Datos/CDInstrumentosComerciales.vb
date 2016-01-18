@@ -1865,7 +1865,7 @@ Public Class CDInstrumentosComerciales
 
                         sql_query = " SELECT coalesce(count(codigo_inciso),0) " +
                            " FROM " +
-                           " [SGSACDB].[dbo].[SAC_Asocia_Categoria] " +
+                           " [SAC_Asocia_Categoria] " +
                            " WHERE " +
                            " id_instrumento = @id_instrumento AND " +
                            " id_version = @id_version AND " +
@@ -1915,7 +1915,7 @@ Public Class CDInstrumentosComerciales
 
                         sql_query = " SELECT coalesce(count(codigo_inciso),0) " +
                            " FROM " +
-                           " [SGSACDB].[dbo].[SAC_Asocia_Categoria] " +
+                           " [SAC_Asocia_Categoria] " +
                            " WHERE " +
                            " id_instrumento = @id_instrumento AND " +
                            " id_version = @id_version AND " +
@@ -2423,7 +2423,7 @@ Public Class CDInstrumentosComerciales
         Try
             Dim sql_string As New System.Text.StringBuilder
 
-            sql_string.AppendLine("UPDATE [SGSACDB].[dbo].[IC_Instrumento_Paises]")
+            sql_string.AppendLine("UPDATE [IC_Instrumento_Paises]")
             sql_string.AppendLine("   SET [ID_PAIS] = " & obj.idPais)
             sql_string.AppendLine("      ,[ID_TIPO_SOCIO] = " & obj.idTipoSocio)
             sql_string.AppendLine("      ,[CODIGO_BLOQUE_PAIS] = " & obj.idBloquePais)
@@ -2458,7 +2458,7 @@ Public Class CDInstrumentosComerciales
         Try
             Dim sql_string As New System.Text.StringBuilder
 
-            sql_string.AppendLine("INSERT INTO [SGSACDB].[dbo].[IC_Instrumento_Paises]")
+            sql_string.AppendLine("INSERT INTO [IC_Instrumento_Paises]")
             sql_string.AppendLine("           (")
             sql_string.AppendLine("           [ID_INSTRUMENTO]")
             sql_string.AppendLine("           ,[ID_PAIS]")
@@ -2511,7 +2511,7 @@ Public Class CDInstrumentosComerciales
             sql_string.AppendLine("      ,[FECHA_FIRMA]")
             sql_string.AppendLine("      ,[FECHA_RATIFICACION]")
             sql_string.AppendLine("      ,[FECHA_VIGENCIA]")
-            sql_string.AppendLine("  FROM [SGSACDB].[dbo].[IC_Instrumento_Paises]")
+            sql_string.AppendLine("  FROM [IC_Instrumento_Paises]")
             sql_string.AppendLine("  WHERE ID_INSTRUMENTO = " & idInstrumento)
             sql_string.AppendLine("  AND ID_PAIS = " & idPais)
             sql_string.AppendLine("  AND ID_TIPO_SOCIO = " & idTipoSocio)
@@ -2571,7 +2571,7 @@ Public Class CDInstrumentosComerciales
 
             sql_string.AppendLine("SELECT [id_tipo_socio]")
             sql_string.AppendLine("      ,[descripcion]")
-            sql_string.AppendLine("FROM [SGSACDB].[dbo].[IC_Tipo_Socio]")
+            sql_string.AppendLine("FROM [IC_Tipo_Socio]")
 
             Using cn = objConeccion.Conectar
                 Dim command As SqlCommand = New SqlCommand(sql_string.ToString, cn)
@@ -2594,7 +2594,7 @@ Public Class CDInstrumentosComerciales
 
             sql_string.AppendLine("SELECT [ID_BLOQUE_PAIS]")
             sql_string.AppendLine("      ,[DESCRIPCION]")
-            sql_string.AppendLine("FROM [SGSACDB].[dbo].[IC_Bloque_Pais]")
+            sql_string.AppendLine("FROM [IC_Bloque_Pais]")
 
             Using cn = objConeccion.Conectar
                 Dim command As SqlCommand = New SqlCommand(sql_string.ToString, cn)
@@ -2618,7 +2618,7 @@ Public Class CDInstrumentosComerciales
             sql_string.AppendLine("SELECT [id_pais]")
             sql_string.AppendLine("      ,[nombre_pais]")
             sql_string.AppendLine("      ,[codigo_alfa]")
-            sql_string.AppendLine("FROM [SGSACDB].[dbo].[G_Paises]")
+            sql_string.AppendLine("FROM [G_Paises]")
             sql_string.AppendLine("WHERE estado = 1")
             sql_string.AppendLine("ORDER BY nombre_pais ASC")
 
@@ -2647,7 +2647,7 @@ Public Class CDInstrumentosComerciales
             sql_string.AppendLine("      ,instrumento.[sigla]")
             sql_string.AppendLine("      ,instrumento.[sigla_alternativa]")
             sql_string.AppendLine("      ,relacion.descripcion as AcuerdoEntre")
-            sql_string.AppendLine("FROM [SGSACDB].[dbo].[IC_Instrumentos] as instrumento")
+            sql_string.AppendLine("FROM [IC_Instrumentos] as instrumento")
             sql_string.AppendLine("	inner	JOIN dbo.IC_Tipo_Instrumento as tipo")
             sql_string.AppendLine("		on instrumento.id_tipo_instrumento = tipo.id_tipo_instrumento")
             sql_string.AppendLine("	INNER JOIN dbo.IC_Tipo_Relacion_Instrumento as relacion")
@@ -3456,7 +3456,7 @@ Public Class CDInstrumentosComerciales
             " ,[url] " +
             " ,obligatorio " +
             " ,visible " +
-            " FROM [SGSACDB].[dbo].[g_menu_opcion] " +
+            " FROM [g_menu_opcion] " +
             " where id_padre = @id_padre " +
             " order by orden "
         Else
@@ -3467,7 +3467,7 @@ Public Class CDInstrumentosComerciales
             " ,[url] " +
             " ,obligatorio " +
             " ,visible " +
-            " FROM [SGSACDB].[dbo].[g_menu_opcion] " +
+            " FROM [g_menu_opcion] " +
             " where id_padre is null " +
             " order by orden "
         End If
@@ -3513,7 +3513,7 @@ Public Class CDInstrumentosComerciales
             " ,[orden] " +
             " ,[visible] " +
             " ,[obligatorio] " +
-            " FROM [SGSACDB].[dbo].[g_menu_opcion] " +
+            " FROM [g_menu_opcion] " +
             " where " +
             " id_opcion =  @id_opcion "
 
@@ -3524,7 +3524,7 @@ Public Class CDInstrumentosComerciales
             " ,[orden] " +
             " ,[visible] " +
             " ,[obligatorio] " +
-            " FROM [SGSACDB].[dbo].[g_menu_opcion] " +
+            " FROM [g_menu_opcion] " +
             " where " +
             " id_padre is NULL AND " +
             " id_opcion =  @id_opcion "
@@ -3563,7 +3563,7 @@ Public Class CDInstrumentosComerciales
             id_menu_opcion = objGeneral.ObtenerCorrelativoId("g_menu_opcion", "id_opcion")
 
 
-            sql_query = " INSERT INTO [SGSACDB].[dbo].[g_menu_opcion] " +
+            sql_query = " INSERT INTO [g_menu_opcion] " +
                 " ([id_opcion], [nombre], [descripcion] "
 
             If obj_CeOpcion.id_padre = Nothing Then
@@ -3616,7 +3616,7 @@ Public Class CDInstrumentosComerciales
             Dim sql_query As String
             Dim objGeneral As New General
 
-            sql_query = " UPDATE [SGSACDB].[dbo].[g_menu_opcion] " +
+            sql_query = " UPDATE [g_menu_opcion] " +
                 " set nombre = @nombre,  descripcion = @descripcion, " +
                 " url = @url, visible = @visible, obligatorio = @obligatorio, " +
                 " orden = @orden "
