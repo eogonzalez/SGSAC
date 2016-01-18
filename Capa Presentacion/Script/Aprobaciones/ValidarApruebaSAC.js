@@ -6,7 +6,7 @@ function inicio() {
     $("#ContentPlaceHolder1_lkb_cancelar").click(deshabilitar);
     
     var obj_primerUsuario = document.getElementById('ContentPlaceHolder1_txt_primer_usuario');
-    var contenido_primerUsuario = document.getElementById('ContentPlaceHolder1_txt_primer_usuario').value;
+    var contenido_primerUsuario = $("#ContentPlaceHolder1_txt_primer_usuario").val();
 
     if (obj_primerUsuario.getAttribute("disabled") != "true" && contenido_primerUsuario == null || contenido_primerUsuario.length == 0) {
         $("#ContentPlaceHolder1_txt_primer_usuario").prop("disabled", true);
@@ -24,8 +24,8 @@ function inicio() {
 
 function habilitar() {
 
-    $("#ContentPlaceHolder1_lkb_cancelar").removeProp("disabled");
-    $("#ContentPlaceHolder1_lkb_firmas").prop("disabled", true);
+    //$("#ContentPlaceHolder1_lkb_cancelar").removeProp("disabled");
+    //$("#ContentPlaceHolder1_lkb_firmas").prop("disabled", true);
 
     $("#ContentPlaceHolder1_txt_primer_usuario").removeProp("disabled");
     $("#ContentPlaceHolder1_txt_primer_contraseña").removeProp("disabled");
@@ -38,7 +38,9 @@ function habilitar() {
 function deshabilitar() {
 
     
-    document.getElementById('ContentPlaceHolder1_lkb_aprobar').disabled = "true";
+    //document.getElementById('ContentPlaceHolder1_lkb_aprobar').disabled = "true";
+    //$("#ContentPlaceHolder1_lkb_aprobar").removeProp("disabled");
+    //$("#ContentPlaceHolder1_lkb_firmas").prop("disabled", false);
 
     $("#ContentPlaceHolder1_txt_primer_usuario").prop("disabled", true);
     document.getElementById('ContentPlaceHolder1_txt_primer_usuario').value = "";

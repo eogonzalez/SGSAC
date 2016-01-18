@@ -3804,7 +3804,7 @@ Public Class CDInstrumentosComerciales
                 Dim inciso As String
 
                 'For index = 1 To 10
-                If  inciso != IncisoNuevo then
+                If (inciso <> IncisoNuevo) Then
                     sql_query = "  INSERT INTO TEM_Incisos (ID_Version, Anio_Version,Codigo_inciso,texto_inciso, dai_base ) " +
                         " VALUES (@ID_Version,@AnioNuevaVer,@IncisoNuevo, @Texto_Inciso,@DAI); "
                     IncisoNuevo = inciso
