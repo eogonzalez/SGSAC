@@ -2,7 +2,7 @@
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-        <style type="text/css">
+    <style type="text/css">
         .ColumnaOculta {
             display: none;
         }
@@ -12,85 +12,21 @@
     <script src="Script/jQuery/jquery.validate.js"></script>
     <script src="Script/Aprobaciones/ValidarApruebaSAC.js"></script>
 
-
-<%--    <script type="text/javascript">
-        $(document).ready(inicio);
-
-        function inicio() {
-
-            $("#ContentPlaceHolder1_lkb_firmas").click(habilitar);
-            $("#ContentPlaceHolder1_lkb_cancelar").click(deshabilitar);
-
-            var obj_primerUsuario = document.getElementById('ContentPlaceHolder1_txt_primer_usuario');
-            var contenido_primerUsuario = $("#ContentPlaceHolder1_txt_primer_usuario").val();
-
-            if (obj_primerUsuario.getAttribute("disabled") != "true" && contenido_primerUsuario == null || contenido_primerUsuario.length == 0) {
-                $("#ContentPlaceHolder1_txt_primer_usuario").prop("disabled", true);
-                $("#ContentPlaceHolder1_txt_primer_contraseña").prop("disabled", true);
-            }
-
-            var obj_segundoUsuario = document.getElementById('ContentPlaceHolder1_txt_segundo_usuario');
-            var contenido_segundoUsuario = document.getElementById('ContentPlaceHolder1_txt_segundo_usuario').value;
-
-            if (obj_segundoUsuario.getAttribute("disabled") != "true" && contenido_segundoUsuario == null || contenido_segundoUsuario.length == 0) {
-                $("#ContentPlaceHolder1_txt_segundo_usuario").prop("disabled", true);
-                $("#ContentPlaceHolder1_txt_segunda_contraseña").prop("disabled", true);
-            }
-        }
-
-        function habilitar() {
-
-            $("#ContentPlaceHolder1_lkb_cancelar").removeProp("disabled");
-            $("#ContentPlaceHolder1_lkb_firmas").prop("disabled", true);
-
-            $("#ContentPlaceHolder1_txt_primer_usuario").removeProp("disabled");
-            $("#ContentPlaceHolder1_txt_primer_contraseña").removeProp("disabled");
-
-            $("#ContentPlaceHolder1_txt_segundo_usuario").removeProp("disabled");
-            $("#ContentPlaceHolder1_txt_segunda_contraseña").removeProp("disabled");
-
-        }
-
-        function deshabilitar() {
-
-
-            document.getElementById('ContentPlaceHolder1_lkb_aprobar').disabled = "true";
-
-            $("#ContentPlaceHolder1_txt_primer_usuario").prop("disabled", true);
-            document.getElementById('ContentPlaceHolder1_txt_primer_usuario').value = "";
-
-
-            $("#ContentPlaceHolder1_txt_primer_contraseña").prop("disabled", true);
-            document.getElementById('ContentPlaceHolder1_txt_primer_contraseña').value = "";
-
-
-            $("#ContentPlaceHolder1_txt_segundo_usuario").prop("disabled", true);
-            document.getElementById('ContentPlaceHolder1_txt_segundo_usuario').value = "";
-
-            $("#ContentPlaceHolder1_txt_segunda_contraseña").prop("disabled", true);
-            document.getElementById('ContentPlaceHolder1_txt_segunda_contraseña').value = "";
-
-        }
-    </script>--%>
-
-
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-        <%-- Panel principal --%>
+    <%-- Panel principal --%>
     <div class="panel panel-primary">
-        <div class="panel-heading"> Configurar Correlaciones </div>
+        <div class="panel-heading">Configurar Correlaciones </div>
 
         <%-- Cuerpo del Formulario --%>
         <div class="panel-body form-horizontal">
+
             <%-- Area de datos generales del la version de la enmienda SAC --%>
-            <h5>
-                <span class="label label-default">Datos Generales del SAC Vigente
-                </span>
-            </h5>
+            <h5><span class="label label-default">Datos Generales del SAC Vigente</span></h5>
 
             <div class="form-group">
 
-                <asp:Label ID="lbl_año_vigencia" CssClass="control-label col-xs-2" text="Año Vigencia SAC" runat="server"> </asp:Label>
+                <asp:Label ID="lbl_año_vigencia" CssClass="control-label col-xs-2" Text="Año Vigencia SAC" runat="server"> </asp:Label>
                 <div class="col-xs-1">
                     <asp:TextBox ID="txt_año_vigencia" CssClass="form-control" runat="server" disabled> </asp:TextBox>
                 </div>
@@ -98,7 +34,7 @@
                 <asp:Label ID="lbl_version_enmienda" CssClass="control-label col-xs-2" Text="Enmienda al SAC" runat="server"></asp:Label>
                 <div class="col-xs-2">
                     <asp:TextBox ID="txt_version_enmienda" CssClass="form-control" runat="server" disabled> </asp:TextBox>
-                 </div>
+                </div>
 
                 <asp:Label ID="lbl_periodo_enmienda_sac" CssClass="control-label col-xs-2" Text="Periodo Enmienda SAC del:" runat="server"></asp:Label>
                 <div class="col-xs-1">
@@ -109,7 +45,7 @@
                 <div class="col-xs-1">
                     <asp:TextBox ID="txt_periodo_año_final" CssClass="form-control" runat="server" disabled> </asp:TextBox>
                 </div>
-                    
+
             </div>
 
             <div class="form-group">
@@ -122,9 +58,7 @@
             </div>
 
             <%-- Area de datos generales del nuevo SAC --%>
-            <h5>
-                <span class="label label-success"> Datos Generales del Nuevo SAC </span>
-            </h5>
+            <h5><span class="label label-success">Datos Generales del Nuevo SAC </span></h5>
 
             <div class="form-group">
 
@@ -168,54 +102,50 @@
 
             </div>
 
-            
             <div class="text-center">
                 <h3>
-                    <span class="label label-warning"> Firmas de Aprobación </span>
+                    <span class="label label-warning">Firmas de Aprobación </span>
                 </h3>
             </div>
-            
+
             <div class="text-center">
-                <div class="btn-group"> 
+                <div class="btn-group">
                     <asp:LinkButton ID="lkb_firmas" CssClass="btn btn-primary" runat="server"><i aria-hidden="true" class="glyphicon glyphicon-edit"></i> Agregar Firmas </asp:LinkButton>
-                    <asp:LinkButton ID="lkb_cancelar" CssClass="btn btn-danger" runat="server" ><i aria-hidden="true" class="glyphicon glyphicon-remove"></i> Cancelar </asp:LinkButton>
-                    <asp:LinkButton ID="lkb_aprobar" CssClass="btn btn-success" runat="server" ><i aria-hidden="true" class="glyphicon glyphicon-check" ></i> Aprobar </asp:LinkButton>
+                    <asp:LinkButton ID="lkb_cancelar" CssClass="btn btn-danger" runat="server"><i aria-hidden="true" class="glyphicon glyphicon-remove"></i> Cancelar </asp:LinkButton>
+                    <asp:LinkButton ID="lkb_aprobar" CssClass="btn btn-success" runat="server"><i aria-hidden="true" class="glyphicon glyphicon-check" ></i> Aprobar </asp:LinkButton>
                     <%--<asp:LinkButton ID="lkb_salir" CssClass="btn btn-primary" runat="server"><i aria-hidden="true" class="glyphicon glyphicon-do"></i> Salir </asp:LinkButton>                --%>
                 </div>
             </div>
-            
-            <h4>
-                <span class="label label-primary"> Primera firma de aprobación </span>
-            </h4>
+
+            <h4><span class="label label-primary">Primera firma de aprobación </span></h4>
 
             <div class="form-group">
                 <asp:Label ID="lbl_primer_usuario" CssClass="control-label col-xs-2" Text="Usuario:" runat="server"></asp:Label>
                 <div class="col-xs-4">
-                    <asp:TextBox ID="txt_primer_usuario" CssClass="form-control" runat="server" ></asp:TextBox>
+                    <asp:TextBox ID="txt_primer_usuario" CssClass="form-control" runat="server"></asp:TextBox>
                 </div>
 
                 <asp:Label ID="lbl_primer_contraseña" CssClass="control-label col-xs-2" Text="Contraseña:" runat="server"></asp:Label>
                 <div class="col-xs-4">
-                    <asp:TextBox ID="txt_primer_contraseña" type="password" TextMode="Password" CssClass="form-control" runat="server" ></asp:TextBox>
+                    <asp:TextBox ID="txt_primer_contraseña" type="password" TextMode="Password" CssClass="form-control" runat="server"></asp:TextBox>
                 </div>
             </div>
 
-
-            <h4>
-                <span class="label label-primary"> Segunda firma de aprobación </span>
-            </h4>
+            <h4><span class="label label-primary">Segunda firma de aprobación </span></h4>
 
             <div class="form-group">
-                <asp:Label ID="Label8" CssClass="control-label col-xs-2" Text="Usuario:" runat="server" ></asp:Label>
+                <asp:Label ID="Label8" CssClass="control-label col-xs-2" Text="Usuario:" runat="server"></asp:Label>
                 <div class="col-xs-4">
-                    <asp:TextBox ID="txt_segundo_usuario" CssClass="form-control" runat="server" ></asp:TextBox>
+                    <asp:TextBox ID="txt_segundo_usuario" CssClass="form-control" runat="server"></asp:TextBox>
                 </div>
 
                 <asp:Label ID="Label9" CssClass="control-label col-xs-2" Text="Contraseña:" runat="server"></asp:Label>
                 <div class="col-xs-4">
-                    <asp:TextBox ID="txt_segunda_contraseña" type="password" TextMode="Password" CssClass="form-control" runat="server" ></asp:TextBox>
+                    <asp:TextBox ID="txt_segunda_contraseña" type="password" TextMode="Password" CssClass="form-control" runat="server"></asp:TextBox>
                 </div>
             </div>
+
+        </div>
 
         <%-- Pie de formulario --%>
         <div class="panel-footer">

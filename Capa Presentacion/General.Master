@@ -10,7 +10,7 @@
     <title>Sistema de gestión del SAC</title>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
-    
+
     <link href="Style/bootstrap/css/bootstrap.css" rel="stylesheet" />
     <link href="Style/bootstrap/css/bootstrap-theme.css" rel="stylesheet" />
     <link href="Style/OtrosEstilos.css" rel="stylesheet" />
@@ -31,7 +31,7 @@
                 <td style="text-align: center">
                     <asp:Image ID="imgLogo" runat="server" ImageUrl="~/Images/LogoNew.jpg" Height="65px" Width="310px" />
                 </td>
-                <%--<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</td>--%>
+
                 <td style="text-align: center">
                     <asp:Label ID="lblTitulo" runat="server" Text="Sistema de Gestión del SAC <br /> Ministerio de Economía" ForeColor="#054795" Font-Names="Verdana" Font-Bold="true" Font-Size="Large"></asp:Label>
                 </td>
@@ -45,22 +45,42 @@
                 </td>
             </tr>
             <tr>
-                
-                    <td colspan="3" style="text-align: left; width: 100%; background-color: #054795" >
-                        <asp:Menu ID="MenuPrincipal" runat="server" DisappearAfter="500" Orientation="Horizontal" Font-Names="Trebuchet MS, Arial">
-                            <StaticMenuItemStyle BackColor="#054795" ForeColor="White" HorizontalPadding="30" VerticalPadding="5" />
-                            <StaticHoverStyle BackColor="#0066cc" />
-                            <DynamicMenuItemStyle BackColor="#054795" ForeColor="White" HorizontalPadding="30" VerticalPadding="5" />
-                            <DynamicHoverStyle BackColor="#0066cc" />
-                        </asp:Menu>
-                    </td>
-                
+                <td colspan="3" style="text-align: left; width: 100%; background-color: #054795">
+                    <br />
+                    <asp:Menu ID="MenuPrincipal" runat="server" DisappearAfter="500" Orientation="Horizontal" Font-Names="Trebuchet MS, Arial">
+                        <StaticMenuItemStyle BackColor="#054795" ForeColor="White" HorizontalPadding="30" VerticalPadding="5" />
+                        <StaticHoverStyle BackColor="#0066cc" />
+                        <DynamicMenuItemStyle BackColor="#054795" ForeColor="White" HorizontalPadding="30" VerticalPadding="5" />
+                        <DynamicHoverStyle BackColor="#0066cc" />
+                    </asp:Menu>
+                </td>
             </tr>
         </table>
 
         <asp:ScriptManager ID="ToolkitScriptManager1" runat="server" EnableScriptGlobalization="True"></asp:ScriptManager>
-        <%--<asp:ToolkitScriptManager runat="server" EnableScriptGlobalization="True"></asp:ToolkitScriptManager>--%>
         
+<%--        <div class="navbar navbar-default">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <asp:Menu ID="MenuPrincipal" runat="server"
+                        EnableViewState="false"
+                        IncludeStyleBlock="false"
+                        Orientation="Horizontal"
+                        StaticMenuStyle-CssClass="nav"
+                        StaticSelectedStyle-CssClass="active"
+                        DynamicMenuStyle-CssClass="dropdown-menu">
+                    </asp:Menu>
+                </div>
+            </div>
+        </div>--%>
+
         <div>
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
                 <br />
@@ -70,7 +90,7 @@
     </form>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    
+
     <script src="Script/jQuery/jquery-1.11.3.js"></script>
     <script src="Script/jQuery/jquery.validate.js"></script>
     <script src="Style/bootstrap/js/bootstrap.js"></script>
