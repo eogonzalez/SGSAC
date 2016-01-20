@@ -382,6 +382,10 @@ Public Class CNInstrumentosComerciales
         Return objCDInstrumentos.UpdateOpcionMenu(obj_CeOpcion)
     End Function
 
+    Public Function SelectResumenInstrumento(ByVal id_instrumento As Integer) As DataTable
+        Return objCDInstrumentos.SelectResumenInstrumento(id_instrumento)
+    End Function
+
 #End Region
 
 
