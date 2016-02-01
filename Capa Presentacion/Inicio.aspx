@@ -21,13 +21,13 @@
         <table style="margin: 0 auto 0 auto">
             <tr>
                 <td style="text-align:left">
-                    <asp:Menu ID="MenuPrincipal" runat="server" disappearafter="500" Orientation="Horizontal" staticdisplaylevels="2" font-names="Trebuchet MS, Arial" >
+<%--                    <asp:Menu ID="MenuPrincipal" runat="server" disappearafter="500" Orientation="Horizontal" staticdisplaylevels="2" font-names="Trebuchet MS, Arial" >
                         <staticmenuitemstyle backcolor="#054795" forecolor="WhiteSmoke" horizontalpadding="35" verticalpadding="10" />
                         <statichoverstyle backcolor="#0066cc" forecolor="White" borderstyle="Solid" borderwidth="1px" />
                         <dynamicmenuitemstyle backcolor="RoyalBlue" forecolor="WhiteSmoke" horizontalpadding="5" verticalpadding="2" />
                         <dynamichoverstyle backcolor="CornflowerBlue" forecolor="White" borderstyle="Solid" borderwidth="1px" />  
                                      
-                    </asp:Menu>
+                    </asp:Menu>--%>
                 </td>
             </tr>
         </table>

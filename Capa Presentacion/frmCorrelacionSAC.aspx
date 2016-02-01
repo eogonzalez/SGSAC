@@ -318,7 +318,7 @@
                         <asp:TextBox ID="txt_codigo_partida_apertura" CssClass="form-control" runat="server" disabled="disabled"></asp:TextBox>
                     </div>
                     <div class="col-xs-6">
-                        <asp:TextBox ID="txt_descripcion_partida_apertura" CssClass="form-control" runat="server"></asp:TextBox>
+                        <asp:TextBox ID="txt_descripcion_partida_apertura" CssClass="form-control" runat="server" disabled="disabled"></asp:TextBox>
                         <span class="help-block"></span>
                     </div>
                 </div>
@@ -329,7 +329,7 @@
                         <asp:TextBox ID="txt_codigo_subpartida_apertura" CssClass="form-control" runat="server" disabled="disabled"></asp:TextBox>
                     </div>
                     <div class="col-xs-6">
-                        <asp:TextBox ID="txt_descripcion_subpartida_apertura" CssClass="form-control" runat="server"></asp:TextBox>
+                        <asp:TextBox ID="txt_descripcion_subpartida_apertura" CssClass="form-control" runat="server" disabled="disabled"></asp:TextBox>
                         <span class="help-block"></span>
                     </div>
                 </div>

@@ -5,7 +5,7 @@ Public Class General
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If CType(Session("UsuarioID"), Integer) >= 1 Then
-            'txtFecha.Text = DateTime.Now.ToLongDateString()
+            txtFecha.Text = DateTime.Now.ToLongDateString()
 
             If Not IsPostBack Then
                 LlenarMenu()

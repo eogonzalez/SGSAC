@@ -14,4 +14,10 @@ Public Class cnGeneral
     Public Function ObtenerCorrelativoId(ByVal nombretabla As String, ByVal llave_tabla As String, Optional ByVal TieneEstado As Boolean = False, Optional ByVal llave_filtro As String = Nothing, Optional ByVal valor_llave_filtro As Integer = 0) As Integer
         Return objMenu.ObtenerCorrelativoId(nombretabla, llave_tabla, TieneEstado, llave_filtro, valor_llave_filtro)
     End Function
+
+    'Funcion que obtiene el nombre del instrumento
+    Public Function ObtenerNombreInstrumento(ByVal id_instrumento) As String
+        Return objMenu.ObtenerNombreInstrumento(id_instrumento)
+    End Function
+
 End Class

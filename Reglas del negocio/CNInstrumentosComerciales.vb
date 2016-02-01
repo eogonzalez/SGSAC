@@ -382,11 +382,30 @@ Public Class CNInstrumentosComerciales
         Return objCDInstrumentos.UpdateOpcionMenu(obj_CeOpcion)
     End Function
 
+
+#End Region
+
+#Region "Funcion y procedimientos para los procesos de Aprobacion"
+
+#Region "Funciones de validacion para el proceso de Aprobacion del SAC"
+
+    'Funcion que verifica si es posible realizar el proceso de aprobacion
+    Public Function VerificaApruebaSAC(ByVal anioProcesa As Integer) As Boolean
+        Return objCDInstrumentos.VerificaApruebaSAC(anioProcesa)
+    End Function
+
+#End Region
+
+
+    'Funcion que aprueba y genera la siguiente version del SAC
+    Public Function ApruebaSAC(ByVal anio_version As Integer, ByVal anio_inicia_enmienda As Integer, ByVal anio_final_enmienda As Integer, ByVal anio_version_new As Integer) As Boolean
+        Return objCDInstrumentos.ApruebaSAC(anio_version, anio_inicia_enmienda, anio_final_enmienda, anio_version_new)
+    End Function
+
     Public Function SelectResumenInstrumento(ByVal id_instrumento As Integer) As DataTable
         Return objCDInstrumentos.SelectResumenInstrumento(id_instrumento)
     End Function
 
 #End Region
-
 
 End Class

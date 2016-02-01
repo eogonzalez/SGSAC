@@ -27,9 +27,9 @@
             </td>
             <%--<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</td>--%>
             <td style="text-align: center">
-                <asp:Label ID="lblTitulo" runat="server" Text="Sistema de Gestión del SAC <br /> Ministerio de Economía" ForeColor="#054795" Font-Names="Verdana" Font-Bold="true" Font-Size="Large"></asp:Label>
+                <asp:Label ID="lblTitulo" runat="server" Text="SIGE-SAC <br /> Sistema de Gestión del SAC <br /> Ministerio de Economía" ForeColor="#054795" Font-Names="Verdana" Font-Bold="true" Font-Size="Large"></asp:Label>
             </td>
-            <td style="text-align: right">
+            <td style="text-align: center">
                 <asp:Label ID="txtFecha" runat="server" ForeColor="#054795" Font-Names="Verdana" Font-Bold="true" Font-Size="Medium"></asp:Label>
             </td>
         </tr>

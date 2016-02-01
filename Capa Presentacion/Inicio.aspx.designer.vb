@@ -12,13 +12,4 @@ Option Explicit On
 
 
 Partial Public Class Inicio
-
-    '''<summary>
-    '''Control MenuPrincipal.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents MenuPrincipal As Global.System.Web.UI.WebControls.Menu
 End Class

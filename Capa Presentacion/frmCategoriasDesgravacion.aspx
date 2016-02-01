@@ -26,8 +26,15 @@
     <div class="panel panel-primary">
         <div class="panel-heading">Categorias y Tramos de Desgravacion </div>
         <br />
+        
+        <h4>
+            <span class="label label-success">
+                <asp:Label ID="lbl_instrumento" runat="server"></asp:Label>
+            </span>
+        </h4>
 
-        <%-- Barra de botones --%>
+        <div class="panel-body form-horizontal">
+                    <%-- Barra de botones --%>
         <div class="btn-group pull-right">
             <asp:LinkButton ID="lkBtn_Nuevo" runat="server" CssClass="btn btn-primary">
                 <i aria-hidden="true" class="glyphicon glyphicon-pencil"></i>
@@ -73,12 +80,15 @@
             </cc1:ModalPopupExtender>
         </div>
 
+        <br />
+
         <%-- Gridview --%>
         <div>
             <asp:GridView ID="gvCategorias" runat="server"
                 CssClass="table table-hover table-striped"
                 GridLines="None"
                 EmptyDataText="No se encontraron categorias"
+                
                 AutoGenerateColumns="false">
                 <Columns>
                     <asp:BoundField DataField="id_categoria" SortExpression="id_categoria"> 
@@ -100,6 +110,8 @@
                 </Columns>
             </asp:GridView>
         </div>
+        </div>
+
     </div>
 
     <%-- Panel de mantenimiento de categorias de desgravacion --%>
@@ -108,7 +120,9 @@
             BorderColor="Black" BackColor="White"
             BorderStyle="Inset" BorderWidth="1px" heigth="600" Width="35%">
             <div class="panel-heading">Mantenimiento Categorias Desgravación </div>
-            <div class="panel-title">Titulo del tratado </div>
+            <div class="panel-title">
+                <asp:Label ID="lbl_instrumentoCatDesgra" runat="server"></asp:Label>
+            </div>
 
             <div class="panel-body form-horizontal">
 
@@ -158,7 +172,9 @@
             BorderColor="Black" BackColor="White"
             BorderStyle="Inset" BorderWidth="1px" Height="375" Width="40%">
             <div class="panel-heading">Aprobar Categorias de Desgravación</div>
-            <div class="panel-title">Aprobar Categorias de Desgravación Instrumento Comercial</div>
+            <div class="panel-title">
+                <asp:Label ID="lbl_instrumentoAprueba" runat="server"></asp:Label>
+            </div>
 
             <div class="panel-body form-horizontal">
                 <div class="form-group">

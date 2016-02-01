@@ -80,7 +80,8 @@ Public Class frmPaisesIntrumento
         Next
 
         If idInstrumento = 0 Then
-            MsgBox("Seleccione un instrumeto")
+
+            Mensaje("Seleccione un instrumento.")
             Exit Sub
         Else
 

@@ -119,7 +119,10 @@ Public Class frmCorteDesgravacion
         Else
             If accion = "editar" Then
                 txt_Categoria.Text = datosTramo.Rows(0)("codigo_categoria").ToString
-                ddl_tipo_desgravacion.DataValueField = datosTramo.Rows(0)("id_tipo_desgrava")
+
+                'ddl_tipo_desgravacion.DataValueField = datosTramo.Rows(0)("id_tipo_desgrava")
+                ddl_tipo_desgravacion.SelectedValue = datosTramo.Rows(0)("id_tipo_desgrava")
+
                 txtIdEtapa.Text = datosTramo.Rows(0)("id_tramo").ToString
                 txt_cantidad_cortes.Text = datosTramo.Rows(0)("cantidad_cortes").ToString
 

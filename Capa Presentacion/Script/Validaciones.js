@@ -1,6 +1,10 @@
 ﻿$(document).on("ready", inicio);
+//function pageLoad() {
+//    inicio();
+//}
 
 function inicio() {
+    
     //Aplicar Validacion al texto del formulario 
     //Tipo Instrumento
     //Tipo Relacion Instrumento
@@ -733,7 +737,7 @@ function validarApertura(){
         //Si esta vacio el campo
         $("#iconotexto_partida").remove();
         $("#ContentPlaceHolder1_txt_descripcion_partida_apertura").parent().parent().attr("class", "form-group has-error has-feedback");
-        $("#ContentPlaceHolder1_txt_descripcion_partida_apertura").parent().children("span").text("El campo no puede quedar vacio.").show();
+        $("#ContentPlaceHolder1_txt_descripcion_partida_apertura").parent().children("span").text("Ingrese Partida primero.").show();
         $("#ContentPlaceHolder1_txt_descripcion_partida_apertura").parent().append("<span id='iconotexto_partida' class='glyphicon glyphicon-remove form-control-feedback'>");
         $("#ContentPlaceHolder1_btnGuardar").attr("Class", "btn btn-primary disabled");
         return false;
@@ -751,7 +755,7 @@ function validarApertura(){
         //Si esta vacio el campo
         $("#iconotexto_subpartida").remove();
         $("#ContentPlaceHolder1_txt_descripcion_subpartida_apertura").parent().parent().attr("class", "form-group has-error has-feedback");
-        $("#ContentPlaceHolder1_txt_descripcion_subpartida_apertura").parent().children("span").text("El campo no puede quedar vacio.").show();
+        $("#ContentPlaceHolder1_txt_descripcion_subpartida_apertura").parent().children("span").text("Ingrese Subpartida primero.").show();
         $("#ContentPlaceHolder1_txt_descripcion_subpartida_apertura").parent().append("<span id='iconotexto_subpartida' class='glyphicon glyphicon-remove form-control-feedback'>");
         $("#ContentPlaceHolder1_btnGuardar").attr("Class", "btn btn-primary disabled");
         return false;
@@ -767,6 +771,8 @@ function validarApertura(){
 }
 
 function validarOpcion() {
+    
+
     var nombre = document.getElementById("ContentPlaceHolder1_txtNombreOpcion").value;
     var URL= document.getElementById("ContentPlaceHolder1_txtURL").value;
     var orden = document.getElementById("ContentPlaceHolder1_txtOrden").value;
@@ -788,6 +794,7 @@ function validarOpcion() {
         $("#ContentPlaceHolder1_txtNombreOpcion").parent().children("span").text("").hide();
         $("#ContentPlaceHolder1_txtNombreOpcion").parent().append("<span id='iconotextonombrem' class='glyphicon glyphicon-ok form-control-feedback'>");
         $("#ContentPlaceHolder1_btnGuardar").attr("Class", "btn btn-primary");
+        return true;
     }
 
     if (URL == null || URL.length == 0 || /^\s+$/.test(URL)) {
@@ -806,6 +813,7 @@ function validarOpcion() {
         $("#ContentPlaceHolder1_txtURL").parent().children("span").text("").hide();
         $("#ContentPlaceHolder1_txtURL").parent().append("<span id='iconotextoURL' class='glyphicon glyphicon-ok form-control-feedback'>");
         $("#ContentPlaceHolder1_btnGuardar").attr("Class", "btn btn-primary");
+        return true;
     }
 
     if (orden == null || orden.length == 0 || /^\s+$/.test(orden)) {
@@ -824,5 +832,7 @@ function validarOpcion() {
         $("#ContentPlaceHolder1_txtOrden").parent().children("span").text("").hide();
         $("#ContentPlaceHolder1_txtOrden").parent().append("<span id='iconotextoOrden' class='glyphicon glyphicon-ok form-control-feedback'>");
         $("#ContentPlaceHolder1_btnGuardar").attr("Class", "btn btn-primary");
+        return true;
     }
+    return true;
 }

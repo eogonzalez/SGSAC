@@ -14,6 +14,15 @@ Option Explicit On
 Partial Public Class frmCategoriasDesgravacion
 
     '''<summary>
+    '''Control lbl_instrumento.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents lbl_instrumento As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''Control lkBtn_Nuevo.
     '''</summary>
     '''<remarks>
@@ -113,6 +122,15 @@ Partial Public Class frmCategoriasDesgravacion
     Protected WithEvents pnlNuevaCategoria As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
+    '''Control lbl_instrumentoCatDesgra.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents lbl_instrumentoCatDesgra As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''Control lbl_codidgo_Categoria.
     '''</summary>
     '''<remarks>
@@ -210,6 +228,15 @@ Partial Public Class frmCategoriasDesgravacion
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
     Protected WithEvents pnlApruebaCategoria As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''Control lbl_instrumentoAprueba.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents lbl_instrumentoAprueba As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''Control lbl_nombre.

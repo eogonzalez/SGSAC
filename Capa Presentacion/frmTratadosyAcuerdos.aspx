@@ -42,7 +42,8 @@
         <div class="panel-heading">Instrumentos Comerciales</div>
         <br />
 
-        <div class="btn-group pull-right" role="group">
+        <div class="panel-body form-vertical">
+                    <div class="btn-group pull-right" role="group">
             <asp:LinkButton ID="lkBtt_nuevo" runat="server" CssClass="btn btn-primary"> <i aria-hidden="true" class="glyphicon glyphicon-pencil"></i> Nuevo </asp:LinkButton>
 
             <cc1:ModalPopupExtender ID="lkBtt_nuevo_ModalPopupExtender" BackgroundCssClass="modalBackground"
@@ -86,6 +87,7 @@
             </cc1:ModalPopupExtender>
 
         </div>
+            <br />
 
         <div>
             <asp:GridView ID="gvInstrumentos" runat="server"
@@ -114,6 +116,9 @@
 
             </asp:GridView>
         </div>
+        </div>
+
+
 
     </div>
 
@@ -203,7 +208,7 @@
                 </div>
             </div>
             <div class="panel-footer">
-                <asp:Button ID="btn_Guardar" CssClass="btn btn-primary" runat="server" Text="Guardar" disabled="disabled"/>
+                <asp:Button ID="btn_Guardar" CssClass="btn btn-primary" runat="server" Text="Guardar" disabled="disabled" />
                 <asp:Button ID="btn_Salir" CssClass="btn btn-default" runat="server" Text="Salir" />
             </div>
         </asp:Panel>
@@ -269,7 +274,7 @@
             </div>
 
             <div class="panel-footer">
-                <asp:Button id="btn_Calcular" CssClass="btn btn-primary" Text="Calcular" runat="server"/>
+                <asp:Button ID="btn_Calcular" CssClass="btn btn-primary" Text="Calcular" runat="server" />
                 <asp:Button ID="btn_Cancelar" CssClass="btn btn-default" Text="Cancelar" runat="server" />
             </div>
 

@@ -93,4 +93,37 @@ Public Class General
         Return correlativo + 1
     End Function
 
+    'Funcion que obtiene el nombre del instrumento
+    Public Function ObtenerNombreInstrumento(ByVal id_instrumento) As String
+        Dim sql_server
+        Dim nombre_instrumento = Nothing
+
+        Try
+            sql_server = " SELECT " +
+                " sigla+' - '+nombre_instrumento " +
+                " FROM " +
+                " IC_Instrumentos " +
+                " where " +
+                " id_instrumento = @id_instrumento "
+
+            Using con = objConeccion.Conectar
+                Dim command = New SqlCommand(sql_server, con)
+                command.Parameters.AddWithValue("id_instrumento", id_instrumento)
+
+                con.Open()
+                nombre_instrumento = command.ExecuteScalar()
+                con.Close()
+
+
+            End Using
+
+        Catch ex As SqlException
+
+        Catch ex As Exception
+
+        End Try
+
+        Return nombre_instrumento
+    End Function
+
 End Class

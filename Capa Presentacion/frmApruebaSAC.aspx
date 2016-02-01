@@ -108,12 +108,15 @@
                 </h3>
             </div>
 
-            <div class="text-center">
+            <asp:UpdatePanel runat="server">
+                <ContentTemplate>
+
+                    <div class="text-center">
                 <div class="btn-group">
                     <asp:LinkButton ID="lkb_firmas" CssClass="btn btn-primary" runat="server"><i aria-hidden="true" class="glyphicon glyphicon-edit"></i> Agregar Firmas </asp:LinkButton>
                     <asp:LinkButton ID="lkb_cancelar" CssClass="btn btn-danger" runat="server"><i aria-hidden="true" class="glyphicon glyphicon-remove"></i> Cancelar </asp:LinkButton>
                     <asp:LinkButton ID="lkb_aprobar" CssClass="btn btn-success" runat="server"><i aria-hidden="true" class="glyphicon glyphicon-check" ></i> Aprobar </asp:LinkButton>
-                    <%--<asp:LinkButton ID="lkb_salir" CssClass="btn btn-primary" runat="server"><i aria-hidden="true" class="glyphicon glyphicon-do"></i> Salir </asp:LinkButton>                --%>
+                    
                 </div>
             </div>
 
@@ -144,6 +147,44 @@
                     <asp:TextBox ID="txt_segunda_contraseña" type="password" TextMode="Password" CssClass="form-control" runat="server"></asp:TextBox>
                 </div>
             </div>
+                </ContentTemplate>
+            </asp:UpdatePanel>
+
+            <%--<div class="text-center">
+                <div class="btn-group">
+                    <asp:LinkButton ID="lkb_firmas" CssClass="btn btn-primary" runat="server"><i aria-hidden="true" class="glyphicon glyphicon-edit"></i> Agregar Firmas </asp:LinkButton>
+                    <asp:LinkButton ID="lkb_cancelar" CssClass="btn btn-danger" runat="server"><i aria-hidden="true" class="glyphicon glyphicon-remove"></i> Cancelar </asp:LinkButton>
+                    <asp:LinkButton ID="lkb_aprobar" CssClass="btn btn-success" runat="server"><i aria-hidden="true" class="glyphicon glyphicon-check" ></i> Aprobar </asp:LinkButton>
+                </div>
+            </div>
+
+            <h4><span class="label label-primary">Primera firma de aprobación </span></h4>
+
+            <div class="form-group">
+                <asp:Label ID="lbl_primer_usuario" CssClass="control-label col-xs-2" Text="Usuario:" runat="server"></asp:Label>
+                <div class="col-xs-4">
+                    <asp:TextBox ID="txt_primer_usuario" CssClass="form-control" runat="server"></asp:TextBox>
+                </div>
+
+                <asp:Label ID="lbl_primer_contraseña" CssClass="control-label col-xs-2" Text="Contraseña:" runat="server"></asp:Label>
+                <div class="col-xs-4">
+                    <asp:TextBox ID="txt_primer_contraseña" type="password" TextMode="Password" CssClass="form-control" runat="server"></asp:TextBox>
+                </div>
+            </div>
+
+            <h4><span class="label label-primary">Segunda firma de aprobación </span></h4>
+
+            <div class="form-group">
+                <asp:Label ID="Label8" CssClass="control-label col-xs-2" Text="Usuario:" runat="server"></asp:Label>
+                <div class="col-xs-4">
+                    <asp:TextBox ID="txt_segundo_usuario" CssClass="form-control" runat="server"></asp:TextBox>
+                </div>
+
+                <asp:Label ID="Label9" CssClass="control-label col-xs-2" Text="Contraseña:" runat="server"></asp:Label>
+                <div class="col-xs-4">
+                    <asp:TextBox ID="txt_segunda_contraseña" type="password" TextMode="Password" CssClass="form-control" runat="server"></asp:TextBox>
+                </div>
+            </div>--%>
 
         </div>
 

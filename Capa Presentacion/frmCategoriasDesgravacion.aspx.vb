@@ -4,12 +4,19 @@ Imports Reglas_del_negocio
 Public Class frmCategoriasDesgravacion
     Inherits System.Web.UI.Page
     Dim objCNInstrumentos As New CNInstrumentosComerciales
+    Dim objGeneral As New cnGeneral
 
 #Region "Funciones del sistema"
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not IsPostBack Then
+
+
             hfIdInstrumento.Value = Request.QueryString("id_inst").ToString
+            Dim nombre_instrumento As String = objGeneral.ObtenerNombreInstrumento(hfIdInstrumento.Value)
+            lbl_instrumento.Text = nombre_instrumento
+            lbl_instrumentoAprueba.Text = nombre_instrumento
+            lbl_instrumentoCatDesgra.Text = nombre_instrumento
 
             LlenargvCategorias()
             LlenarTipoDesgravacion()
@@ -113,6 +120,7 @@ Public Class frmCategoriasDesgravacion
             Mensaje("No es posible agregar categorias, ya que las categorias ya han sido aprobadas.")
         Else
             lkBtt_Nuevo_ModalPopupExtender.Show()
+
         End If
     End Sub
 

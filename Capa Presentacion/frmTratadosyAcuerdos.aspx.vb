@@ -21,7 +21,7 @@ Public Class frmTratadosyAcuerdos
         Dim id_instrumento As Integer
         id_instrumento = Convert.ToInt32(getIdInstrumentoGridView())
         If id_instrumento = 0 Then
-            MsgBox("Seleccione un instrumeto")
+            Mensaje("Seleccione un instrumeto")
             Exit Sub
         Else
             LlenarInstrumentosMant("editar", id_instrumento)
@@ -331,7 +331,8 @@ Public Class frmTratadosyAcuerdos
         datosInstrumentos = ObjCNInstrumentoMant.SelectInstrumentoMant(id_instrumento)
 
         If datosInstrumentos.Rows.Count = 0 Then
-            MsgBox("El instrumento no existe")
+
+            Mensaje("El instrumento no existe")
             Exit Sub
         Else
             If accion = "editar" Then

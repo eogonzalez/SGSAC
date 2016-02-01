@@ -33,9 +33,9 @@
                 </td>
 
                 <td style="text-align: center">
-                    <asp:Label ID="lblTitulo" runat="server" Text="Sistema de Gestión del SAC <br /> Ministerio de Economía" ForeColor="#054795" Font-Names="Verdana" Font-Bold="true" Font-Size="Large"></asp:Label>
+                    <asp:Label ID="lblTitulo" runat="server" Text="SIGE-SAC <br /> Sistema de Gestión del SAC  <br /> Ministerio de Economía" ForeColor="#054795" Font-Names="Verdana" Font-Bold="true" Font-Size="Large"></asp:Label>
                 </td>
-                <td style="text-align: right">
+                <td style="text-align: center">
                     <asp:Label ID="txtFecha" runat="server" ForeColor="#054795" Font-Names="Verdana" Font-Bold="true" Font-Size="Medium"></asp:Label>
                 </td>
             </tr>
@@ -47,7 +47,7 @@
             <tr>
                 <td colspan="3" style="text-align: left; width: 100%; background-color: #054795">
                     <br />
-                    <asp:Menu ID="MenuPrincipal" runat="server" DisappearAfter="500" Orientation="Horizontal" Font-Names="Trebuchet MS, Arial">
+                                        <asp:Menu ID="MenuPrincipal" runat="server" DisappearAfter="500" Orientation="Horizontal" Font-Names="Trebuchet MS, Arial">
                         <StaticMenuItemStyle BackColor="#054795" ForeColor="White" HorizontalPadding="30" VerticalPadding="5" />
                         <StaticHoverStyle BackColor="#0066cc" />
                         <DynamicMenuItemStyle BackColor="#054795" ForeColor="White" HorizontalPadding="30" VerticalPadding="5" />
@@ -57,8 +57,16 @@
             </tr>
         </table>
 
-        <asp:ScriptManager ID="ToolkitScriptManager1" runat="server" EnableScriptGlobalization="True"></asp:ScriptManager>
-        
+                            <asp:ScriptManager ID="ToolkitScriptManager1" runat="server" EnableScriptGlobalization="True">
+<%--            <Scripts>
+                <asp:ScriptReference Path="~/Script/jQuery/jquery-1.11.3.js"/>
+                <asp:ScriptReference Path="~/Script/jQuery/jquery.validate.js"/>
+                <asp:ScriptReference Path="~/Style/bootstrap/js/bootstrap.js" />
+    
+                <asp:ScriptReference Path="~/Script/Validaciones.js"/>
+            </Scripts>--%>
+        </asp:ScriptManager>
+
 <%--        <div class="navbar navbar-default">
             <div class="container">
                 <div class="navbar-header">
@@ -82,9 +90,21 @@
         </div>--%>
 
         <div>
-            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
-                <br />
-            </asp:ContentPlaceHolder>
+
+<%--            <asp:UpdatePanel runat="server" >
+                <ContentTemplate>--%>
+
+                    <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                        <br />
+
+
+
+                    </asp:ContentPlaceHolder>
+
+<%--                </ContentTemplate>
+            </asp:UpdatePanel>--%>
+
+
         </div>
 
     </form>
