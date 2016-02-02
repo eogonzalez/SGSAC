@@ -47,7 +47,7 @@
             <tr>
                 <td colspan="3" style="text-align: left; width: 100%; background-color: #054795">
                     <br />
-                                        <asp:Menu ID="MenuPrincipal" runat="server" DisappearAfter="500" Orientation="Horizontal" Font-Names="Trebuchet MS, Arial">
+                    <asp:Menu ID="MenuPrincipal" runat="server" DisappearAfter="500" Orientation="Horizontal" Font-Names="Trebuchet MS, Arial">
                         <StaticMenuItemStyle BackColor="#054795" ForeColor="White" HorizontalPadding="30" VerticalPadding="5" />
                         <StaticHoverStyle BackColor="#0066cc" />
                         <DynamicMenuItemStyle BackColor="#054795" ForeColor="White" HorizontalPadding="30" VerticalPadding="5" />
@@ -57,17 +57,21 @@
             </tr>
         </table>
 
-                            <asp:ScriptManager ID="ToolkitScriptManager1" runat="server" EnableScriptGlobalization="True">
-<%--            <Scripts>
-                <asp:ScriptReference Path="~/Script/jQuery/jquery-1.11.3.js"/>
-                <asp:ScriptReference Path="~/Script/jQuery/jquery.validate.js"/>
-                <asp:ScriptReference Path="~/Style/bootstrap/js/bootstrap.js" />
-    
-                <asp:ScriptReference Path="~/Script/Validaciones.js"/>
+        <asp:ScriptManager ID="ToolkitScriptManager1" runat="server" EnableScriptGlobalization="True">
+            <%--<Scripts>--%>
+                <%--<asp:ScriptReference Path="Script/jQuery/jquery-1.11.3.js" />
+                <asp:ScriptReference Path="Script/jQuery/jquery.validate.js" />
+                <asp:ScriptReference Path="Style/bootstrap/js/bootstrap.js" />
+                <asp:ScriptReference Path="Script/Validaciones.js" />--%>
+
+                <%--<asp:ScriptReference Assembly="jquery-1.11.3" name ="jQuery/jquery-1.11.3.js" />
+                <asp:ScriptReference Assembly="jquery.validate" Name="jQuery/jquery.valiate.js" />
+                <asp:ScriptReference Assembly="bootstrap" Name="bootstrap/js/bootstrap.js" />
+                <asp:ScriptReference Assembly="Validaciones" Name="Validaciones.js" />
             </Scripts>--%>
         </asp:ScriptManager>
 
-<%--        <div class="navbar navbar-default">
+        <%--        <div class="navbar navbar-default">
             <div class="container">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse">
@@ -91,30 +95,28 @@
 
         <div>
 
-<%--            <asp:UpdatePanel runat="server" >
+            <%--            <asp:UpdatePanel runat="server" >
                 <ContentTemplate>--%>
 
-                    <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
-                        <br />
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                <br />
 
 
 
-                    </asp:ContentPlaceHolder>
+            </asp:ContentPlaceHolder>
 
-<%--                </ContentTemplate>
+            <%--                </ContentTemplate>
             </asp:UpdatePanel>--%>
-
-
         </div>
 
     </form>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 
-    <script src="Script/jQuery/jquery-1.11.3.js"></script>
-    <script src="Script/jQuery/jquery.validate.js"></script>
-    <script src="Style/bootstrap/js/bootstrap.js"></script>
-    <script src="Script/Validaciones.js"></script>
+    <script src="../Script/jQuery/jquery-1.11.3.js"></script>
+    <script src="../Script/jQuery/jquery.validate.js"></script>
+    <script src="../Style/bootstrap/js/bootstrap.js"></script>
+    <script src="../Script/Validaciones.js"></script>
     <%--<script src="Script/Aprobaciones/ValidarApruebaSAC.js"></script>--%>
 </body>
 </html>

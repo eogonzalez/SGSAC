@@ -35,6 +35,7 @@
     </script>
 
 </asp:Content>
+
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
     <%-- Panel principal --%>
@@ -117,8 +118,6 @@
             </asp:GridView>
         </div>
         </div>
-
-
 
     </div>
 

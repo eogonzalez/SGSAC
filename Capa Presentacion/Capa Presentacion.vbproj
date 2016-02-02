@@ -96,6 +96,8 @@
     <Import Include="System.Web.UI.HtmlControls" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Enmiendas\frmPartidas.aspx" />
+    <Content Include="Enmiendas\frmSubpartidas.aspx" />
     <Content Include="frmApruebaSAC.aspx" />
     <Content Include="frmAsignaCategoriasSAC.aspx" />
     <Content Include="frmAsignaPrecision.aspx" />
@@ -143,6 +145,20 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enmiendas\frmPartidas.aspx.designer.vb">
+      <DependentUpon>frmPartidas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Enmiendas\frmPartidas.aspx.vb">
+      <DependentUpon>frmPartidas.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Enmiendas\frmSubpartidas.aspx.designer.vb">
+      <DependentUpon>frmSubpartidas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Enmiendas\frmSubpartidas.aspx.vb">
+      <DependentUpon>frmSubpartidas.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="frmApruebaSAC.aspx.designer.vb">
       <DependentUpon>frmApruebaSAC.aspx</DependentUpon>
     </Compile>
