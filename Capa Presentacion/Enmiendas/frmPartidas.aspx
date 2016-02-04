@@ -21,7 +21,7 @@
 
     <%-- Panel principal --%>
     <div class="panel panel-primary">
-        <div class="panel-heading">Configurar Correlaciones </div>
+        <div class="panel-heading">Configurar Partidas </div>
 
         <%-- Cuerpo del Formulario --%>
         <div class="panel-body form-horizontal">

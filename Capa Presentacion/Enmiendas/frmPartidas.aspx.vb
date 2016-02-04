@@ -128,9 +128,6 @@ Public Class frmPartidas
             .DataBind()
         End With
 
-        With objCNPartidas.SelectDatosPartidas(codigo)
-
-        End With
     End Sub
 
     Function ObtienePartidaGriewView() As String

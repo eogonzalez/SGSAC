@@ -23,7 +23,7 @@
         </tr>
         <tr>
             <td style="text-align: center">
-                <asp:Image ID="imgLogo" runat="server" ImageUrl="~/Images/LogoNew.jpg" Height="65px" Width="310px"  />
+                <asp:Image ID="imgLogo" runat="server" ImageUrl="~/Images/logof16.png" Height="89px" Width="264px"  />
             </td>
             <%--<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</td>--%>
             <td style="text-align: center">

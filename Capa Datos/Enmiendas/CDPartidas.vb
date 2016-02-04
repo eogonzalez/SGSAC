@@ -160,4 +160,5 @@ Public Class CDPartidas
 
         Return estado
     End Function
+
 End Class

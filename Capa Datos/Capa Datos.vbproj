@@ -66,6 +66,7 @@
     <Compile Include="CDInstrumentosComerciales.vb" />
     <Compile Include="Coneccion.vb" />
     <Compile Include="Enmiendas\CDPartidas.vb" />
+    <Compile Include="Enmiendas\CDSubPartidas.vb" />
     <Compile Include="General.vb" />
     <Compile Include="Login.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

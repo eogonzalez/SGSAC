@@ -219,6 +219,30 @@ function inicio() {
         validarPartidasMant();
     }
 
+    //Aplicar validaciones subpartidas
+    $("#ContentPlaceHolder1_txt_codigo_subp").keyup(validarSubPartida);
+    $("#ContentPlaceHolder1_txt_codigo_subp").focus(validarSubPartida);
+
+    var contenidoCodigoSubp = $("#ContentPlaceHolder1_txt_codigo_subp").val();
+    if (contenidoCodigoSubp != null){
+        validarSubPartida();
+    }
+
+    $("#ContentPlaceHolder1_txt_codigo_subpartida").keyup(validarSubPartidasMant);
+    $("#ContentPlaceHolder1_txt_codigo_subpartida").focus(validarSubPartidasMant);
+
+    $("#ContentPlaceHolder1_txt_descripcion_subpartida").keyup(validarSubPartidasMant);
+    $("#ContentPlaceHolder1_txt_descripcion_subpartida").focus(validarSubPartidasMant);
+
+    var contenidoSubPartida = $("#ContentPlaceHolder1_txt_codigo_subpartida").val();
+    if (contenidoSubPartida != null) {
+        validarSubPartidasMant();
+    }
+
+    var contenidoDescripSubPartida = $("#ContentPlaceHolder1_txt_descripcion_subpartida").val();
+    if (contenidoDescripSubPartida != null) {
+        validarSubPartidasMant();
+    }
 
 }
 
@@ -783,9 +807,9 @@ function validarApertura(){
         //Si esta vacio el campo
         $("#iconotexto_subpartida").remove();
         $("#ContentPlaceHolder1_txt_descripcion_subpartida_apertura").parent().parent().attr("class", "form-group has-error has-feedback");
-        $("#ContentPlaceHolder1_txt_descripcion_subpartida_apertura").parent().children("span").text("Ingrese Subpartida primero.").show();
+        $("#ContentPlaceHolder1_txt_descripcion_subpartida_apertura").parent().children("span").text("Verifique si existe Subpartida.").show();
         $("#ContentPlaceHolder1_txt_descripcion_subpartida_apertura").parent().append("<span id='iconotexto_subpartida' class='glyphicon glyphicon-remove form-control-feedback'>");
-        $("#ContentPlaceHolder1_btnGuardar").attr("Class", "btn btn-primary disabled");
+        $("#ContentPlaceHolder1_btnGuardar").attr("Class", "btn btn-primary");
         return false;
     }
     else {
@@ -813,7 +837,7 @@ function validarOpcion() {
         $("#ContentPlaceHolder1_txtNombreOpcion").parent().children("span").text("El campo no puede quedar vacio.").show();
         $("#ContentPlaceHolder1_txtNombreOpcion").parent().append("<span id='iconotextonombrem' class='glyphicon glyphicon-remove form-control-feedback'>");
         $("#ContentPlaceHolder1_btnGuardar").attr("Class", "btn btn-primary disabled");
-        return false;
+        
     }
     else {
         //Si no esta vacio
@@ -822,7 +846,7 @@ function validarOpcion() {
         $("#ContentPlaceHolder1_txtNombreOpcion").parent().children("span").text("").hide();
         $("#ContentPlaceHolder1_txtNombreOpcion").parent().append("<span id='iconotextonombrem' class='glyphicon glyphicon-ok form-control-feedback'>");
         $("#ContentPlaceHolder1_btnGuardar").attr("Class", "btn btn-primary");
-        return true;
+        
     }
 
     if (URL == null || URL.length == 0 || /^\s+$/.test(URL)) {
@@ -832,7 +856,7 @@ function validarOpcion() {
         $("#ContentPlaceHolder1_txtURL").parent().children("span").text("El campo no puede quedar vacio.").show();
         $("#ContentPlaceHolder1_txtURL").parent().append("<span id='iconotextoURL' class='glyphicon glyphicon-remove form-control-feedback'>");
         $("#ContentPlaceHolder1_btnGuardar").attr("Class", "btn btn-primary disabled");
-        return false;
+        
     }
     else {
         //Si no esta vacio
@@ -841,7 +865,7 @@ function validarOpcion() {
         $("#ContentPlaceHolder1_txtURL").parent().children("span").text("").hide();
         $("#ContentPlaceHolder1_txtURL").parent().append("<span id='iconotextoURL' class='glyphicon glyphicon-ok form-control-feedback'>");
         $("#ContentPlaceHolder1_btnGuardar").attr("Class", "btn btn-primary");
-        return true;
+        
     }
 
     if (orden == null || orden.length == 0 || /^\s+$/.test(orden)) {
@@ -851,7 +875,7 @@ function validarOpcion() {
         $("#ContentPlaceHolder1_txtOrden").parent().children("span").text("El campo no puede quedar vacio.").show();
         $("#ContentPlaceHolder1_txtOrden").parent().append("<span id='iconotextoOrden' class='glyphicon glyphicon-remove form-control-feedback'>");
         $("#ContentPlaceHolder1_btnGuardar").attr("Class", "btn btn-primary disabled");
-        return false;
+        
     }
     else {
         //Si no esta vacio
@@ -860,7 +884,7 @@ function validarOpcion() {
         $("#ContentPlaceHolder1_txtOrden").parent().children("span").text("").hide();
         $("#ContentPlaceHolder1_txtOrden").parent().append("<span id='iconotextoOrden' class='glyphicon glyphicon-ok form-control-feedback'>");
         $("#ContentPlaceHolder1_btnGuardar").attr("Class", "btn btn-primary");
-        return true;
+        
     }
     return true;
 }
@@ -960,6 +984,105 @@ function validarPartidasMant() {
         $("#ContentPlaceHolder1_txt_descripcion_partida").parent().parent().attr("class", "has-success has-feedback");
         $("#ContentPlaceHolder1_txt_descripcion_partida").parent().children("span").text("").hide();
         $("#ContentPlaceHolder1_txt_descripcion_partida").parent().append("<span id='iconodescripcion' class='glyphicon glyphicon-ok form-control-feedback'>");
+        $("#ContentPlaceHolder1_btnGuardar").attr("Class", "btn btn-primary");
+    }
+}
+
+function validarSubPartida() {
+    var codigo = document.getElementById("ContentPlaceHolder1_txt_codigo_subp").value;
+
+    if (codigo == null || codigo.length == 0 || /^\s+$/.test(codigo)) {
+        //Si esta vacio el campo
+        $("#iconotextocodigo").remove();
+        $("#ContentPlaceHolder1_txt_codigo_subp").parent().parent().attr("class", "has-error has-feedback");
+        $("#ContentPlaceHolder1_txt_codigo_subp").parent().children("span").text("Para seleccionar, el campo no puede quedar vacio.").show();
+        $("#ContentPlaceHolder1_txt_codigo_subp").parent().append("<span id='iconotextocodigo' class='glyphicon glyphicon-remove form-control-feedback'>");
+        $("#ContentPlaceHolder1_btn_seleccionar").attr("Class", "btn btn-primary disabled");
+
+        return false;
+    }
+    else if (codigo.length < 2) {
+        //Cantidad de cortes debe de ser mayor a cero
+        $("#iconotextocodigo").remove();
+        $("#ContentPlaceHolder1_txt_codigo_subp").parent().parent().attr("class", "has-error has-feedback");
+        $("#ContentPlaceHolder1_txt_codigo_subp").parent().children("span").text("Para seleccionar, la cantidad de digitos debe ser mayor a uno.").show();
+        $("#ContentPlaceHolder1_txt_codigo_subp").parent().append("<span id='iconotextocodigo' class='glyphicon glyphicon-remove form-control-feedback'>");
+        $("#ContentPlaceHolder1_btn_seleccionar").attr("Class", "btn btn-primary disabled");
+        //$("#ContentPlaceHolder1_btn_asigna_categoria").attr("Class", "btn btn-primary disabled");
+        return false;
+    }
+    else if (codigo.length > 6) {
+        $("#iconotextocodigo").remove();
+        $("#ContentPlaceHolder1_txt_codigo_subp").parent().parent().attr("class", "has-error has-feedback");
+        $("#ContentPlaceHolder1_txt_codigo_subp").parent().children("span").text("Para seleccionar, la cantidad de digitos debe ser menor a seis.").show();
+        $("#ContentPlaceHolder1_txt_codigo_subp").parent().append("<span id='iconotextocodigo' class='glyphicon glyphicon-remove form-control-feedback'>");
+        $("#ContentPlaceHolder1_btn_seleccionar").attr("Class", "btn btn-primary disabled");
+        //$("#ContentPlaceHolder1_btn_asigna_categoria").attr("Class", "btn btn-primary disabled");
+        return false;
+    }
+    else {
+        //Si no esta vacio
+        $("#iconotextocodigo").remove();
+        $("#ContentPlaceHolder1_txt_codigo_subp").parent().parent().attr("class", "has-success has-feedback");
+        $("#ContentPlaceHolder1_txt_codigo_subp").parent().children("span").text("").hide();
+        $("#ContentPlaceHolder1_txt_codigo_subp").parent().append("<span id='iconotextocodigo' class='glyphicon glyphicon-ok form-control-feedback'>");
+        $("#ContentPlaceHolder1_btn_seleccionar").attr("Class", "btn btn-primary");
+    }
+}
+
+function validarSubPartidasMant() {
+    var subpartida = document.getElementById("ContentPlaceHolder1_txt_codigo_subpartida").value;
+    var descripcion = document.getElementById("ContentPlaceHolder1_txt_descripcion_subpartida").value;
+
+    if (subpartida == null || subpartida.length == 0 || /^\s+$/.test(subpartida)) {
+        //Si esta vacio el campo
+        $("#iconosubpartida").remove();
+        $("#ContentPlaceHolder1_txt_codigo_subpartida").parent().parent().attr("class", "has-error has-feedback");
+        $("#ContentPlaceHolder1_txt_codigo_subpartida").parent().children("span").text("El campo no puede quedar vacio.").show();
+        $("#ContentPlaceHolder1_txt_codigo_subpartida").parent().append("<span id='iconosubpartida' class='glyphicon glyphicon-remove form-control-feedback'>");
+        $("#ContentPlaceHolder1_btnGuardar").attr("Class", "btn btn-primary disabled");
+
+
+    }
+    else if (isNaN(subpartida)) {
+        $("#iconosubpartida").remove();
+        $("#ContentPlaceHolder1_txt_codigo_subpartida").parent().parent().attr("class", "has-error has-feedback");
+        $("#ContentPlaceHolder1_txt_codigo_subpartida").parent().children("span").text("El debe ser numerico.").show();
+        $("#ContentPlaceHolder1_txt_codigo_subpartida").parent().append("<span id='iconosubpartida' class='glyphicon glyphicon-remove form-control-feedback'>");
+        $("#ContentPlaceHolder1_btnGuardar").attr("Class", "btn btn-primary disabled");
+    }
+    else if (subpartida.length > 6) {
+        $("#iconosubpartida").remove();
+        $("#ContentPlaceHolder1_txt_codigo_subpartida").parent().parent().attr("class", "has-error has-feedback");
+        $("#ContentPlaceHolder1_txt_codigo_subpartida").parent().children("span").text("El campo no puede ser menor de 6 digitos.").show();
+        $("#ContentPlaceHolder1_txt_codigo_subpartida").parent().append("<span id='iconosubpartida' class='glyphicon glyphicon-remove form-control-feedback'>");
+        $("#ContentPlaceHolder1_btnGuardar").attr("Class", "btn btn-primary disabled");
+    }
+    else {
+        //Si no esta vacio
+        $("#iconosubpartida").remove();
+        $("#ContentPlaceHolder1_txt_codigo_subpartida").parent().parent().attr("class", "has-success has-feedback");
+        $("#ContentPlaceHolder1_txt_codigo_subpartida").parent().children("span").text("").hide();
+        $("#ContentPlaceHolder1_txt_codigo_subpartida").parent().append("<span id='iconosubpartida' class='glyphicon glyphicon-ok form-control-feedback'>");
+        $("#ContentPlaceHolder1_btnGuardar").attr("Class", "btn btn-primary");
+    }
+
+    if (descripcion == null || descripcion.length == 0 || /^\s+$/.test(descripcion)) {
+        //Si esta vacio el campo
+        $("#iconodescripcion").remove();
+        $("#ContentPlaceHolder1_txt_descripcion_subpartida").parent().parent().attr("class", "has-error has-feedback");
+        $("#ContentPlaceHolder1_txt_descripcion_subpartida").parent().children("span").text("El campo no puede quedar vacio.").show();
+        $("#ContentPlaceHolder1_txt_descripcion_subpartida").parent().append("<span id='iconodescripcion' class='glyphicon glyphicon-remove form-control-feedback'>");
+        $("#ContentPlaceHolder1_btnGuardar").attr("Class", "btn btn-primary disabled");
+
+
+    }
+    else {
+        //Si no esta vacio
+        $("#iconodescripcion").remove();
+        $("#ContentPlaceHolder1_txt_descripcion_subpartida").parent().parent().attr("class", "has-success has-feedback");
+        $("#ContentPlaceHolder1_txt_descripcion_subpartida").parent().children("span").text("").hide();
+        $("#ContentPlaceHolder1_txt_descripcion_subpartida").parent().append("<span id='iconodescripcion' class='glyphicon glyphicon-ok form-control-feedback'>");
         $("#ContentPlaceHolder1_btnGuardar").attr("Class", "btn btn-primary");
     }
 }
