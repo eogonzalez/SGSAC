@@ -1,70 +1,95 @@
 ﻿Imports Reglas_del_negocio
-Public Class frmConsultaSAC
+Public Class frmConsultaSACAsocia
     Inherits System.Web.UI.Page
+    Dim objReporte As New CNReportesGeneral
 
-    Dim objReporte As New CNReportes
-    Shared _tabla_incisos As DataTable
-    Public Shared Property tabla_incisos As DataTable
-        Get
-            Return _tabla_incisos
-        End Get
-        Set(value As DataTable)
-            _tabla_incisos = value
-        End Set
-    End Property
-
-#Region "Funciones del Sistema"
+#Region "Funciones del sistema"
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+
         If Not IsPostBack Then
-            InstrumentosComerciales()
-            Categorias()
+            LlenarComboInstrumentos()
+            LlenarComboCategoria(ddl_instrumento_comercial.SelectedValue)
         End If
+
     End Sub
 
     Protected Sub ddl_instrumento_comercial_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ddl_instrumento_comercial.SelectedIndexChanged
-        Categorias()
+        LlenarComboCategoria(ddl_instrumento_comercial.SelectedValue)
+    End Sub
+
+    Protected Sub cb_categorias_CheckedChanged(sender As Object, e As EventArgs) Handles cb_categorias.CheckedChanged
+
+        If cb_categorias.Checked Then
+            ddl_categoria_asignar.Enabled = False
+
+        Else
+            ddl_categoria_asignar.Enabled = True
+
+        End If
+
+    End Sub
+
+    Protected Sub cb_incisos_CheckedChanged(sender As Object, e As EventArgs) Handles cb_incisos.CheckedChanged
+        If cb_incisos.Checked Then
+            txt_codigo_inciso_rep.Enabled = False
+            'btn_seleccionar.Enabled = False
+        Else
+            txt_codigo_inciso_rep.Enabled = True
+            'btn_seleccionar.Enabled = True
+        End If
     End Sub
 
     Protected Sub btn_seleccionar_Click(sender As Object, e As EventArgs) Handles btn_seleccionar.Click
-        llenar_gv_incisos_sac()
+        LlenarGridView()
     End Sub
 
     Protected Sub btn_genera_Click(sender As Object, e As EventArgs) Handles btn_genera.Click
-        DataTable_to_CSV(tabla_incisos, Server.MapPath("Reportes/ConsultaSAC/IncisosSAC.csv"), ",")
+        DataTable_to_CSV(Session("tabla_re"), Server.MapPath("Reportes/ConsultaSAC/IncisosSAC.csv"), ",")
         Response.Redirect("Reportes/ConsultaSAC/IncisosSAC.csv")
     End Sub
 
 #End Region
 
-#Region "Mis Funciones"
-    Private Sub InstrumentosComerciales()
-        Dim tbl As New DataTable
-        tbl = objReporte.InstrumentoComercial.Tables("InstrumentoComercial")
 
-        With Me.ddl_instrumento_comercial
+#Region "Mis funciones"
+
+    Private Sub LlenarComboInstrumentos()
+        Dim tbl As New DataTable
+
+        tbl = objReporte.SelectInstrumentoComercial
+
+        With ddl_instrumento_comercial
+
             .DataSource = tbl
             .DataTextField = "nombre_instrumento"
             .DataValueField = "id_instrumento"
             .DataBind()
+
         End With
+
+
     End Sub
 
-    Private Sub Categorias()
-        Dim tbl As New DataTable
-        tbl = objReporte.Categorias(ddl_instrumento_comercial.SelectedValue).Tables("Categorias")
+    Private Sub LlenarComboCategoria(ByVal id_instrumento As Integer)
+        Dim datatableCat As New DataTable
+        datatableCat = Nothing
+        datatableCat = objReporte.SelectCategoriasList(id_instrumento)
 
-        With Me.ddl_categoria_asignar
-            .DataSource = tbl
+        With ddl_categoria_asignar
+            .Items.Clear()
+            .DataSource = datatableCat
             .DataTextField = "Categoria"
             .DataValueField = "id_categoria"
             .DataBind()
         End With
+
     End Sub
 
-    Private Sub llenar_gv_incisos_sac()
+    Private Sub LlenarGridView()
         Dim objCNAsignaCat As New CNInstrumentosComerciales
+        Dim id_instrumento As Integer = ddl_instrumento_comercial.SelectedValue
 
-        With objCNAsignaCat.SelectDatosCodigoInciso(hfIdInstrumento.Value, txt_codigo_arancel.Text)
+        With objCNAsignaCat.SelectDatosCodigoInciso(id_instrumento, txt_codigo_inciso_rep.Text)
 
             If .Tables(0).Rows.Count = 0 Then
                 'Esta vacia la tabla
@@ -90,7 +115,8 @@ Public Class frmConsultaSAC
                 Dim tbl As New DataTable
 
                 tbl = .Tables(3)
-                tabla_incisos = .Tables(3)
+                'tabla_incisos = .Tables(3)
+                Session.Add("tabla_rep", .Tables(3))
 
                 With gv_incisos_sac
                     .DataSource = tbl
@@ -134,6 +160,11 @@ Public Class frmConsultaSAC
             If Not writer Is Nothing Then writer.Close()
         End Try
     End Sub
+
 #End Region
 
+
+    
+    
+    
 End Class

@@ -127,6 +127,7 @@
     <Content Include="Inicio.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="Logout.aspx" />
+    <Content Include="Reportes\frmConsultaSACAsocia.aspx" />
     <Content Include="Script\Aprobaciones\ValidarApruebaSAC.js" />
     <Content Include="Script\jQuery\jquery-1.11.3.js" />
     <Content Include="Script\jQuery\jquery.validate.js" />
@@ -325,6 +326,13 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Reportes\frmConsultaSACAsocia.aspx.designer.vb">
+      <DependentUpon>frmConsultaSACAsocia.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\frmConsultaSACAsocia.aspx.vb">
+      <DependentUpon>frmConsultaSACAsocia.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>

@@ -1,69 +1,75 @@
-﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/General.Master" CodeBehind="frmConsultaSAC.aspx.vb" Inherits="Capa_Presentacion.frmConsultaSAC" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <script language="javascript" type="text/javascript">
-        function SelectSingleRadiobutton(rdbtnid) {
-            var rdBtn = document.getElementById(rdbtnid);
-            var rdBtnList = document.getElementsByTagName("input");
-            for (i = 0; i < rdBtnList.length; i++) {
-                if (rdBtnList[i].type == "radio" && rdBtnList[i].id != rdBtn.id) {
-                    rdBtnList[i].checked = false;
-                }
-            }
-        }
-    </script>
+﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/General.Master" CodeBehind="frmConsultaSACAsocia.aspx.vb" Inherits="Capa_Presentacion.frmConsultaSACAsocia" %>
 
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-      <%-- Panel principal --%>
+    <%-- Panel principal --%>
     <div class="panel panel-primary">
-        <div class="panel-heading"> Consulta del  SAC </div>
+        <div class="panel-heading">Consulta del  SAC </div>
 
         <%-- Cuerpo del Formulario --%>
         <div class="panel-body form-horizontal">
 
-            
+
             <asp:UpdatePanel ID="Datos_SAC" runat="server">
                 <ContentTemplate>
 
                     <%-- Area de Datos del Instrumento --%>
-            <h5>
-                <span class="label label-primary">1. Seleccione Instrumento Comercial
-                </span>
-            </h5>
-            <div class="form-group">
-                <asp:Label ID="lbl_nombre_insrumento" CssClass="control-label col-xs-3" Text=" Nombre del Instrumento Comercial: " runat="server"></asp:Label>
-                <div class="col-xs-9">
-                    <asp:DropDownList ID="ddl_instrumento_comercial" AutoPostBack="true" CssClass="form-control" runat="server"></asp:DropDownList>
-                </div>
-            </div>
+                    <h5>
+                        <span class="label label-primary">1. Seleccione Instrumento Comercial
+                        </span>
+                    </h5>
+                    <div class="form-group">
+                        <asp:Label ID="lbl_nombre_insrumento" CssClass="control-label col-xs-3" Text=" Nombre del Instrumento Comercial: " runat="server"></asp:Label>
+                        <div class="col-xs-9">
+                            <asp:DropDownList ID="ddl_instrumento_comercial" AutoPostBack="true" CssClass="form-control" runat="server"></asp:DropDownList>
+                        </div>
+                    </div>
 
-            <%-- Area de Categoria y Codigo Arancelario --%>
-            <h5>
-                <span class="label label-primary">2. Seleccionar Categoria de Desgravacion y Código Arancelario:
-                </span>
-            </h5>
-            <div class="form-group">
-                <asp:Label ID="lbl_categoria_asignar" CssClass="control-label col-xs-2" Text="Categoria para asignar:" runat="server"></asp:Label>
-                <div class="col-xs-4">
-                    <asp:DropDownList ID="ddl_categoria_asignar" CssClass="form-control" runat="server"></asp:DropDownList>
-                </div>
+                    <%-- Area de Categoria y Codigo Arancelario --%>
+                    <h5>
+                        <span class="label label-primary">2. Seleccionar Categoria de Desgravacion y Código Arancelario:
+                        </span>
+                    </h5>
+                    <div class="form-group">
 
-                <asp:Label ID="lbl_codigo_arancel" CssClass="control-label col-xs-2" Text="Código Arancelario:" runat="server"></asp:Label>
-                <div class="col-xs-2">
-                    <asp:TextBox ID="txt_codigo_arancel" CssClass="form-control" runat="server"></asp:TextBox>
-                </div>
-                <div class="col-xs-2">
-                    <asp:Button ID="btn_seleccionar" CssClass="btn btn-primary" Text="Seleccionar" runat="server" />
-                </div>
-                
-            </div>
+                        <asp:Label ID="lbl_todas_categorias" CssClass="control-label col-xs-2" Text="Todas las categorias:" runat="server"></asp:Label>
+                        <div class="col-xs-2">
+                            <asp:CheckBox ID="cb_categorias" runat="server" AutoPostBack="True" />
+                        </div>
 
-            <%-- Descripcion Capitulo-Partida y Subpartida Seleccionada --%>
-            <h5>
-                <span class="label label-primary">Descripción Capitulo-Partida y Subpartida Seleccionada
-                </span>
-            </h5>
+                        <asp:Label ID="lbl_categoria_asignar" CssClass="control-label col-xs-2" Text="Categoria para asignar:" runat="server"></asp:Label>
+                        <div class="col-xs-5">
+                            <asp:DropDownList ID="ddl_categoria_asignar" CssClass="form-control" runat="server"></asp:DropDownList>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+
+                        <asp:Label ID="lbl_todos_incisos" CssClass="control-label col-xs-2" Text="Todos los incisos:" runat="server"></asp:Label>
+                        <div class="col-xs-2">
+                            <asp:CheckBox ID="cb_incisos" runat="server" AutoPostBack="True" />
+                        </div>
+
+                        <div>
+                            <asp:Label ID="lbl_codigo_arancel" CssClass="control-label col-xs-2" Text="Código Arancelario:" runat="server"></asp:Label>
+                            <div class="col-xs-4">
+                                <asp:TextBox ID="txt_codigo_inciso_rep" CssClass="form-control" runat="server"></asp:TextBox>
+                            </div>
+
+                            <div class="col-xs-2">
+                                <asp:Button ID="btn_seleccionar" CssClass="btn btn-primary" Text="Consultar" runat="server" />
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <%-- Descripcion Capitulo-Partida y Subpartida Seleccionada --%>
+                    <h5>
+                        <span class="label label-primary">Descripción Capitulo-Partida y Subpartida Seleccionada
+                        </span>
+                    </h5>
 
                     <div class="form-group">
                         <asp:Label ID="lbl_descripcion_capitulo" CssClass="control-label col-xs-2" Text="Capitulo:" runat="server"></asp:Label>
@@ -124,11 +130,6 @@
             <asp:Button ID="btn_Salir" CssClass="btn btn-default" runat="server" Text="Salir" />
         </div>
 
-    </div>
-
-    <div>
-        <asp:HiddenField ID="hfIdInstrumento" runat="server" />
-        <asp:HiddenField ID="hfCheckInciso" runat="server" />
     </div>
 
 </asp:Content>
