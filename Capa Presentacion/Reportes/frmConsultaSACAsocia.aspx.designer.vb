@@ -176,6 +176,15 @@ Partial Public Class frmConsultaSACAsocia
     Protected WithEvents txt_descripcion_sub_partida As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''Control lbl_cantidad.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents lbl_cantidad As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''Control Datos_GridView.
     '''</summary>
     '''<remarks>

@@ -105,7 +105,6 @@
     <Content Include="frmCierraInstrumento.aspx" />
     <Content Include="frmConfigurarMenu.aspx" />
     <Content Include="frmConfigurarMenuOpcion.aspx" />
-    <Content Include="frmConsultaSAC.aspx" />
     <Content Include="frmCorrelacionSAC.aspx" />
     <Content Include="frmCorteDesgravacion.aspx" />
     <Content Include="frmEnmiendas.aspx" />
@@ -208,13 +207,6 @@
     </Compile>
     <Compile Include="frmConfigurarMenuOpcion.aspx.vb">
       <DependentUpon>frmConfigurarMenuOpcion.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="frmConsultaSAC.aspx.designer.vb">
-      <DependentUpon>frmConsultaSAC.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="frmConsultaSAC.aspx.vb">
-      <DependentUpon>frmConsultaSAC.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="frmCorrelacionSAC.aspx.designer.vb">

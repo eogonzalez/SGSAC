@@ -70,4 +70,121 @@ Public Class CDReportesGeneral
 
     End Function
 
+    'Funcion que obtiene encabezados del sac e incisos segun filtros
+    Public Function SelectIncisosAsocia(ByVal id_instrumento As Integer, ByVal str_codigo As String, ByVal id_categoria As Integer, ByVal all_catego As Boolean, ByVal all_incisos As Boolean) As DataSet
+        Dim sql_string As String
+        Dim capitulo As String = Nothing
+        Dim partida As String = Nothing
+        Dim subpartida As String = Nothing
+        Dim dataSet As New DataSet
+
+        Try
+
+
+            If str_codigo.Length >= 2 Then
+                capitulo = str_codigo.Substring(0, 2)
+                If str_codigo.Length >= 4 Then
+                    partida = str_codigo.Substring(0, 4)
+                    If str_codigo.Length >= 5 Then
+                        If str_codigo.Length = 5 Then
+                            subpartida = str_codigo.Substring(0, 5) + "%"
+                        Else
+                            If str_codigo.Length >= 6 Then
+                                subpartida = str_codigo.Substring(0, 6) + "%"
+                            End If
+                        End If
+                    Else
+                        subpartida = str_codigo
+                    End If
+                Else
+                    partida = str_codigo.Substring(0, 1)
+                    subpartida = str_codigo.Substring(0, 1)
+                End If
+            Else
+                Exit Try
+            End If
+
+            sql_string = " SELECT " +
+                " descripcion_capitulo " +
+                " FROM " +
+                " SAC_Capitulos " +
+                " WHERE " +
+                " Capitulo = @capitulo AND  " +
+                " activo = 'S'; " +
+                " SELECT " +
+                " Descripcion_Partida " +
+                " FROM " +
+                " SAC_Partidas " +
+                " WHERE " +
+                " Capitulo = @capitulo AND " +
+                " Partida = @partida AND  " +
+                " activo = 'S'; " +
+                " SELECT " +
+                " texto_subpartida " +
+                " FROM " +
+                " SAC_Subpartidas " +
+                " WHERE " +
+                " Capitulo = @capitulo AND " +
+                " partida = @partida AND " +
+                " subpartida like @subpartida AND " +
+                " activo = 'S'; " +
+                " " +
+                " SELECT " +
+                " sac.codigo_inciso, si.texto_inciso, si.dai_base, " +
+                " icd.codigo_categoria, SUBSTRING(sac.inciso_presicion, 9, 12) as inciso_presicion, sac.texto_precision " +
+                " FROM " +
+                " SAC_Asocia_Categoria sac " +
+                " Right Join " +
+                " SAC_Incisos si ON " +
+                " si.codigo_inciso = sac.codigo_inciso And " +
+                " si.id_version = sac.id_version And " +
+                " si.anio_version = sac.anio_version " +
+                " Right Join " +
+                " IC_Categorias_Desgravacion ICD ON " +
+                " icd.id_categoria = sac.id_categoria And " +
+                " icd.id_instrumento = sac.id_instrumento " +
+                " where " +
+                " sac.id_instrumento = @id_instrumento "
+
+            If Not all_catego Then
+                sql_string = sql_string + " and sac.id_categoria = @id_categoria "
+            End If
+
+            If Not all_incisos Then
+                sql_string = sql_string + " and sac.codigo_inciso like @codigo_inciso+'%' "
+            End If
+
+
+
+
+            Using cn = objConeccion.Conectar
+                Dim command As SqlCommand = New SqlCommand(sql_string, cn)
+                command.Parameters.AddWithValue("id_instrumento", id_instrumento)
+                command.Parameters.AddWithValue("capitulo", capitulo)
+                command.Parameters.AddWithValue("partida", partida)
+                command.Parameters.AddWithValue("subpartida", subpartida)
+
+                If Not all_catego Then
+                    command.Parameters.AddWithValue("id_categoria", id_categoria)
+                End If
+
+                If Not all_incisos Then
+                    command.Parameters.AddWithValue("codigo_inciso", str_codigo)
+                End If
+
+                Dim da As New SqlDataAdapter(command)
+                da.Fill(dataSet)
+
+            End Using
+
+        Catch ex As Exception
+            MsgBox("ERROR SelectDatosInciso = " + ex.Message.ToString)
+        Finally
+
+        End Try
+
+        Return dataSet
+
+    End Function
+
 End Class

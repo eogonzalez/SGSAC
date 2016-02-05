@@ -2,6 +2,7 @@
 Public Class frmConsultaSACAsocia
     Inherits System.Web.UI.Page
     Dim objReporte As New CNReportesGeneral
+    
 
 #Region "Funciones del sistema"
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
@@ -9,6 +10,8 @@ Public Class frmConsultaSACAsocia
         If Not IsPostBack Then
             LlenarComboInstrumentos()
             LlenarComboCategoria(ddl_instrumento_comercial.SelectedValue)
+            lbl_cantidad.Text = 0
+            'btn_genera.Enabled = False
         End If
 
     End Sub
@@ -40,18 +43,43 @@ Public Class frmConsultaSACAsocia
     End Sub
 
     Protected Sub btn_seleccionar_Click(sender As Object, e As EventArgs) Handles btn_seleccionar.Click
+
         LlenarGridView()
+
     End Sub
 
     Protected Sub btn_genera_Click(sender As Object, e As EventArgs) Handles btn_genera.Click
-        DataTable_to_CSV(Session("tabla_re"), Server.MapPath("Reportes/ConsultaSAC/IncisosSAC.csv"), ",")
-        Response.Redirect("Reportes/ConsultaSAC/IncisosSAC.csv")
+
+        If Not lbl_cantidad.Text = "0" Then
+            DataTable_to_CSV(Session("tabla_rep"), Server.MapPath("../Reportes/ConsultaSAC/IncisosSAC.csv"), ",")
+            Response.Redirect("../Reportes/ConsultaSAC/IncisosSAC.csv")
+        Else
+            Mensaje("No existen datos para generar excel.")
+        End If
+
+    End Sub
+
+    Protected Sub gv_incisos_sac_PageIndexChanging(ByVal sender As Object, ByVal e As System.Web.UI.WebControls.GridViewPageEventArgs) Handles gv_incisos_sac.PageIndexChanging
+        gv_incisos_sac.PageIndex = e.NewPageIndex
+
+        With gv_incisos_sac
+            .DataSource = Session("tabla_rep")
+            .DataBind()
+        End With
+
     End Sub
 
 #End Region
 
 
 #Region "Mis funciones"
+
+    'Mensajes en el formulario
+    Sub Mensaje(ByVal texto As String)
+        Dim jv As String = "<script>alert('" & texto & "');</script>"
+        ScriptManager.RegisterClientScriptBlock(Me, GetType(Page), "alert", jv, False)
+    End Sub
+
 
     Private Sub LlenarComboInstrumentos()
         Dim tbl As New DataTable
@@ -88,44 +116,84 @@ Public Class frmConsultaSACAsocia
     Private Sub LlenarGridView()
         Dim objCNAsignaCat As New CNInstrumentosComerciales
         Dim id_instrumento As Integer = ddl_instrumento_comercial.SelectedValue
+        Dim all_cat As Boolean
+        Dim all_incisos As Boolean
 
-        With objCNAsignaCat.SelectDatosCodigoInciso(id_instrumento, txt_codigo_inciso_rep.Text)
+        If cb_categorias.Checked Then
+            all_cat = True
+        Else
+            all_cat = False
+        End If
 
-            If .Tables(0).Rows.Count = 0 Then
-                'Esta vacia la tabla
-            Else
-                txt_descripcion_capitulo.Text = .Tables(0).Rows(0)("descripcion_capitulo").ToString()
-            End If
+        If cb_incisos.Checked Then
+            all_incisos = True
+        Else
+            all_incisos = False
 
-            If .Tables(1).Rows.Count = 0 Then
+        End If
 
-            Else
-                txt_descripcion_partida.Text = .Tables(1).Rows(0)("Descripcion_Partida").ToString()
-            End If
+        Dim dataset As New DataSet
+        dataset = objReporte.SelectIncisosAsocia(id_instrumento, txt_codigo_inciso_rep.Text, ddl_categoria_asignar.SelectedValue, all_cat, all_incisos)
 
-            If .Tables(2).Rows.Count = 0 Then
+        If dataset IsNot Nothing Then
 
-            Else
-                txt_descripcion_sub_partida.Text = .Tables(2).Rows(0)("texto_subpartida").ToString()
-            End If
+            With dataset
 
-            If .Tables(3).Rows.Count = 0 Then
+                'With objCNAsignaCat.SelectDatosCodigoInciso(id_instrumento, txt_codigo_inciso_rep.Text)
 
-            Else
-                Dim tbl As New DataTable
+                If Not IsDBNull(.Tables(0).Rows(0)("descripcion_capitulo")) Then
+                    txt_descripcion_capitulo.Text = .Tables(0).Rows(0)("descripcion_capitulo").ToString()
+                End If
 
-                tbl = .Tables(3)
-                'tabla_incisos = .Tables(3)
-                Session.Add("tabla_rep", .Tables(3))
+                If Not IsDBNull(.Tables(1).Rows(0)("Descripcion_Partida")) Then
+                    txt_descripcion_partida.Text = .Tables(1).Rows(0)("Descripcion_Partida").ToString()
+                End If
 
-                With gv_incisos_sac
-                    .DataSource = tbl
-                    .DataBind()
-                End With
+                If Not IsDBNull(.Tables(2).Rows(0)("texto_subpartida")) Then
+                    txt_descripcion_sub_partida.Text = .Tables(2).Rows(0)("texto_subpartida").ToString()
+                End If
 
-            End If
+                If Not IsDBNull(.Tables(3)) Then
+                    If .Tables(3).Rows.Count = 0 Then
 
-        End With
+                        Dim tbl As New DataTable
+
+                        tbl = Nothing
+                        'tabla_incisos = .Tables(3)
+                        Session.Add("tabla_rep", .Tables(3))
+
+                        With gv_incisos_sac
+                            .DataSource = tbl
+                            .DataBind()
+                        End With
+
+                        lbl_cantidad.Text = 0
+                        'btn_genera.Enabled = False
+
+                    Else
+                        lbl_cantidad.Text = .Tables(3).Rows.Count.ToString
+                        'btn_genera.Enabled = True
+
+                        Dim tbl As New DataTable
+
+                        tbl = .Tables(3)
+                        'tabla_incisos = .Tables(3)
+                        Session.Add("tabla_rep", .Tables(3))
+
+                        With gv_incisos_sac
+                            .DataSource = tbl
+                            .DataBind()
+                        End With
+
+                    End If
+                End If
+
+            End With
+
+        End If
+
+
+
     End Sub
 
     Public Sub DataTable_to_CSV(ByVal table As DataTable, ByVal filename As String, ByVal sepChar As String)

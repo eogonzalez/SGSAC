@@ -16,22 +16,22 @@
                 <ContentTemplate>
 
                     <%-- Area de Datos del Instrumento --%>
-                    <h5>
-                        <span class="label label-primary">1. Seleccione Instrumento Comercial
+                    <h4>
+                        <span class="label label-success">1. Seleccione Instrumento Comercial
                         </span>
-                    </h5>
+                    </h4>
                     <div class="form-group">
-                        <asp:Label ID="lbl_nombre_insrumento" CssClass="control-label col-xs-3" Text=" Nombre del Instrumento Comercial: " runat="server"></asp:Label>
-                        <div class="col-xs-9">
+                        <asp:Label ID="lbl_nombre_insrumento" CssClass="control-label col-xs-2" Text=" Nombre del Instrumento Comercial: " runat="server"></asp:Label>
+                        <div class="col-xs-10">
                             <asp:DropDownList ID="ddl_instrumento_comercial" AutoPostBack="true" CssClass="form-control" runat="server"></asp:DropDownList>
                         </div>
                     </div>
 
                     <%-- Area de Categoria y Codigo Arancelario --%>
-                    <h5>
-                        <span class="label label-primary">2. Seleccionar Categoria de Desgravacion y Código Arancelario:
+                    <h4>
+                        <span class="label label-success">2. Seleccionar Categoria de Desgravacion y Código Arancelario:
                         </span>
-                    </h5>
+                    </h4>
                     <div class="form-group">
 
                         <asp:Label ID="lbl_todas_categorias" CssClass="control-label col-xs-2" Text="Todas las categorias:" runat="server"></asp:Label>
@@ -66,10 +66,10 @@
                     </div>
 
                     <%-- Descripcion Capitulo-Partida y Subpartida Seleccionada --%>
-                    <h5>
-                        <span class="label label-primary">Descripción Capitulo-Partida y Subpartida Seleccionada
+                    <h4>
+                        <span class="label label-success">Descripción Capitulo-Partida y Subpartida Seleccionada
                         </span>
-                    </h5>
+                    </h4>
 
                     <div class="form-group">
                         <asp:Label ID="lbl_descripcion_capitulo" CssClass="control-label col-xs-2" Text="Capitulo:" runat="server"></asp:Label>
@@ -92,8 +92,20 @@
                             <asp:TextBox ID="txt_descripcion_sub_partida" CssClass="form-control" runat="server" disabled></asp:TextBox>
                         </div>
                     </div>
+
+                    <div class="form-group">
+                        <span class="badge">
+                            Cantidad de asociaciones:
+                            <asp:Label ID="lbl_cantidad" runat="server"></asp:Label>
+                        </span>
+                    </div>
+
                 </ContentTemplate>
             </asp:UpdatePanel>
+
+            
+            
+            
 
             <%-- Grid que muestra incisos del SAC --%>
 
