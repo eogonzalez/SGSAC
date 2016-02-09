@@ -127,6 +127,7 @@
     <Content Include="Login.aspx" />
     <Content Include="Logout.aspx" />
     <Content Include="Reportes\frmConsultaSACAsocia.aspx" />
+    <Content Include="Reportes\frmConsultaVerSAC.aspx" />
     <Content Include="Script\Aprobaciones\ValidarApruebaSAC.js" />
     <Content Include="Script\jQuery\jquery-1.11.3.js" />
     <Content Include="Script\jQuery\jquery.validate.js" />
@@ -324,6 +325,13 @@
     </Compile>
     <Compile Include="Reportes\frmConsultaSACAsocia.aspx.vb">
       <DependentUpon>frmConsultaSACAsocia.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Reportes\frmConsultaVerSAC.aspx.designer.vb">
+      <DependentUpon>frmConsultaVerSAC.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\frmConsultaVerSAC.aspx.vb">
+      <DependentUpon>frmConsultaVerSAC.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
   </ItemGroup>

@@ -1,12 +1,11 @@
-﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/General.Master" CodeBehind="frmConsultaSACAsocia.aspx.vb" Inherits="Capa_Presentacion.frmConsultaSACAsocia" %>
-
+﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/General.Master" CodeBehind="frmConsultaVerSAC.aspx.vb" Inherits="Capa_Presentacion.frmConsultaVerSAC" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-    <%-- Panel principal --%>
+        <%-- Panel principal --%>
     <div class="panel panel-primary">
-        <div class="panel-heading">Consulta de las asignaciones de categorias por Instrumento Comercial </div>
+        <div class="panel-heading">Consulta del  SAC </div>
 
         <%-- Cuerpo del Formulario --%>
         <div class="panel-body form-horizontal">
@@ -17,45 +16,45 @@
 
                     <%-- Area de Datos del Instrumento --%>
                     <h4>
-                        <span class="label label-success">1. Seleccione Instrumento Comercial
+                        <span class="label label-success">1. Seleccione versión del SAC
                         </span>
                     </h4>
                     <div class="form-group">
-                        <asp:Label ID="lbl_nombre_insrumento" CssClass="control-label col-xs-2" Text=" Nombre del Instrumento Comercial: " runat="server"></asp:Label>
+                        <asp:Label ID="lbl_nombre_version" CssClass="control-label col-xs-2" Text=" Version del SAC: " runat="server"></asp:Label>
                         <div class="col-xs-10">
-                            <asp:DropDownList ID="ddl_instrumento_comercial" AutoPostBack="true" CssClass="form-control" runat="server"></asp:DropDownList>
+                            <asp:DropDownList ID="ddl_version_SAC" AutoPostBack="true" CssClass="form-control" runat="server"></asp:DropDownList>
                         </div>
                     </div>
 
                     <%-- Area de Categoria y Codigo Arancelario --%>
                     <h4>
-                        <span class="label label-success">2. Seleccionar Categoria de Desgravacion y Código Arancelario:
+                        <span class="label label-success">2. Seleccionar el detalle a generar:
                         </span>
                     </h4>
                     <div class="form-group">
 
-                        <asp:Label ID="lbl_todas_categorias" CssClass="control-label col-xs-2" Text="Todas las categorias:" runat="server"></asp:Label>
-                        <div class="col-xs-2">
-                            <asp:CheckBox ID="cb_categorias" runat="server" AutoPostBack="True" />
+                        <asp:Label ID="lbl_todas_capitulos" CssClass="control-label col-xs-2" Text="Todas las capitulos:" runat="server"></asp:Label>
+                        <div class="col-xs-1">
+                            <asp:CheckBox ID="cb_capitulo" runat="server" AutoPostBack="True" />
                         </div>
 
-                        <asp:Label ID="lbl_categoria_asignar" CssClass="control-label col-xs-2" Text="Categoria para asignar:" runat="server"></asp:Label>
-                        <div class="col-xs-5">
-                            <asp:DropDownList ID="ddl_categoria_asignar" CssClass="form-control" runat="server"></asp:DropDownList>
+                        <asp:Label ID="lbl_capitulo" CssClass="control-label col-xs-2" Text="Capitulo:" runat="server"></asp:Label>
+                        <div class="col-xs-7">
+                            <asp:DropDownList ID="ddl_capitulo" CssClass="form-control" runat="server" AutoPostBack="True"></asp:DropDownList>
                         </div>
                     </div>
 
                     <div class="form-group">
 
-                        <asp:Label ID="lbl_todos_incisos" CssClass="control-label col-xs-2" Text="Todos los incisos:" runat="server"></asp:Label>
-                        <div class="col-xs-2">
-                            <asp:CheckBox ID="cb_incisos" runat="server" AutoPostBack="True" />
+                        <asp:Label ID="lbl_todas_partidas" CssClass="control-label col-xs-2" Text="Todas las partidas:" runat="server"></asp:Label>
+                        <div class="col-xs-1">
+                            <asp:CheckBox ID="cb_partidas" runat="server" AutoPostBack="True" />
                         </div>
 
                         <div>
-                            <asp:Label ID="lbl_codigo_arancel" CssClass="control-label col-xs-2" Text="Código Arancelario:" runat="server"></asp:Label>
-                            <div class="col-xs-4">
-                                <asp:TextBox ID="txt_codigo_inciso_rep" CssClass="form-control" runat="server"></asp:TextBox>
+                            <asp:Label ID="lbl_partida" CssClass="control-label col-xs-2" Text="Partida:" runat="server"></asp:Label>
+                            <div class="col-xs-5">
+                                <asp:DropDownList ID="ddl_partida" CssClass="form-control" runat="server"></asp:DropDownList>
                             </div>
 
                             <div class="col-xs-2">
@@ -66,7 +65,7 @@
                     </div>
 
                     <%-- Descripcion Capitulo-Partida y Subpartida Seleccionada --%>
-                    <h4>
+<%--                    <h4>
                         <span class="label label-success">Descripción Capitulo-Partida y Subpartida Seleccionada
                         </span>
                     </h4>
@@ -91,11 +90,11 @@
                         <div class="col-xs-10">
                             <asp:TextBox ID="txt_descripcion_sub_partida" CssClass="form-control" runat="server" disabled></asp:TextBox>
                         </div>
-                    </div>
+                    </div>--%>
 
                     <div class="form-group">
                         <span class="badge">
-                            Cantidad de asociaciones:
+                            Cantidad de incisos:
                             <asp:Label ID="lbl_cantidad" runat="server"></asp:Label>
                         </span>
                     </div>
@@ -104,9 +103,6 @@
             </asp:UpdatePanel>
 
             
-            
-            
-
             <%-- Grid que muestra incisos del SAC --%>
 
             <div class="table-responsive">
@@ -123,12 +119,9 @@
                                 PageButtonCount="10" />
 
                             <Columns>
-                                <asp:BoundField DataField="codigo_inciso" HeaderText="Inciso Arancelario" />
-                                <asp:BoundField DataField="texto_inciso" HeaderText="Descripcion Inciso Arancelario" />
-                                <asp:BoundField DataField="dai_base" HeaderText="DAI SAC(Base)" />
-                                <asp:BoundField DataField="codigo_categoria" HeaderText="Categoria" />
-                                <asp:BoundField DataField="inciso_presicion" HeaderText="Código Precision" />
-                                <asp:BoundField DataField="texto_precision" HeaderText="Descripcion Precision" />
+                                <asp:BoundField DataField="codigo" HeaderText="Inciso Arancelario" />
+                                <asp:BoundField DataField="descripcion" HeaderText="Descripcion Inciso Arancelario" />
+                                <asp:BoundField DataField="SAC" HeaderText="DAI SAC(Base)" />
                             </Columns>
                         </asp:GridView>
                     </ContentTemplate>

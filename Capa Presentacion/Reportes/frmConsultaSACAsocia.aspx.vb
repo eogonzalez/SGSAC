@@ -135,58 +135,72 @@ Public Class frmConsultaSACAsocia
         Dim dataset As New DataSet
         dataset = objReporte.SelectIncisosAsocia(id_instrumento, txt_codigo_inciso_rep.Text, ddl_categoria_asignar.SelectedValue, all_cat, all_incisos)
 
+
         If dataset IsNot Nothing Then
+            Dim dataTableList As New DataTable
 
             With dataset
 
-                'With objCNAsignaCat.SelectDatosCodigoInciso(id_instrumento, txt_codigo_inciso_rep.Text)
+                If Not all_incisos Then
+                    'Si no son todos los incisos
+                    'With objCNAsignaCat.SelectDatosCodigoInciso(id_instrumento, txt_codigo_inciso_rep.Text)
 
-                If Not IsDBNull(.Tables(0).Rows(0)("descripcion_capitulo")) Then
-                    txt_descripcion_capitulo.Text = .Tables(0).Rows(0)("descripcion_capitulo").ToString()
-                End If
-
-                If Not IsDBNull(.Tables(1).Rows(0)("Descripcion_Partida")) Then
-                    txt_descripcion_partida.Text = .Tables(1).Rows(0)("Descripcion_Partida").ToString()
-                End If
-
-                If Not IsDBNull(.Tables(2).Rows(0)("texto_subpartida")) Then
-                    txt_descripcion_sub_partida.Text = .Tables(2).Rows(0)("texto_subpartida").ToString()
-                End If
-
-                If Not IsDBNull(.Tables(3)) Then
-                    If .Tables(3).Rows.Count = 0 Then
-
-                        Dim tbl As New DataTable
-
-                        tbl = Nothing
-                        'tabla_incisos = .Tables(3)
-                        Session.Add("tabla_rep", .Tables(3))
-
-                        With gv_incisos_sac
-                            .DataSource = tbl
-                            .DataBind()
-                        End With
-
-                        lbl_cantidad.Text = 0
-                        'btn_genera.Enabled = False
-
-                    Else
-                        lbl_cantidad.Text = .Tables(3).Rows.Count.ToString
-                        'btn_genera.Enabled = True
-
-                        Dim tbl As New DataTable
-
-                        tbl = .Tables(3)
-                        'tabla_incisos = .Tables(3)
-                        Session.Add("tabla_rep", .Tables(3))
-
-                        With gv_incisos_sac
-                            .DataSource = tbl
-                            .DataBind()
-                        End With
-
+                    If .Tables(0).Rows.Count > 0 Then
+                        txt_descripcion_capitulo.Text = .Tables(0).Rows(0)("descripcion_capitulo").ToString()
                     End If
+
+                    If .Tables(1).Rows.Count > 0 Then
+                        txt_descripcion_partida.Text = .Tables(1).Rows(0)("Descripcion_Partida").ToString()
+                    End If
+
+                    If .Tables(2).Rows.Count > 0 Then
+                        txt_descripcion_sub_partida.Text = .Tables(2).Rows(0)("texto_subpartida").ToString()
+                    End If
+
+                    'If Not IsDBNull(.Tables(2).Rows(0)("texto_subpartida")) Then
+
+                    'End If
+
+                    dataTableList = .Tables(3)
+
                 End If
+
+
+
+        If Not IsDBNull(.Tables(3)) Then
+            If .Tables(3).Rows.Count = 0 Then
+
+                Dim tbl As New DataTable
+
+                tbl = Nothing
+                'tabla_incisos = .Tables(3)
+                Session.Add("tabla_rep", .Tables(3))
+
+                With gv_incisos_sac
+                    .DataSource = tbl
+                    .DataBind()
+                End With
+
+                lbl_cantidad.Text = 0
+                'btn_genera.Enabled = False
+
+            Else
+                lbl_cantidad.Text = .Tables(3).Rows.Count.ToString
+                'btn_genera.Enabled = True
+
+                Dim tbl As New DataTable
+
+                tbl = .Tables(3)
+                'tabla_incisos = .Tables(3)
+                Session.Add("tabla_rep", .Tables(3))
+
+                With gv_incisos_sac
+                    .DataSource = tbl
+                    .DataBind()
+                End With
+
+            End If
+        End If
 
             End With
 

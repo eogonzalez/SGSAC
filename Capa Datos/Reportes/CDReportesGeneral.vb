@@ -101,7 +101,9 @@ Public Class CDReportesGeneral
                     subpartida = str_codigo.Substring(0, 1)
                 End If
             Else
-                Exit Try
+                capitulo = ""
+                partida = ""
+                subpartida = ""
             End If
 
             sql_string = " SELECT " +
