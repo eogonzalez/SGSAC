@@ -1,9 +1,10 @@
 ﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/General.Master" CodeBehind="frmConsultaVerSAC.aspx.vb" Inherits="Capa_Presentacion.frmConsultaVerSAC" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-        <%-- Panel principal --%>
+    <%-- Panel principal --%>
     <div class="panel panel-primary">
         <div class="panel-heading">Consulta del  SAC </div>
 
@@ -39,12 +40,17 @@
                         </div>
 
                         <asp:Label ID="lbl_capitulo" CssClass="control-label col-xs-2" Text="Capitulo:" runat="server"></asp:Label>
-                        <div class="col-xs-7">
+                        <div class="col-xs-5">
                             <asp:DropDownList ID="ddl_capitulo" CssClass="form-control" runat="server" AutoPostBack="True"></asp:DropDownList>
                         </div>
+
+                        <div class="col-xs-2">
+                            <asp:Button ID="btn_seleccionar" CssClass="btn btn-primary" Text="Consultar" runat="server" />
+                        </div>
+
                     </div>
 
-                    <div class="form-group">
+<%--                    <div class="form-group">
 
                         <asp:Label ID="lbl_todas_partidas" CssClass="control-label col-xs-2" Text="Todas las partidas:" runat="server"></asp:Label>
                         <div class="col-xs-1">
@@ -57,15 +63,13 @@
                                 <asp:DropDownList ID="ddl_partida" CssClass="form-control" runat="server"></asp:DropDownList>
                             </div>
 
-                            <div class="col-xs-2">
-                                <asp:Button ID="btn_seleccionar" CssClass="btn btn-primary" Text="Consultar" runat="server" />
-                            </div>
+
                         </div>
 
-                    </div>
+                    </div>--%>
 
                     <%-- Descripcion Capitulo-Partida y Subpartida Seleccionada --%>
-<%--                    <h4>
+                    <%--                    <h4>
                         <span class="label label-success">Descripción Capitulo-Partida y Subpartida Seleccionada
                         </span>
                     </h4>
@@ -93,8 +97,7 @@
                     </div>--%>
 
                     <div class="form-group">
-                        <span class="badge">
-                            Cantidad de incisos:
+                        <span class="badge">Cantidad de incisos:
                             <asp:Label ID="lbl_cantidad" runat="server"></asp:Label>
                         </span>
                     </div>
@@ -102,7 +105,7 @@
                 </ContentTemplate>
             </asp:UpdatePanel>
 
-            
+
             <%-- Grid que muestra incisos del SAC --%>
 
             <div class="table-responsive">

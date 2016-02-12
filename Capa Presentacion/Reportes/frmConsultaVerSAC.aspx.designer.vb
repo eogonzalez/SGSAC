@@ -77,42 +77,6 @@ Partial Public Class frmConsultaVerSAC
     Protected WithEvents ddl_capitulo As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
-    '''Control lbl_todas_partidas.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents lbl_todas_partidas As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''Control cb_partidas.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents cb_partidas As Global.System.Web.UI.WebControls.CheckBox
-
-    '''<summary>
-    '''Control lbl_partida.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents lbl_partida As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''Control ddl_partida.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents ddl_partida As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
     '''Control btn_seleccionar.
     '''</summary>
     '''<remarks>
