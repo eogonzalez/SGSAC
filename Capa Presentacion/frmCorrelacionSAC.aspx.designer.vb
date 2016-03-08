@@ -257,13 +257,13 @@ Partial Public Class frmCorrelacionSAC
     Protected WithEvents lbl_descripcion_partida As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''Control txt_descripcion_partida.
+    '''Control txt_descripcion_partida_corr.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents txt_descripcion_partida As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents txt_descripcion_partida_corr As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''Control lbl_descripcion_sub_partida.
@@ -311,6 +311,15 @@ Partial Public Class frmCorrelacionSAC
     Protected WithEvents lkBtn_Hidden_Nuevo As Global.System.Web.UI.WebControls.LinkButton
 
     '''<summary>
+    '''Control lkBtn_AperturaNew.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents lkBtn_AperturaNew As Global.System.Web.UI.WebControls.LinkButton
+
+    '''<summary>
     '''Control lkBtn_Elimar.
     '''</summary>
     '''<remarks>
@@ -327,6 +336,15 @@ Partial Public Class frmCorrelacionSAC
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
     Protected WithEvents lkBtt_Nuevo_ModalPopupExtender As Global.AjaxControlToolkit.ModalPopupExtender
+
+    '''<summary>
+    '''Control lkBtnn_AperturaNew_ModalPopupExtender.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents lkBtnn_AperturaNew_ModalPopupExtender As Global.AjaxControlToolkit.ModalPopupExtender
 
     '''<summary>
     '''Control Datos_GridView.
@@ -687,4 +705,229 @@ Partial Public Class frmCorrelacionSAC
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
     Protected WithEvents btnSalir As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''Control pnlAperturaNew.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents pnlAperturaNew As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''Control Label7.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents Label7 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''Control txt_inciso_new.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents txt_inciso_new As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Control Label8.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents Label8 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''Control txt_dai_new.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents txt_dai_new As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Control Label9.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents Label9 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''Control txt_descripcion_new.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents txt_descripcion_new As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Control Label10.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents Label10 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''Control txt_codigo_partida_new.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents txt_codigo_partida_new As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Control txt_descripcion_partida_new.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents txt_descripcion_partida_new As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Control Label11.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents Label11 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''Control txt_codigo_SubPartida_new.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents txt_codigo_SubPartida_new As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Control txt_descripcion_SubPartida_new.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents txt_descripcion_SubPartida_new As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Control Label12.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents Label12 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''Control txt_fecha_InicioVigencia_new.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents txt_fecha_InicioVigencia_new As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Control txt_fecha_InicioVigencia_new_CalendarExtender.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents txt_fecha_InicioVigencia_new_CalendarExtender As Global.AjaxControlToolkit.CalendarExtender
+
+    '''<summary>
+    '''Control Label13.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents Label13 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''Control txt_fecha_FinVigencia_new.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents txt_fecha_FinVigencia_new As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Control txt_fecha_FinVigencia_new_CalendarExtender.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents txt_fecha_FinVigencia_new_CalendarExtender As Global.AjaxControlToolkit.CalendarExtender
+
+    '''<summary>
+    '''Control Label14.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents Label14 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''Control txt_BaseNormativa_new.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents txt_BaseNormativa_new As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Control Label15.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents Label15 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''Control txt_Observaciones_new.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents txt_Observaciones_new As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Control btnGuardar_new.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents btnGuardar_new As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''Control btnSalir_new.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents btnSalir_new As Global.System.Web.UI.WebControls.Button
 End Class

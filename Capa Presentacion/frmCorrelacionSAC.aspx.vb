@@ -53,7 +53,7 @@ Public Class frmCorrelacionSAC
     Protected Sub btnGuardar_Click(sender As Object, e As EventArgs) Handles btnGuardar.Click
 
         If ValidaIncisoNuevo() Then
-            Mensaje("El codigo de inciso aperturado, ya existe en la version actual verifique.")
+            Mensaje("El codigo de inciso aperturado, ya existe en la version actual, sí desea modificarlo, SUPRIMELO primero, y luego realice la APERTURA con las modificaciones.")
         Else
             If GuardarApertura() Then
                 Mensaje("Apertura realizada con éxito.")
@@ -120,6 +120,11 @@ Public Class frmCorrelacionSAC
             Mensaje("Seleccione un inciso para realizar supresion.")
             LlenarCorrelacionMant()
         End If
+    End Sub
+
+    Protected Sub txt_inciso_new_TextChanged(sender As Object, e As EventArgs) Handles txt_inciso_new.TextChanged
+        LlenarDescripcionesNew(txt_inciso_new.Text)
+        lkBtnn_AperturaNew_ModalPopupExtender.Show()
     End Sub
 
 #End Region
@@ -211,7 +216,7 @@ Public Class frmCorrelacionSAC
             If .Tables(1).Rows.Count = 0 Then
 
             Else
-                txt_descripcion_partida.Text = .Tables(1).Rows(0)("Descripcion_Partida").ToString()
+                txt_descripcion_partida_corr.Text = .Tables(1).Rows(0)("Descripcion_Partida").ToString()
             End If
 
             If .Tables(2).Rows.Count = 0 Then
@@ -506,6 +511,22 @@ Public Class frmCorrelacionSAC
 
     End Function
 
+    Private Sub LlenarDescripcionesNew(ByVal codigo_inciso As String)
+
+        If codigo_inciso.Length = 8 Then
+            Dim objEnmienda As New CNInstrumentosComerciales
+            Dim dt As New DataTable
+
+            dt = objEnmienda.SelectDatosApertura(codigo_inciso)
+
+
+
+
+        End If
+
+    End Sub
+
 #End Region
+
 
 End Class

@@ -3233,6 +3233,8 @@ Public Class CDInstrumentosComerciales
     'Funcion que valida si inciso nuevo ya existe
     Public Function ValidaIncisoNuevo(ByVal objCeCorrelacion As CEEnmiendas) As Boolean
         Dim estado As Boolean = True
+        Dim estado_incisos As Boolean = True
+        Dim estado_correlacion As Boolean = True
         Try
             Dim sql_query As String
             sql_query = " SELECT " +
@@ -3251,16 +3253,159 @@ Public Class CDInstrumentosComerciales
                 cn.Open()
 
                 If command.ExecuteScalar() > 0 Then
-                    estado = True
+                    estado_incisos = True
                 Else
-                    estado = False
+                    estado_incisos = False
                 End If
             End Using
+
+            sql_query = " SELECT " +
+                " COALESCE(count(1), 0) " +
+                " From " +
+                " SAC_Correlacion " +
+                " where " +
+                " inciso_origen = @codigo_inciso " +
+                " AND version = @id_version  " +
+                " AND anio_version = @anio_version " +
+                " AND inciso_nuevo is NULL "
+
+            Using cn = objConeccion.Conectar
+                Dim command As SqlCommand = New SqlCommand(sql_query, cn)
+                command.Parameters.AddWithValue("id_version", objCeCorrelacion.id_version)
+                command.Parameters.AddWithValue("anio_version", objCeCorrelacion.anio_version)
+                command.Parameters.AddWithValue("codigo_inciso", objCeCorrelacion.inciso_nuevo)
+                cn.Open()
+
+                If command.ExecuteScalar() > 0 Then
+                    estado_correlacion = True
+                Else
+                    estado_correlacion = False
+                End If
+
+            End Using
+
+            If estado_correlacion And estado_incisos Then
+                estado = False
+            Else
+                estado = True
+            End If
 
         Catch ex As Exception
 
         End Try
         Return estado
+    End Function
+
+    'Funcion que obtiene datos de partida y subpartida para Apertura de comieco
+    Public Function SelectDatosApertura(ByVal inciso As String) As DataTable
+        Dim Respuesta As New DataTable
+        Dim sql_query As String
+        Try
+
+            sql_query = " select " +
+                " partida, Descripcion_Partida " +
+                " FROM " +
+                " SAC_Partidas " +
+                " where " +
+                " Partida LIKE @partida "
+
+            Using cn = objConeccion.Conectar
+                Dim command As New SqlCommand(sql_query, cn)
+                Dim partida As String
+                partida = inciso.Substring(0, 4)
+                command.Parameters.AddWithValue("partida", partida)
+                Dim DataAdapter As New SqlDataAdapter(command)
+                cn.Open()
+                DataAdapter.Fill(Respuesta)
+                cn.Close()
+            End Using
+
+            sql_query = " SELECT " +
+                " count(1) " +
+                " from " +
+                " SAC_Subpartidas " +
+                " where " +
+                " subpartida like  @subpartida+'%' "
+
+            Using cn = objConeccion.Conectar
+                Dim command As New SqlCommand(sql_query, cn)
+                Dim valor As Integer
+                Dim subpartida As String
+                subpartida = inciso.Substring(0, 5)
+                command.Parameters.AddWithValue("subpartida", subpartida)
+                cn.Open()
+
+                valor = command.ExecuteScalar()
+
+                If valor = 1 Then
+
+                    sql_query = " SELECT " +
+                        " subpartida, texto_subpartida " +
+                        " FROM " +
+                        " SAC_Subpartidas " +
+                        " where " +
+                        " subpartida like @subpartida "
+
+                    Using cn2 = objConeccion.Conectar
+                        Dim cmd As New SqlCommand(sql_query, cn2)
+
+                        cmd.Parameters.AddWithValue("subpartida", subpartida)
+                        Dim DataAdapter As New SqlDataAdapter(cmd)
+                        cn2.Open()
+                        DataAdapter.Fill(Respuesta)
+                        cn2.Close()
+                    End Using
+
+                ElseIf valor = 2 Then
+
+                    sql_query = " SELECT " +
+                        " subpartida, texto_subpartida " +
+                        " FROM " +
+                        " SAC_Subpartidas " +
+                        " where " +
+                        " subpartida like @subpartida "
+
+                    Using cn2 = objConeccion.Conectar
+                        Dim cmd As New SqlCommand(sql_query, cn2)
+                        subpartida = inciso.Substring(0, 6)
+                        cmd.Parameters.AddWithValue("subpartida", subpartida)
+                        Dim DataAdapter As New SqlDataAdapter(cmd)
+                        cn2.Open()
+                        DataAdapter.Fill(Respuesta)
+                        cn2.Close()
+                    End Using
+
+                ElseIf valor = 3 Then
+
+                    sql_query = " SELECT " +
+                        " subpartida, texto_subpartida " +
+                        " FROM " +
+                        " SAC_Subpartidas " +
+                        " where " +
+                        " subpartida like @subpartida "
+
+                    Using cn2 = objConeccion.Conectar
+                        Dim cmd As New SqlCommand(sql_query, cn2)
+                        subpartida = inciso.Substring(0, 7)
+                        cmd.Parameters.AddWithValue("subpartida", subpartida)
+                        Dim DataAdapter As New SqlDataAdapter(cmd)
+                        cn2.Open()
+                        DataAdapter.Fill(Respuesta)
+                        cn2.Close()
+                    End Using
+                End If
+
+
+            End Using
+
+
+        Catch ex As SqlException
+
+        Catch ex As Exception
+
+        End Try
+
+        Return Respuesta
     End Function
 
 #End Region

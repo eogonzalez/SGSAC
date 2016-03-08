@@ -327,6 +327,12 @@ Public Class CNInstrumentosComerciales
     Public Function ValidaIncisoNuevo(ByVal objCeCorrelacion As CEEnmiendas) As Boolean
         Return objCDInstrumentos.ValidaIncisoNuevo(objCeCorrelacion)
     End Function
+
+    'Funcion que obtiene datos de partida y subpartida para Apertura de comieco
+    Public Function SelectDatosApertura(ByVal inciso As String) As DataTable
+        Return objCDInstrumentos.SelectDatosApertura(inciso)
+    End Function
+
 #End Region
 
 #Region "Funciones y procedimientos para el Mantenimiento de Asignacion de Precision"

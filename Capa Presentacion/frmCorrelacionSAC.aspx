@@ -25,7 +25,7 @@
 
     <%-- Panel principal --%>
     <div class="panel panel-primary">
-        <div class="panel-heading"> Configurar Correlaciones </div>
+        <div class="panel-heading">Configurar Correlaciones </div>
 
         <%-- Cuerpo del Formulario --%>
         <div class="panel-body form-horizontal">
@@ -37,7 +37,7 @@
 
             <div class="form-group">
 
-                <asp:Label ID="lbl_año_vigencia" CssClass="control-label col-xs-2" text="Año Vigencia SAC" runat="server"> </asp:Label>
+                <asp:Label ID="lbl_año_vigencia" CssClass="control-label col-xs-2" Text="Año Vigencia SAC" runat="server"> </asp:Label>
                 <div class="col-xs-1">
                     <asp:TextBox ID="txt_año_vigencia" CssClass="form-control" runat="server" disabled> </asp:TextBox>
                 </div>
@@ -45,7 +45,7 @@
                 <asp:Label ID="lbl_version_enmienda" CssClass="control-label col-xs-2" Text="Enmienda al SAC" runat="server"></asp:Label>
                 <div class="col-xs-2">
                     <asp:TextBox ID="txt_version_enmienda" CssClass="form-control" runat="server" disabled> </asp:TextBox>
-                 </div>
+                </div>
 
                 <asp:Label ID="lbl_periodo_enmienda_sac" CssClass="control-label col-xs-2" Text="Periodo Enmienda SAC del:" runat="server"></asp:Label>
                 <div class="col-xs-1">
@@ -56,7 +56,7 @@
                 <div class="col-xs-1">
                     <asp:TextBox ID="txt_periodo_año_final" CssClass="form-control" runat="server" disabled> </asp:TextBox>
                 </div>
-                    
+
             </div>
 
             <div class="form-group">
@@ -70,7 +70,7 @@
 
             <%-- Area de datos generales del nuevo SAC --%>
             <h5>
-                <span class="label label-success"> Datos Generales del Nuevo SAC </span>
+                <span class="label label-success">Datos Generales del Nuevo SAC </span>
             </h5>
 
             <div class="form-group">
@@ -126,7 +126,7 @@
                 <div class="col-xs-5">
                     <asp:Button ID="btn_seleccionar" CssClass="btn btn-primary disabled" Text="Seleccionar" runat="server" />
                 </div>
-                
+
             </div>
 
             <%-- Descripcion Capitulo-Partida y Subpartida Seleccionada --%>
@@ -148,7 +148,7 @@
 
                         <asp:Label ID="lbl_descripcion_partida" CssClass="control-label col-xs-2" Text="Partida:" runat="server"></asp:Label>
                         <div class="col-xs-10">
-                            <asp:TextBox ID="txt_descripcion_partida" CssClass="form-control" runat="server" disabled></asp:TextBox>
+                            <asp:TextBox ID="txt_descripcion_partida_corr" CssClass="form-control" runat="server" disabled></asp:TextBox>
                         </div>
                     </div>
 
@@ -184,6 +184,14 @@
                     <asp:LinkButton ID="lkBtn_Hidden_Nuevo" Style="display: hidden" runat="server">
                     </asp:LinkButton>
 
+                    <asp:LinkButton ID="lkBtn_AperturaNew" runat="server" CssClass="btn btn-primary">
+                        <i aria-hidden="true" class="glyphicon glyphicon-check"></i>
+                        Nuevo
+                    </asp:LinkButton>
+
+                    <%--                    <asp:LinkButton ID="lkBtn_Hidden_AperturaNew" Style="display: hidden" runat="server">
+                    </asp:LinkButton>--%>
+
                     <asp:LinkButton ID="lkBtn_Elimar" runat="server" CssClass="btn btn-primary">
                         <i aria-hidden="true" class="glyphicon glyphicon-remove"></i>
                         Eliminar Accion
@@ -194,6 +202,12 @@
                 <cc1:ModalPopupExtender ID="lkBtt_Nuevo_ModalPopupExtender"
                     BackgroundCssClass="modalBackground" BehaviorID="lkBtt_Nuevo_ModalPopupExtender"
                     PopupControlID="pnlApertura" DynamicServicePath="" TargetControlID="lkBtn_Hidden_Nuevo"
+                    runat="server">
+                </cc1:ModalPopupExtender>
+
+                <cc1:ModalPopupExtender ID="lkBtnn_AperturaNew_ModalPopupExtender"
+                    BackgroundCssClass="modalBackground" BehaviorID="lkBtt_AperturaNew_ModalPopupExtender"
+                    PopupControlID="pnlAperturaNew" DynamicServicePath="" TargetControlID="lkBtn_AperturaNew"
                     runat="server">
                 </cc1:ModalPopupExtender>
 
@@ -240,9 +254,9 @@
 
     </div>
 
-    <%-- Panel para las aperturas --%>
+    <%-- Panel para las aperturas de correlacion --%>
     <div>
-        <asp:Panel ID="pnlApertura" CssClass="panel panel-primary" 
+        <asp:Panel ID="pnlApertura" CssClass="panel panel-primary"
             BorderColor="Black" BackColor="White" BorderStyle="Inset" BorderWidth="1px"
             Height="765" Width="40%" runat="server">
             <div class="panel-heading">Datos de Apertura Arancelaria SAC </div>
@@ -279,8 +293,6 @@
                         <asp:TextBox ID="txt_dai_actual" CssClass="form-control" runat="server" disabled="disabled"></asp:TextBox>
                     </div>
                 </div>
-
-
 
                 <div class="form-group">
                     <asp:Label ID="lbl_descripcion_inciso" CssClass="control-label col-xs-3" Text="Descripcion Inciso:" runat="server"></asp:Label>
@@ -363,10 +375,103 @@
                 </div>
 
             </div>
-            
+
             <div class="panel-footer">
                 <asp:Button ID="btnGuardar" CssClass="btn btn-primary" runat="server" Text="Guardar" />
                 <asp:Button ID="btnSalir" CssClass="btn btn-default" runat="server" Text="Salir" />
+            </div>
+
+        </asp:Panel>
+    </div>
+
+    <%-- Panel para nuevas aperturas --%>
+
+    <div>
+        <asp:Panel ID="pnlAperturaNew" CssClass="panel panel-primary"
+            BorderColor="Black" BackColor="White" BorderStyle="Inset" BorderWidth="1px"
+            Height="600" Width="40%" runat="server">
+            <div class="panel-heading">Datos de Apertura</div>
+
+            <div class="panel-body form-horizontal">
+
+                <div class="form-group">
+
+                    <asp:Label ID="Label7" CssClass="control-label col-xs-3" Text="Inciso Nuevo: " runat="server"></asp:Label>
+                    <div class="col-xs-3">
+                        <asp:TextBox ID="txt_inciso_new" type="text" CssClass="form-control" runat="server" AutoPostBack="True"></asp:TextBox>
+                        <span class="help-block"></span>
+                    </div>
+
+                    <asp:Label ID="Label8" CssClass="control-label col-xs-3" Text="DAI Nuevo:" runat="server"></asp:Label>
+                    <div class="col-xs-3">
+                        <asp:TextBox ID="txt_dai_new" CssClass="form-control" runat="server"></asp:TextBox>
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <asp:Label ID="Label9" CssClass="control-label col-xs-3" Text="Descripcion Nuevo Inciso:" runat="server"></asp:Label>
+                    <div class="col-xs-9">
+                        <asp:TextBox ID="txt_descripcion_new" CssClass="form-control" runat="server"></asp:TextBox>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <asp:Label ID="Label10" CssClass="control-label col-xs-3" Text="Descripcion Partida:" runat="server"></asp:Label>
+                    <div class="col-xs-3">
+                        <asp:TextBox ID="txt_codigo_partida_new" CssClass="form-control" runat="server" disabled="disabled"></asp:TextBox>
+                    </div>
+                    <div class="col-xs-6">
+                        <asp:TextBox ID="txt_descripcion_partida_new" CssClass="form-control" runat="server" disabled="disabled"></asp:TextBox>
+                        <span class="help-block"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <asp:Label ID="Label11" CssClass="control-label col-xs-3" Text="Descripcion Sub Partida:" runat="server"></asp:Label>
+                    <div class="col-xs-3">
+                        <asp:TextBox ID="txt_codigo_SubPartida_new" CssClass="form-control" runat="server" disabled="disabled"></asp:TextBox>
+                    </div>
+                    <div class="col-xs-6">
+                        <asp:TextBox ID="txt_descripcion_SubPartida_new" CssClass="form-control" runat="server" disabled="disabled"></asp:TextBox>
+                        <span class="help-block"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <asp:Label ID="Label12" CssClass="control-label col-xs-3" runat="server" Text="Fecha Inicio Vigencia:"></asp:Label>
+                    <div class="col-xs-3">
+                        <asp:TextBox ID="txt_fecha_InicioVigencia_new" CssClass="form-control" runat="server"></asp:TextBox>
+                        <cc1:CalendarExtender ID="txt_fecha_InicioVigencia_new_CalendarExtender" runat="server" BehaviorID="txt_fecha_InicioVigencia_new_CalendarExtender" TargetControlID="txt_Fecha_InicioVigencia_new" />
+                    </div>
+
+                    <asp:Label ID="Label13" CssClass="control-label col-xs-3" runat="server" Text="Fecha Fin de Vigencia:"></asp:Label>
+                    <div class="col-xs-3">
+                        <asp:TextBox ID="txt_fecha_FinVigencia_new" CssClass="form-control" runat="server"></asp:TextBox>
+                        <cc1:CalendarExtender ID="txt_fecha_FinVigencia_new_CalendarExtender" runat="server" BehaviorID="txt_fecha_FinVigencia_new_CalendarExtender" TargetControlID="txt_Fecha_FinVigencia_new" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <asp:Label ID="Label14" CssClass="control-label col-xs-3" Text="Base Normativa:" runat="server"></asp:Label>
+                    <div class="col-xs-9">
+                        <asp:TextBox ID="txt_BaseNormativa_new" CssClass="form-control" runat="server"></asp:TextBox>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <asp:Label ID="Label15" CssClass="control-label col-xs-3" Text="Observaciones:" runat="server"></asp:Label>
+                    <div class="col-xs-9">
+                        <asp:TextBox ID="txt_Observaciones_new" CssClass="form-control" TextMode="MultiLine" runat="server"></asp:TextBox>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="panel-footer">
+                <asp:Button ID="btnGuardar_new" CssClass="btn btn-primary" runat="server" Text="Guardar" />
+                <asp:Button ID="btnSalir_new" CssClass="btn btn-default" runat="server" Text="Salir" />
             </div>
 
         </asp:Panel>
