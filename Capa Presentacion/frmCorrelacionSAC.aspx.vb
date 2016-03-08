@@ -54,6 +54,7 @@ Public Class frmCorrelacionSAC
 
         If ValidaIncisoNuevo() Then
             Mensaje("El codigo de inciso aperturado, ya existe en la version actual, sí desea modificarlo, SUPRIMELO primero, y luego realice la APERTURA con las modificaciones.")
+            LlenarCorrelacionMant()
         Else
             If GuardarApertura() Then
                 Mensaje("Apertura realizada con éxito.")
@@ -125,6 +126,22 @@ Public Class frmCorrelacionSAC
     Protected Sub txt_inciso_new_TextChanged(sender As Object, e As EventArgs) Handles txt_inciso_new.TextChanged
         LlenarDescripcionesNew(txt_inciso_new.Text)
         lkBtnn_AperturaNew_ModalPopupExtender.Show()
+    End Sub
+
+    Protected Sub btnGuardar_new_Click(sender As Object, e As EventArgs) Handles btnGuardar_new.Click
+        If ValidaIncisoNuevo(txt_inciso_new.Text) Then
+            Mensaje("No se puede agregar nuevo inciso, el codigo de inciso ya existe en la version actual.")
+            LlenarCorrelacionMant()
+        Else
+            If GuardarNuevaApertura() Then
+                Mensaje("Nueva Apertura realizada con éxito.")
+                LlenarCorrelacionMant()
+            Else
+                Mensaje("Error al realizar apertura.")
+                LlenarDescripcionesNew(txt_inciso_new.Text)
+                lkBtnn_AperturaNew_ModalPopupExtender.Show()
+            End If
+        End If
     End Sub
 
 #End Region
@@ -407,6 +424,11 @@ Public Class frmCorrelacionSAC
 
     End Function
 
+    Private Function ValidaIncisoNuevo(ByVal codigo_inciso As String) As Boolean
+        Dim objEnmiendas As New CNInstrumentosComerciales
+        Return objEnmiendas.ValidaIncisoNuevo(codigo_inciso)
+    End Function
+
     Private Sub LimpiarAperturaMant()
         txt_anio_actual.Text = ""
         txt_descripcion_actual.Text = ""
@@ -515,18 +537,87 @@ Public Class frmCorrelacionSAC
 
         If codigo_inciso.Length = 8 Then
             Dim objEnmienda As New CNInstrumentosComerciales
-            Dim dt As New DataTable
+            Dim dataSet As New DataSet
 
-            dt = objEnmienda.SelectDatosApertura(codigo_inciso)
+            dataSet = objEnmienda.SelectDatosApertura(codigo_inciso)
 
+            txt_codigo_partida_new.Text = dataSet.Tables(0).Rows(0)("partida").ToString
+            txt_descripcion_partida_new.Text = dataSet.Tables(0).Rows(0)("descripcion_partida").ToString
 
+            If dataSet.Tables.Count > 1 Then
 
+                If dataSet.Tables(1).Rows.Count > 0 Then
+                    txt_codigo_SubPartida_new.Text = dataSet.Tables(1).Rows(0)("subpartida").ToString
+                    txt_descripcion_SubPartida_new.Text = dataSet.Tables(1).Rows(0)("texto_subpartida").ToString
+                Else
+                    txt_codigo_subpartida_apertura.Text = System.String.Empty
+                    txt_descripcion_subpartida_apertura.Text = System.String.Empty
+                End If
+
+            End If
 
         End If
 
     End Sub
 
+    Private Sub ObtengoDatosVersion()
+        Dim estado As Boolean = False
+        Dim objCorrelacion As New CNInstrumentosComerciales
+
+        Dim id_version As Integer
+        Dim anio_actual As Integer
+        Dim anio_nueva As Integer
+
+
+        With objCorrelacion.SelectCorrelacionMant()
+            If Not .Tables(0).Rows.Count = 0 Then
+                id_version = Convert.ToInt32(.Tables(0).Rows(0)("id_version").ToString())
+                Session.Add("id_version", id_version)
+
+                anio_actual = .Tables(0).Rows(0)("anio_version")
+                Session.Add("anio_actual", anio_actual)
+
+                estado = True
+            Else
+                estado = False
+            End If
+
+            If Not .Tables(1).Rows.Count = 0 Then
+                anio_nueva = .Tables(1).Rows(0)("anio_version")
+                Session.Add("anio_nueva", anio_nueva)
+
+                estado = True
+            Else
+                estado = False
+            End If
+        End With
+    End Sub
+
+    Private Function GuardarNuevaApertura() As Boolean
+        Dim objEnmiendas As New CNInstrumentosComerciales
+        Dim objCorrelacion As New CEEnmiendas
+
+        ObtengoDatosVersion()
+        objCorrelacion.inciso_nuevo = "NULL"
+        objCorrelacion.inciso_nuevo = txt_inciso_new.Text
+        objCorrelacion.texto_inciso = txt_descripcion_new.Text
+        objCorrelacion.observaciones = txt_observaciones.Text
+        objCorrelacion.normativa = txt_BaseNormativa_new.Text
+        objCorrelacion.dai_base = 0.0
+        objCorrelacion.dai_nuevo = Convert.ToDecimal(txt_dai_new.Text)
+        objCorrelacion.anio_version = getVersionActual()
+        objCorrelacion.anio_nueva_version = getNuevaVersion()
+        objCorrelacion.id_version = Session("id_version")
+        objCorrelacion.fecha_fin_vigencia = Convert.ToDateTime(txt_fecha_FinVigencia_new.Text)
+        objCorrelacion.fecha_inicia_vigencia = Convert.ToDateTime(txt_fecha_InicioVigencia_new.Text)
+
+        Return objEnmiendas.InsertApertura(objCorrelacion)
+
+    End Function
+
+
 #End Region
 
 
+    
 End Class

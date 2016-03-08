@@ -188,7 +188,7 @@ function inicio() {
         validarAperturaNew();
     }
 
-    var contenido_subpartida_new = $("#ContentPlaceholder1_txt_descripcion_subpartida_new").val();
+    var contenido_subpartida_new = $("#ContentPlaceHolder1_txt_descripcion_subpartida_new").val();
     if (contenido_subpartida_new != null) {
         validarAperturaNew();
     }
@@ -900,18 +900,18 @@ function validarAperturaNew() {
     if (descripcion_subpartida == null || descripcion_subpartida.length == 0 || /^\s+$/.test(descripcion_subpartida)) {
         //Si esta vacio el campo
         $("#iconotexto_subpartida").remove();
-        $("#ContentPlaceHolder1_txt_descripcion_subpartida_new").parent().parent().attr("class", "form-group has-error has-feedback");
-        $("#ContentPlaceHolder1_txt_descripcion_subpartida_new").parent().children("span").text("Verifique si existe Subpartida.").show();
-        $("#ContentPlaceHolder1_txt_descripcion_subpartida_new").parent().append("<span id='iconotexto_subpartida' class='glyphicon glyphicon-remove form-control-feedback'>");
+        $("#ContentPlaceHolder1_txt_descripcion_SubPartida_new").parent().parent().attr("class", "form-group has-error has-feedback");
+        $("#ContentPlaceHolder1_txt_descripcion_SubPartida_new").parent().children("span").text("Verifique si existe Subpartida.").show();
+        $("#ContentPlaceHolder1_txt_descripcion_SubPartida_new").parent().append("<span id='iconotexto_subpartida' class='glyphicon glyphicon-remove form-control-feedback'>");
         $("#ContentPlaceHolder1_btnGuardar_new").attr("Class", "btn btn-primary");
         return false;
     }
     else {
         //Si no esta vacio
         $("#iconotexto_subpartida").remove();
-        $("#ContentPlaceHolder1_txt_descripcion_subpartida_new").parent().parent().attr("class", "form-group has-success has-feedback");
-        $("#ContentPlaceHolder1_txt_descripcion_subpartida_new").parent().children("span").text("").hide();
-        $("#ContentPlaceHolder1_txt_descripcion_subpartida_new").parent().append("<span id='iconotexto_subpartida' class='glyphicon glyphicon-ok form-control-feedback'>");
+        $("#ContentPlaceHolder1_txt_descripcion_SubPartida_new").parent().parent().attr("class", "form-group has-success has-feedback");
+        $("#ContentPlaceHolder1_txt_descripcion_SubPartida_new").parent().children("span").text("").hide();
+        $("#ContentPlaceHolder1_txt_descripcion_SubPartida_new").parent().append("<span id='iconotexto_subpartida' class='glyphicon glyphicon-ok form-control-feedback'>");
         $("#ContentPlaceHolder1_btnGuardar_new").attr("Class", "btn btn-primary");
     }
 }

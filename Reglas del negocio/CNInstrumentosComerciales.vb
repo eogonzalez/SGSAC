@@ -328,8 +328,13 @@ Public Class CNInstrumentosComerciales
         Return objCDInstrumentos.ValidaIncisoNuevo(objCeCorrelacion)
     End Function
 
+    'Funcion que valida si inciso nuevo ya existe
+    Public Function ValidaIncisoNuevo(ByVal codigo_inciso As String) As Boolean
+        Return objCDInstrumentos.ValidaIncisoNuevo(codigo_inciso)
+    End Function
+
     'Funcion que obtiene datos de partida y subpartida para Apertura de comieco
-    Public Function SelectDatosApertura(ByVal inciso As String) As DataTable
+    Public Function SelectDatosApertura(ByVal inciso As String) As DataSet
         Return objCDInstrumentos.SelectDatosApertura(inciso)
     End Function
 

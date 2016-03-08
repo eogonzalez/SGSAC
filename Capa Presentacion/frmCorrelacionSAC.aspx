@@ -389,7 +389,7 @@
     <div>
         <asp:Panel ID="pnlAperturaNew" CssClass="panel panel-primary"
             BorderColor="Black" BackColor="White" BorderStyle="Inset" BorderWidth="1px"
-            Height="600" Width="40%" runat="server">
+            Height="550" Width="40%" runat="server">
             <div class="panel-heading">Datos de Apertura</div>
 
             <div class="panel-body form-horizontal">

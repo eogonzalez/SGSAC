@@ -3088,7 +3088,12 @@ Public Class CDInstrumentosComerciales
 
             Using cn = objConeccion.Conectar
                 Dim command As SqlCommand = New SqlCommand(sql_query, cn)
-                command.Parameters.AddWithValue("inciso_origen", objCorrelacion.inciso_origen)
+                If objCorrelacion.inciso_origen Is Nothing Then
+                    command.Parameters.AddWithValue("inciso_origen", DBNull.Value)
+                Else
+                    command.Parameters.AddWithValue("inciso_origen", objCorrelacion.inciso_origen)
+                End If
+
                 command.Parameters.AddWithValue("inciso_nuevo", objCorrelacion.inciso_nuevo)
                 command.Parameters.AddWithValue("texto_inciso", objCorrelacion.texto_inciso)
                 command.Parameters.AddWithValue("comentarios", objCorrelacion.observaciones)
@@ -3230,7 +3235,7 @@ Public Class CDInstrumentosComerciales
         Return estado
     End Function
 
-    'Funcion que valida si inciso nuevo ya existe
+    'Funcion que valida si inciso nuevo ya existe y si ya esta supreso
     Public Function ValidaIncisoNuevo(ByVal objCeCorrelacion As CEEnmiendas) As Boolean
         Dim estado As Boolean = True
         Dim estado_incisos As Boolean = True
@@ -3296,9 +3301,74 @@ Public Class CDInstrumentosComerciales
         Return estado
     End Function
 
+
+    'Funcion que valida si inciso nuevo ya existe
+    Public Function ValidaIncisoNuevo(ByVal codigo_inciso As String) As Boolean
+        Dim estado As Boolean = True
+        Dim estadoIncisos As Boolean = True
+        Dim estadoCorrelacion As Boolean = True
+        Try
+            Dim sql_query As String
+            sql_query = " SELECT " +
+                " COALESCE(count(1), 0) " +
+                " FROM " +
+                " SAC_Incisos " +
+                " where " +
+                " codigo_inciso = @codigo_inciso " +
+                " AND estado = 'A' "
+
+            Using cn = objConeccion.Conectar
+                Dim command As SqlCommand = New SqlCommand(sql_query, cn)
+                
+                command.Parameters.AddWithValue("codigo_inciso", codigo_inciso)
+                cn.Open()
+
+                If command.ExecuteScalar() > 0 Then
+                    estadoIncisos = True
+                Else
+                    estadoIncisos = False
+                End If
+            End Using
+
+            sql_query = " SELECT " +
+                " COALESCE(count(1), 0) " +
+                " FROM " +
+                " SAC_Correlacion " +
+                " where " +
+                " inciso_nuevo = @codigo_inciso "
+
+
+            Using cn = objConeccion.Conectar
+                Dim Command As SqlCommand = New SqlCommand(sql_query, cn)
+
+                Command.Parameters.AddWithValue("codigo_inciso", codigo_inciso)
+                cn.Open()
+
+                If Command.ExecuteScalar() > 0 Then
+                    estadoCorrelacion = True
+                Else
+                    estadoCorrelacion = False
+                End If
+
+            End Using
+
+            If estadoIncisos Or estadoCorrelacion Then
+                estado = True
+            Else
+                estado = False
+            End If
+
+
+        Catch ex As Exception
+
+        End Try
+        Return estado
+    End Function
+
+
     'Funcion que obtiene datos de partida y subpartida para Apertura de comieco
-    Public Function SelectDatosApertura(ByVal inciso As String) As DataTable
-        Dim Respuesta As New DataTable
+    Public Function SelectDatosApertura(ByVal inciso As String) As DataSet
+        Dim Respuesta As New DataSet
         Dim sql_query As String
         Try
 
@@ -3321,80 +3391,60 @@ Public Class CDInstrumentosComerciales
             End Using
 
             sql_query = " SELECT " +
-                " count(1) " +
+                " subpartida, texto_subpartida " +
                 " from " +
                 " SAC_Subpartidas " +
                 " where " +
-                " subpartida like  @subpartida+'%' "
+                " rtrim(subpartida)  like  @subpartida+'%' "
 
             Using cn = objConeccion.Conectar
                 Dim command As New SqlCommand(sql_query, cn)
-                Dim valor As Integer
+                Dim dataSet As New DataSet
+
                 Dim subpartida As String
                 subpartida = inciso.Substring(0, 5)
                 command.Parameters.AddWithValue("subpartida", subpartida)
+                Dim dataAdapter As New SqlDataAdapter(command)
                 cn.Open()
+                dataAdapter.Fill(dataSet)
 
-                valor = command.ExecuteScalar()
+                For Each row As DataRow In dataSet.Tables(0).Rows
+                    If row("subpartida").ToString.Trim.Length = 5 Then
+                        If row("subpartida").ToString.Trim = inciso.Substring(0, 5) Then
 
-                If valor = 1 Then
+                            Dim datatable As DataTable = Respuesta.Tables.Add("subpartidas")
+                            datatable.Columns.Add("subpartida", Type.GetType("System.String"))
+                            datatable.Columns.Add("texto_subpartida", Type.GetType("System.String"))
+                            datatable.ImportRow(row)
 
-                    sql_query = " SELECT " +
-                        " subpartida, texto_subpartida " +
-                        " FROM " +
-                        " SAC_Subpartidas " +
-                        " where " +
-                        " subpartida like @subpartida "
+                            Exit For
+                        End If
+                    ElseIf row("subpartida").ToString.Trim.Length = 6 Then
+                        If row("subpartida").ToString.Trim = inciso.Substring(0, 6) Then
 
-                    Using cn2 = objConeccion.Conectar
-                        Dim cmd As New SqlCommand(sql_query, cn2)
+                            Dim datatable As DataTable = Respuesta.Tables.Add("subpartidas")
+                            datatable.Columns.Add("subpartida", Type.GetType("System.String"))
+                            datatable.Columns.Add("texto_subpartida", Type.GetType("System.String"))
+                            datatable.ImportRow(row)
 
-                        cmd.Parameters.AddWithValue("subpartida", subpartida)
-                        Dim DataAdapter As New SqlDataAdapter(cmd)
-                        cn2.Open()
-                        DataAdapter.Fill(Respuesta)
-                        cn2.Close()
-                    End Using
+                            Exit For
+                        End If
+                    ElseIf row("subpartida").ToString.Trim.Length = 7 Then
+                        If row("subpartida").ToString.Trim = inciso.Substring(0, 7) Then
+                            Dim datatable As DataTable = Respuesta.Tables.Add("subpartidas")
+                            datatable.Columns.Add("subpartida", Type.GetType("System.String"))
+                            datatable.Columns.Add("texto_subpartida", Type.GetType("System.String"))
+                            datatable.ImportRow(row)
 
-                ElseIf valor = 2 Then
+                            Exit For
+                        End If
+                    Else
+                        Dim datatable As DataTable = Respuesta.Tables.Add("subpartidas")
+                        datatable.Columns.Add("subpartida", Type.GetType("System.String"))
+                        datatable.Columns.Add("texto_subpartida", Type.GetType("System.String"))
 
-                    sql_query = " SELECT " +
-                        " subpartida, texto_subpartida " +
-                        " FROM " +
-                        " SAC_Subpartidas " +
-                        " where " +
-                        " subpartida like @subpartida "
-
-                    Using cn2 = objConeccion.Conectar
-                        Dim cmd As New SqlCommand(sql_query, cn2)
-                        subpartida = inciso.Substring(0, 6)
-                        cmd.Parameters.AddWithValue("subpartida", subpartida)
-                        Dim DataAdapter As New SqlDataAdapter(cmd)
-                        cn2.Open()
-                        DataAdapter.Fill(Respuesta)
-                        cn2.Close()
-                    End Using
-
-                ElseIf valor = 3 Then
-
-                    sql_query = " SELECT " +
-                        " subpartida, texto_subpartida " +
-                        " FROM " +
-                        " SAC_Subpartidas " +
-                        " where " +
-                        " subpartida like @subpartida "
-
-                    Using cn2 = objConeccion.Conectar
-                        Dim cmd As New SqlCommand(sql_query, cn2)
-                        subpartida = inciso.Substring(0, 7)
-                        cmd.Parameters.AddWithValue("subpartida", subpartida)
-                        Dim DataAdapter As New SqlDataAdapter(cmd)
-                        cn2.Open()
-                        DataAdapter.Fill(Respuesta)
-                        cn2.Close()
-                    End Using
-                End If
-
+                    End If
+                Next
 
             End Using
 
