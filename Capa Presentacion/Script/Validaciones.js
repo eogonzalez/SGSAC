@@ -783,7 +783,6 @@ function validarApertura(){
     var descripcion_partida = document.getElementById("ContentPlaceHolder1_txt_descripcion_partida_apertura").value;
     var descripcion_subpartida = document.getElementById("ContentPlaceHolder1_txt_descripcion_subpartida_apertura").value;
 
-
     if (inciso_nuevo == null || inciso_nuevo.length == 0 || /^\s+$/.test(inciso_nuevo) ) {
         //Si esta vacio el campo
         $("#iconotextoinciso").remove();
@@ -791,6 +790,7 @@ function validarApertura(){
         $("#ContentPlaceHolder1_txt_inciso_nuevo").parent().children("span").text("El campo no puede quedar vacio.").show();
         $("#ContentPlaceHolder1_txt_inciso_nuevo").parent().append("<span id='iconotextoinciso' class='glyphicon glyphicon-remove form-control-feedback'>");
         $("#ContentPlaceHolder1_btnGuardar").attr("Class", "btn btn-primary disabled");
+        
         return false;
     }
     else if (inciso_nuevo.length != 8) {
@@ -800,6 +800,8 @@ function validarApertura(){
         $("#ContentPlaceHolder1_txt_inciso_nuevo").parent().children("span").text("El inciso debe ser de 8 digitos.").show();
         $("#ContentPlaceHolder1_txt_inciso_nuevo").parent().append("<span id='iconotextoinciso' class='glyphicon glyphicon-remove form-control-feedback'>");
         $("#ContentPlaceHolder1_btnGuardar").attr("Class", "btn btn-primary disabled");
+
+        return false;
     }
     else {
         //Si no esta vacio
@@ -808,6 +810,7 @@ function validarApertura(){
         $("#ContentPlaceHolder1_txt_inciso_nuevo").parent().children("span").text("").hide();
         $("#ContentPlaceHolder1_txt_inciso_nuevo").parent().append("<span id='iconotextoinciso' class='glyphicon glyphicon-ok form-control-feedback'>");
         $("#ContentPlaceHolder1_btnGuardar").attr("Class", "btn btn-primary");
+        
     }
 
     if (descripcion_partida == null || descripcion_partida.length == 0 || /^\s+$/.test(descripcion_partida)) {
@@ -818,6 +821,7 @@ function validarApertura(){
         $("#ContentPlaceHolder1_txt_descripcion_partida_apertura").parent().append("<span id='iconotexto_partida' class='glyphicon glyphicon-remove form-control-feedback'>");
         $("#ContentPlaceHolder1_btnGuardar").attr("Class", "btn btn-primary disabled");
         return false;
+        
     }
     else {
         //Si no esta vacio
@@ -826,6 +830,7 @@ function validarApertura(){
         $("#ContentPlaceHolder1_txt_descripcion_partida_apertura").parent().children("span").text("").hide();
         $("#ContentPlaceHolder1_txt_descripcion_partida_apertura").parent().append("<span id='iconotexto_partida' class='glyphicon glyphicon-ok form-control-feedback'>");
         $("#ContentPlaceHolder1_btnGuardar").attr("Class", "btn btn-primary");
+        
     }
 
     if (descripcion_subpartida == null || descripcion_subpartida.length == 0 || /^\s+$/.test(descripcion_subpartida)) {
@@ -835,7 +840,7 @@ function validarApertura(){
         $("#ContentPlaceHolder1_txt_descripcion_subpartida_apertura").parent().children("span").text("Verifique si existe Subpartida.").show();
         $("#ContentPlaceHolder1_txt_descripcion_subpartida_apertura").parent().append("<span id='iconotexto_subpartida' class='glyphicon glyphicon-remove form-control-feedback'>");
         $("#ContentPlaceHolder1_btnGuardar").attr("Class", "btn btn-primary");
-        return false;
+        
     }
     else {
         //Si no esta vacio
@@ -869,6 +874,7 @@ function validarAperturaNew() {
         $("#ContentPlaceHolder1_txt_inciso_new").parent().children("span").text("El inciso debe ser de 8 digitos.").show();
         $("#ContentPlaceHolder1_txt_inciso_new").parent().append("<span id='iconotextoinciso' class='glyphicon glyphicon-remove form-control-feedback'>");
         $("#ContentPlaceHolder1_btnGuardar_new").attr("Class", "btn btn-primary disabled");
+        return false;
     }
     else {
         //Si no esta vacio

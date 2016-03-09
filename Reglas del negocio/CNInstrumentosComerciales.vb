@@ -264,8 +264,8 @@ Public Class CNInstrumentosComerciales
 #Region "Funciones y procedimientos para el Mantenimiento de Enmiendas del SAC"
 
     'Funcion para obtener los datos para los codigos seleccionados
-    Public Function SelectDatosCodigoIncisoCorrelacion(ByVal str_codigo As String) As DataSet
-        Return objCDInstrumentos.SelectDatosCodigoIncisoCorrelacion(str_codigo)
+    Public Function SelectDatosCodigoIncisoCorrelacion(ByVal str_codigo As String, ByVal anio_version As Integer, ByVal id_version As Integer) As DataSet
+        Return objCDInstrumentos.SelectDatosCodigoIncisoCorrelacion(str_codigo, anio_version, id_version)
     End Function
 
     'Funcion para obtener los datos del Mantenimiento de Correlacion 

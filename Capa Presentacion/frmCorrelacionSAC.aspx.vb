@@ -222,8 +222,9 @@ Public Class frmCorrelacionSAC
     'Metodo para llenar controles de la seleccion del inciso
     Sub LlenarSeleccionCodigoInciso(ByVal inciso As String)
         Dim objCorrelacion As New CNInstrumentosComerciales
+        ObtengoDatosVersion()
 
-        With objCorrelacion.SelectDatosCodigoIncisoCorrelacion(inciso)
+        With objCorrelacion.SelectDatosCodigoIncisoCorrelacion(inciso, Session("anio_actual"), Session("id_version"))
             If .Tables(0).Rows.Count = 0 Then
                 'Esta vacia la tabla
             Else
@@ -541,10 +542,15 @@ Public Class frmCorrelacionSAC
 
             dataSet = objEnmienda.SelectDatosApertura(codigo_inciso)
 
-            txt_codigo_partida_new.Text = dataSet.Tables(0).Rows(0)("partida").ToString
-            txt_descripcion_partida_new.Text = dataSet.Tables(0).Rows(0)("descripcion_partida").ToString
-
             If dataSet.Tables.Count > 1 Then
+
+                If dataSet.Tables(0).Rows.Count > 0 Then
+                    txt_codigo_partida_new.Text = dataSet.Tables(0).Rows(0)("partida").ToString
+                    txt_descripcion_partida_new.Text = dataSet.Tables(0).Rows(0)("descripcion_partida").ToString
+                Else
+                    txt_codigo_partida_new.Text = System.String.Empty
+                    txt_descripcion_partida_new.Text = System.String.Empty
+                End If
 
                 If dataSet.Tables(1).Rows.Count > 0 Then
                     txt_codigo_SubPartida_new.Text = dataSet.Tables(1).Rows(0)("subpartida").ToString

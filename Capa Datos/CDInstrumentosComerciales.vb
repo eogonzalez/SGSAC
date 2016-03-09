@@ -2677,7 +2677,7 @@ Public Class CDInstrumentosComerciales
 #Region "Funciones y procedimientos para el Mantenimiento de Enmiendas del SAC"
 
     'Funcion para obtener los datos para los codigos seleccionados
-    Public Function SelectDatosCodigoIncisoCorrelacion(ByVal str_codigo As String) As DataSet
+    Public Function SelectDatosCodigoIncisoCorrelacion(ByVal str_codigo As String, ByVal anio_version As Integer, ByVal id_version As Integer) As DataSet
         Try
             Dim sql_string As String
             Dim capitulo As String = Nothing
@@ -2731,27 +2731,66 @@ Public Class CDInstrumentosComerciales
                 " partida = @partida AND " +
                 " subpartida like @subpartida AND " +
                 " activo = 'S'; " +
-                " SELECT " +
-                " ci.codigo_inciso, ci.texto_inciso, ci.dai_base, " +
-                " sc.estado, " +
-                " sc.inciso_nuevo as codigo_inciso_corr, " +
-                " sc.texto_inciso as texto_inciso_corr, sc.dai_nuevo as dai_corr " +
+                "  " +
+                "  SELECT " +
+                " ci.codigo_inciso, ci.texto_inciso, ci.dai_base,  " +
+                " sc.estado,  " +
+                " sc.inciso_nuevo as codigo_inciso_corr,  " +
+                " sc.texto_inciso as texto_inciso_corr, sc.dai_nuevo as dai_corr  " +
                 " FROM " +
                 " SAC_Incisos CI " +
-                " LEFT OUTER JOIN" +
-                " (SELECT " +
+                " LEFT OUTER JOIN " +
+                " (SELECT  " +
                 " inciso_origen, inciso_nuevo, " +
-                " texto_inciso, dai_nuevo, " +
-                " anio_version, version," +
+                " texto_inciso, dai_nuevo,  " +
+                " anio_version, version, " +
                 " CASE WHEN (inciso_nuevo IS NULL)  THEN 'SUPRIMIDA' ELSE 'APERTURA' END as estado " +
                 " FROM " +
                 " SAC_Correlacion) SC ON " +
                 " sc.inciso_origen = ci.codigo_inciso And " +
                 " sc.version = ci.id_version And " +
                 " sc.anio_version = ci.anio_version " +
-                " WHERE "+
-                " CI.estado = 'A' AND  " +
-                " CI.codigo_inciso LIKE '" + str_codigo + "%' "
+                " WHERE " +
+                " CI.estado = 'A' AND " +
+                " ci.anio_version = @anio_version AND " +
+                " ci.id_version = @id_version AND " +
+                " CI.codigo_inciso LIKE @codigo_inciso+'%' " +
+                " union " +
+                " (SELECT " +
+                " inciso_nuevo, " +
+                " texto_inciso, " +
+                " dai_nuevo,  " +
+                " CASE WHEN (inciso_nuevo IS NULL)  THEN 'SUPRIMIDA' ELSE 'APERTURA' END as estado , " +
+                " '' as codigo_inciso_corr, '' as texto_inciso_corr, 0.00 as dai_corr " +
+                " FROM " +
+                " SAC_Correlacion " +
+                " where inciso_origen Is NULL " +
+                " and anio_version = @anio_version " +
+                " and version = @id_version " +
+                " and inciso_nuevo like @codigo_inciso+'%') "
+
+
+            '" SELECT " +
+            '" ci.codigo_inciso, ci.texto_inciso, ci.dai_base, " +
+            '" sc.estado, " +
+            '" sc.inciso_nuevo as codigo_inciso_corr, " +
+            '" sc.texto_inciso as texto_inciso_corr, sc.dai_nuevo as dai_corr " +
+            '" FROM " +
+            '" SAC_Incisos CI " +
+            '" LEFT OUTER JOIN" +
+            '" (SELECT " +
+            '" inciso_origen, inciso_nuevo, " +
+            '" texto_inciso, dai_nuevo, " +
+            '" anio_version, version," +
+            '" CASE WHEN (inciso_nuevo IS NULL)  THEN 'SUPRIMIDA' ELSE 'APERTURA' END as estado " +
+            '" FROM " +
+            '" SAC_Correlacion) SC ON " +
+            '" sc.inciso_origen = ci.codigo_inciso And " +
+            '" sc.version = ci.id_version And " +
+            '" sc.anio_version = ci.anio_version " +
+            '" WHERE " +
+            '" CI.estado = 'A' AND  " +
+            '" CI.codigo_inciso LIKE '" + str_codigo + "%' "
 
             Using cn = objConeccion.Conectar
                 Dim command As SqlCommand = New SqlCommand(sql_string, cn)
@@ -2759,6 +2798,8 @@ Public Class CDInstrumentosComerciales
                 command.Parameters.AddWithValue("partida", partida)
                 command.Parameters.AddWithValue("subpartida", subpartida)
                 command.Parameters.AddWithValue("codigo_inciso", str_codigo)
+                command.Parameters.AddWithValue("anio_version", anio_version)
+                command.Parameters.AddWithValue("id_version", id_version)
 
                 da = New SqlDataAdapter(command)
                 da.Fill(ds)
@@ -2944,7 +2985,8 @@ Public Class CDInstrumentosComerciales
         sql_query = " SELECT id_version, anio_version, " +
             " enmienda, fecha_inicia_vigencia, " +
             " fecha_fin_vigencia, estado, observaciones" +
-            " FROM SAC_Versiones_Bitacora "
+            " FROM SAC_Versiones_Bitacora " +
+            " order BY anio_version DESC, id_version DESC "
 
         Using cn = objConeccion.Conectar
             Try
@@ -3301,7 +3343,6 @@ Public Class CDInstrumentosComerciales
         Return estado
     End Function
 
-
     'Funcion que valida si inciso nuevo ya existe
     Public Function ValidaIncisoNuevo(ByVal codigo_inciso As String) As Boolean
         Dim estado As Boolean = True
@@ -3364,7 +3405,6 @@ Public Class CDInstrumentosComerciales
         End Try
         Return estado
     End Function
-
 
     'Funcion que obtiene datos de partida y subpartida para Apertura de comieco
     Public Function SelectDatosApertura(ByVal inciso As String) As DataSet
