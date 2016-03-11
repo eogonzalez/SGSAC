@@ -149,13 +149,13 @@ Partial Public Class frmConsultaSACAsocia
     Protected WithEvents lbl_descripcion_partida As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''Control txt_descripcion_partida.
+    '''Control txt_descripcion_partida_rep.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents txt_descripcion_partida As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents txt_descripcion_partida_rep As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''Control lbl_descripcion_sub_partida.

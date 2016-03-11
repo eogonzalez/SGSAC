@@ -150,7 +150,7 @@ Public Class frmConsultaSACAsocia
                     End If
 
                     If .Tables(1).Rows.Count > 0 Then
-                        txt_descripcion_partida.Text = .Tables(1).Rows(0)("Descripcion_Partida").ToString()
+                        txt_descripcion_partida_rep.Text = .Tables(1).Rows(0)("Descripcion_Partida").ToString()
                     End If
 
                     If .Tables(2).Rows.Count > 0 Then

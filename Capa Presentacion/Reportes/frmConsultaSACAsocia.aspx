@@ -82,7 +82,7 @@
 
                         <asp:Label ID="lbl_descripcion_partida" CssClass="control-label col-xs-2" Text="Partida:" runat="server"></asp:Label>
                         <div class="col-xs-10">
-                            <asp:TextBox ID="txt_descripcion_partida" CssClass="form-control" runat="server" disabled></asp:TextBox>
+                            <asp:TextBox ID="txt_descripcion_partida_rep" CssClass="form-control" runat="server" disabled></asp:TextBox>
                         </div>
                     </div>
 
