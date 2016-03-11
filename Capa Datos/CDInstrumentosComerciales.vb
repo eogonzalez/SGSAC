@@ -3972,13 +3972,9 @@ Public Class CDInstrumentosComerciales
     '    Return estado
     'End Function
 
-
-
     'Funcion que aprueba y genera la siguiente version del SAC
 
-    'Funcion que aprueba y genera la siguiente version del SAC
-
-    Public Function ApruebaSAC(ByVal anio_version As Integer, ByVal anio_inicia_enmienda As Integer, ByVal anio_final_enmienda As Integer, ByVal anio_version_new As Integer) As Boolean
+    Public Function ApruebaSAC(ByVal id_versionAct As Integer, ByVal anio_version As Integer, ByVal anio_inicia_enmienda As Integer, ByVal anio_final_enmienda As Integer, ByVal anio_version_new As Integer) As Boolean
         Dim estado As Boolean = True
         Dim sql_query As String
         Try
@@ -4081,6 +4077,7 @@ Public Class CDInstrumentosComerciales
                 " FROM SAC_CORRELACION " +
                 " WHERE Inciso_nuevo Is Not NULL " +
                 " AND estado Is NULL " +
+                " AND version = @id_versionAct " +
                 " AND Anio_Nueva_version =  @AnioVerCorNew " +
                 " ORDER BY Inciso_nuevo "
 
@@ -4088,6 +4085,7 @@ Public Class CDInstrumentosComerciales
             Using con6 = objConeccion.Conectar
                 Dim command As New SqlCommand(sql_query, con6)
                 command.Parameters.AddWithValue("AnioVerCorNew", AnioVerCorNew)
+                command.Parameters.AddWithValue("id_versionAct", id_versionAct)
                 Dim dataAdapter As New SqlDataAdapter(command)
 
                 con6.Open()
@@ -4337,110 +4335,107 @@ Public Class CDInstrumentosComerciales
                 Dim Codigo_Inciso_Inst As String
                 Dim Id_instrumento As Integer
                 Dim Id_Categoria As Integer
+                Dim dTAsociaCat As New DataTable
 
                 Using con16 = objConeccion.Conectar
                     Dim command As New SqlCommand(sql_query, con16)
                     command.Parameters.AddWithValue("IncisoOrigen", IncisoOrigen)
-
-                    Dim dataReader As SqlDataReader
-
+                    Dim dataAdapter As New SqlDataAdapter(command)
                     con16.Open()
-                    dataReader = command.ExecuteReader()
-
-                    If dataReader.HasRows Then
-
-                        dataReader.Read()
-
-                        Codigo_Inciso_Inst = dataReader.GetString(0)
-                        Id_instrumento = dataReader.GetInt32(1)
-                        Id_Categoria = dataReader.GetInt32(2)
-
-                    Else
-                        Return estado = False
-                    End If
-
-
-
+                    dataAdapter.Fill(dTAsociaCat)
                     con16.Close()
 
                 End Using
 
-                If Codigo_Inciso_Inst.Length > 4 Then
-                    Dim nombre_instrumento As String
-                    Dim codigo_categoria As String
+                If dTAsociaCat.Rows.Count > 0 Then
+                    'Si el inciso afecta tratado
 
-                    sql_query = " SELECT Nombre_Instrumento FROM IC_INSTRUMENTOS " +
-                        " WHERE id_instrumento = @ID_Instrumento "
+                    For Each rowAsociaCat As DataRow In dTAsociaCat.Rows
+                        Codigo_Inciso_Inst = rowAsociaCat("codigo_inciso").ToString
+                        Id_instrumento = rowAsociaCat("id_instrumento").ToString
+                        Id_Categoria = rowAsociaCat("id_categoria").ToString
 
-                    Using con16 = objConeccion.Conectar
-                        Dim command As New SqlCommand(sql_query, con16)
-                        command.Parameters.AddWithValue("ID_Instrumento", Id_instrumento)
+                        If Codigo_Inciso_Inst.Length > 4 Then
+                            Dim nombre_instrumento As String
+                            Dim codigo_categoria As String
 
-                        con16.Open()
-                        nombre_instrumento = command.ExecuteScalar()
-                        con16.Close()
+                            sql_query = " SELECT Nombre_Instrumento FROM IC_INSTRUMENTOS " +
+                                " WHERE id_instrumento = @ID_Instrumento "
 
-                    End Using
+                            Using con16 = objConeccion.Conectar
+                                Dim command As New SqlCommand(sql_query, con16)
+                                command.Parameters.AddWithValue("ID_Instrumento", Id_instrumento)
 
+                                con16.Open()
+                                nombre_instrumento = command.ExecuteScalar()
+                                con16.Close()
 
-                    sql_query = " SELECT  Codigo_Categoria FROM IC_Categorias_Desgravacion  " +
-                        " WHERE id_instrumento = @ID_Instrumento " +
-                        " AND ID_Categoria   = @ID_Categoria "
-
-                    Using con17 = objConeccion.Conectar
-                        Dim command As New SqlCommand(sql_query, con17)
-                        command.Parameters.AddWithValue("ID_Instrumento", Id_instrumento)
-                        command.Parameters.AddWithValue("ID_Categoria", Id_Categoria)
-
-                        con17.Open()
-                        codigo_categoria = command.ExecuteScalar()
-                        con17.Close()
-
-                    End Using
+                            End Using
 
 
+                            sql_query = " SELECT  Codigo_Categoria FROM IC_Categorias_Desgravacion  " +
+                                " WHERE id_instrumento = @ID_Instrumento " +
+                                " AND ID_Categoria   = @ID_Categoria "
 
-                    sql_query = " INSERT INTO Correlacion_Instrumentos " +
-                        " (inciso_original,situacion, id_instrumento, " +
-                        " texto_original, dai_original, " +
-                        " anio_anterior_cor, canti_aperturas, " +
-                        " nombre_instrumento,id_categoria,codigo_categoria, " +
-                        " ver_nueva_cor, anio_nueva_cor, " +
-                        " dai_max_nuevo,dai_min_nuevo, " +
-                        " estado,accion_propuesta, " +
-                        " fecha_generada,usuario_generada )   " +
-                        " VALUES (@Codigo_Inciso_Inst,@Situacion,@ID_Instrumento, " +
-                        " @Texto_Inciso, @DAI_Ori," +
-                        " @AnioVerCorAct,@CanReg, " +
-                        " @Nombre_Instrumento,@ID_Categoria,@Codigo_Categoria, " +
-                        " @ID_VerCorNew, @AnioVerCorNew, " +
-                        " @DAI_Max,@DAI_Min, " +
-                        " 'PENDIENTE', 'Revisar lista de nuevos incisos aperturados y definir si requiere de asociar la respectiva categoría de desgravación para el tratado o acuerdo', " +
-                        " SYSDATETIME(),'USER') "
+                            Using con17 = objConeccion.Conectar
+                                Dim command As New SqlCommand(sql_query, con17)
+                                command.Parameters.AddWithValue("ID_Instrumento", Id_instrumento)
+                                command.Parameters.AddWithValue("ID_Categoria", Id_Categoria)
 
-                    Using con18 = objConeccion.Conectar
-                        Dim command As New SqlCommand(sql_query, con18)
-                        command.Parameters.AddWithValue("Codigo_Inciso_Inst", Codigo_Inciso_Inst)
-                        command.Parameters.AddWithValue("Situacion", situacion)
-                        command.Parameters.AddWithValue("ID_Instrumento", Id_instrumento)
-                        command.Parameters.AddWithValue("Texto_Inciso", texto_inciso)
-                        command.Parameters.AddWithValue("DAI_Ori", DAI_Ori)
-                        command.Parameters.AddWithValue("AnioVerCorAct", AnioVERCorAct)
-                        command.Parameters.AddWithValue("CanReg", CanReg)
-                        command.Parameters.AddWithValue("Nombre_Instrumento", nombre_instrumento)
-                        command.Parameters.AddWithValue("ID_Categoria", Id_Categoria)
-                        command.Parameters.AddWithValue("Codigo_Categoria", codigo_categoria)
-                        command.Parameters.AddWithValue("ID_VerCorNew", id_verCorNew)
-                        command.Parameters.AddWithValue("AnioVerCorNew", AnioVerCorNew)
-                        command.Parameters.AddWithValue("DAI_Max", dai_max)
-                        command.Parameters.AddWithValue("DAI_Min", dai_min)
+                                con17.Open()
+                                codigo_categoria = command.ExecuteScalar()
+                                con17.Close()
 
-                        con18.Open()
-                        command.ExecuteNonQuery()
-                        con18.Close()
+                            End Using
 
-                    End Using
 
+
+                            sql_query = " INSERT INTO Correlacion_Instrumentos " +
+                                " (inciso_original,situacion, id_instrumento, " +
+                                " texto_original, dai_original, " +
+                                " anio_anterior_cor, canti_aperturas, " +
+                                " nombre_instrumento,id_categoria,codigo_categoria, " +
+                                " ver_nueva_cor, anio_nueva_cor, " +
+                                " dai_max_nuevo,dai_min_nuevo, " +
+                                " estado,accion_propuesta, " +
+                                " fecha_generada,usuario_generada )   " +
+                                " VALUES (@Codigo_Inciso_Inst,@Situacion,@ID_Instrumento, " +
+                                " @Texto_Inciso, @DAI_Ori," +
+                                " @AnioVerCorAct,@CanReg, " +
+                                " @Nombre_Instrumento,@ID_Categoria,@Codigo_Categoria, " +
+                                " @ID_VerCorNew, @AnioVerCorNew, " +
+                                " @DAI_Max,@DAI_Min, " +
+                                " 'PENDIENTE', 'Revisar lista de nuevos incisos aperturados y definir si requiere de asociar la respectiva categoría de desgravación para el tratado o acuerdo', " +
+                                " SYSDATETIME(),'USER') "
+
+                            Using con18 = objConeccion.Conectar
+                                Dim command As New SqlCommand(sql_query, con18)
+                                command.Parameters.AddWithValue("Codigo_Inciso_Inst", Codigo_Inciso_Inst)
+                                command.Parameters.AddWithValue("Situacion", situacion)
+                                command.Parameters.AddWithValue("ID_Instrumento", Id_instrumento)
+                                command.Parameters.AddWithValue("Texto_Inciso", texto_inciso)
+                                command.Parameters.AddWithValue("DAI_Ori", DAI_Ori)
+                                command.Parameters.AddWithValue("AnioVerCorAct", AnioVERCorAct)
+                                command.Parameters.AddWithValue("CanReg", CanReg)
+                                command.Parameters.AddWithValue("Nombre_Instrumento", nombre_instrumento)
+                                command.Parameters.AddWithValue("ID_Categoria", Id_Categoria)
+                                command.Parameters.AddWithValue("Codigo_Categoria", codigo_categoria)
+                                command.Parameters.AddWithValue("ID_VerCorNew", id_verCorNew)
+                                command.Parameters.AddWithValue("AnioVerCorNew", AnioVerCorNew)
+                                command.Parameters.AddWithValue("DAI_Max", dai_max)
+                                command.Parameters.AddWithValue("DAI_Min", dai_min)
+
+                                con18.Open()
+                                command.ExecuteNonQuery()
+                                con18.Close()
+
+                            End Using
+
+                        End If
+
+                    Next
+                Else
+                    'Si el inciso no afecta a ningun tratado
                 End If
 
                 situacion = Nothing

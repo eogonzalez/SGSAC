@@ -25,11 +25,13 @@ Public Class frmApruebaSAC
         Dim anio_inicia_enmienda As Integer
         Dim anio_final_enmienda As Integer
         Dim anio_version_new As Integer
+        Dim id_version As Integer
 
         If ValidaFirmas() Then
             'Ejecuta Aprobacion
             Dim objInstrumento As New CNInstrumentosComerciales
 
+            id_version = Session("id_version")
             anio_version_SAC = Session("anio_version_SAC")
             anio_inicia_enmienda = Session("anio_inicia_enmienda")
             anio_final_enmienda = Session("anio_final_enmienda")
@@ -37,7 +39,7 @@ Public Class frmApruebaSAC
 
             If objInstrumento.VerificaApruebaSAC(anio_version_new) Then
 
-                If objInstrumento.ApruebaSAC(anio_version_SAC, anio_inicia_enmienda, anio_final_enmienda, anio_version_new) Then
+                If objInstrumento.ApruebaSAC(id_version, anio_version_SAC, anio_inicia_enmienda, anio_final_enmienda, anio_version_new) Then
                     Mensaje("Proceso de aprobacion del SAC ha finalizado con exito.")
                 Else
                     Mensaje("Ha ocurrido un error en el Proceso de aprobacion del SAC.")
@@ -125,6 +127,7 @@ Public Class frmApruebaSAC
 
                 txt_año_vigencia.Text = .Tables(0).Rows(0)("anio_version").ToString()
 
+                Session.Add("id_version", .Tables(0).Rows(0)("id_version").ToString())
                 Session.Add("anio_version_SAC", txt_año_vigencia.Text)
 
                 txt_version_enmienda.Text = .Tables(0).Rows(0)("enmienda").ToString()

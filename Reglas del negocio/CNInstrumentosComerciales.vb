@@ -409,8 +409,8 @@ Public Class CNInstrumentosComerciales
 
 
     'Funcion que aprueba y genera la siguiente version del SAC
-    Public Function ApruebaSAC(ByVal anio_version As Integer, ByVal anio_inicia_enmienda As Integer, ByVal anio_final_enmienda As Integer, ByVal anio_version_new As Integer) As Boolean
-        Return objCDInstrumentos.ApruebaSAC(anio_version, anio_inicia_enmienda, anio_final_enmienda, anio_version_new)
+    Public Function ApruebaSAC(ByVal id_version As Integer, ByVal anio_version As Integer, ByVal anio_inicia_enmienda As Integer, ByVal anio_final_enmienda As Integer, ByVal anio_version_new As Integer) As Boolean
+        Return objCDInstrumentos.ApruebaSAC(id_version, anio_version, anio_inicia_enmienda, anio_final_enmienda, anio_version_new)
     End Function
 
     Public Function SelectResumenInstrumento(ByVal id_instrumento As Integer) As DataTable
