@@ -9,7 +9,7 @@ Public Class CDReporteVerSAC
 
         Try
             sql_query = " SELECT " +
-                " id_version, " +
+                " ((id_version*10000)+anio_version) as id_ver, id_version, " +
                 " enmienda +' - '+ cast(anio_inicia_enmienda as VARCHAR(5))+' - '+Cast(anio_fin_enmieda as varchar(5)) as descripcion " +
                 " FROM " +
                 " SAC_Versiones_Bitacora " +
@@ -138,7 +138,7 @@ Public Class CDReporteVerSAC
     End Function
 
     'Funcion que obtiene listado del sac 
-    Public Function SelectSACList(ByVal id_version As Integer, ByVal capitulo As String, ByVal all_capitulos As Boolean) As DataTable
+    Public Function SelectSACList(ByVal id_version As Integer, ByVal anio_version As Integer, ByVal capitulo As String, ByVal all_capitulos As Boolean) As DataTable
         Dim dataTableSACList As New DataTable
         Dim sql_query As String
 
@@ -157,7 +157,7 @@ Public Class CDReporteVerSAC
                     " AND   activo = 'S';  "
             End If
 
-                
+
 
             Dim dataTable_Capitulos As New DataTable
             Using conn = objConeccion.Conectar
@@ -274,7 +274,8 @@ Public Class CDReporteVerSAC
                         " SAC_Incisos " +
                         " where " +
                         " codigo_inciso like @partida+'%' " +
-                        " and id_version = @id_version "
+                        " and id_version = @id_version " +
+                        " and anio_version = @anio_version "
 
                     Dim dataTableIncisos As New DataTable
 
@@ -283,6 +284,7 @@ Public Class CDReporteVerSAC
                         Dim command As New SqlCommand(sql_query, conn3)
                         command.Parameters.AddWithValue("partida", partida)
                         command.Parameters.AddWithValue("id_version", id_version)
+                        command.Parameters.AddWithValue("anio_version", anio_version)
                         Dim dataAdapter As New SqlDataAdapter(command)
 
                         conn3.Open()
@@ -364,7 +366,7 @@ Public Class CDReporteVerSAC
 
             Next
 
-            
+
 
         Catch ex As SqlException
 

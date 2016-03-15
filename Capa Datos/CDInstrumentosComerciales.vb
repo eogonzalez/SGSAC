@@ -3928,7 +3928,6 @@ Public Class CDInstrumentosComerciales
                     estado = False
                 End If
 
-
             End Using
 
         Catch ex As SqlException
@@ -3940,47 +3939,15 @@ Public Class CDInstrumentosComerciales
         Return estado
     End Function
 
-
 #End Region
 
     'Funcion que aprueba y genera la siguiente version del SAC
-    'Public Function ApruebaSAC() As Boolean
-    '    Dim estado As Boolean = True
-
-
-    '    Try
-    '        Using connexion = objConeccion.Conectar
-    '            Dim command = New SqlCommand("dbo.APRUEBA_SAC", connexion)
-    '            connexion.Open()
-
-    '            If command.ExecuteScalar() > 0 Then
-    '                estado = True
-    '            Else
-    '                estado = False
-    '            End If
-
-
-    '        End Using
-
-
-    '    Catch ex As SqlException
-    '        estado = False
-    '    Catch ex As Exception
-    '        estado = False
-    '    End Try
-
-    '    Return estado
-    'End Function
-
-    'Funcion que aprueba y genera la siguiente version del SAC
-
     Public Function ApruebaSAC(ByVal id_versionAct As Integer, ByVal anio_version As Integer, ByVal anio_inicia_enmienda As Integer, ByVal anio_final_enmienda As Integer, ByVal anio_version_new As Integer) As Boolean
         Dim estado As Boolean = True
         Dim sql_query As String
         Try
             '      Se Verifica previamente que no este "APROBADA" la Correlacion
             '       @AnioProcesa es pasado como parametro de la Versión del SAC por Aprobar
-
 
             'a) De SAC_Versiones_Bitacora obtener Anio_version y Anio_inicia_enmienda activa "ESTADO= 'A' 
 
@@ -4036,12 +4003,16 @@ Public Class CDInstrumentosComerciales
             sql_query = " SELECT distinct Inciso_origen " +
                 " FROM SAC_CORRELACION " +
                 " WHERE Inciso_nuevo Is NULL " +
+                " AND version = @id_versionAct " +
+                " AND Anio_Nueva_version =  @AnioVerCorNew " +
                 " AND estado Is NULL "
 
             Dim dataSetTem_Incisos As New DataSet
 
             Using con4 = objConeccion.Conectar
                 Dim command As New SqlCommand(sql_query, con4)
+                command.Parameters.AddWithValue("AnioVerCorNew", AnioVerCorNew)
+                command.Parameters.AddWithValue("id_versionAct", id_versionAct)
                 Dim dataAdapter As New SqlDataAdapter(command)
                 con4.Open()
                 dataAdapter.Fill(dataSetTem_Incisos)
@@ -4130,7 +4101,6 @@ Public Class CDInstrumentosComerciales
 
             Next
 
-
             'Elimina Incisos Repetidos en TEM_INCISOS
 
             sql_query = " SELECT CODIGO_INCISO, COUNT(1) AS TT FROM TEM_Incisos " +
@@ -4177,21 +4147,26 @@ Public Class CDInstrumentosComerciales
 
             Next
 
-
-
             ' G) Verifica en cada Instrumentode Impacto generado por la Correlación e Ingresa los
             ' registros en tabla CORRELACION_INSTRUMENTOS con "INCISO_ORIGEN" de la tabla SAC_CORRELACION 
 
             'f1)Identifica incisos Aperturados que afecten a un Instrumento
-            sql_query = " SELECT Inciso_origen " +
+            'NOTA Cambio Query ya que no aparecian todas las aperturas
+            sql_query = " select SAC_Corre.inciso_origen " +
+                " from " +
+                " (SELECT case when (Inciso_origen is null) then inciso_nuevo else inciso_origen end inciso_origen " +
                 " FROM SAC_CORRELACION " +
                 " WHERE estado Is NULL " +
-                " GROUP BY Inciso_origen " +
-                " ORDER BY Inciso_origen "
+                " AND version = @id_versionAct " +
+                " AND Anio_Nueva_version =  @AnioVerCorNew) SAC_Corre " +
+                " GROUP by SAC_Corre.inciso_origen " +
+                " ORDER BY SAC_Corre.Inciso_origen "
 
             Dim dataSet_IncisoCorre As New DataSet
             Using con10 = objConeccion.Conectar
                 Dim command As New SqlCommand(sql_query, con10)
+                command.Parameters.AddWithValue("AnioVerCorNew", AnioVerCorNew)
+                command.Parameters.AddWithValue("id_versionAct", id_versionAct)
                 Dim dataAdapter As New SqlDataAdapter(command)
 
                 con10.Open()
@@ -4208,21 +4183,21 @@ Public Class CDInstrumentosComerciales
                 Dim situacion As String = Nothing
                 Dim IncisoOrigen As String = row("Inciso_origen")
 
-                'If IncisoOrigen = "06031093" Then
-                '    Dim hola As Integer
-                'End If
-
-
 
                 sql_query = " SELECT count(1) " +
                     " FROM SAC_Correlacion " +
                     " WHERE INCISO_ORIGEN =@IncisoOrigen " +
+                    " or inciso_nuevo = @IncisoOrigen " +
                     " AND estado Is NULL " +
+                    " AND version = @id_versionAct " +
+                    " AND Anio_Nueva_version =  @AnioVerCorNew " +
                     " AND(INCISO_NUEVO Is Not NULL Or DATALENGTH(INCISO_NUEVO) > 0) "
 
                 Using con11 = objConeccion.Conectar
                     Dim command As New SqlCommand(sql_query, con11)
                     command.Parameters.AddWithValue("IncisoOrigen", IncisoOrigen)
+                    command.Parameters.AddWithValue("AnioVerCorNew", AnioVerCorNew)
+                    command.Parameters.AddWithValue("id_versionAct", id_versionAct)
                     con11.Open()
                     CanReg = command.ExecuteScalar()
                     con11.Close()
@@ -4236,14 +4211,19 @@ Public Class CDInstrumentosComerciales
                 '/**	IDETIFICA SI EL INCISO SE SUPRIME O NO EN LA CORRELACION **/
                 Dim suprime As Integer = 0
 
-                sql_query = " (SELECT count(1) FROM SAC_Correlacion " +
+                sql_query = " (SELECT count(1) " +
+                    " FROM SAC_Correlacion " +
                     " WHERE INCISO_ORIGEN = @IncisoOrigen " +
                     " AND estado Is NULL " +
+                    " AND version = @id_versionAct " +
+                    " AND Anio_Nueva_version =  @AnioVerCorNew " +
                     " AND (INCISO_NUEVO IS NULL OR DATALENGTH(INCISO_NUEVO)= 0)) "
 
                 Using con12 = objConeccion.Conectar
                     Dim command As New SqlCommand(sql_query, con12)
                     command.Parameters.AddWithValue("IncisoOrigen", IncisoOrigen)
+                    command.Parameters.AddWithValue("AnioVerCorNew", AnioVerCorNew)
+                    command.Parameters.AddWithValue("id_versionAct", id_versionAct)
                     con12.Open()
                     suprime = command.ExecuteScalar()
                     con12.Close()
@@ -4276,14 +4256,12 @@ Public Class CDInstrumentosComerciales
                         texto_inciso = dataReader.GetString(0)
                         DAI_Ori = dataReader.GetDecimal(1)
 
-
                     Else
-                        Return estado = False
-
+                        'Return estado = False
+                        estado = False
                     End If
 
                     con13.Close()
-
 
                 End Using
 
@@ -4292,6 +4270,8 @@ Public Class CDInstrumentosComerciales
                 sql_query = " (SELECT coalesce(max(dai_nuevo),0) " +
                     " FROM SAC_Correlacion " +
                     " WHERE INCISO_ORIGEN = @IncisoOrigen " +
+                    " AND version = @id_versionAct " +
+                    " AND Anio_Nueva_version =  @AnioVerCorNew " +
                     " AND estado Is NULL " +
                     " AND (INCISO_NUEVO IS NOT NULL OR DATALENGTH(INCISO_NUEVO)> 0)) "
 
@@ -4299,7 +4279,8 @@ Public Class CDInstrumentosComerciales
                 Using con14 = objConeccion.Conectar
                     Dim command As New SqlCommand(sql_query, con14)
                     command.Parameters.AddWithValue("IncisoOrigen", IncisoOrigen)
-
+                    command.Parameters.AddWithValue("AnioVerCorNew", AnioVerCorNew)
+                    command.Parameters.AddWithValue("id_versionAct", id_versionAct)
                     con14.Open()
                     dai_max = command.ExecuteScalar()
                     con14.Close()
@@ -4310,13 +4291,16 @@ Public Class CDInstrumentosComerciales
                     " FROM SAC_Correlacion " +
                     " WHERE INCISO_ORIGEN = @IncisoOrigen " +
                     " AND estado Is NULL " +
+                    " AND version = @id_versionAct " +
+                    " AND Anio_Nueva_version =  @AnioVerCorNew " +
                     " AND (INCISO_NUEVO IS NOT NULL OR DATALENGTH(INCISO_NUEVO)> 0)) "
 
                 Dim dai_min As Integer
                 Using con15 = objConeccion.Conectar
                     Dim command As New SqlCommand(sql_query, con15)
                     command.Parameters.AddWithValue("IncisoOrigen", IncisoOrigen)
-
+                    command.Parameters.AddWithValue("AnioVerCorNew", AnioVerCorNew)
+                    command.Parameters.AddWithValue("id_versionAct", id_versionAct)
                     con15.Open()
                     dai_min = command.ExecuteScalar()
                     con15.Close()
@@ -4388,8 +4372,6 @@ Public Class CDInstrumentosComerciales
 
                             End Using
 
-
-
                             sql_query = " INSERT INTO Correlacion_Instrumentos " +
                                 " (inciso_original,situacion, id_instrumento, " +
                                 " texto_original, dai_original, " +
@@ -4441,6 +4423,113 @@ Public Class CDInstrumentosComerciales
                 situacion = Nothing
                 'IncisoCorre =  IncisoOrigen
             Next
+
+
+            'D1)  ACTUALIZA en SAC_CORRELACION ESTADO INDICANDO SUPRESION
+            sql_query = " UPDATE SAC_CORRELACION " +
+                " SET ESTADO ='S' " +
+                " WHERE Inciso_nuevo Is NULL " +
+                " AND DATALENGTH(inciso_ORIGEN)>2 " +
+                " AND ESTADO IS NULL " +
+                " AND Anio_nueva_version = @AnioVerCorNew  " +
+                " AND VERSION = @id_versionAct "
+
+            Using con = objConeccion.Conectar
+                Dim command As New SqlCommand(sql_query, con)
+                command.Parameters.AddWithValue("AnioVerCorNew", AnioVerCorNew)
+                command.Parameters.AddWithValue("id_versionAct", id_versionAct)
+
+                con.Open()
+                command.ExecuteNonQuery()
+                con.Close()
+
+            End Using
+
+
+            'D2) ACTUALIZA en SAC_CORRELACION ESTADO INDICANDO NUEVO inciso
+            sql_query = " 	UPDATE SAC_CORRELACION " +
+                " SET ESTADO ='N' " +
+                " WHERE Inciso_origen Is NULL " +
+                " AND DATALENGTH(inciso_nuevo)>2 " +
+                " AND ESTADO IS NULL " +
+                " AND Anio_nueva_version = @AnioVerCorNew  " +
+                " AND VERSION = @id_versionAct "
+
+            Using con = objConeccion.Conectar
+                Dim command As New SqlCommand(sql_query, con)
+                command.Parameters.AddWithValue("AnioVerCorNew", AnioVerCorNew)
+                command.Parameters.AddWithValue("id_versionAct", id_versionAct)
+
+                con.Open()
+                command.ExecuteNonQuery()
+                con.Close()
+
+            End Using
+
+            'D3) ACTUALIZA en SAC_CORRELACION ESTADO INDICANDO  APERTURA
+            sql_query = " 	UPDATE SAC_CORRELACION " +
+                " SET ESTADO ='A' " +
+                " WHERE DATALENGTH(inciso_ORIGEN) > 2 " +
+                " AND DATALENGTH(inciso_nuevo)>2 " +
+                " AND Inciso_origen <> inciso_nuevo " +
+                " AND ESTADO IS NULL " +
+                " AND Anio_nueva_version = @AnioVerCorNew " +
+                " AND VERSION = @id_versionAct "
+
+            Using con = objConeccion.Conectar
+                Dim command As New SqlCommand(sql_query, con)
+                command.Parameters.AddWithValue("AnioVerCorNew", AnioVerCorNew)
+                command.Parameters.AddWithValue("id_versionAct", id_versionAct)
+
+                con.Open()
+                command.ExecuteNonQuery()
+                con.Close()
+
+            End Using
+
+            'D4) ACTUALIZA en SAC_CORRELACION ESTADO INDICANDO  DAI MODIFICADO
+            sql_query = " 	UPDATE SAC_CORRELACION " +
+                " SET ESTADO ='D' " +
+                " WHERE DATALENGTH(inciso_ORIGEN) > 2 " +
+                " AND DATALENGTH(inciso_nuevo)>2 " +
+                " AND Inciso_origen = inciso_nuevo " +
+                " AND DAI_BASE <> DAI_NUEVO " +
+                " AND ESTADO IS NULL " +
+                " AND Anio_nueva_version = @AnioVerCorNew " +
+                " AND VERSION = @id_versionAct "
+
+            Using con = objConeccion.Conectar
+                Dim command As New SqlCommand(sql_query, con)
+                command.Parameters.AddWithValue("AnioVerCorNew", AnioVerCorNew)
+                command.Parameters.AddWithValue("id_versionAct", id_versionAct)
+
+                con.Open()
+                command.ExecuteNonQuery()
+                con.Close()
+
+            End Using
+
+            'D5) ACTUALIZA en SAC_CORRELACION ESTADO INDICANDO  TEXTO MODIFICADO
+            sql_query = " 	UPDATE SAC_CORRELACION " +
+                " SET ESTADO ='T' " +
+                " WHERE DATALENGTH(inciso_ORIGEN) > 2 " +
+                " AND DATALENGTH(inciso_nuevo)>2 " +
+                " AND Inciso_origen = inciso_nuevo " +
+                " AND DAI_BASE = DAI_NUEVO " +
+                " AND ESTADO IS NULL " +
+                " AND Anio_nueva_version = @AnioVerCorNew " +
+                " AND VERSION = @id_versionAct "
+
+            Using con = objConeccion.Conectar
+                Dim command As New SqlCommand(sql_query, con)
+                command.Parameters.AddWithValue("AnioVerCorNew", AnioVerCorNew)
+                command.Parameters.AddWithValue("id_versionAct", id_versionAct)
+
+                con.Open()
+                command.ExecuteNonQuery()
+                con.Close()
+
+            End Using
 
             'h) En SAC_INCISOS cambia "el estado" de los registros CON ESTADO = 'I' al ESTADO='H'(historico)**/
 
@@ -4529,10 +4618,8 @@ Public Class CDInstrumentosComerciales
         Catch ex As Exception
             estado = False
         End Try
-
         Return estado
     End Function
-
 
     Public Function SelectResumenInstrumento(ByVal id_instrumento As Integer) As DataTable
         Dim dt As New DataTable

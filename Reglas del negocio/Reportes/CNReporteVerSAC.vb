@@ -18,8 +18,8 @@ Public Class CNReporteVerSAC
     End Function
 
     'Funcion que obtiene listado del sac 
-    Public Function SelectSACList(ByVal id_version As Integer, ByVal capitulo As String, ByVal all_capitulos As Boolean) As DataTable
-        Return objCDReportes.SelectSACList(id_version, capitulo, all_capitulos)
+    Public Function SelectSACList(ByVal id_version As Integer, ByVal anio_version As Integer, ByVal capitulo As String, ByVal all_capitulos As Boolean) As DataTable
+        Return objCDReportes.SelectSACList(id_version, anio_version, capitulo, all_capitulos)
     End Function
 
 End Class

@@ -24,7 +24,11 @@ Public Class frmConsultaVerSAC
     End Sub
 
     Protected Sub btn_seleccionar_Click(sender As Object, e As EventArgs) Handles btn_seleccionar.Click
-        LlenarGv_Incisos(ddl_version_SAC.SelectedValue, ddl_capitulo.SelectedValue)
+        Dim id_version As Integer = 0
+        Dim anio_version As Integer = 0
+        id_version = ddl_version_SAC.SelectedValue.Substring(0, 1)
+        anio_version = ddl_version_SAC.SelectedValue.Substring(1, 4)
+        LlenarGv_Incisos(id_version, anio_version, ddl_capitulo.SelectedValue)
     End Sub
 
     Protected Sub btn_genera_Click(sender As Object, e As EventArgs) Handles btn_genera.Click
@@ -74,9 +78,10 @@ Public Class frmConsultaVerSAC
         With ddl_version_SAC
             .DataSource = tblVerSAc
             .DataTextField = "descripcion"
-            .DataValueField = "id_version"
+            .DataValueField = "id_ver"
             .DataBind()
         End With
+
 
     End Sub
 
@@ -108,9 +113,9 @@ Public Class frmConsultaVerSAC
 
     'End Sub
 
-    Sub LlenarGv_Incisos(ByVal id_version_sac As Integer, ByVal capitulo As String)
+    Sub LlenarGv_Incisos(ByVal id_version_sac As Integer, ByVal anio_version As Integer, ByVal capitulo As String)
         Dim tbl_sac_list As New DataTable
-        tbl_sac_list = objCNReportes.SelectSACList(id_version_sac, capitulo, cb_capitulo.Checked)
+        tbl_sac_list = objCNReportes.SelectSACList(id_version_sac, anio_version, capitulo, cb_capitulo.Checked)
 
         With tbl_sac_list
 
