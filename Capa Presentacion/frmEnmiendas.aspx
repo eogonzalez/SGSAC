@@ -50,10 +50,10 @@
 
 
 
-            <asp:LinkButton ID="lkBtn_asignar_categorias" runat="server" CssClass="btn btn-primary"> 
+<%--            <asp:LinkButton ID="lkBtn_asignar_categorias" runat="server" CssClass="btn btn-primary"> 
                         <i aria-hidden="true" class="glyphicon glyphicon-check"></i> 
                         Aprobar Version
-            </asp:LinkButton>
+            </asp:LinkButton>--%>
 
         </div>
 

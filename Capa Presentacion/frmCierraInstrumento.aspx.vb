@@ -26,6 +26,7 @@ Public Class frmCierraInstrumento
             'txt_fecha_suscripcion.Text = .Tables(0).Columns("fecha_firma").ToString()
             'txt_fecha_vigencia.Text = .Tables(0).Columns("fecha_vigencia").ToString()
         End With
+
     End Sub
 
     Sub Llenar_gvResumen(ByVal id_instrumento As Integer)

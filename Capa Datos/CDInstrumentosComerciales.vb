@@ -4257,8 +4257,11 @@ Public Class CDInstrumentosComerciales
                         DAI_Ori = dataReader.GetDecimal(1)
 
                     Else
+                        'Este bloque ya no se cumple su funcion original 
+                        ' ya que cuando son nuevas partidas siempre entrara a este bloque
+
                         'Return estado = False
-                        estado = False
+                        'estado = False
                     End If
 
                     con13.Close()
