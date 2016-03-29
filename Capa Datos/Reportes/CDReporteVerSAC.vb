@@ -311,7 +311,7 @@ Public Class CDReporteVerSAC
 
                                 Dim inciso As String
                                 inciso = row_inciso("codigo")
-                                inciso = inciso.Substring(0, 6)
+                                'inciso = inciso.Substring(0, 6)
 
                                 Dim subpartida As String
                                 subpartida = row_subPartida("codigo")
@@ -320,18 +320,12 @@ Public Class CDReporteVerSAC
 
                                 If tamanio_subpartida = 5 Then
                                     inciso = inciso.Substring(0, 5)
+                                ElseIf tamanio_subpartida = 6 Then
+                                    inciso = inciso.Substring(0, 6)
+                                ElseIf tamanio_subpartida = 7 Then
+                                    inciso = inciso.Substring(0, 7)
                                 End If
 
-
-                                'Else
-                                '    subpartida = subpartida.Substring(0, 6)
-
-                                'End If
-
-
-
-
-                                'If inciso = subpartida And cant_sub_agregados <> cantSubPartidas And cant_sub_agregados <> cont_sub_list Then
                                 If inciso = subpartida Then
                                     'agrego_sub = True
                                     new_row = dataTableSACList.NewRow()
