@@ -136,6 +136,7 @@ Public Class frmCorrelacionSAC
             If GuardarNuevaApertura() Then
                 Mensaje("Nueva Apertura realizada con éxito.")
                 LlenarCorrelacionMant()
+                LlenarSeleccionCodigoInciso(txt_codigo_arancel.Text)
             Else
                 Mensaje("Error al realizar apertura.")
                 LlenarDescripcionesNew(txt_inciso_new.Text)

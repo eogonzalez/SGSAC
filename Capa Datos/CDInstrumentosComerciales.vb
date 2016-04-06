@@ -3332,8 +3332,13 @@ Public Class CDInstrumentosComerciales
             End Using
 
             If estado_correlacion And estado_incisos Then
+                'Si existe inciso y existe suprecion 
+                estado = False
+            ElseIf Not estado_correlacion And Not estado_incisos Then
+                'Si no existe inciso y tampoco suprecion
                 estado = False
             Else
+                'si existe inciso pero no suprecion
                 estado = True
             End If
 
