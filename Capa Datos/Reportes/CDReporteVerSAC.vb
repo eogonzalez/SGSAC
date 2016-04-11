@@ -99,6 +99,45 @@ Public Class CDReporteVerSAC
         Return dataTablePartidasSac
     End Function
 
+    'Funcion que verifica si existe partida
+    Function ExistePartida(ByVal codigo As String) As Boolean
+        Dim existe As Boolean = True
+        Dim sql_query As String
+
+        Try
+
+            sql_query = "  SELECT " +
+                " COALESCE(COUNT(1), 0) " +
+                " FROM " +
+                " SAC_Partidas " +
+                " where " +
+                " Partida = @partida " +
+                " and activo = 'S' "
+
+            Dim partida As String = codigo.Substring(0, 4)
+
+            Using con = objConeccion.Conectar
+                Dim command As New SqlCommand(sql_query, con)
+                command.Parameters.AddWithValue("partida", partida)
+                con.Open()
+
+                If command.ExecuteScalar > 0 Then
+                    existe = True
+                Else
+                    existe = False
+                End If
+
+                con.Close()
+
+            End Using
+
+        Catch ex As Exception
+
+        End Try
+
+        Return existe
+    End Function
+
     'Funcion verifica existe subpartida
     Function ExisteSubpartida(ByVal codigo As String) As Boolean
         Dim existe As Boolean = True
@@ -157,8 +196,6 @@ Public Class CDReporteVerSAC
                     " AND   activo = 'S';  "
             End If
 
-
-
             Dim dataTable_Capitulos As New DataTable
             Using conn = objConeccion.Conectar
                 Dim command As New SqlCommand(sql_query, conn)
@@ -174,8 +211,11 @@ Public Class CDReporteVerSAC
                 conn.Close()
 
             End Using
+
             Dim new_row_cap As DataRow
             Dim cont As Integer = 0
+
+            'Recorro lista de capitulos
             For Each row_cap As DataRow In dataTable_Capitulos.Rows
 
                 If cont = 0 Then
@@ -190,7 +230,6 @@ Public Class CDReporteVerSAC
                     dataTableSACList.Columns.Add(column)
 
                     column = New DataColumn
-                    'column.DataType = Type.GetType("System.String")
                     column.ColumnName = "SAC"
                     dataTableSACList.Columns.Add(column)
 
@@ -198,7 +237,6 @@ Public Class CDReporteVerSAC
                 cont = cont + 1
 
                 new_row_cap = dataTableSACList.NewRow()
-
                 new_row_cap("codigo") = row_cap("codigo")
                 capitulo = row_cap("codigo")
                 new_row_cap("descripcion") = row_cap("descripcion")
@@ -206,12 +244,13 @@ Public Class CDReporteVerSAC
 
                 dataTableSACList.Rows.Add(new_row_cap)
 
+                'Query para seleccionar las partidas del capitulo
                 sql_query = "  SELECT " +
-                " Partida as codigo, Descripcion_Partida as descripcion, ' ' as SAC " +
-                " FROM " +
-                " SAC_Partidas " +
-                " WHERE  Capitulo = @Capitulo " +
-                " AND   activo = 'S'; "
+                    " Partida as codigo, Descripcion_Partida as descripcion, ' ' as SAC " +
+                    " FROM " +
+                    " SAC_Partidas " +
+                    " WHERE  Capitulo = @Capitulo " +
+                    " AND   activo = 'S'; "
 
                 Dim dataTablePartida As New DataTable
                 Using conn = objConeccion.Conectar
@@ -225,142 +264,132 @@ Public Class CDReporteVerSAC
 
                 End Using
 
+                'Query que consulta subpartidas del capitulo
+                sql_query = "  SELECT  " +
+                    " subpartida as codigo, texto_subpartida as descripcion, ' ' as SAC  " +
+                    " FROM SAC_Subpartidas " +
+                    " WHERE  Capitulo = @Capitulo " +
+                    " AND  activo = 'S';   "
+
+                Dim dataTableSubPartidas As New DataTable
+                Using conn2 = objConeccion.Conectar
+                    Dim command As New SqlCommand(sql_query, conn2)
+                    command.Parameters.AddWithValue("Capitulo", capitulo)
+                    Dim dataAdapter As New SqlDataAdapter(command)
+
+                    conn2.Open()
+                    dataAdapter.Fill(dataTableSubPartidas)
+                    conn2.Close()
+
+                End Using
+
+                'Query para seleccionar los incisos del capitulo
+                sql_query = "  SELECT " +
+                    " codigo_inciso as codigo, texto_inciso as descripcion, dai_base as SAC " +
+                    " FROM " +
+                    " SAC_Incisos " +
+                    " where " +
+                    " codigo_inciso like @capitulo+'%' " +
+                    " and id_version = @id_version " +
+                    " and anio_version = @anio_version "
+
+                Dim dataTableIncisos As New DataTable
+
+                Using conn3 = objConeccion.Conectar
+                    Dim command As New SqlCommand(sql_query, conn3)
+                    command.Parameters.AddWithValue("capitulo", capitulo)
+                    command.Parameters.AddWithValue("id_version", id_version)
+                    command.Parameters.AddWithValue("anio_version", anio_version)
+                    Dim dataAdapter As New SqlDataAdapter(command)
+
+                    conn3.Open()
+                    dataAdapter.Fill(dataTableIncisos)
+                    conn3.Close()
+
+                End Using
+
+                '----------------------'
+                'Recorro lista de incisos'
                 Dim new_row As DataRow
 
-                For Each row As DataRow In dataTablePartida.Rows
-                    'Recorro Cada partida, la agrego.
+                For Each row_inciso As DataRow In dataTableIncisos.Rows
+
+                    If ExistePartida(row_inciso("codigo")) Then
+                        'Si existe recorro listado de partidas y agrego
+
+                        'Recorro lista de partidas del capitulo
+                        For Each row_partida As DataRow In dataTablePartida.Rows
+                            Dim partida As String = row_partida("codigo")
+
+                            If partida = row_inciso("codigo").ToString.Substring(0, 4) Then
+                                new_row = dataTableSACList.NewRow()
+                                new_row("codigo") = partida
+                                new_row("descripcion") = row_partida("descripcion")
+                                new_row("SAC") = row_partida("SAC")
+
+                                dataTableSACList.Rows.Add(new_row)
+                                dataTablePartida.Rows.Remove(row_partida)
+
+                                Exit For
+                            End If
+                        Next
+                        'Fin recorrer lista partidas del capitulo
+
+                    End If
+                    'Fin ExistePartida
+
+                    If ExisteSubpartida(row_inciso("codigo")) Then
+                        'Si existe subpartida agrego primero subpartida
+
+                        'Recorro listado de subpartida
+                        For i = 0 To dataTableSubPartidas.Rows.Count - 1
+                            Dim cantSubPartidas As Integer
+                            Dim inciso As String
+                            Dim subpartida As String
+                            Dim tamanio_subpartida As Integer
+
+                            cantSubPartidas = dataTableSubPartidas.Rows.Count
+                            inciso = row_inciso("codigo")
+                            subpartida = dataTableSubPartidas.Rows(i)("codigo")
+                            subpartida = RTrim(subpartida)
+                            tamanio_subpartida = subpartida.Length
+
+                            If tamanio_subpartida = 5 Then
+                                inciso = inciso.Substring(0, 5)
+                            ElseIf tamanio_subpartida = 6 Then
+                                inciso = inciso.Substring(0, 6)
+                            ElseIf tamanio_subpartida = 7 Then
+                                inciso = inciso.Substring(0, 7)
+                            End If
+
+                            If inciso = subpartida Then
+                                new_row = dataTableSACList.NewRow()
+                                new_row("codigo") = dataTableSubPartidas.Rows(i)("codigo")
+                                new_row("descripcion") = dataTableSubPartidas.Rows(i)("descripcion")
+                                new_row("SAC") = dataTableSubPartidas.Rows(i)("SAC")
+
+                                dataTableSACList.Rows.Add(new_row)
+                                dataTableSubPartidas.Rows(i).Delete()
+                            End If
+                        Next
+                        dataTableSubPartidas.AcceptChanges()
+                        'Fin Recorrer lista subpartidas
+
+                    End If
+                    'Fin ExisteSubPartidas
 
                     new_row = dataTableSACList.NewRow()
-
-                    new_row("codigo") = row("codigo")
-                    new_row("descripcion") = row("descripcion")
-                    new_row("SAC") = row("SAC")
+                    new_row("codigo") = row_inciso("codigo")
+                    new_row("descripcion") = row_inciso("descripcion")
+                    new_row("SAC") = row_inciso("SAC")
 
                     dataTableSACList.Rows.Add(new_row)
-
-
-                    'verifico si la partida tiene supartidas y lleno la lista para uso posterior
-                    Dim partida As String = row("codigo")
-                    partida = RTrim(partida)
-
-                    sql_query = "  SELECT  " +
-                                " subpartida as codigo, texto_subpartida as descripcion, ' ' as SAC  " +
-                                " FROM SAC_Subpartidas " +
-                                " WHERE  Capitulo = @Capitulo " +
-                                " AND  partida = @Partida " +
-                                " AND  activo = 'S';   "
-
-
-
-                    Dim dataTableSubPartidas As New DataTable
-                    Using conn2 = objConeccion.Conectar
-                        Dim command As New SqlCommand(sql_query, conn2)
-                        command.Parameters.AddWithValue("Capitulo", capitulo)
-                        command.Parameters.AddWithValue("Partida", partida)
-                        Dim dataAdapter As New SqlDataAdapter(command)
-
-                        conn2.Open()
-                        dataAdapter.Fill(dataTableSubPartidas)
-                        conn2.Close()
-
-                    End Using
-
-
-                    'Incerto incisos
-                    'Agrego incisos
-                    sql_query = "  SELECT " +
-                        " codigo_inciso as codigo, texto_inciso as descripcion, dai_base as SAC " +
-                        " FROM " +
-                        " SAC_Incisos " +
-                        " where " +
-                        " codigo_inciso like @partida+'%' " +
-                        " and id_version = @id_version " +
-                        " and anio_version = @anio_version "
-
-                    Dim dataTableIncisos As New DataTable
-
-
-                    Using conn3 = objConeccion.Conectar
-                        Dim command As New SqlCommand(sql_query, conn3)
-                        command.Parameters.AddWithValue("partida", partida)
-                        command.Parameters.AddWithValue("id_version", id_version)
-                        command.Parameters.AddWithValue("anio_version", anio_version)
-                        Dim dataAdapter As New SqlDataAdapter(command)
-
-                        conn3.Open()
-                        dataAdapter.Fill(dataTableIncisos)
-                        conn3.Close()
-
-                    End Using
-
-                    'Dim agrego_sub As Boolean = False
-                    'Dim cant_sub_agregados As Integer = 0
-                    For Each row_inciso As DataRow In dataTableIncisos.Rows
-                        'Recorro tabla incisos
-
-                        'If ExisteSubpartida(row_inciso("codigo")) And agrego_sub = False Then
-                        If ExisteSubpartida(row_inciso("codigo")) Then
-                            'Si existe subpartida agrego primero subpartida
-
-                            'Dim cont_sub_list As Integer = 0
-                            'Recorro listado de subpartida
-                            For Each row_subPartida As DataRow In dataTableSubPartidas.Rows
-                                'cont_sub_list = cont_sub_list + 1
-                                Dim cantSubPartidas As Integer
-                                cantSubPartidas = dataTableSubPartidas.Rows.Count
-
-                                Dim inciso As String
-                                inciso = row_inciso("codigo")
-                                'inciso = inciso.Substring(0, 6)
-
-                                Dim subpartida As String
-                                subpartida = row_subPartida("codigo")
-                                subpartida = RTrim(subpartida)
-                                Dim tamanio_subpartida = subpartida.Length
-
-                                If tamanio_subpartida = 5 Then
-                                    inciso = inciso.Substring(0, 5)
-                                ElseIf tamanio_subpartida = 6 Then
-                                    inciso = inciso.Substring(0, 6)
-                                ElseIf tamanio_subpartida = 7 Then
-                                    inciso = inciso.Substring(0, 7)
-                                End If
-
-                                If inciso = subpartida Then
-                                    'agrego_sub = True
-                                    new_row = dataTableSACList.NewRow()
-
-                                    new_row("codigo") = row_subPartida("codigo")
-                                    new_row("descripcion") = row_subPartida("descripcion")
-                                    new_row("SAC") = row_subPartida("SAC")
-
-
-                                    dataTableSACList.Rows.Add(new_row)
-                                    dataTableSubPartidas.Rows.Remove(row_subPartida)
-
-                                    'cant_sub_agregados = cant_sub_agregados + 1
-                                    Exit For
-                                End If
-
-                            Next
-
-
-                        End If
-
-                        new_row = dataTableSACList.NewRow()
-
-                        new_row("codigo") = row_inciso("codigo")
-                        new_row("descripcion") = row_inciso("descripcion")
-                        new_row("SAC") = row_inciso("SAC")
-
-                        dataTableSACList.Rows.Add(new_row)
-                    Next
-
                 Next
+                'Fin Recorrer lista incisos'
+                '----------------------'
 
             Next
-
-
+            'Fin Recorrer lista de capitulos
 
         Catch ex As SqlException
 
