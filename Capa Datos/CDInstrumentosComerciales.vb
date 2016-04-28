@@ -3119,14 +3119,14 @@ Public Class CDInstrumentosComerciales
                 " ,[normativa] ,[dai_base] " +
                 " ,[dai_nuevo] ,[anio_version] " +
                 " ,[anio_nueva_version] ,[version] " +
-                " ,[fin_vigencia] ,[inicio_vigencia]) " +
+                " ,[fin_vigencia] ,[inicio_vigencia], [fecha_inicio_vigencia]) " +
                 " VALUES " +
                 " (@inciso_origen ,@inciso_nuevo " +
                 " ,@texto_inciso ,@comentarios " +
                 " ,@normativa ,@dai_base " +
                 " ,@dai_nuevo ,@anio_version " +
                 " ,@anio_nueva_version ,@version " +
-                " ,@fin_vigencia ,@inicio_vigencia) "
+                " ,@fin_vigencia ,@inicio_vigencia, @fecha_inicio_vigencia) "
 
             Using cn = objConeccion.Conectar
                 Dim command As SqlCommand = New SqlCommand(sql_query, cn)
@@ -3147,6 +3147,7 @@ Public Class CDInstrumentosComerciales
                 command.Parameters.AddWithValue("version", objCorrelacion.id_version)
                 command.Parameters.AddWithValue("fin_vigencia", objCorrelacion.fecha_fin_vigencia.Year)
                 command.Parameters.AddWithValue("inicio_vigencia", objCorrelacion.fecha_inicia_vigencia.Year)
+                command.Parameters.AddWithValue("fecha_inicio_vigencia", objCorrelacion.fecha_inicia_vigencia)
                 cn.Open()
                 command.ExecuteScalar()
                 estado = True
@@ -4005,13 +4006,17 @@ Public Class CDInstrumentosComerciales
             End Using
 
             'd) Elimina de la tabla: TEMP_INCISOS, los incisos que en SAC_CORRELACION tienen Inciso_nuevo IS NULL
-            sql_query = " SELECT distinct Inciso_origen " +
+            ' -- Selecciona los incisos vigentes que tiene supresion y apertura (modificacion)
+            ' -- Queda pendiente clasificar aparte las supreciones y aparte las modificaciones
+
+            sql_query = "  SELECT distinct Inciso_origen " +
                 " FROM SAC_CORRELACION " +
                 " WHERE Inciso_nuevo Is NULL " +
                 " AND version = @id_versionAct " +
                 " AND Anio_Nueva_version =  @AnioVerCorNew " +
-                " AND estado Is NULL "
-
+                " AND estado Is NULL  " +
+                " and fin_vigencia = @AnioVerCorNew  "
+                
             Dim dataSetTem_Incisos As New DataSet
 
             Using con4 = objConeccion.Conectar
@@ -4023,7 +4028,7 @@ Public Class CDInstrumentosComerciales
                 dataAdapter.Fill(dataSetTem_Incisos)
                 con4.Close()
 
-            End Using
+                End Using
 
             CanReg = 0
             For Each row As DataRow In dataSetTem_Incisos.Tables(0).Rows
@@ -4038,7 +4043,7 @@ Public Class CDInstrumentosComerciales
                     con5.Open()
                     command.ExecuteNonQuery()
                     con5.Close()
-                End Using
+                    End Using
 
 
                 CanReg = CanReg + 1
@@ -4046,8 +4051,9 @@ Public Class CDInstrumentosComerciales
             Next
 
 
-            'e) Inserta en tabla: TEMP_INCISOS todos los INCISOS  de correlacion con 
-            '    "Inciso_Nuevo" IS NOT NULL en SAC_CORRELACION
+            '   e) Inserta en tabla: TEMP_INCISOS todos los INCISOS  de correlacion con 
+            '   "Inciso_Nuevo" IS NOT NULL en SAC_CORRELACION
+            ' -- Agrega unicamente los vigentes en esta version
 
             sql_query = " SELECT version,anio_nueva_version,Inciso_nuevo, texto_inciso, dai_nuevo " +
                 " FROM SAC_CORRELACION " +
@@ -4055,6 +4061,7 @@ Public Class CDInstrumentosComerciales
                 " AND estado Is NULL " +
                 " AND version = @id_versionAct " +
                 " AND Anio_Nueva_version =  @AnioVerCorNew " +
+                " and inicio_vigencia = @AnioVerCorNew " +
                 " ORDER BY Inciso_nuevo "
 
             Dim dataSetINCI_NEW As New DataSet
@@ -4068,7 +4075,7 @@ Public Class CDInstrumentosComerciales
                 dataAdapter.Fill(dataSetINCI_NEW)
                 con6.Close()
 
-            End Using
+                End Using
 
             Dim inciso As String = "00"
 
@@ -4097,16 +4104,16 @@ Public Class CDInstrumentosComerciales
                         command.ExecuteNonQuery()
                         con7.Close()
 
-                    End Using
+                        End Using
 
                     inciso = IncisoNuevo
 
 
-                End If
+                    End If
 
             Next
 
-            'Elimina Incisos Repetidos en TEM_INCISOS
+                'Elimina Incisos Repetidos en TEM_INCISOS
 
             sql_query = " SELECT CODIGO_INCISO, COUNT(1) AS TT FROM TEM_Incisos " +
                 " GROUP BY CODIGO_INCISO " +
@@ -4121,7 +4128,7 @@ Public Class CDInstrumentosComerciales
                 con8.Close()
 
 
-            End Using
+                End Using
 
             Dim codi As String
             Dim repe As Integer = 0
@@ -4144,26 +4151,29 @@ Public Class CDInstrumentosComerciales
                         command.ExecuteNonQuery()
                         con9.Close()
 
-                    End Using
+                        End Using
 
                     i = i + 1
 
-                End If
+                    End If
 
             Next
 
             ' G) Verifica en cada Instrumentode Impacto generado por la Correlación e Ingresa los
             ' registros en tabla CORRELACION_INSTRUMENTOS con "INCISO_ORIGEN" de la tabla SAC_CORRELACION 
 
-            'f1)Identifica incisos Aperturados que afecten a un Instrumento
-            'NOTA Cambio Query ya que no aparecian todas las aperturas
+            ' f1)Identifica incisos Aperturados que afecten a un Instrumento
+            ' NOTA Cambio Query ya que no aparecian todas las aperturas
+            ' -- Seleccionando unicamente los incisos aplicados en la version actual
+
             sql_query = " select SAC_Corre.inciso_origen " +
                 " from " +
                 " (SELECT case when (Inciso_origen is null) then inciso_nuevo else inciso_origen end inciso_origen " +
                 " FROM SAC_CORRELACION " +
                 " WHERE estado Is NULL " +
                 " AND version = @id_versionAct " +
-                " AND Anio_Nueva_version =  @AnioVerCorNew) SAC_Corre " +
+                " AND Anio_Nueva_version =  @AnioVerCorNew " +
+                " and inicio_vigencia = @AnioVerCorNew) SAC_Corre " +
                 " GROUP by SAC_Corre.inciso_origen " +
                 " ORDER BY SAC_Corre.Inciso_origen "
 
@@ -4178,12 +4188,12 @@ Public Class CDInstrumentosComerciales
                 dataAdapter.Fill(dataSet_IncisoCorre)
                 con10.Close()
 
-            End Using
+                End Using
 
-            '/**	BUSCA AFECTACION EN INSTRUMENTOS  **/
+                '/**	BUSCA AFECTACION EN INSTRUMENTOS  **/
             For Each row As DataRow In dataSet_IncisoCorre.Tables(0).Rows
 
-                '/**	CONTEO DE APERTURAS DE CADA INCISO CORRELACION **/
+                    '/**	CONTEO DE APERTURAS DE CADA INCISO CORRELACION **/
                 CanReg = 0
                 Dim situacion As String = Nothing
                 Dim IncisoOrigen As String = row("Inciso_origen")
@@ -4207,13 +4217,13 @@ Public Class CDInstrumentosComerciales
                     CanReg = command.ExecuteScalar()
                     con11.Close()
 
-                End Using
+                    End Using
 
                 If CanReg > 0 Then
                     situacion = " -APERTURADO- "
-                End If
+                    End If
 
-                '/**	IDETIFICA SI EL INCISO SE SUPRIME O NO EN LA CORRELACION **/
+                    '/**	IDETIFICA SI EL INCISO SE SUPRIME O NO EN LA CORRELACION **/
                 Dim suprime As Integer = 0
 
                 sql_query = " (SELECT count(1) " +
@@ -4233,13 +4243,13 @@ Public Class CDInstrumentosComerciales
                     suprime = command.ExecuteScalar()
                     con12.Close()
 
-                End Using
+                    End Using
 
                 If suprime > 0 Then
                     situacion = situacion + " -SUPRIMIDO- "
-                End If
+                    End If
 
-                '/**	OBTIENE DATOS DEL INCISO ORIGINAL  **/
+                    '/**	OBTIENE DATOS DEL INCISO ORIGINAL  **/
                 sql_query = " SELECT texto_inciso,dai_base " +
                     " FROM SAC_Incisos " +
                     " WHERE Estado = 'A' " +
@@ -4262,18 +4272,18 @@ Public Class CDInstrumentosComerciales
                         DAI_Ori = dataReader.GetDecimal(1)
 
                     Else
-                        'Este bloque ya no se cumple su funcion original 
-                        ' ya que cuando son nuevas partidas siempre entrara a este bloque
+                            'Este bloque ya no se cumple su funcion original 
+                            ' ya que cuando son nuevas partidas siempre entrara a este bloque
 
-                        'Return estado = False
-                        'estado = False
-                    End If
+                            'Return estado = False
+                            'estado = False
+                        End If
 
                     con13.Close()
 
-                End Using
+                    End Using
 
-                '/**	OBTIENE DATOS DE LA CORRELACION  **/
+                    '/**	OBTIENE DATOS DE LA CORRELACION  **/
 
                 sql_query = " (SELECT coalesce(max(dai_nuevo),0) " +
                     " FROM SAC_Correlacion " +
@@ -4293,7 +4303,7 @@ Public Class CDInstrumentosComerciales
                     dai_max = command.ExecuteScalar()
                     con14.Close()
 
-                End Using
+                    End Using
 
                 sql_query = " (SELECT coalesce(min(dai_nuevo),0) " +
                     " FROM SAC_Correlacion " +
@@ -4313,10 +4323,10 @@ Public Class CDInstrumentosComerciales
                     dai_min = command.ExecuteScalar()
                     con15.Close()
 
-                End Using
+                    End Using
 
 
-                '/**	OBTIENE DATOS DE LOS TRATADOS  E INSERTA DATOS EN TABLA DE AFECTA TRATADO   **/
+                    '/**	OBTIENE DATOS DE LOS TRATADOS  E INSERTA DATOS EN TABLA DE AFECTA TRATADO   **/
 
                 sql_query = " SELECT CODIGO_INCISO,id_instrumento,id_categoria " +
                     " FROM SAC_Asocia_Categoria " +
@@ -4337,10 +4347,10 @@ Public Class CDInstrumentosComerciales
                     dataAdapter.Fill(dTAsociaCat)
                     con16.Close()
 
-                End Using
+                    End Using
 
                 If dTAsociaCat.Rows.Count > 0 Then
-                    'Si el inciso afecta tratado
+                        'Si el inciso afecta tratado
 
                     For Each rowAsociaCat As DataRow In dTAsociaCat.Rows
                         Codigo_Inciso_Inst = rowAsociaCat("codigo_inciso").ToString
@@ -4362,7 +4372,7 @@ Public Class CDInstrumentosComerciales
                                 nombre_instrumento = command.ExecuteScalar()
                                 con16.Close()
 
-                            End Using
+                                End Using
 
 
                             sql_query = " SELECT  Codigo_Categoria FROM IC_Categorias_Desgravacion  " +
@@ -4378,7 +4388,7 @@ Public Class CDInstrumentosComerciales
                                 codigo_categoria = command.ExecuteScalar()
                                 con17.Close()
 
-                            End Using
+                                End Using
 
                             sql_query = " INSERT INTO Correlacion_Instrumentos " +
                                 " (inciso_original,situacion, id_instrumento, " +
@@ -4419,28 +4429,31 @@ Public Class CDInstrumentosComerciales
                                 command.ExecuteNonQuery()
                                 con18.Close()
 
-                            End Using
+                                End Using
 
-                        End If
+                            End If
 
                     Next
                 Else
-                    'Si el inciso no afecta a ningun tratado
-                End If
+                        'Si el inciso no afecta a ningun tratado
+                    End If
 
                 situacion = Nothing
-                'IncisoCorre =  IncisoOrigen
+                    'IncisoCorre =  IncisoOrigen
             Next
 
 
-            'D1)  ACTUALIZA en SAC_CORRELACION ESTADO INDICANDO SUPRESION
+            ' D1)  ACTUALIZA en SAC_CORRELACION ESTADO INDICANDO SUPRESION
+            ' -- selecciona unicamente las supresiones vigentes
+
             sql_query = " UPDATE SAC_CORRELACION " +
                 " SET ESTADO ='S' " +
                 " WHERE Inciso_nuevo Is NULL " +
                 " AND DATALENGTH(inciso_ORIGEN)>2 " +
                 " AND ESTADO IS NULL " +
                 " AND Anio_nueva_version = @AnioVerCorNew  " +
-                " AND VERSION = @id_versionAct "
+                " AND VERSION = @id_versionAct " +
+                " and fin_vigencia = @AnioVerCorNew "
 
             Using con = objConeccion.Conectar
                 Dim command As New SqlCommand(sql_query, con)
@@ -4451,16 +4464,18 @@ Public Class CDInstrumentosComerciales
                 command.ExecuteNonQuery()
                 con.Close()
 
-            End Using
+                End Using
 
 
             'D2) ACTUALIZA en SAC_CORRELACION ESTADO INDICANDO NUEVO inciso
+            '-- Actualiza incisos vigentes
             sql_query = " 	UPDATE SAC_CORRELACION " +
                 " SET ESTADO ='N' " +
                 " WHERE Inciso_origen Is NULL " +
                 " AND DATALENGTH(inciso_nuevo)>2 " +
                 " AND ESTADO IS NULL " +
                 " AND Anio_nueva_version = @AnioVerCorNew  " +
+                " and inicio_vigencia = @AnioVerCorNew " +
                 " AND VERSION = @id_versionAct "
 
             Using con = objConeccion.Conectar
@@ -4472,9 +4487,10 @@ Public Class CDInstrumentosComerciales
                 command.ExecuteNonQuery()
                 con.Close()
 
-            End Using
+                End Using
 
             'D3) ACTUALIZA en SAC_CORRELACION ESTADO INDICANDO  APERTURA
+            '-- Actualiza incisos vigentes
             sql_query = " 	UPDATE SAC_CORRELACION " +
                 " SET ESTADO ='A' " +
                 " WHERE DATALENGTH(inciso_ORIGEN) > 2 " +
@@ -4482,6 +4498,7 @@ Public Class CDInstrumentosComerciales
                 " AND Inciso_origen <> inciso_nuevo " +
                 " AND ESTADO IS NULL " +
                 " AND Anio_nueva_version = @AnioVerCorNew " +
+                " and inicio_vigencia = @AnioVerCorNew " +
                 " AND VERSION = @id_versionAct "
 
             Using con = objConeccion.Conectar
@@ -4493,9 +4510,10 @@ Public Class CDInstrumentosComerciales
                 command.ExecuteNonQuery()
                 con.Close()
 
-            End Using
+                End Using
 
             'D4) ACTUALIZA en SAC_CORRELACION ESTADO INDICANDO  DAI MODIFICADO
+            '-- Actualiza incisos vigentes
             sql_query = " 	UPDATE SAC_CORRELACION " +
                 " SET ESTADO ='D' " +
                 " WHERE DATALENGTH(inciso_ORIGEN) > 2 " +
@@ -4504,6 +4522,7 @@ Public Class CDInstrumentosComerciales
                 " AND DAI_BASE <> DAI_NUEVO " +
                 " AND ESTADO IS NULL " +
                 " AND Anio_nueva_version = @AnioVerCorNew " +
+                " and inicio_vigencia = @AnioVerCorNew " +
                 " AND VERSION = @id_versionAct "
 
             Using con = objConeccion.Conectar
@@ -4515,9 +4534,10 @@ Public Class CDInstrumentosComerciales
                 command.ExecuteNonQuery()
                 con.Close()
 
-            End Using
+                End Using
 
             'D5) ACTUALIZA en SAC_CORRELACION ESTADO INDICANDO  TEXTO MODIFICADO
+            '-- Actualiza incisos vigentes
             sql_query = " 	UPDATE SAC_CORRELACION " +
                 " SET ESTADO ='T' " +
                 " WHERE DATALENGTH(inciso_ORIGEN) > 2 " +
@@ -4526,6 +4546,7 @@ Public Class CDInstrumentosComerciales
                 " AND DAI_BASE = DAI_NUEVO " +
                 " AND ESTADO IS NULL " +
                 " AND Anio_nueva_version = @AnioVerCorNew " +
+                " and inicio_vigencia = @AnioVerCorNew " +
                 " AND VERSION = @id_versionAct "
 
             Using con = objConeccion.Conectar
@@ -4537,9 +4558,9 @@ Public Class CDInstrumentosComerciales
                 command.ExecuteNonQuery()
                 con.Close()
 
-            End Using
+                End Using
 
-            'h) En SAC_INCISOS cambia "el estado" de los registros CON ESTADO = 'I' al ESTADO='H'(historico)**/
+                'h) En SAC_INCISOS cambia "el estado" de los registros CON ESTADO = 'I' al ESTADO='H'(historico)**/
 
             sql_query = " UPDATE SAC_INCISOS SET ESTADO = 'H' " +
                 " WHERE  ESTADO = 'I' "
@@ -4551,10 +4572,10 @@ Public Class CDInstrumentosComerciales
                 command.ExecuteNonQuery()
                 con19.Close()
 
-            End Using
+                End Using
 
 
-            '/** I) En SAC_INCISOS cambia "el estado" de los registros CON ESTADO = 'A' al ESTADO='I'(Inactivo)**/
+                '/** I) En SAC_INCISOS cambia "el estado" de los registros CON ESTADO = 'A' al ESTADO='I'(Inactivo)**/
             sql_query = " UPDATE SAC_INCISOS SET ESTADO = 'I' " +
                 " WHERE  ESTADO = 'A' "
 
@@ -4565,9 +4586,9 @@ Public Class CDInstrumentosComerciales
                 command.ExecuteNonQuery()
                 con20.Close()
 
-            End Using
+                End Using
 
-            '/** J) SE INSERTAN EN SAC_INCISOS los registros de nueva Version y cambia ESTADO = 'A' (Activo) **/
+                '/** J) SE INSERTAN EN SAC_INCISOS los registros de nueva Version y cambia ESTADO = 'A' (Activo) **/
 
 
             sql_query = " UPDATE TEM_INCISOS " +
@@ -4582,7 +4603,7 @@ Public Class CDInstrumentosComerciales
                 command.ExecuteNonQuery()
                 con21.Close()
 
-            End Using
+                End Using
 
             sql_query = " INSERT INTO SAC_Incisos (ID_Version, Anio_Version,Codigo_inciso,texto_inciso, dai_base, Estado ) " +
                 " SELECT ID_Version, Anio_Version,Codigo_inciso,texto_inciso, dai_base, 'A'  " +
@@ -4595,7 +4616,7 @@ Public Class CDInstrumentosComerciales
                 command.ExecuteNonQuery()
                 con22.Close()
 
-            End Using
+                End Using
 
             sql_query = " UPDATE SAC_Versiones_Bitacora SET ESTADO = 'I' " +
                 " WHERE  ESTADO = 'A'  "
@@ -4607,7 +4628,7 @@ Public Class CDInstrumentosComerciales
                 command.ExecuteNonQuery()
                 con23.Close()
 
-            End Using
+                End Using
 
             sql_query = " UPDATE SAC_Versiones_Bitacora SET ESTADO = 'A' " +
                 " WHERE estado Is NULL "
@@ -4619,7 +4640,7 @@ Public Class CDInstrumentosComerciales
                 command.ExecuteNonQuery()
                 con24.Close()
 
-            End Using
+                End Using
 
         Catch ex As SqlException
             estado = False
