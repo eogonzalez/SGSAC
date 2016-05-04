@@ -133,7 +133,7 @@ Public Class CDReportesGeneral
                 " " +
                 " SELECT " +
                 " sac.codigo_inciso, si.texto_inciso, si.dai_base, " +
-                " icd.codigo_categoria, SUBSTRING(sac.inciso_presicion, 9, 12) as inciso_presicion, sac.texto_precision " +
+                " icd.codigo_categoria, SUBSTRING(sac.inciso_presicion, 9, 12) as inciso_presicion, sac.texto_precision, sac.observaciones  " +
                 " FROM " +
                 " SAC_Asocia_Categoria sac " +
                 " Right Join " +
@@ -148,12 +148,15 @@ Public Class CDReportesGeneral
                 " where " +
                 " sac.id_instrumento = @id_instrumento "
 
+
             If Not all_catego Then
-                sql_string = sql_string + " and sac.id_categoria = @id_categoria "
+                sql_string = sql_string + " and sac.id_categoria = @id_categoria " +
+                    " ORDER by sac.codigo_inciso "
             End If
 
             If Not all_incisos Then
-                sql_string = sql_string + " and sac.codigo_inciso like @codigo_inciso+'%' "
+                sql_string = sql_string + " and sac.codigo_inciso like @codigo_inciso+'%' " +
+                    " ORDER by sac.codigo_inciso "
             End If
 
 

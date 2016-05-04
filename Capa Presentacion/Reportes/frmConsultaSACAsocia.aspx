@@ -129,6 +129,7 @@
                                 <asp:BoundField DataField="codigo_categoria" HeaderText="Categoria" />
                                 <asp:BoundField DataField="inciso_presicion" HeaderText="Código Precision" />
                                 <asp:BoundField DataField="texto_precision" HeaderText="Descripcion Precision" />
+                                <asp:BoundField DataField="observaciones" HeaderText="Observaciones"/>
                             </Columns>
                         </asp:GridView>
                     </ContentTemplate>
