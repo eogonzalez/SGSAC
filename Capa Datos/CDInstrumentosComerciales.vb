@@ -261,7 +261,7 @@ Public Class CDInstrumentosComerciales
                                 " ID_CORTE_NUEVO, USUARIO_GENERO, FECHA_GENERADA, estado) " +
                                 " SELECT @id_instrumento, A.codigo_inciso, A.id_categoria, " +
                                 " B.factor_desgrava,B.desgrava_tramo_anterior, " +
-                                " (i.dai_base -(((( @id_corte_nuevo * B.factor_desgrava)+B.desgrava_tramo_anterior)/100)* I.dai_base))," +
+                                " (i.dai_base -((((  (B.cantidad_cortes-(B.cortes_ejecutados-@id_corte_nuevo))  * B.factor_desgrava)+B.desgrava_tramo_anterior)/100)* I.dai_base))," +
                                 "  I.dai_base, C.sigla, @id_corte_nuevo,'ADMIN',SYSDATETIME(),'CALC1' " +
                                 "  FROM SAC_Asocia_Categoria AS A" +
                                 "  LEFT OUTER JOIN  SAC_Incisos AS I" +

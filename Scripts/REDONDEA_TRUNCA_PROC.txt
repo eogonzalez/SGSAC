@@ -1,0 +1,87 @@
+USE [SGSACDBCAPA]
+GO
+/****** Object:  StoredProcedure [dbo].[TRUNC_ROUND]    Script Date: 23/01/2017 12:35:13 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE  PROCEDURE [dbo].[TRUNC_ROUND] 
+
+/***
+**** REDONDEA O TRUNCA LOS VALORES DE DAI QUE FUERON CALCULADOS PARA UN INSTRUMENTO O TRATATO COMERCIAL
+**** 
+*************************************************************************************/
+	@Instrumento int,
+	@ID_CORTE_NUEVO int
+AS
+Declare  
+   @ID_DAI_Instrumento int,
+   @ID_Instrumento int,
+   @INCISO varchar(15),
+   @CATEGORIA varchar(500),
+   @FACTOR_DESGRAVA decimal,
+   @DAI_CALC_ABSOLUTO decimal(10,3),
+   @DAI_BASE decimal(8,2),
+   @DAI_RELATIVO decimal(10,3),
+   @DAI_V1 decimal(10,3),     
+   @DAI_V2 decimal(10,3)  
+
+BEGIN
+	SET NOCOUNT ON;
+
+ /** Selección de Categorias que cumplen con #Corte correspondiente
+ *** Para obtener su respectivo Factor de Desgravación 
+ ---------------------------------------------------------------------**/
+ 
+
+ SET    @ID_DAI_Instrumento =0;
+ SET    @INCISO ='';
+ SET    @CATEGORIA = '' ;
+ SET    @FACTOR_DESGRAVA = 0.0 ;
+ SET    @DAI_CALC_ABSOLUTO = 0.0 ;
+ SET    @DAI_RELATIVO = 0.0 ; 
+
+ 
+ DECLARE
+ COD CURSOR 
+ FOR
+ SELECT id_dai_instrumento, id_instrumento, INCISO, CATEGORIA, FACTOR_DESGRAVA, 
+        DAI_CALC_ABSOLUTO, ID_CORTE_NUEVO
+ FROM SAC_Dai_Instrumento
+ WHERE id_instrumento = @Instrumento AND id_corte_nuevo = @ID_CORTE_NUEVO
+
+OPEN COD
+-- Lectura de la primera fila del cursor
+   FETCH COD INTO  @ID_DAI_Instrumento,@ID_Instrumento, @INCISO, @CATEGORIA, @FACTOR_DESGRAVA,
+                   @DAI_CALC_ABSOLUTO,@ID_CORTE_NUEVO  
+
+   WHILE (@@FETCH_STATUS = 0)  --While 1--
+     BEGIN 
+	   SET  @DAI_V1 = Round( (Round(@DAI_CALC_ABSOLUTO,2,-1) * 10),0,-1 )+ 1;     
+	   SET  @DAI_V2 = round( ((Round(@DAI_CALC_ABSOLUTO,2,-1) * 10) + 0.4),0,-1 );
+	   
+	    IF @DAI_V1 = @DAI_V2
+         BEGIN
+             SET @DAI_RELATIVO = Round( @DAI_CALC_ABSOLUTO,1,0);  --REDONDEAR A UN DECIMAL-- 			 
+           END
+           ELSE
+           BEGIN
+		     SET @DAI_RELATIVO =  Round(@DAI_CALC_ABSOLUTO,1,-1);  --TRUNCAR UN DECIMAL---
+			 
+	      END -- END IF  ----
+
+	 -- Almace el DAI SIN TRUNCAR EN EL CAMPO DAI_CALC_RELATIVO y                              --
+	 -- el Truncado o Redondeado en el Campo DAI_CALC_ABSOLUTO de la tabla SAC_Dai_Instrumento --
+	 ---    --        
+	 	UPDATE SAC_Dai_Instrumento SET  dai_calc_absoluto = @DAI_RELATIVO, dai_calc_relativo = @DAI_CALC_ABSOLUTO
+	             WHERE id_dai_instrumento =  @ID_DAI_Instrumento
+			       AND id_instrumento = @ID_Instrumento
+			       AND inciso = @INCISO 
+		           AND ID_CORTE_NUEVO = @ID_CORTE_NUEVO    
+                   AND categoria = @CATEGORIA 
+		 FETCH COD INTO  @ID_DAI_Instrumento,@ID_Instrumento, @INCISO, @CATEGORIA, @FACTOR_DESGRAVA,
+                   @DAI_CALC_ABSOLUTO, @ID_CORTE_NUEVO   
+	 EnD --End While For---	
+ END
+
