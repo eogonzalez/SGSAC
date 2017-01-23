@@ -44,79 +44,79 @@
         <br />
 
         <div class="panel-body form-vertical">
-                    <div class="btn-group pull-right" role="group">
-            <asp:LinkButton ID="lkBtt_nuevo" runat="server" CssClass="btn btn-primary"> <i aria-hidden="true" class="glyphicon glyphicon-pencil"></i> Nuevo </asp:LinkButton>
+            <div class="btn-group pull-right" role="group">
+                <asp:LinkButton ID="lkBtt_nuevo" runat="server" CssClass="btn btn-primary"> <i aria-hidden="true" class="glyphicon glyphicon-pencil"></i> Nuevo </asp:LinkButton>
 
-            <cc1:ModalPopupExtender ID="lkBtt_nuevo_ModalPopupExtender" BackgroundCssClass="modalBackground"
-                runat="server" BehaviorID="lkBtt_nuevo_ModalPopupExtender" PopupControlID="pnlNuevoInstrumento"
-                DynamicServicePath="" TargetControlID="lkBtt_nuevo">
-            </cc1:ModalPopupExtender>
+                <cc1:ModalPopupExtender ID="lkBtt_nuevo_ModalPopupExtender" BackgroundCssClass="modalBackground"
+                    runat="server" BehaviorID="lkBtt_nuevo_ModalPopupExtender" PopupControlID="pnlNuevoInstrumento"
+                    DynamicServicePath="" TargetControlID="lkBtt_nuevo">
+                </cc1:ModalPopupExtender>
 
-            <asp:LinkButton ID="lkBtt_editar" runat="server" CssClass="btn btn-primary"> <i aria-hidden="true" class="glyphicon glyphicon-edit"></i> Editar </asp:LinkButton>
+                <asp:LinkButton ID="lkBtt_editar" runat="server" CssClass="btn btn-primary"> <i aria-hidden="true" class="glyphicon glyphicon-edit"></i> Editar </asp:LinkButton>
 
-            <asp:LinkButton ID="lkBtt_categorias" runat="server" CssClass="btn btn-primary"> 
+                <asp:LinkButton ID="lkBtt_categorias" runat="server" CssClass="btn btn-primary"> 
                         <i aria-hidden="true" class="glyphicon glyphicon-random"></i> 
                          Categorias 
-            </asp:LinkButton>
+                </asp:LinkButton>
 
-            <asp:LinkButton ID="lkBtt_paises" runat="server" CssClass="btn btn-primary">
+                <asp:LinkButton ID="lkBtt_paises" runat="server" CssClass="btn btn-primary">
                         <i aria-hidden="true" class="glyphicon glyphicon-globe"></i> 
                         Paises 
-            </asp:LinkButton>
+                </asp:LinkButton>
 
-            <asp:LinkButton ID="lkBtn_asignar_precision" runat="server" CssClass="btn btn-primary"> 
+                <asp:LinkButton ID="lkBtn_asignar_precision" runat="server" CssClass="btn btn-primary"> 
                         <i aria-hidden="true" class="glyphicon glyphicon-th-list"></i> 
                         Asignar Precisión
-            </asp:LinkButton>
+                </asp:LinkButton>
 
-            <asp:LinkButton ID="lkBtn_asignar_categorias" runat="server" CssClass="btn btn-primary"> 
+                <asp:LinkButton ID="lkBtn_asignar_categorias" runat="server" CssClass="btn btn-primary"> 
                         <i aria-hidden="true" class="glyphicon glyphicon-indent-left"></i> 
                         Asignar Categorias
-            </asp:LinkButton>
+                </asp:LinkButton>
 
-            <asp:LinkButton ID="lkBtb_calcula_dai" runat="server" CssClass="btn btn-primary">
+                <asp:LinkButton ID="lkBtb_calcula_dai" runat="server" CssClass="btn btn-primary">
                         <i aria-hidden="true" class="glyphicon glyphicon-certificate"></i>
                         Calcula DAI
-            </asp:LinkButton>
+                </asp:LinkButton>
 
-            <asp:LinkButton ID="lkBtn_Hidden_Calcula_Dai" runat="server" Style="display: hidden">
-            </asp:LinkButton>
+                <asp:LinkButton ID="lkBtn_Hidden_Calcula_Dai" runat="server" Style="display: hidden">
+                </asp:LinkButton>
 
-            <cc1:ModalPopupExtender ID="lkBtt_Calcula_Dai_ModalPopupExtender" BackgroundCssClass="modalBackground"
-                runat="server" BehaviorID="lkBtt_Calcula_Dai_ModalPopupExtender" PopupControlID="pnl_Calcula_Dai"
-                DynamicServicePath="" TargetControlID="lkBtn_Hidden_Calcula_Dai">
-            </cc1:ModalPopupExtender>
+                <cc1:ModalPopupExtender ID="lkBtt_Calcula_Dai_ModalPopupExtender" BackgroundCssClass="modalBackground"
+                    runat="server" BehaviorID="lkBtt_Calcula_Dai_ModalPopupExtender" PopupControlID="pnl_Calcula_Dai"
+                    DynamicServicePath="" TargetControlID="lkBtn_Hidden_Calcula_Dai">
+                </cc1:ModalPopupExtender>
 
-        </div>
+            </div>
             <br />
 
-        <div>
-            <asp:GridView ID="gvInstrumentos" runat="server"
-                CssClass="table table-hover table-striped"
-                GridLines="None"
-                EmptyDataText="No se encontraron instrumentos comerciales"
-                AutoGenerateColumns="false">
+            <div>
+                <asp:GridView ID="gvInstrumentos" runat="server"
+                    CssClass="table table-hover table-striped"
+                    GridLines="None"
+                    EmptyDataText="No se encontraron instrumentos comerciales"
+                    AutoGenerateColumns="false">
 
-                <Columns>
-                    <asp:BoundField DataField="id_instrumento" SortExpression="id_intrumento">
-                        <HeaderStyle CssClass="ColumnaOculta" />
-                        <ItemStyle CssClass="ColumnaOculta" />
-                    </asp:BoundField>
-                    <asp:TemplateField>
-                        <ItemTemplate>
-                            <asp:RadioButton ID="rb_sigla" runat="server" OnClick="javascript:SelectSingleRadiobutton(this.id)" />
-                        </ItemTemplate>
-                    </asp:TemplateField>
-                    <asp:BoundField DataField="sigla" HeaderText="Sigla" />
-                    <asp:BoundField DataField="nombre_instrumento" HeaderText="Tratado o Acuerdo Comercial" />
-                    <asp:BoundField DataField="fecha_firma" HeaderText="Fecha Firma" DataFormatString="{0:d}" />
-                    <asp:BoundField DataField="fecha_ratificada" HeaderText="Fecha Ratificación" DataFormatString="{0:d}" />
-                    <asp:BoundField DataField="fecha_vigencia" HeaderText="Fecha Vigencia" DataFormatString="{0:d}" />
+                    <Columns>
+                        <asp:BoundField DataField="id_instrumento" SortExpression="id_intrumento">
+                            <HeaderStyle CssClass="ColumnaOculta" />
+                            <ItemStyle CssClass="ColumnaOculta" />
+                        </asp:BoundField>
+                        <asp:TemplateField>
+                            <ItemTemplate>
+                                <asp:RadioButton ID="rb_sigla" runat="server" OnClick="javascript:SelectSingleRadiobutton(this.id)" />
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:BoundField DataField="sigla" HeaderText="Sigla" />
+                        <asp:BoundField DataField="nombre_instrumento" HeaderText="Tratado o Acuerdo Comercial" />
+                        <asp:BoundField DataField="fecha_firma" HeaderText="Fecha Firma" DataFormatString="{0:d}" />
+                        <asp:BoundField DataField="fecha_ratificada" HeaderText="Fecha Ratificación" DataFormatString="{0:d}" />
+                        <asp:BoundField DataField="fecha_vigencia" HeaderText="Fecha Vigencia" DataFormatString="{0:d}" />
 
-                </Columns>
+                    </Columns>
 
-            </asp:GridView>
-        </div>
+                </asp:GridView>
+            </div>
         </div>
 
     </div>
