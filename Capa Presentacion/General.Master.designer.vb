@@ -59,15 +59,6 @@ Partial Public Class General
     Protected WithEvents txtFecha As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''Control MenuPrincipal.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents MenuPrincipal As Global.System.Web.UI.WebControls.Menu
-
-    '''<summary>
     '''Control ToolkitScriptManager1.
     '''</summary>
     '''<remarks>
@@ -75,6 +66,24 @@ Partial Public Class General
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
     Protected WithEvents ToolkitScriptManager1 As Global.System.Web.UI.ScriptManager
+
+    '''<summary>
+    '''Control UPMenuDinamico.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents UPMenuDinamico As Global.System.Web.UI.UpdatePanel
+
+    '''<summary>
+    '''Control MenuPrincipal.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents MenuPrincipal As Global.System.Web.UI.WebControls.Menu
 
     '''<summary>
     '''Control ContentPlaceHolder1.

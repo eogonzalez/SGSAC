@@ -1,4 +1,4 @@
-﻿body {
+﻿/*body {
 }
 
 .modalBackground {
@@ -11,7 +11,7 @@
     clear: both;
     height: 0;
     overflow: hidden;
-}
+}*/
 
 ColumnaOculta {
             display: none;

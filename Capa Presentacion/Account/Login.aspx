@@ -7,9 +7,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title></title>
 
-    <link href="Style/Login.css" rel="stylesheet" type="text/css"/>
-    <link href="Style/bootstrap/css/bootstrap.css" rel="stylesheet" />
-    <link href="Style/bootstrap/css/bootstrap-theme.css" rel="stylesheet" />
+    <link href="~/Style/Login.css" rel="stylesheet" type="text/css"/>
+    <link href="~/Style/bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/Style/bootstrap/css/bootstrap-theme.css" rel="stylesheet" />
 
 
 </head>
@@ -83,7 +83,7 @@
     </div>--%>
 
 
-    <script src="Script/jQuery/jquery-1.11.3.js"></script>
-    <script src="Style/bootstrap/js/bootstrap.js"></script>
+    <script src="~/Script/jQuery/jquery-1.11.3.js"></script>
+    <script src="~/Style/bootstrap/js/bootstrap.js"></script>
 </body>
 </html>

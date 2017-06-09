@@ -70,7 +70,7 @@ Public Class frmTratadosyAcuerdos
             Exit Sub
         Else
             hfIdInstrumento.Value = id_intrumento
-            Response.Redirect("~/frmCategoriasDesgravacion.aspx?id_inst=" + hfIdInstrumento.Value)
+            Response.Redirect("~/Tratados/frmCategoriasDesgravacion.aspx?id_inst=" + hfIdInstrumento.Value)
         End If
 
     End Sub
@@ -83,7 +83,7 @@ Public Class frmTratadosyAcuerdos
             Exit Sub
         Else
             hfIdInstrumento.Value = id_intrumento
-            Response.Redirect("~/frmPaisesInstrumento.aspx?id_inst=" + hfIdInstrumento.Value)
+            Response.Redirect("~/Tratados/frmPaisesInstrumento.aspx?id_inst=" + hfIdInstrumento.Value)
         End If
     End Sub
 
@@ -95,7 +95,7 @@ Public Class frmTratadosyAcuerdos
             Exit Sub
         Else
             hfIdInstrumento.Value = id_instrumento
-            Response.Redirect("~/frmAsignaCategoriasSAC.aspx?id_inst=" + hfIdInstrumento.Value)
+            Response.Redirect("~/Tratados/frmAsignaCategoriasSAC.aspx?id_inst=" + hfIdInstrumento.Value)
         End If
 
     End Sub
@@ -144,7 +144,7 @@ Public Class frmTratadosyAcuerdos
             Exit Sub
         Else
             hfIdInstrumento.Value = id_instrumento
-            Response.Redirect("~/frmAsignaPrecision.aspx?id_inst=" + hfIdInstrumento.Value)
+            Response.Redirect("~/Tratados/frmAsignaPrecision.aspx?id_inst=" + hfIdInstrumento.Value)
         End If
 
     End Sub

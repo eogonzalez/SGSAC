@@ -62,19 +62,19 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CECategoriaDesgravacion.vb" />
-    <Compile Include="CECorteDesgravacion.vb" />
-    <Compile Include="CEEnmiendas.vb" />
-    <Compile Include="CEIncisoAsociaCategoria.vb" />
-    <Compile Include="CeInstrumentoPais.vb" />
-    <Compile Include="CeInstrumentoPaisMant.vb" />
-    <Compile Include="CEInstrumentosMant.vb" />
-    <Compile Include="CEOpcionMenu.vb" />
-    <Compile Include="CeTipoDesgravacion.vb" />
-    <Compile Include="CETipoInstrumento.vb" />
-    <Compile Include="CETipoPeriodo.vb" />
-    <Compile Include="CETipoRelacionInstrumento.vb" />
-    <Compile Include="CETramoCategoria.vb" />
+    <Compile Include="Tratados\CECategoriaDesgravacion.vb" />
+    <Compile Include="Tratados\CECorteDesgravacion.vb" />
+    <Compile Include="Incisos\CEEnmiendas.vb" />
+    <Compile Include="Tratados\CEIncisoAsociaCategoria.vb" />
+    <Compile Include="Tratados\CeInstrumentoPais.vb" />
+    <Compile Include="Tratados\CeInstrumentoPaisMant.vb" />
+    <Compile Include="Tratados\CEInstrumentosMant.vb" />
+    <Compile Include="Administracion\CEOpcionMenu.vb" />
+    <Compile Include="Mantenimientos\CeTipoDesgravacion.vb" />
+    <Compile Include="Mantenimientos\CETipoInstrumento.vb" />
+    <Compile Include="Mantenimientos\CETipoPeriodo.vb" />
+    <Compile Include="Mantenimientos\CETipoRelacionInstrumento.vb" />
+    <Compile Include="Tratados\CETramoCategoria.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -110,6 +110,7 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

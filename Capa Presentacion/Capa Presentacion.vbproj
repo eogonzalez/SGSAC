@@ -96,24 +96,25 @@
     <Import Include="System.Web.UI.HtmlControls" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Enmiendas\frmPartidas.aspx" />
-    <Content Include="Enmiendas\frmSubpartidas.aspx" />
-    <Content Include="frmApruebaSAC.aspx" />
-    <Content Include="frmAsignaCategoriasSAC.aspx" />
-    <Content Include="frmAsignaPrecision.aspx" />
-    <Content Include="frmCategoriasDesgravacion.aspx" />
-    <Content Include="frmCierraInstrumento.aspx" />
-    <Content Include="frmConfigurarMenu.aspx" />
-    <Content Include="frmConfigurarMenuOpcion.aspx" />
-    <Content Include="frmCorrelacionSAC.aspx" />
-    <Content Include="frmCorteDesgravacion.aspx" />
-    <Content Include="frmEnmiendas.aspx" />
-    <Content Include="frmPaisesInstrumento.aspx" />
-    <Content Include="frmTipoDesgravacion.aspx" />
-    <Content Include="frmTipoInstrumento.aspx" />
-    <Content Include="frmTipoPeriodo.aspx" />
-    <Content Include="frmTipoRelacionInstrumento.aspx" />
-    <Content Include="frmTratadosyAcuerdos.aspx" />
+    <Content Include="Default.aspx" />
+    <Content Include="Mantenimientos\frmPartidas.aspx" />
+    <Content Include="Mantenimientos\frmSubpartidas.aspx" />
+    <Content Include="Incisos\frmApruebaSAC.aspx" />
+    <Content Include="Tratados\frmAsignaCategoriasSAC.aspx" />
+    <Content Include="Tratados\frmAsignaPrecision.aspx" />
+    <Content Include="Tratados\frmCategoriasDesgravacion.aspx" />
+    <Content Include="Tratados\frmCierraInstrumento.aspx" />
+    <Content Include="Administracion\frmConfigurarMenu.aspx" />
+    <Content Include="Administracion\frmConfigurarMenuOpcion.aspx" />
+    <Content Include="Incisos\frmCorrelacionSAC.aspx" />
+    <Content Include="Tratados\frmCorteDesgravacion.aspx" />
+    <Content Include="Incisos\frmEnmiendas.aspx" />
+    <Content Include="Tratados\frmPaisesInstrumento.aspx" />
+    <Content Include="Mantenimientos\frmTipoDesgravacion.aspx" />
+    <Content Include="Mantenimientos\frmTipoInstrumento.aspx" />
+    <Content Include="Mantenimientos\frmTipoPeriodo.aspx" />
+    <Content Include="Mantenimientos\frmTipoRelacionInstrumento.aspx" />
+    <Content Include="Tratados\frmTratadosyAcuerdos.aspx" />
     <Content Include="Images\ayuda.png" />
     <Content Include="Images\desgraba.png" />
     <Content Include="Images\editar.png" />
@@ -125,8 +126,8 @@
     <Content Include="Images\nuevo.png" />
     <Content Include="Images\paises.png" />
     <Content Include="Inicio.aspx" />
-    <Content Include="Login.aspx" />
-    <Content Include="Logout.aspx" />
+    <Content Include="Account\Login.aspx" />
+    <Content Include="Account\Logout.aspx" />
     <Content Include="Reportes\frmConsultaSACAsocia.aspx" />
     <Content Include="Reportes\frmConsultaVerSAC.aspx" />
     <Content Include="Script\Aprobaciones\ValidarApruebaSAC.js" />
@@ -148,129 +149,136 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Enmiendas\frmPartidas.aspx.designer.vb">
+    <Compile Include="Default.aspx.designer.vb">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Default.aspx.vb">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Mantenimientos\frmPartidas.aspx.designer.vb">
       <DependentUpon>frmPartidas.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Enmiendas\frmPartidas.aspx.vb">
+    <Compile Include="Mantenimientos\frmPartidas.aspx.vb">
       <DependentUpon>frmPartidas.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
-    <Compile Include="Enmiendas\frmSubpartidas.aspx.designer.vb">
+    <Compile Include="Mantenimientos\frmSubpartidas.aspx.designer.vb">
       <DependentUpon>frmSubpartidas.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Enmiendas\frmSubpartidas.aspx.vb">
+    <Compile Include="Mantenimientos\frmSubpartidas.aspx.vb">
       <DependentUpon>frmSubpartidas.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
-    <Compile Include="frmApruebaSAC.aspx.designer.vb">
+    <Compile Include="Incisos\frmApruebaSAC.aspx.designer.vb">
       <DependentUpon>frmApruebaSAC.aspx</DependentUpon>
     </Compile>
-    <Compile Include="frmApruebaSAC.aspx.vb">
+    <Compile Include="Incisos\frmApruebaSAC.aspx.vb">
       <DependentUpon>frmApruebaSAC.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
-    <Compile Include="frmAsignaCategoriasSAC.aspx.designer.vb">
+    <Compile Include="Tratados\frmAsignaCategoriasSAC.aspx.designer.vb">
       <DependentUpon>frmAsignaCategoriasSAC.aspx</DependentUpon>
     </Compile>
-    <Compile Include="frmAsignaCategoriasSAC.aspx.vb">
+    <Compile Include="Tratados\frmAsignaCategoriasSAC.aspx.vb">
       <DependentUpon>frmAsignaCategoriasSAC.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
-    <Compile Include="frmAsignaPrecision.aspx.designer.vb">
+    <Compile Include="Tratados\frmAsignaPrecision.aspx.designer.vb">
       <DependentUpon>frmAsignaPrecision.aspx</DependentUpon>
     </Compile>
-    <Compile Include="frmAsignaPrecision.aspx.vb">
+    <Compile Include="Tratados\frmAsignaPrecision.aspx.vb">
       <DependentUpon>frmAsignaPrecision.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
-    <Compile Include="frmCategoriasDesgravacion.aspx.designer.vb">
+    <Compile Include="Tratados\frmCategoriasDesgravacion.aspx.designer.vb">
       <DependentUpon>frmCategoriasDesgravacion.aspx</DependentUpon>
     </Compile>
-    <Compile Include="frmCategoriasDesgravacion.aspx.vb">
+    <Compile Include="Tratados\frmCategoriasDesgravacion.aspx.vb">
       <DependentUpon>frmCategoriasDesgravacion.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
-    <Compile Include="frmCierraInstrumento.aspx.designer.vb">
+    <Compile Include="Tratados\frmCierraInstrumento.aspx.designer.vb">
       <DependentUpon>frmCierraInstrumento.aspx</DependentUpon>
     </Compile>
-    <Compile Include="frmCierraInstrumento.aspx.vb">
+    <Compile Include="Tratados\frmCierraInstrumento.aspx.vb">
       <DependentUpon>frmCierraInstrumento.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
-    <Compile Include="frmConfigurarMenu.aspx.designer.vb">
+    <Compile Include="Administracion\frmConfigurarMenu.aspx.designer.vb">
       <DependentUpon>frmConfigurarMenu.aspx</DependentUpon>
     </Compile>
-    <Compile Include="frmConfigurarMenu.aspx.vb">
+    <Compile Include="Administracion\frmConfigurarMenu.aspx.vb">
       <DependentUpon>frmConfigurarMenu.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
-    <Compile Include="frmConfigurarMenuOpcion.aspx.designer.vb">
+    <Compile Include="Administracion\frmConfigurarMenuOpcion.aspx.designer.vb">
       <DependentUpon>frmConfigurarMenuOpcion.aspx</DependentUpon>
     </Compile>
-    <Compile Include="frmConfigurarMenuOpcion.aspx.vb">
+    <Compile Include="Administracion\frmConfigurarMenuOpcion.aspx.vb">
       <DependentUpon>frmConfigurarMenuOpcion.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
-    <Compile Include="frmCorrelacionSAC.aspx.designer.vb">
+    <Compile Include="Incisos\frmCorrelacionSAC.aspx.designer.vb">
       <DependentUpon>frmCorrelacionSAC.aspx</DependentUpon>
     </Compile>
-    <Compile Include="frmCorrelacionSAC.aspx.vb">
+    <Compile Include="Incisos\frmCorrelacionSAC.aspx.vb">
       <DependentUpon>frmCorrelacionSAC.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
-    <Compile Include="frmCorteDesgravacion.aspx.designer.vb">
+    <Compile Include="Tratados\frmCorteDesgravacion.aspx.designer.vb">
       <DependentUpon>frmCorteDesgravacion.aspx</DependentUpon>
     </Compile>
-    <Compile Include="frmCorteDesgravacion.aspx.vb">
+    <Compile Include="Tratados\frmCorteDesgravacion.aspx.vb">
       <DependentUpon>frmCorteDesgravacion.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
-    <Compile Include="frmEnmiendas.aspx.designer.vb">
+    <Compile Include="Incisos\frmEnmiendas.aspx.designer.vb">
       <DependentUpon>frmEnmiendas.aspx</DependentUpon>
     </Compile>
-    <Compile Include="frmEnmiendas.aspx.vb">
+    <Compile Include="Incisos\frmEnmiendas.aspx.vb">
       <DependentUpon>frmEnmiendas.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
-    <Compile Include="frmPaisesInstrumento.aspx.designer.vb">
+    <Compile Include="Tratados\frmPaisesInstrumento.aspx.designer.vb">
       <DependentUpon>frmPaisesInstrumento.aspx</DependentUpon>
     </Compile>
-    <Compile Include="frmPaisesInstrumento.aspx.vb">
+    <Compile Include="Tratados\frmPaisesInstrumento.aspx.vb">
       <DependentUpon>frmPaisesInstrumento.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
-    <Compile Include="frmTipoDesgravacion.aspx.designer.vb">
+    <Compile Include="Mantenimientos\frmTipoDesgravacion.aspx.designer.vb">
       <DependentUpon>frmTipoDesgravacion.aspx</DependentUpon>
     </Compile>
-    <Compile Include="frmTipoDesgravacion.aspx.vb">
+    <Compile Include="Mantenimientos\frmTipoDesgravacion.aspx.vb">
       <DependentUpon>frmTipoDesgravacion.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
-    <Compile Include="frmTipoInstrumento.aspx.designer.vb">
+    <Compile Include="Mantenimientos\frmTipoInstrumento.aspx.designer.vb">
       <DependentUpon>frmTipoInstrumento.aspx</DependentUpon>
     </Compile>
-    <Compile Include="frmTipoInstrumento.aspx.vb">
+    <Compile Include="Mantenimientos\frmTipoInstrumento.aspx.vb">
       <DependentUpon>frmTipoInstrumento.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="frmTipoPeriodo.aspx.designer.vb">
+    <Compile Include="Mantenimientos\frmTipoPeriodo.aspx.designer.vb">
       <DependentUpon>frmTipoPeriodo.aspx</DependentUpon>
     </Compile>
-    <Compile Include="frmTipoPeriodo.aspx.vb">
+    <Compile Include="Mantenimientos\frmTipoPeriodo.aspx.vb">
       <DependentUpon>frmTipoPeriodo.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
-    <Compile Include="frmTipoRelacionInstrumento.aspx.designer.vb">
+    <Compile Include="Mantenimientos\frmTipoRelacionInstrumento.aspx.designer.vb">
       <DependentUpon>frmTipoRelacionInstrumento.aspx</DependentUpon>
     </Compile>
-    <Compile Include="frmTipoRelacionInstrumento.aspx.vb">
+    <Compile Include="Mantenimientos\frmTipoRelacionInstrumento.aspx.vb">
       <DependentUpon>frmTipoRelacionInstrumento.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="frmTratadosyAcuerdos.aspx.designer.vb">
+    <Compile Include="Tratados\frmTratadosyAcuerdos.aspx.designer.vb">
       <DependentUpon>frmTratadosyAcuerdos.aspx</DependentUpon>
     </Compile>
-    <Compile Include="frmTratadosyAcuerdos.aspx.vb">
+    <Compile Include="Tratados\frmTratadosyAcuerdos.aspx.vb">
       <DependentUpon>frmTratadosyAcuerdos.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
@@ -288,17 +296,17 @@
       <DependentUpon>Inicio.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
-    <Compile Include="Login.aspx.designer.vb">
+    <Compile Include="Account\Login.aspx.designer.vb">
       <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Login.aspx.vb">
+    <Compile Include="Account\Login.aspx.vb">
       <DependentUpon>Login.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
-    <Compile Include="Logout.aspx.designer.vb">
+    <Compile Include="Account\Logout.aspx.designer.vb">
       <DependentUpon>Logout.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Logout.aspx.vb">
+    <Compile Include="Account\Logout.aspx.vb">
       <DependentUpon>Logout.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>

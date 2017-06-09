@@ -11,7 +11,7 @@ Public Class General
                 LlenarMenu()
             End If
         Else
-            Response.Redirect("~/Login.aspx")
+            Response.Redirect("~/Account/Login.aspx")
         End If
 
         

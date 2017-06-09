@@ -80,7 +80,7 @@ Public Class frmCategoriasDesgravacion
         Else
 
             hfIdCategoria.Value = id_categoria
-            Response.Redirect("~/frmCorteDesgravacion.aspx?id_inst=" + hfIdInstrumento.Value + "&id_ct=" + hfIdCategoria.Value)
+            Response.Redirect("~/Tratados/frmCorteDesgravacion.aspx?id_inst=" + hfIdInstrumento.Value + "&id_ct=" + hfIdCategoria.Value)
         End If
     End Sub
 

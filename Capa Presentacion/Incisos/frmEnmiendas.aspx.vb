@@ -42,7 +42,7 @@ Public Class frmEnmiendas
             If objCapaNegocio.CantidadVersionesSACPendientes > 1 Then
                 Mensaje("Solo puede existir una version pendiente.")
             Else
-                Response.Redirect("~/frmCorrelacionSAC.aspx")
+                Response.Redirect("~/Incisos/frmCorrelacionSAC.aspx")
             End If
 
         Else

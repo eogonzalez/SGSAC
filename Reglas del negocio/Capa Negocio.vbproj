@@ -62,11 +62,11 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="cnGeneral.vb" />
+    <Compile Include="General\cnGeneral.vb" />
     <Compile Include="CNInstrumentosComerciales.vb" />
-    <Compile Include="CNLogin.vb" />
-    <Compile Include="Enmiendas\CNPartidas.vb" />
-    <Compile Include="Enmiendas\CNSubPartidas.vb" />
+    <Compile Include="General\CNLogin.vb" />
+    <Compile Include="Mantenimientos\CNPartidas.vb" />
+    <Compile Include="Mantenimientos\CNSubPartidas.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
