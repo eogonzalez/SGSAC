@@ -2,8 +2,9 @@
 Imports Capa_Entidad
 Public Class frmTipoRelacionInstrumento
     Inherits System.Web.UI.Page
-    Dim objCNTipoRelacionIns As New CNInstrumentosComerciales
-
+    Dim objCNTipoRelacionIns As New CNTipoRelacionInstrumento
+    Dim objCETipoRelacion As New CETipoRelacionInstrumento
+    Dim objCNGeneral As New cnGeneral
 #Region "Funciones del sistema"
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not IsPostBack Then
@@ -79,25 +80,20 @@ Public Class frmTipoRelacionInstrumento
 
     'Funcion para editar tipo relacion instrumento
     Private Function EditarTipoRelacionInstrumento(ByVal id_tipoRelacionInstrumento As Integer)
-        'Declaracion de variables de la capa de datos y entidad
-        Dim CE_objTipoRelacionInstrumento As New CETipoRelacionInstrumento
-        Dim CN_objTipoRelacionInstrumento As New CNInstrumentosComerciales
-
         'Obtengo los valores de los controles
-        CE_objTipoRelacionInstrumento.id_tipo_relacion_instrumento = id_tipoRelacionInstrumento
-        CE_objTipoRelacionInstrumento.descripcion = getDescripcion()
-        CE_objTipoRelacionInstrumento.observaciones = getObservaciones()
+        objCETipoRelacion.id_tipo_relacion_instrumento = id_tipoRelacionInstrumento
+        objCETipoRelacion.descripcion = getDescripcion()
+        objCETipoRelacion.observaciones = getObservaciones()
 
         'Envio los valores a la capa entidad con el objeto a la funcion actualizar tipo relacion intrumento
-        Return CN_objTipoRelacionInstrumento.UpdateTipoRelacionInstrumento(CE_objTipoRelacionInstrumento)
+        Return objCNTipoRelacionIns.UpdateTipoRelacionInstrumento(objCETipoRelacion)
     End Function
 
     'Procedimiento para llenar formulario con el id del instrumento
     Sub LlenarTipoRelacionInstrumentoMant(ByVal accion As String, ByVal id_tipoRelacionInstrumento As Integer)
-        Dim obj_CNTipoRelacionInstrumentoMant As New CNInstrumentosComerciales
 
         Dim dtTipoRelacionInstrumento As New DataTable
-        dtTipoRelacionInstrumento = obj_CNTipoRelacionInstrumentoMant.SelectTipoRelacionInstrumentoMant(id_tipoRelacionInstrumento)
+        dtTipoRelacionInstrumento = objCNTipoRelacionIns.SelectTipoRelacionInstrumentoMant(id_tipoRelacionInstrumento)
 
         If dtTipoRelacionInstrumento.Rows.Count = 0 Then
             Mensaje("El Tipo Relacion Instrumento no existe")
@@ -133,7 +129,7 @@ Public Class frmTipoRelacionInstrumento
     'Procedimiento para llenar Gridview
     Protected Sub Llenar_gvTipoRelacionInstrumento()
         Dim tbl As DataTable
-        tbl = objCNTipoRelacionIns.SelectTipoRelacionInstrumento.Tables(0)
+        tbl = objCNGeneral.SelectTipoRelacionInstrumento.Tables(0)
 
         With gvTipoRelacionInstrumento
             .DataSource = tbl
@@ -143,16 +139,12 @@ Public Class frmTipoRelacionInstrumento
 
     'Funcion para guardar nuevo tipo de relacion instrumento
     Private Function GuardarTipoRelacionInstrumento() As Boolean
-        'Declaracion de variables de la capa de datos y entidad
-        Dim CEObj As New CETipoRelacionInstrumento
-        Dim CNTipoRelacionIns As New CNInstrumentosComerciales
-
         'Obtener los valores de los controles
-        CEObj.descripcion = getDescripcion()
-        CEObj.observaciones = getObservaciones()
+        objCETipoRelacion.descripcion = getDescripcion()
+        objCETipoRelacion.observaciones = getObservaciones()
 
         'Envio de valores a la capa entidad con el objeto a la funcion insertar nuevo tipo relacion instrumento
-        Return CNTipoRelacionIns.InsertTipoRelacionInstrumento(CEObj)
+        Return objCNTipoRelacionIns.InsertTipoRelacionInstrumento(objCETipoRelacion)
 
     End Function
 

@@ -2,6 +2,8 @@
 Imports Reglas_del_negocio
 Public Class frmCorrelacionSAC
     Inherits System.Web.UI.Page
+    Dim objCNCorrelacion As New CNCorrelacionSAC
+    Dim objCECorrelacion As New CEEnmiendas
 
 #Region "Funciones del sistema"
 
@@ -222,10 +224,10 @@ Public Class frmCorrelacionSAC
 
     'Metodo para llenar controles de la seleccion del inciso
     Sub LlenarSeleccionCodigoInciso(ByVal inciso As String)
-        Dim objCorrelacion As New CNInstrumentosComerciales
+
         ObtengoDatosVersion()
 
-        With objCorrelacion.SelectDatosCodigoIncisoCorrelacion(inciso, Session("anio_actual"), Session("id_version"))
+        With objCNCorrelacion.SelectDatosCodigoIncisoCorrelacion(inciso, Session("anio_actual"), Session("id_version"))
             If .Tables(0).Rows.Count = 0 Then
                 'Esta vacia la tabla
             Else
@@ -264,8 +266,7 @@ Public Class frmCorrelacionSAC
     End Sub
 
     'Metodo para llenar los controles del Mantenimiento
-    Sub LlenarCorrelacionMant()
-        Dim objCNCorrelacion As New CNInstrumentosComerciales
+    Sub LlenarCorrelacionMant()        
 
         With objCNCorrelacion.SelectCorrelacionMant()
 
@@ -327,14 +328,13 @@ Public Class frmCorrelacionSAC
 
     'Metodo que llena el encabezado del formulario de apertura arancelaria
     Private Function LlenarEncabezadoApertura(ByVal codigo_inciso As String) As Boolean
-        Dim estado As Boolean = False
-        Dim objCorrelacion As New CNInstrumentosComerciales
+        Dim estado As Boolean = False        
         Dim id_version As Integer
         Dim anio_actual As Integer
         Dim anio_nueva As Integer
         Dim dai_actual As Decimal
 
-        With objCorrelacion.SelectCorrelacionMant()
+        With objCNCorrelacion.SelectCorrelacionMant()
             If Not .Tables(0).Rows.Count = 0 Then
                 id_version = Convert.ToInt32(.Tables(0).Rows(0)("id_version").ToString())
                 Session.Add("id_version", id_version)
@@ -362,7 +362,7 @@ Public Class frmCorrelacionSAC
             End If
         End With
 
-        With objCorrelacion.SelectIncisoApertura(codigo_inciso)
+        With objCNCorrelacion.SelectIncisoApertura(codigo_inciso)
             If Not .Rows.Count = 0 Then
                 txt_inciso_actual.Text = codigo_inciso
                 Session.Add("inciso_origen", codigo_inciso)
@@ -394,41 +394,36 @@ Public Class frmCorrelacionSAC
 
     'Funcion que almacena la apertura arancelaria
     Private Function GuardarApertura() As Boolean
-        Dim objEnmiendas As New CNInstrumentosComerciales
-        Dim objCorrelacion As New CEEnmiendas
 
-        objCorrelacion.inciso_origen = getIncisoActual()
-        objCorrelacion.inciso_nuevo = getIncisoNuevo()
-        objCorrelacion.texto_inciso = getNuevaDescripcion()
-        objCorrelacion.observaciones = getObservaciones()
-        objCorrelacion.normativa = getNormativa()
-        objCorrelacion.dai_base = getDaiActual()
-        objCorrelacion.dai_nuevo = getDaiNuevo()
-        objCorrelacion.anio_version = getVersionActual()
-        objCorrelacion.anio_nueva_version = getNuevaVersion()
-        objCorrelacion.id_version = Session("id_version")
-        objCorrelacion.fecha_fin_vigencia = getFechaFinVigencia()
-        objCorrelacion.fecha_inicia_vigencia = getFechaInicioVigencia()
+        objCECorrelacion.inciso_origen = getIncisoActual()
+        objCECorrelacion.inciso_nuevo = getIncisoNuevo()
+        objCECorrelacion.texto_inciso = getNuevaDescripcion()
+        objCECorrelacion.observaciones = getObservaciones()
+        objCECorrelacion.normativa = getNormativa()
+        objCECorrelacion.dai_base = getDaiActual()
+        objCECorrelacion.dai_nuevo = getDaiNuevo()
+        objCECorrelacion.anio_version = getVersionActual()
+        objCECorrelacion.anio_nueva_version = getNuevaVersion()
+        objCECorrelacion.id_version = Session("id_version")
+        objCECorrelacion.fecha_fin_vigencia = getFechaFinVigencia()
+        objCECorrelacion.fecha_inicia_vigencia = getFechaInicioVigencia()
 
-        Return objEnmiendas.InsertApertura(objCorrelacion)
+        Return objCNCorrelacion.InsertApertura(objCECorrelacion)
 
     End Function
 
     Private Function ValidaIncisoNuevo() As Boolean
-        Dim objEnmiendas As New CNInstrumentosComerciales
-        Dim objCorrelacion As New CEEnmiendas
 
-        objCorrelacion.id_version = Session("id_version")
-        objCorrelacion.anio_version = getVersionActual()
-        objCorrelacion.inciso_nuevo = getIncisoNuevo()
+        objCECorrelacion.id_version = Session("id_version")
+        objCECorrelacion.anio_version = getVersionActual()
+        objCECorrelacion.inciso_nuevo = getIncisoNuevo()
 
-        Return objEnmiendas.ValidaIncisoNuevo(objCorrelacion)
+        Return objCNCorrelacion.ValidaIncisoNuevo(objCECorrelacion)
 
     End Function
 
     Private Function ValidaIncisoNuevo(ByVal codigo_inciso As String) As Boolean
-        Dim objEnmiendas As New CNInstrumentosComerciales
-        Return objEnmiendas.ValidaIncisoNuevo(codigo_inciso)
+        Return objCNCorrelacion.ValidaIncisoNuevo(codigo_inciso)
     End Function
 
     Private Sub LimpiarAperturaMant()
@@ -450,16 +445,13 @@ Public Class frmCorrelacionSAC
     Private Function GuardarSupresion(ByVal codigo_inciso As String) As Boolean
         Dim estado As Boolean = False
         If ObtieneValoresSuprimir(codigo_inciso) Then
-            Dim objEnmiendas As New CNInstrumentosComerciales
-            Dim objCorrelacion As New CEEnmiendas
+            objCECorrelacion.inciso_origen = getIncisoActual()
+            objCECorrelacion.dai_base = getDaiActual()
+            objCECorrelacion.anio_version = getVersionActual()
+            objCECorrelacion.anio_nueva_version = getNuevaVersion()
+            objCECorrelacion.id_version = Session("id_version")
 
-            objCorrelacion.inciso_origen = getIncisoActual()
-            objCorrelacion.dai_base = getDaiActual()
-            objCorrelacion.anio_version = getVersionActual()
-            objCorrelacion.anio_nueva_version = getNuevaVersion()
-            objCorrelacion.id_version = Session("id_version")
-
-            estado = objEnmiendas.InsertSupresion(objCorrelacion)
+            estado = objCNCorrelacion.InsertSupresion(objCECorrelacion)
         Else
             estado = False
         End If
@@ -468,13 +460,13 @@ Public Class frmCorrelacionSAC
 
     Private Function ObtieneValoresSuprimir(ByVal codigo_inciso As String) As Boolean
         Dim estado As Boolean = False
-        Dim objCorrelacion As New CNInstrumentosComerciales
+
         Dim id_version As Integer
         Dim anio_actual As Integer
         Dim anio_nueva_version As Integer
         Dim dai_actual As Decimal
 
-        With objCorrelacion.SelectCorrelacionMant()
+        With objCNCorrelacion.SelectCorrelacionMant()
             If Not .Tables(0).Rows.Count = 0 Then
                 id_version = Convert.ToInt32(.Tables(0).Rows(0)("id_version").ToString())
                 Session.Add("id_version", id_version)
@@ -499,7 +491,7 @@ Public Class frmCorrelacionSAC
 
         End With
 
-        With objCorrelacion.SelectIncisoApertura(codigo_inciso)
+        With objCNCorrelacion.SelectIncisoApertura(codigo_inciso)
             If Not .Rows.Count = 0 Then
 
                 Session.Add("inciso_origen", codigo_inciso)
@@ -518,8 +510,7 @@ Public Class frmCorrelacionSAC
     Private Function EliminarAccion(ByVal codigo_inciso As String, ByVal inciso_correlacion As String) As Boolean
         Dim estado As Boolean = False
 
-        If ObtieneValoresSuprimir(codigo_inciso) Then
-            Dim objCNCorrelacion As New CNInstrumentosComerciales
+        If ObtieneValoresSuprimir(codigo_inciso) Then            
             Dim objCECorrelacion As New CEEnmiendas
             objCECorrelacion.inciso_origen = getIncisoActual()
             objCECorrelacion.inciso_nuevo = inciso_correlacion
@@ -538,10 +529,10 @@ Public Class frmCorrelacionSAC
     Private Sub LlenarDescripcionesNew(ByVal codigo_inciso As String)
 
         If codigo_inciso.Length = 8 Then
-            Dim objEnmienda As New CNInstrumentosComerciales
+
             Dim dataSet As New DataSet
 
-            dataSet = objEnmienda.SelectDatosApertura(codigo_inciso)
+            dataSet = objCNCorrelacion.SelectDatosApertura(codigo_inciso)
 
             If dataSet.Tables.Count > 1 Then
 
@@ -569,14 +560,14 @@ Public Class frmCorrelacionSAC
 
     Private Sub ObtengoDatosVersion()
         Dim estado As Boolean = False
-        Dim objCorrelacion As New CNInstrumentosComerciales
+
 
         Dim id_version As Integer
         Dim anio_actual As Integer
         Dim anio_nueva As Integer
 
 
-        With objCorrelacion.SelectCorrelacionMant()
+        With objCNCorrelacion.SelectCorrelacionMant()
             If Not .Tables(0).Rows.Count = 0 Then
                 id_version = Convert.ToInt32(.Tables(0).Rows(0)("id_version").ToString())
                 Session.Add("id_version", id_version)
@@ -601,7 +592,7 @@ Public Class frmCorrelacionSAC
     End Sub
 
     Private Function GuardarNuevaApertura() As Boolean
-        Dim objEnmiendas As New CNInstrumentosComerciales
+
         Dim objCorrelacion As New CEEnmiendas
 
         ObtengoDatosVersion()
@@ -618,7 +609,7 @@ Public Class frmCorrelacionSAC
         objCorrelacion.fecha_fin_vigencia = Convert.ToDateTime(txt_fecha_FinVigencia_new.Text)
         objCorrelacion.fecha_inicia_vigencia = Convert.ToDateTime(txt_fecha_InicioVigencia_new.Text)
 
-        Return objEnmiendas.InsertApertura(objCorrelacion)
+        Return objCNCorrelacion.InsertApertura(objCorrelacion)
 
     End Function
 

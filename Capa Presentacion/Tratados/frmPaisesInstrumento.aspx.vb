@@ -3,7 +3,8 @@ Imports Capa_Entidad
 Public Class frmPaisesIntrumento
     Inherits System.Web.UI.Page
 
-    Dim objCapaNegocio As New CNInstrumentosComerciales
+    Dim objCNPaises As New CNPaisesInstrumento
+    Dim objCEPaises As New CeInstrumentoPais
 
 #Region "Funciones del Sistema"
 
@@ -24,7 +25,7 @@ Public Class frmPaisesIntrumento
 
     Protected Sub ddlPaises_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ddlPaises.SelectedIndexChanged
         Dim tbl As New DataTable
-        tbl = objCapaNegocio.Paises().Tables("Paises")
+        tbl = objCNPaises.Paises().Tables("Paises")
 
         Llenar_CodigoPais(ddlPaises.SelectedValue, tbl)
     End Sub
@@ -92,7 +93,7 @@ Public Class frmPaisesIntrumento
             llenar_RegionPais()
 
             Dim tbl As New DataTable
-            tbl = objCapaNegocio.PaisesInstrumentoMant(idInstrumento, idPais, idTipoSocio).Tables("PaisesInstrumentoMant")
+            tbl = objCNPaises.PaisesInstrumentoMant(idInstrumento, idPais, idTipoSocio).Tables("PaisesInstrumentoMant")
 
             For Each enc As DataRow In tbl.Rows
                 ddlPaises.SelectedValue = enc("ID_PAIS")
@@ -136,38 +137,34 @@ Public Class frmPaisesIntrumento
     End Sub
 
     Public Function Editar() As Boolean
-        Dim objeto As New CeInstrumentoPais
-        Dim objetoMant As New CeInstrumentoPaisMant
 
-        objetoMant.idInstrumento = hfIdInstrumento.Value
-        objetoMant.idPais = hfIdPais.Value
-        objetoMant.idBloquePais = hfBloquePais.Value
-        objetoMant.idTipoSocio = hfTipoSocio.Value
+        objCEPaises.idInstrumento = hfIdInstrumento.Value
+        objCEPaises.idPais = hfIdPais.Value
+        objCEPaises.idBloquePais = hfBloquePais.Value
+        objCEPaises.idTipoSocio = hfTipoSocio.Value
 
-        objeto.idPais = ddlPaises.SelectedValue
-        objeto.idTipoSocio = ddlTipoSocio.SelectedValue
-        objeto.idBloquePais = ddlRegionPais.SelectedValue
-        objeto.FechaFirma = txtFechaFirma.Text
-        objeto.FechaRatificacion = txtFechaRatificacion.Text
-        objeto.FechaVigencia = txtFechaVigencia.Text
-        objeto.Observaciones = txtObservaciones.Text
+        objCEPaises.idPais = ddlPaises.SelectedValue
+        objCEPaises.idTipoSocio = ddlTipoSocio.SelectedValue
+        objCEPaises.idBloquePais = ddlRegionPais.SelectedValue
+        objCEPaises.FechaFirma = txtFechaFirma.Text
+        objCEPaises.FechaRatificacion = txtFechaRatificacion.Text
+        objCEPaises.FechaVigencia = txtFechaVigencia.Text
+        objCEPaises.Observaciones = txtObservaciones.Text
 
-        Return objCapaNegocio.ActualizarInstrumentoPais(objeto, objetoMant)
+        Return objCNPaises.ActualizarInstrumentoPais(objCEPaises)
     End Function
 
     Public Function Guardar() As Boolean
-        Dim objeto As New CeInstrumentoPais
+        objCEPaises.idInstrumento = Request.QueryString("id_inst")
+        objCEPaises.idPais = ddlPaises.SelectedValue
+        objCEPaises.idTipoSocio = ddlTipoSocio.SelectedValue
+        objCEPaises.idBloquePais = ddlRegionPais.SelectedValue
+        objCEPaises.FechaFirma = txtFechaFirma.Text
+        objCEPaises.FechaRatificacion = txtFechaRatificacion.Text
+        objCEPaises.FechaVigencia = txtFechaVigencia.Text
+        objCEPaises.Observaciones = txtObservaciones.Text
 
-        objeto.idInstrumento = Request.QueryString("id_inst")
-        objeto.idPais = ddlPaises.SelectedValue
-        objeto.idTipoSocio = ddlTipoSocio.SelectedValue
-        objeto.idBloquePais = ddlRegionPais.SelectedValue
-        objeto.FechaFirma = txtFechaFirma.Text
-        objeto.FechaRatificacion = txtFechaRatificacion.Text
-        objeto.FechaVigencia = txtFechaVigencia.Text
-        objeto.Observaciones = txtObservaciones.Text
-
-        Return objCapaNegocio.GuardarInstrumentoPais(objeto)
+        Return objCNPaises.GuardarInstrumentoPais(objCEPaises)
 
     End Function
 
@@ -251,7 +248,7 @@ Public Class frmPaisesIntrumento
     End Function
     Sub PaisesInstrumento(ByVal IdInstrumento As Integer)
         Dim tbl As New DataTable
-        tbl = objCapaNegocio.PaisesInstrumento(IdInstrumento).Tables("PaisesInstrumento")
+        tbl = objCNPaises.PaisesInstrumento(IdInstrumento).Tables("PaisesInstrumento")
 
         With Me.gvPaisesInstrumento
             .DataSource = tbl
@@ -260,7 +257,7 @@ Public Class frmPaisesIntrumento
     End Sub
     Sub DatosInstrumento(ByVal idInstrumento As Integer)
         Dim tbl As New DataTable
-        tbl = objCapaNegocio.DatosInstrumento(idInstrumento).Tables("DatosInstrumento")
+        tbl = objCNPaises.DatosInstrumento(idInstrumento).Tables("DatosInstrumento")
 
         For Each enc As DataRow In tbl.Rows
             txtNombre.Text = enc("nombre_instrumento")
@@ -274,7 +271,7 @@ Public Class frmPaisesIntrumento
 
     Sub Llenar_Paises()
         Dim tbl As New DataTable
-        tbl = objCapaNegocio.Paises().Tables("Paises")
+        tbl = objCNPaises.Paises().Tables("Paises")
 
         With Me.ddlPaises
             .DataSource = tbl
@@ -299,7 +296,7 @@ Public Class frmPaisesIntrumento
 
     Sub llenar_TipoSocio()
         Dim tbl As New DataTable
-        tbl = objCapaNegocio.TipoSocio().Tables("TipoSocio")
+        tbl = objCNPaises.TipoSocio().Tables("TipoSocio")
 
         With Me.ddlTipoSocio
             .DataSource = tbl
@@ -311,7 +308,7 @@ Public Class frmPaisesIntrumento
 
     Sub llenar_RegionPais()
         Dim tbl As New DataTable
-        tbl = objCapaNegocio.RegionPais().Tables("RegionPais")
+        tbl = objCNPaises.RegionPais().Tables("RegionPais")
 
         With Me.ddlRegionPais
             .DataSource = tbl

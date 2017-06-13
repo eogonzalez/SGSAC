@@ -2,7 +2,9 @@
 Imports Capa_Entidad
 Public Class frmTipoInstrumento
     Inherits System.Web.UI.Page
-    Dim objCNTipoInstrumento As New CNInstrumentosComerciales
+    Dim objCNTipoInstrumento As New CNTipoInstrumentos
+    Dim objCETipoInstrumento As New CETipoInstrumento
+    Dim objCNGeneral As New cnGeneral
 
 #Region "Funciones del sistema"
 
@@ -72,25 +74,21 @@ Public Class frmTipoInstrumento
 
     'Funcion para editar tipo instrumento
     Private Function EditarTipoInstrumento(ByVal id_tipoInstrumento As Integer) As Boolean
-        'Declaro las variables de la capa de datos y entidad
-        Dim CE_objTipoInstrumento As New CETipoInstrumento
-        Dim CN_objTipoInstrumento As New CNInstrumentosComerciales
-
         'Obtengo los valores de los controles
-        CE_objTipoInstrumento.id_tipo_instrumento = id_tipoInstrumento
-        CE_objTipoInstrumento.descripcion = getDescripcion()
-        CE_objTipoInstrumento.observaciones = getObservaciones()
+        objCETipoInstrumento.id_tipo_instrumento = id_tipoInstrumento
+        objCETipoInstrumento.descripcion = getDescripcion()
+        objCETipoInstrumento.observaciones = getObservaciones()
 
         'Envio los valores a la capa entidad con el objeto a la funcion actualizar tipo instrumento
-        Return CN_objTipoInstrumento.UpdateTipoInstrumento(CE_objTipoInstrumento)
+        Return objCNTipoInstrumento.UpdateTipoInstrumento(objCETipoInstrumento)
     End Function
 
     'Procedimiento para llenar formulario con el id del instrumento
     Sub LlenarTipoInstrumentoMnat(ByVal accion As String, ByVal id_tipoInstrumento As Integer)
-        Dim Obj_CNTipoInstrumentoMant As New CNInstrumentosComerciales
+        'Dim Obj_CNTipoInstrumentoMant As New CNInstrumentosComerciales
 
         Dim dtTipoInstrumento As New DataTable
-        dtTipoInstrumento = Obj_CNTipoInstrumentoMant.SelectTipoInstrumentoMant(id_tipoInstrumento)
+        dtTipoInstrumento = objCNTipoInstrumento.SelectTipoInstrumentoMant(id_tipoInstrumento)
 
         If dtTipoInstrumento.Rows.Count = 0 Then
             Mensaje("El Tipo Instrumento no existe")
@@ -119,7 +117,7 @@ Public Class frmTipoInstrumento
     'Procedimiento para llenar Gridview de Tipo Instrumento
     Protected Sub Llenar_gvTipoInstrumento()
         Dim tbl As DataTable
-        tbl = objCNTipoInstrumento.SelectTipoInstrumento.Tables(0)
+        tbl = objCNGeneral.SelectTipoInstrumento.Tables(0)
 
         With gvTipoInstrumento
             .DataSource = tbl
@@ -129,16 +127,12 @@ Public Class frmTipoInstrumento
 
     'Funcion para guardar nuevo tipo instrumento
     Private Function GuardarTipoInstrumento() As Boolean
-        'Declaro las variables de la capa de datos y entidad
-        Dim CEObj As New CETipoInstrumento
-        Dim CNTipoInstrumentoIns As New CNInstrumentosComerciales
-
         'Obtengo los valores de los controles
-        CEObj.descripcion = getDescripcion()
-        CEObj.observaciones = getObservaciones()
+        objCETipoInstrumento.descripcion = getDescripcion()
+        objCETipoInstrumento.observaciones = getObservaciones()
 
         'Envio los valores a la capa entidad con el objeto a la funcion guardar nuevo tipo instrumento
-        Return CNTipoInstrumentoIns.InsertTipoInstrumento(CEObj)
+        Return objCNTipoInstrumento.InsertTipoInstrumento(objCETipoInstrumento)
 
     End Function
 
@@ -157,6 +151,5 @@ Public Class frmTipoInstrumento
     End Function
 
 #End Region
-
 
 End Class

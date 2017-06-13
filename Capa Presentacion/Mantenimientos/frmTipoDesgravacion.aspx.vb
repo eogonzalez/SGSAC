@@ -2,7 +2,9 @@
 Imports Capa_Entidad
 Public Class frmTipoDesgravacion
     Inherits System.Web.UI.Page
-    Dim objCNTipoDesgravacion As New CNInstrumentosComerciales
+    Dim objCNTipoDesgravacion As New CNTipoDesgravacion
+    Dim objCETipoDesgravacion As New CeTipoDesgravacion
+    Dim objCNCategoriasDesgravacion As New CNCategoriasDesgravacion
 
 #Region "Funciones del sistema"
 
@@ -73,25 +75,21 @@ Public Class frmTipoDesgravacion
 
     'Funcion para editar tipo desgravacion
     Private Function EditarTipoDesgravacion(ByVal id_tipoDesgravacion As Integer) As Boolean
-        'Declaro las variables de la capa de datos y entidad
-        Dim CE_objTipoDesgravacion As New CeTipoDesgravacion
-        Dim CN_objTipoDesgravacion As New CNInstrumentosComerciales
-
         'Obtengo los valores de los controles
-        CE_objTipoDesgravacion.id_tipo_desgravacion = id_tipoDesgravacion
-        CE_objTipoDesgravacion.descripcion = getDescripcion()
-        CE_objTipoDesgravacion.observaciones = getObservaciones()
+        objCETipoDesgravacion.id_tipo_desgravacion = id_tipoDesgravacion
+        objCETipoDesgravacion.descripcion = getDescripcion()
+        objCETipoDesgravacion.observaciones = getObservaciones()
 
         'Envio los valores a la capa entidad con el objeto a la funcion actualizar tipo desgravacion
-        Return CN_objTipoDesgravacion.UpdateTipoDesgravacion(CE_objTipoDesgravacion)
+        Return objCNTipoDesgravacion.UpdateTipoDesgravacion(objCETipoDesgravacion)
     End Function
 
     'Procedimiento para llenar formulario con el id de tipo de desgravacion
     Sub LlenarTipoDesgravacionMant(ByVal accion As String, ByVal id_tipoDesgravacion As Integer)
-        Dim Obj_CNTipoDesgravacionMant As New CNInstrumentosComerciales
+
 
         Dim dtTipoDesgravacion As New DataTable
-        dtTipoDesgravacion = Obj_CNTipoDesgravacionMant.SelectTipoDesgravacionMant(id_tipoDesgravacion)
+        dtTipoDesgravacion = objCNTipoDesgravacion.SelectTipoDesgravacionMant(id_tipoDesgravacion)
 
         If dtTipoDesgravacion.Rows.Count = 0 Then
             Mensaje("El Tipo de Desgravacion no existe")
@@ -118,23 +116,19 @@ Public Class frmTipoDesgravacion
     End Sub
 
     Private Function GuardarTipoDesgravacion() As Boolean
-        'Declaro las variables de la capa de datos y entidad
-        Dim CEObj As New CeTipoDesgravacion
-        Dim CNTipoDesgravacionIns As New CNInstrumentosComerciales
-
         'Obtengo los valores de los controles
-        CEObj.descripcion = getDescripcion()
-        CEObj.observaciones = getObservaciones()
+        objCETipoDesgravacion.descripcion = getDescripcion()
+        objCETipoDesgravacion.observaciones = getObservaciones()
 
         'Envio los valores a la capa entidad con el objeto a la funcion guardar nuevo tipo de desgravacion
-        Return CNTipoDesgravacionIns.InsertTipoDesgravacion(CEObj)
+        Return objCNTipoDesgravacion.InsertTipoDesgravacion(objCETipoDesgravacion)
 
     End Function
 
     'Procedimiento para llenar Gridview de Tipo de desgravacion
     Protected Sub Llenar_gvTipoDesgravacion()
         Dim tbl As DataTable
-        tbl = objCNTipoDesgravacion.SelectTipoDesgravacion.Tables(0)
+        tbl = objCNCategoriasDesgravacion.SelectTipoDesgravacion.Tables(0)
 
         With gvTipoDesgravacion
             .DataSource = tbl

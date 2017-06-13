@@ -3,7 +3,9 @@ Imports Capa_Entidad
 
 Public Class frmAsignaPrecisionTLC
     Inherits System.Web.UI.Page
-
+    Dim objCNAsignaPrecision As New CNAsignaPrecision
+    Dim objCEAsignaPrecision As New CEIncisoAsociaCategoria
+    Dim objCNAsignaCategoria As New CNAsignaCategoriasSAC
 #Region "Funciones del sistema"
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
@@ -194,22 +196,19 @@ Public Class frmAsignaPrecisionTLC
     End Sub
 
     Private Function EliminaPrecision(ByVal id_instrumento As Integer, ByVal codigo_inciso As String, ByVal inciso_precision As String) As Boolean
-        Dim objCEIncisoAsocia As New CEIncisoAsociaCategoria
-        Dim objCNIncisoAsigna As New CNInstrumentosComerciales
 
-        objCEIncisoAsocia.id_instrumento = id_instrumento
+        objCEAsignaPrecision.id_instrumento = id_instrumento
         'objCEIncisoAsocia.id_categoria = getIdCategoria()
-        objCEIncisoAsocia.codigo_inciso = codigo_inciso
-        objCEIncisoAsocia.codigo_precision = inciso_precision
+        objCEAsignaPrecision.codigo_inciso = codigo_inciso
+        objCEAsignaPrecision.codigo_precision = inciso_precision
 
-        Return objCNIncisoAsigna.DeletePrecision(objCEIncisoAsocia)
+        Return objCNAsignaPrecision.DeletePrecision(objCEAsignaPrecision)
     End Function
 
     'Metodo para llenar los controles del Mantenimiento
     Sub LlenarPrecisionMant(ByVal id_instrumento As Integer)
-        Dim objCNPrecision As New CNInstrumentosComerciales
 
-        With objCNPrecision.SelectDatosAsignaPrecisionMant(id_instrumento)
+        With objCNAsignaPrecision.SelectDatosAsignaPrecisionMant(id_instrumento)
             If Not .Tables(0).Rows.Count = 0 Then
                 txt_año_vigencia.Text = .Tables(0).Rows(0)("anio_version").ToString()
                 txt_version_enmienda.Text = .Tables(0).Rows(0)("enmienda").ToString()
@@ -228,10 +227,8 @@ Public Class frmAsignaPrecisionTLC
 
     'Metodo para llenar controles de la seleccion del inciso
     Sub LlenarSeleccionCodigoInciso(ByVal id_instrumento As Integer, ByVal inciso As String)
-        Dim objCNAsignaCat As New CNInstrumentosComerciales
 
-
-        With objCNAsignaCat.SelectDatosCodigoInciso(id_instrumento, inciso)
+        With objCNAsignaCategoria.SelectDatosCodigoInciso(id_instrumento, inciso)
 
             If Not .Tables(0).Rows.Count = 0 Then
                 txt_descripcion_capitulo.Text = .Tables(0).Rows(0)("descripcion_capitulo").ToString()
@@ -283,9 +280,7 @@ Public Class frmAsignaPrecisionTLC
     Private Function LlenarEncabezadoPrecision(ByVal accion As String, ByVal id_instrumento As Integer, ByVal codigo_inciso As String, ByVal inciso_presicion As String) As Boolean
         Dim estado As Boolean = False
 
-        Dim objEncabezadoPrecision As New CNInstrumentosComerciales
-
-        With objEncabezadoPrecision.SelectDatosEncabezadoPrecisionMant(id_instrumento)
+        With objCNAsignaPrecision.SelectDatosEncabezadoPrecisionMant(id_instrumento)
             If Not .Tables(0).Rows.Count = 0 Then
                 txt_version_enmienda_pnl.Text = .Tables(0).Rows(0)("enmienda").ToString()
                 txt_periodo_año_inicial_pnl.Text = .Tables(0).Rows(0)("anio_inicia_enmienda").ToString()
@@ -320,7 +315,7 @@ Public Class frmAsignaPrecisionTLC
 
 
 
-        With objEncabezadoPrecision.SelectIncisoPrecision(id_instrumento, codigo_inciso, inciso_presicion)
+        With objCNAsignaPrecision.SelectIncisoPrecision(id_instrumento, codigo_inciso, inciso_presicion)
             Dim id_categoria As Integer = 0
             Dim codigo_precision As String = Nothing
             Dim texto_precision As String = Nothing
@@ -362,16 +357,13 @@ Public Class frmAsignaPrecisionTLC
 
     'Funcion para almacenar la precision
     Private Function GuardarPrecision() As Boolean
-        Dim objCNPrecision As New CNInstrumentosComerciales
-        Dim objCEPrecision As New CEIncisoAsociaCategoria
+        objCEAsignaPrecision.id_instrumento = Session("id_instrumento")
+        objCEAsignaPrecision.codigo_inciso = Session("codigo_inciso")
+        objCEAsignaPrecision.id_categoria = getIdCategoria()
+        objCEAsignaPrecision.codigo_precision = getCodigoPrecision()
+        objCEAsignaPrecision.texto_precision = getTextoPrecision()
 
-        objCEPrecision.id_instrumento = Session("id_instrumento")
-        objCEPrecision.codigo_inciso = Session("codigo_inciso")
-        objCEPrecision.id_categoria = getIdCategoria()
-        objCEPrecision.codigo_precision = getCodigoPrecision()
-        objCEPrecision.texto_precision = getTextoPrecision()
-
-        Return objCNPrecision.InsertPrecision(objCEPrecision)
+        Return objCNAsignaPrecision.InsertPrecision(objCEAsignaPrecision)
     End Function
 
     'Metodo que limpia panel de precision

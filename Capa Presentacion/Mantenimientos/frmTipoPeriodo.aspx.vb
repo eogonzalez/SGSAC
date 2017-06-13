@@ -2,7 +2,8 @@
 Imports Capa_Entidad
 Public Class frmTipoPeriodo
     Inherits System.Web.UI.Page
-    Dim objCNTipoPeriodoCorte As New CNInstrumentosComerciales
+    Dim objCNTipoPeriodo As New CNTipoPeriodo
+    Dim objCETipoPeriodo As New CETipoPeriodo
 
 #Region "Funciones del sistema"
 
@@ -73,25 +74,19 @@ Public Class frmTipoPeriodo
 
     'Funcion para editar tipo instrumento
     Private Function EditarTipoPeriodo(ByVal id_tipoPeriodo As Integer) As Boolean
-        'Declaro las variables de la capa de datos y entidad
-        Dim CE_objTipoPeriodo As New CETipoPeriodo
-        Dim CN_objTipoPeriodo As New CNInstrumentosComerciales
-
         'Obtengo los valores de los controles
-        CE_objTipoPeriodo.id_tipo_periodo = id_tipoPeriodo
-        CE_objTipoPeriodo.descripcion = getDescripcion()
-        CE_objTipoPeriodo.observaciones = getObservaciones()
+        objCETipoPeriodo.id_tipo_periodo = id_tipoPeriodo
+        objCETipoPeriodo.descripcion = getDescripcion()
+        objCETipoPeriodo.observaciones = getObservaciones()
 
         'Envio los valores a la capa entidad con el objeto a la funcion actualizar tipo periodo
-        Return CN_objTipoPeriodo.UpdateTipoPeriodo(CE_objTipoPeriodo)
+        Return objCNTipoPeriodo.UpdateTipoPeriodo(objCETipoPeriodo)
     End Function
 
     'Procedimiento para llenar formulario con el id del instrumento
     Sub LlenarTipoPeriodoMant(ByVal accion As String, ByVal id_tipoPeriodo As Integer)
-        Dim Obj_CNTipoPeriodoMant As New CNInstrumentosComerciales
-
         Dim dtTipoPeriodo As New DataTable
-        dtTipoPeriodo = Obj_CNTipoPeriodoMant.SelectTipoPeriodoMant(id_tipoPeriodo)
+        dtTipoPeriodo = objCNTipoPeriodo.SelectTipoPeriodoMant(id_tipoPeriodo)
 
         If dtTipoPeriodo.Rows.Count = 0 Then
             Mensaje("El Tipo Periodo no existe")
@@ -120,7 +115,7 @@ Public Class frmTipoPeriodo
     'Procedimiento para llenar Gridview de Tipo periodo
     Protected Sub Llenar_gvTipoPeriodoCorte()
         Dim tbl As DataTable
-        tbl = objCNTipoPeriodoCorte.SelectTipoPeriodo.Tables(0)
+        tbl = objCNTipoPeriodo.SelectTipoPeriodo.Tables(0)
 
         With gvTipoPeriodoCorte
             .DataSource = tbl
@@ -130,16 +125,12 @@ Public Class frmTipoPeriodo
 
     'Funcion para guardar nuevo tipo periodo
     Private Function GuardarTipoPeriodo() As Boolean
-        'Declaro las variables de la capa de datos y entidad
-        Dim CEObj As New CETipoPeriodo
-        Dim CNTipoPeriodo As New CNInstrumentosComerciales
-
         'Obtengo los valores de los controles
-        CEObj.descripcion = getDescripcion()
-        CEObj.observaciones = getObservaciones()
+        objCETipoPeriodo.descripcion = getDescripcion()
+        objCETipoPeriodo.observaciones = getObservaciones()
 
         'Envio los valores a la capa entidad con el objeto a la funcion guardar nuevo tipo instrumento
-        Return CNTipoPeriodo.InsertTipoPeriodo(CEObj)
+        Return objCNTipoPeriodo.InsertTipoPeriodo(objCETipoPeriodo)
 
     End Function
 

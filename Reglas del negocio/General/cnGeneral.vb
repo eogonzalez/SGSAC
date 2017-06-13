@@ -20,4 +20,15 @@ Public Class cnGeneral
         Return objMenu.ObtenerNombreInstrumento(id_instrumento)
     End Function
 
+
+    'Funcion para seleccionar listado del combo tipo de instrumetos
+    Public Function SelectTipoInstrumento() As DataSet
+        Return objMenu.SelectTipoInstrumento
+    End Function
+
+    'Funcion para seleccionar listado del combo tipo de relaciones de instrumentos
+    Public Function SelectTipoRelacionInstrumento() As DataSet
+        Return objMenu.SelectTipoRelacionInstrumento
+    End Function
+
 End Class

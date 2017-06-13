@@ -2,7 +2,8 @@
 Imports Capa_Entidad
 Public Class frmConfigurarMenu
     Inherits System.Web.UI.Page
-    Dim objCN As New CNInstrumentosComerciales
+    Dim objCNMenu As New CNConfigurarMenu
+
 
 #Region "Funciones del Sistema"
 
@@ -117,7 +118,7 @@ Public Class frmConfigurarMenu
     Protected Sub Llenar_gvOpcionesMenu()
         Dim tbl As New DataTable
 
-        tbl = objCN.SelectOpcionesMenu()
+        tbl = objCNMenu.SelectOpcionesMenu()
 
         With gvOpcionesMenu
             .DataSource = tbl
@@ -148,7 +149,7 @@ Public Class frmConfigurarMenu
     Sub LlenarMenuOpcionMant(ByVal id_menu_opcion As Integer)
         Dim dtOpcion As New DataTable
 
-        dtOpcion = objCN.SelectOpcionMant(id_menu_opcion)
+        dtOpcion = objCNMenu.SelectOpcionMant(id_menu_opcion)
 
         If dtOpcion.Rows.Count = 0 Then
             Mensaje("La opcion no existe.")
@@ -254,7 +255,7 @@ Public Class frmConfigurarMenu
         obj_CEOpcion.id_padre = Nothing
 
 
-        Return objCN.SaveOpcionMenu(obj_CEOpcion)
+        Return objCNMenu.SaveOpcionMenu(obj_CEOpcion)
     End Function
 
     'Funcion que actualiza datos de la opcion del menu
@@ -270,7 +271,7 @@ Public Class frmConfigurarMenu
         obj_CeOpcion.visible = getVisible()
         obj_CeOpcion.id_padre = Nothing
 
-        Return objCN.UpdateOpcionMenu(obj_CeOpcion)
+        Return objCNMenu.UpdateOpcionMenu(obj_CeOpcion)
     End Function
 
 #End Region

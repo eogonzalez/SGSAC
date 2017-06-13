@@ -3,7 +3,9 @@ Imports Capa_Entidad
 
 Public Class frmTratadosyAcuerdos
     Inherits System.Web.UI.Page
-    Dim objCapaNegocio As New CNInstrumentosComerciales
+    Dim objCNTratados As New CNTratadosyAcuerdos
+    Dim ObjCEInstrumentoMant As New CEInstrumentosMant
+    Dim objCNGeneral As New cnGeneral
 
 #Region "Funciones del Sistema"
 
@@ -124,7 +126,7 @@ Public Class frmTratadosyAcuerdos
         Else
             hfIdInstrumento.Value = id_instrumento
             'Realiza calculo 
-            If objCapaNegocio.CalcularDAI(hfIdInstrumento.Value) Then
+            If objCNTratados.CalcularDAI(hfIdInstrumento.Value) Then
                 'Calculo se realizo con exito
                 Mensaje("Calculo se realizo con éxito.")
             Else
@@ -220,7 +222,7 @@ Public Class frmTratadosyAcuerdos
 
         Dim ds_CalculaDaiMant As New DataSet
 
-        ds_CalculaDaiMant = objCapaNegocio.SelectInstrumentoCalculoDAI(id_instrumento)
+        ds_CalculaDaiMant = objCNTratados.SelectInstrumentoCalculoDAI(id_instrumento)
 
         If ds_CalculaDaiMant.Tables(0).Rows.Count = 0 Then
             Mensaje("No existen datos de instrumentos para llenar opción.")
@@ -271,7 +273,7 @@ Public Class frmTratadosyAcuerdos
     Protected Sub Llenar_gvInstrumentos()
         Dim tbl As New DataTable
 
-        tbl = objCapaNegocio.SelectInstrumentos.Tables(0)
+        tbl = objCNTratados.SelectInstrumentos.Tables(0)
 
         With gvInstrumentos
             .DataSource = tbl
@@ -282,8 +284,8 @@ Public Class frmTratadosyAcuerdos
 
     'Procedimiento que llena el combo de tipo relacion instrumento
     Sub LlenarTipoRelacionInstrumento()
-        Dim objCNInstrumentos As New CNInstrumentosComerciales
-        With objCNInstrumentos.SelectTipoRelacionInstrumento
+
+        With objCNGeneral.SelectTipoRelacionInstrumento
             ddlstTipoRelacion.DataTextField = .Tables(0).Columns("descripcion").ToString()
             ddlstTipoRelacion.DataValueField = .Tables(0).Columns("id_tipo_relacion_instrumento").ToString()
             ddlstTipoRelacion.DataSource = .Tables(0)
@@ -295,9 +297,8 @@ Public Class frmTratadosyAcuerdos
 
     'Procedimiento que llena el combo de tipo instrumento
     Sub LlenarTipoInstrumento()
-        Dim objCNInstrumentos As New CNInstrumentosComerciales
 
-        With objCNInstrumentos.SelectTipoInstrumento
+        With objCNGeneral.SelectTipoInstrumento
             ddlstTipoInstrumento.DataTextField = .Tables(0).Columns("descripcion").ToString()
             ddlstTipoInstrumento.DataValueField = .Tables(0).Columns("id_tipo_instrumento").ToString()
             ddlstTipoInstrumento.DataSource = .Tables(0)
@@ -323,12 +324,8 @@ Public Class frmTratadosyAcuerdos
     'Procedimiento para llenar formulario con el id del instrumento seleccionado
     Sub LlenarInstrumentosMant(ByVal accion As String, ByVal id_instrumento As Integer)
 
-
-        Dim ObjCEInstrumentoMant As New CEInstrumentosMant
-        Dim ObjCNInstrumentoMant As New CNInstrumentosComerciales
-
         Dim datosInstrumentos As New DataTable
-        datosInstrumentos = ObjCNInstrumentoMant.SelectInstrumentoMant(id_instrumento)
+        datosInstrumentos = objCNTratados.SelectInstrumentoMant(id_instrumento)
 
         If datosInstrumentos.Rows.Count = 0 Then
 
@@ -354,48 +351,41 @@ Public Class frmTratadosyAcuerdos
 
     'Procedimiento para agregar nuevo instrumento
     Private Function GuardarInstrumento() As Boolean
-        'Declaro las varialbes de la capa de datos y entidad
-        Dim objeto As New CEInstrumentosMant
-        Dim cnInstrumentos As New CNInstrumentosComerciales
-
         'Obtengo los valores de los controles
-        objeto.id_instrumento = getIdInstrumento()
-        objeto.id_tipo_instrumento = getTipoInstrumento()
-        objeto.id_tipo_relacion_instrumento = getTipoRelacionInstrumento()
-        objeto.nombre_instrumento = getNombreInstrumento()
-        objeto.sigla = getSigla()
-        objeto.sigla_alternativa = getSiglaAlterna()
-        objeto.observaciones = getObservaciones()
-        objeto.fecha_firma = getFechaFirma()
-        objeto.fecha_ratificada = getFechaRatifica()
-        objeto.fecha_vigencia = getFechaVigencia()
-        objeto.estado = True
+        ObjCEInstrumentoMant.id_instrumento = getIdInstrumento()
+        ObjCEInstrumentoMant.id_tipo_instrumento = getTipoInstrumento()
+        ObjCEInstrumentoMant.id_tipo_relacion_instrumento = getTipoRelacionInstrumento()
+        ObjCEInstrumentoMant.nombre_instrumento = getNombreInstrumento()
+        ObjCEInstrumentoMant.sigla = getSigla()
+        ObjCEInstrumentoMant.sigla_alternativa = getSiglaAlterna()
+        ObjCEInstrumentoMant.observaciones = getObservaciones()
+        ObjCEInstrumentoMant.fecha_firma = getFechaFirma()
+        ObjCEInstrumentoMant.fecha_ratificada = getFechaRatifica()
+        ObjCEInstrumentoMant.fecha_vigencia = getFechaVigencia()
+        ObjCEInstrumentoMant.estado = True
 
         'Envio los valores a la capa entidad con el objeto a la funcion guardar nuevo instrumento
-        Return cnInstrumentos.InsertInstrumento(objeto)
+        Return objCNTratados.InsertInstrumento(ObjCEInstrumentoMant)
     End Function
 
     'Procedimiento para editar instrumento
     Private Function EditarInstrumento(ByVal idInstrumento As Integer) As Boolean
-        'Declaro las variables de la capa de datos y entidad
-        Dim CEObjeto As New CEInstrumentosMant
-        Dim CNInstrumentos As New CNInstrumentosComerciales
 
         'Obtengo los valores de los controles
-        CEObjeto.id_instrumento = idInstrumento
-        CEObjeto.id_tipo_instrumento = getTipoInstrumento()
-        CEObjeto.id_tipo_relacion_instrumento = getTipoRelacionInstrumento()
-        CEObjeto.nombre_instrumento = getNombreInstrumento()
-        CEObjeto.sigla = getSigla()
-        CEObjeto.sigla_alternativa = getSiglaAlterna()
-        CEObjeto.observaciones = getObservaciones()
-        CEObjeto.fecha_firma = getFechaFirma()
-        CEObjeto.fecha_ratificada = getFechaRatifica()
-        CEObjeto.fecha_vigencia = getFechaVigencia()
-        CEObjeto.estado = True
+        ObjCEInstrumentoMant.id_instrumento = idInstrumento
+        ObjCEInstrumentoMant.id_tipo_instrumento = getTipoInstrumento()
+        ObjCEInstrumentoMant.id_tipo_relacion_instrumento = getTipoRelacionInstrumento()
+        ObjCEInstrumentoMant.nombre_instrumento = getNombreInstrumento()
+        ObjCEInstrumentoMant.sigla = getSigla()
+        ObjCEInstrumentoMant.sigla_alternativa = getSiglaAlterna()
+        ObjCEInstrumentoMant.observaciones = getObservaciones()
+        ObjCEInstrumentoMant.fecha_firma = getFechaFirma()
+        ObjCEInstrumentoMant.fecha_ratificada = getFechaRatifica()
+        ObjCEInstrumentoMant.fecha_vigencia = getFechaVigencia()
+        ObjCEInstrumentoMant.estado = True
 
         'Envio los valores a la capa entidad con el Objeto a la funcion actualizar instrumentos
-        Return CNInstrumentos.UpdateInstrumento(CEObjeto)
+        Return objCNTratados.UpdateInstrumento(ObjCEInstrumentoMant)
 
     End Function
 

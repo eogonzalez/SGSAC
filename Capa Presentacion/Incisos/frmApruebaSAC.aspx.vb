@@ -1,7 +1,10 @@
 ﻿Imports Capa_Entidad
 Imports Reglas_del_negocio
 Public Class frmApruebaSAC
-    Inherits System.Web.UI.Page
+    Inherits System.Web.UI.Page    
+    Dim objCNAprueba As New CNApruebaSAC
+    Dim objCNCorrelacion As New CNCorrelacionSAC
+    Dim c_login As New CNLogin
 
 #Region "Funciones del sistema"
 
@@ -29,7 +32,7 @@ Public Class frmApruebaSAC
 
         If ValidaFirmas() Then
             'Ejecuta Aprobacion
-            Dim objInstrumento As New CNInstrumentosComerciales
+
 
             id_version = Session("id_version")
             anio_version_SAC = Session("anio_version_SAC")
@@ -37,9 +40,9 @@ Public Class frmApruebaSAC
             anio_final_enmienda = Session("anio_final_enmienda")
             anio_version_new = Session("anio_version_new")
 
-            If objInstrumento.VerificaApruebaSAC(anio_version_new) Then
+            If objCNAprueba.VerificaApruebaSAC(anio_version_new) Then
 
-                If objInstrumento.ApruebaSAC(id_version, anio_version_SAC, anio_inicia_enmienda, anio_final_enmienda, anio_version_new) Then
+                If objCNAprueba.ApruebaSAC(id_version, anio_version_SAC, anio_inicia_enmienda, anio_final_enmienda, anio_version_new) Then
                     Mensaje("Proceso de aprobacion del SAC ha finalizado con exito.")
                 Else
                     Mensaje("Ha ocurrido un error en el Proceso de aprobacion del SAC.")
@@ -119,7 +122,7 @@ Public Class frmApruebaSAC
     End Function
 
     Sub LlenarCorrelacionMant()
-        Dim objCNCorrelacion As New CNInstrumentosComerciales
+
 
         With objCNCorrelacion.SelectCorrelacionMant()
 
@@ -165,7 +168,7 @@ Public Class frmApruebaSAC
 
         Dim str_usuario As String
         Dim str_contraseña As String
-        Dim c_login As New CNLogin
+
 
         str_usuario = usuario.Replace(";", "").Replace("--", "")
         str_contraseña = contraseña.Replace(";", "").Replace("--", "")

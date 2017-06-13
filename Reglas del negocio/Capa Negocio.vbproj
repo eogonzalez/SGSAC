@@ -62,11 +62,18 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Administracion\CNConfigurarMenu.vb" />
     <Compile Include="General\cnGeneral.vb" />
-    <Compile Include="CNInstrumentosComerciales.vb" />
     <Compile Include="General\CNLogin.vb" />
+    <Compile Include="Incisos\CNApruebaSAC.vb" />
+    <Compile Include="Incisos\CNCorrelacionSAC.vb" />
+    <Compile Include="Incisos\CNEnmiendas.vb" />
     <Compile Include="Mantenimientos\CNPartidas.vb" />
     <Compile Include="Mantenimientos\CNSubPartidas.vb" />
+    <Compile Include="Mantenimientos\CNTipoDesgravacion.vb" />
+    <Compile Include="Mantenimientos\CNTipoInstrumentos.vb" />
+    <Compile Include="Mantenimientos\CNTipoPeriodo.vb" />
+    <Compile Include="Mantenimientos\CNTipoRelacionInstrumento.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -84,6 +91,13 @@
     </Compile>
     <Compile Include="Reportes\CNReportesGeneral.vb" />
     <Compile Include="Reportes\CNReporteVerSAC.vb" />
+    <Compile Include="Tratados\CNAsignaCategoriasSAC.vb" />
+    <Compile Include="Tratados\CNAsignaPrecision.vb" />
+    <Compile Include="Tratados\CNCategoriasDesgravacion.vb" />
+    <Compile Include="Tratados\CNCierraInstrumento.vb" />
+    <Compile Include="Tratados\CNCorteDesgravacion.vb" />
+    <Compile Include="Tratados\CNPaisesInstrumento.vb" />
+    <Compile Include="Tratados\CNTratadosyAcuerdos.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

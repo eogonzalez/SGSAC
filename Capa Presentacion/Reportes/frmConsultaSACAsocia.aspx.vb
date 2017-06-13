@@ -113,8 +113,7 @@ Public Class frmConsultaSACAsocia
 
     End Sub
 
-    Private Sub LlenarGridView()
-        Dim objCNAsignaCat As New CNInstrumentosComerciales
+    Private Sub LlenarGridView()        
         Dim id_instrumento As Integer = ddl_instrumento_comercial.SelectedValue
         Dim all_cat As Boolean
         Dim all_incisos As Boolean

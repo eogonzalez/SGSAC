@@ -2,7 +2,8 @@
 Imports Capa_Entidad
 Public Class frmEnmiendas
     Inherits System.Web.UI.Page
-    Dim objCapaNegocio As New CNInstrumentosComerciales
+    Dim objCNEnmienda As New CNEnmiendas
+    Dim objCNCorrelacion As New CNCorrelacionSAC
 
 #Region "Funciones del Sistema"
 
@@ -38,8 +39,8 @@ Public Class frmEnmiendas
     End Sub
 
     Protected Sub lkBtt_categorias_Click(sender As Object, e As EventArgs) Handles lkBtt_categorias.Click
-        If objCapaNegocio.ExisteVersionSACPendiente() Then
-            If objCapaNegocio.CantidadVersionesSACPendientes > 1 Then
+        If objCNEnmienda.ExisteVersionSACPendiente() Then
+            If objCNEnmienda.CantidadVersionesSACPendientes > 1 Then
                 Mensaje("Solo puede existir una version pendiente.")
             Else
                 Response.Redirect("~/Incisos/frmCorrelacionSAC.aspx")
@@ -126,7 +127,7 @@ Public Class frmEnmiendas
         CEObjeto.observaciones = getBaseNormativa()
 
         'Envio los valores a la capa entidad con el Objeto a la funcion actualizar instrumentos
-        Return objCapaNegocio.UpdateVersionSAC(CEObjeto)
+        Return objCNCorrelacion.UpdateVersionSAC(CEObjeto)
 
     End Function
 
@@ -143,7 +144,7 @@ Public Class frmEnmiendas
         objEnmiendas.observaciones = getBaseNormativa()
 
         'Envio los valores a la capa entidad con el objeto a la funcion guardar nuevo instrumento
-        Return objCapaNegocio.InsertVersionSAC(objEnmiendas)
+        Return objCNCorrelacion.InsertVersionSAC(objEnmiendas)
 
     End Function
 
@@ -160,7 +161,7 @@ Public Class frmEnmiendas
     'Procedimiento para llenar formulario con el id de la version del sac seleccionado
     Sub LlenarVersionSACMant(ByVal accion As String, ByVal id_version_sac As Integer, ByVal anio_version As Integer)
         Dim datosVersionSac As New DataTable
-        datosVersionSac = objCapaNegocio.SelectVersionSACMant(id_version_sac, anio_version)
+        datosVersionSac = objCNCorrelacion.SelectVersionSACMant(id_version_sac, anio_version)
 
         If datosVersionSac.Rows.Count = 0 Then
             Mensaje("El Version de SAC no existe")
@@ -228,7 +229,7 @@ Public Class frmEnmiendas
     Protected Sub Llenar_gv_Enmiendas_Sac()
         Dim tbl As New DataTable
 
-        tbl = objCapaNegocio.SelectEnmiendas.Tables(0)
+        tbl = objCNCorrelacion.SelectEnmiendas.Tables(0)
 
 
         With gv_Versiones_SAC
@@ -239,7 +240,7 @@ Public Class frmEnmiendas
 
     'Funcion para verificar si puede abrir nueva version
     Private Function ExisteVersionSAC() As Boolean
-        Return objCapaNegocio.ExisteVersionSACPendiente()
+        Return objCNEnmienda.ExisteVersionSACPendiente()
     End Function
 
 #End Region

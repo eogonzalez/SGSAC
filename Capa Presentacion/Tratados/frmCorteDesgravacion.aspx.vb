@@ -4,7 +4,9 @@ Imports Reglas_del_negocio
 
 Public Class frmCorteDesgravacion
     Inherits System.Web.UI.Page
-    Dim objCNInstrumentos As New CNInstrumentosComerciales
+    Dim objCNCorte As New CNCorteDesgravacion
+    Dim objCECorte As New CECorteDesgravacion
+    Dim objCNCategoriasDesgravacion As New CNCategoriasDesgravacion
 
 #Region "Funciones del sistema"
 
@@ -88,30 +90,24 @@ Public Class frmCorteDesgravacion
 
     'Funcion para actualizar el tramo
     Protected Function ConfigurarTramo(ByVal id_instrumento As Integer, ByVal id_categoria As Integer, ByVal id_tramos As Integer) As Boolean
-        'Declaro las variables de la capa de datos y entidad
-        Dim CEObjeto As New CECorteDesgravacion
-        Dim CNTramo As New CNInstrumentosComerciales
 
         'Obtengo los valores de los controles
-        CEObjeto.id_instrumento = id_instrumento
-        CEObjeto.id_categoria = id_categoria
-        CEObjeto.id_tramos = id_tramos
-        CEObjeto.id_tipo_periodo = getTipoPeriodo()
-        CEObjeto.cantidad_cortes = getCantidadTramos()
-        CEObjeto.porcen_periodo_anterior = getPeriodoAnterior()
-        CEObjeto.porcen_periodo_final = getPeriodoFinal()
-        CEObjeto.factor_desgrava = getFactorDesgrava()
+        objCECorte.id_instrumento = id_instrumento
+        objCECorte.id_categoria = id_categoria
+        objCECorte.id_tramos = id_tramos
+        objCECorte.id_tipo_periodo = getTipoPeriodo()
+        objCECorte.cantidad_cortes = getCantidadTramos()
+        objCECorte.porcen_periodo_anterior = getPeriodoAnterior()
+        objCECorte.porcen_periodo_final = getPeriodoFinal()
+        objCECorte.factor_desgrava = getFactorDesgrava()
 
-        Return CNTramo.UpdateTramoCategoriaMant(CEObjeto)
+        Return objCNCorte.UpdateTramoCategoriaMant(objCECorte)
     End Function
 
     'Funcion para llenar los controles con el id_instrumento, id_categoria y id_tramo
     Sub LlenarTramoCategoriaMant(ByVal accion As String, ByVal id_instrumento As Integer, ByVal id_categoria As Integer, ByVal id_tramo As Integer)
-        Dim objCE_Tramo As New CETramoCategoria
-        Dim objCN_Tramo As New CNInstrumentosComerciales
-
         Dim datosTramo As New DataTable
-        datosTramo = objCN_Tramo.SelectTramoCategoriaMant(id_instrumento, id_categoria, id_tramo)
+        datosTramo = objCNCorte.SelectTramoCategoriaMant(id_instrumento, id_categoria, id_tramo)
 
         If datosTramo.Rows.Count = 0 Then
             Mensaje("Tramo no existe")
@@ -140,7 +136,7 @@ Public Class frmCorteDesgravacion
 
     'Procedimiento para llenar el combo de tipo de periodo
     Sub LlenarTipoPeriodo()
-        Dim objCNTramo As New CNInstrumentosComerciales
+        Dim objCNTramo As New CNTipoPeriodo
 
         With objCNTramo.SelectTipoPeriodo
             ddl_tipo_periodo_corte.DataTextField = .Tables(0).Columns("descripcion").ToString()
@@ -153,9 +149,7 @@ Public Class frmCorteDesgravacion
 
     'Procedimiento para llenar el combo de tipo de desgravacion
     Sub LlenarTipoDesgravacion()
-        Dim objCNTramo As New CNInstrumentosComerciales
-
-        With objCNTramo.SelectTipoDesgravacion
+        With objCNCategoriasDesgravacion.SelectTipoDesgravacion
             ddl_tipo_desgravacion.DataTextField = .Tables(0).Columns("descripcion").ToString()
             ddl_tipo_desgravacion.DataValueField = .Tables(0).Columns("id_tipo_desgrava").ToString()
             ddl_tipo_desgravacion.DataSource = .Tables(0)
@@ -188,7 +182,7 @@ Public Class frmCorteDesgravacion
         Dim id_instrumento As Integer = hfIdInstrumento.Value
         Dim id_categoria As Integer = hfIdCategoria.Value
 
-        dtbl = objCNInstrumentos.SelectTramoCategoria(id_instrumento, id_categoria)
+        dtbl = objCNCorte.SelectTramoCategoria(id_instrumento, id_categoria)
 
         With gvTramos
             .DataSource = dtbl
@@ -201,12 +195,10 @@ Public Class frmCorteDesgravacion
     'Funcion que verifica si ya estan aprobadas las categorias
     Protected Function VerificaCategoriasEstado(ByVal id_instrumento As Integer) As Boolean
         'si retorna Verdadero las categorias ya estan aprobadas
-        Return objCNInstrumentos.VerificaCategoriasEstado(id_instrumento)
+        Return objCNCategoriasDesgravacion.VerificaCategoriasEstado(id_instrumento)
     End Function
 
 
 #End Region
-
-
 
 End Class

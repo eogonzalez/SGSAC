@@ -67,7 +67,6 @@
     <Compile Include="Incisos\CEEnmiendas.vb" />
     <Compile Include="Tratados\CEIncisoAsociaCategoria.vb" />
     <Compile Include="Tratados\CeInstrumentoPais.vb" />
-    <Compile Include="Tratados\CeInstrumentoPaisMant.vb" />
     <Compile Include="Tratados\CEInstrumentosMant.vb" />
     <Compile Include="Administracion\CEOpcionMenu.vb" />
     <Compile Include="Mantenimientos\CeTipoDesgravacion.vb" />

@@ -2,7 +2,10 @@
 Imports Reglas_del_negocio
 Public Class frmCierraInstrumento
     Inherits System.Web.UI.Page
-    Dim objCN As New CNInstrumentosComerciales
+
+    Dim objCNTratados As New CNTratadosyAcuerdos
+    Dim objCNCierra As New CNCierraInstrumento
+
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not IsPostBack Then
             Llenar_ComboInstrumento()
@@ -13,7 +16,7 @@ Public Class frmCierraInstrumento
 
     Sub Llenar_ComboInstrumento()
 
-        With objCN.SelectInstrumentos
+        With objCNTratados.SelectInstrumentos
             ddl_instrumento.DataTextField = .Tables(0).Columns("nombre_instrumento").ToString()
             ddl_instrumento.DataValueField = .Tables(0).Columns("id_instrumento").ToString()
             ddl_instrumento.DataSource = .Tables(0)
@@ -32,7 +35,7 @@ Public Class frmCierraInstrumento
     Sub Llenar_gvResumen(ByVal id_instrumento As Integer)
         Dim tbl As New DataTable
 
-        tbl = objCN.SelectResumenInstrumento(id_instrumento)
+        tbl = objCNCierra.SelectResumenInstrumento(id_instrumento)
 
         With gvInstrumentos
             .DataSource = tbl
@@ -43,7 +46,7 @@ Public Class frmCierraInstrumento
 
     Protected Sub ddl_instrumento_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ddl_instrumento.SelectedIndexChanged
         Dim tbl As DataTable
-        tbl = objCN.SelectInstrumentos.Tables(0)
+        tbl = objCNTratados.SelectInstrumentos.Tables(0)
 
         Llenar_DetallesInstrumento(ddl_instrumento.SelectedValue, tbl)
         Llenar_gvResumen(ddl_instrumento.SelectedValue)

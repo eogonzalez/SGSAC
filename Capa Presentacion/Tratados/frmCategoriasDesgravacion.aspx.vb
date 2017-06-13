@@ -3,7 +3,8 @@ Imports Reglas_del_negocio
 
 Public Class frmCategoriasDesgravacion
     Inherits System.Web.UI.Page
-    Dim objCNInstrumentos As New CNInstrumentosComerciales
+    Dim objCNCategorias As New CNCategoriasDesgravacion
+    Dim objCECategorias As New CECategoriaDesgravacion
     Dim objGeneral As New cnGeneral
 
 #Region "Funciones del sistema"
@@ -101,7 +102,7 @@ Public Class frmCategoriasDesgravacion
             Mensaje("No es posible aprobar categorias, las categorias han sido aprobadas previamente.")
             Exit Sub
         Else
-            If objCNInstrumentos.ApruebaCategoria(hfIdInstrumento.Value) Then
+            If objCNCategorias.ApruebaCategoria(hfIdInstrumento.Value) Then
                 Mensaje("Categorias Aprobadas Con Exito")
             Else
                 Mensaje("No es posible aprobar categorias")
@@ -183,7 +184,7 @@ Public Class frmCategoriasDesgravacion
     Protected Sub LlenarApruebaMant(ByVal id_instrumento As Integer)
         Dim dtApruebaMant As New DataTable
 
-        dtApruebaMant = objCNInstrumentos.SelectInstrumentoCategoria(id_instrumento)
+        dtApruebaMant = objCNCategorias.SelectInstrumentoCategoria(id_instrumento)
 
         If dtApruebaMant.Rows.Count = 0 Then
             Mensaje("No existen datos para llenar opcion.")
@@ -198,29 +199,24 @@ Public Class frmCategoriasDesgravacion
 
     'Funcion  para actualizar categoria
     Protected Function EditarCategoria(ByVal id_instrumento As Integer, ByVal id_categoria As Integer) As Boolean
-        'Declaro las variables de la capa de datos y entidad
-        Dim CEObjeto As New CECategoriaDesgravacion
-        Dim CNCategoria As New CNInstrumentosComerciales
 
         'Obtengo los valores de los controles
-        CEObjeto.id_instrumento = id_instrumento
-        CEObjeto.id_categoria = hfIdCategoria.Value
-        CEObjeto.codigo_categoria = getCodigoCategoria()
-        CEObjeto.id_tipo_desgravacion = getTipoDesgravacion()
-        CEObjeto.cantidad_tramos = getCantidadTramos()
-        CEObjeto.observaciones = getObservaciones()
+        objCECategorias.id_instrumento = id_instrumento
+        objCECategorias.id_categoria = hfIdCategoria.Value
+        objCECategorias.codigo_categoria = getCodigoCategoria()
+        objCECategorias.id_tipo_desgravacion = getTipoDesgravacion()
+        objCECategorias.cantidad_tramos = getCantidadTramos()
+        objCECategorias.observaciones = getObservaciones()
 
-        Return CNCategoria.UpdateCategoriaDesgrava(CEObjeto)
+        Return objCNCategorias.UpdateCategoriaDesgrava(objCECategorias)
 
     End Function
 
     'Funcion para llenar los controles con el id_categoria
     Sub LlenarCategoriasMant(ByVal accion As String, ByVal id_categoria As Integer, ByVal id_instrumento As Integer)
-        Dim objCe_Categorias As New CECategoriaDesgravacion
-        Dim objCN_Categorias As New CNInstrumentosComerciales
 
         Dim datosCategoria As New DataTable
-        datosCategoria = objCN_Categorias.SelectCategoriaDesgravaMant(id_categoria, id_instrumento)
+        datosCategoria = objCNCategorias.SelectCategoriaDesgravaMant(id_categoria, id_instrumento)
 
         If datosCategoria.Rows.Count = 0 Then
             Mensaje("Categoria no existe")
@@ -253,26 +249,21 @@ Public Class frmCategoriasDesgravacion
 
     'Guardar nueva categoria
     Protected Function GuardarCategoriaDesgrava() As Boolean
-        'Declaro los objetos de las clases de datos y negocio
-        Dim objCN_Categorias As New CNInstrumentosComerciales
-        Dim objCE_Categorias As New CECategoriaDesgravacion
 
         'Obtengo valores de los controles
-        objCE_Categorias.id_instrumento = hfIdInstrumento.Value
-        objCE_Categorias.codigo_categoria = getCodigoCategoria()
-        objCE_Categorias.cantidad_tramos = getCantidadTramos()
-        objCE_Categorias.id_tipo_desgravacion = getTipoDesgravacion()
-        objCE_Categorias.observaciones = getObservaciones()
+        objCECategorias.id_instrumento = hfIdInstrumento.Value
+        objCECategorias.codigo_categoria = getCodigoCategoria()
+        objCECategorias.cantidad_tramos = getCantidadTramos()
+        objCECategorias.id_tipo_desgravacion = getTipoDesgravacion()
+        objCECategorias.observaciones = getObservaciones()
 
         'Envio el objeto al metodo para insertar categorias y tramos
-        Return objCN_Categorias.InsertCategoriaDesgrava(objCE_Categorias)
+        Return objCNCategorias.InsertCategoriaDesgrava(objCECategorias)
     End Function
 
     'Procedimiento para llenar el combo de tipo de desgravacion
     Sub LlenarTipoDesgravacion()
-        Dim objCNCategoria As New CNInstrumentosComerciales
-
-        With objCNCategoria.SelectTipoDesgravacion
+        With objCNCategorias.SelectTipoDesgravacion
             ddl_tipo_desgravacion.DataTextField = .Tables(0).Columns("descripcion").ToString()
             ddl_tipo_desgravacion.DataValueField = .Tables(0).Columns("id_tipo_desgrava").ToString()
             ddl_tipo_desgravacion.DataSource = .Tables(0)
@@ -300,7 +291,7 @@ Public Class frmCategoriasDesgravacion
         Dim dtbl As DataTable
         Dim id_instrumento As Integer = hfIdInstrumento.Value
 
-        dtbl = objCNInstrumentos.SelectCategoriasDesgrava(id_instrumento)
+        dtbl = objCNCategorias.SelectCategoriasDesgrava(id_instrumento)
 
         With gvCategorias
             .DataSource = dtbl
@@ -313,20 +304,19 @@ Public Class frmCategoriasDesgravacion
     'Funcion que verifica si ya estan aprobadas las categorias
     Protected Function VerificaCategoriasEstado(ByVal id_instrumento As Integer) As Boolean
         'si retorna Verdadero las categorias ya estan aprobadas
-        Return objCNInstrumentos.VerificaCategoriasEstado(id_instrumento)
+        Return objCNCategorias.VerificaCategoriasEstado(id_instrumento)
     End Function
 
     'Funcion para eliminar categoria
     Protected Function EliminaCategoria(ByVal objCategoriasDesgravacion As CECategoriaDesgravacion) As Boolean
-        Return objCNInstrumentos.DeleteCategoria(objCategoriasDesgravacion)
+        Return objCNCategorias.DeleteCategoria(objCategoriasDesgravacion)
     End Function
 
     'Funcion que verifica si categoria esta asociada
     Protected Function VerificaCategoriaAsociacion(ByVal objCategoriasDesgravacion As CECategoriaDesgravacion) As Boolean
-        Return objCNInstrumentos.VerificaCategoriaAsocia(objCategoriasDesgravacion)
+        Return objCNCategorias.VerificaCategoriaAsocia(objCategoriasDesgravacion)
     End Function
 
 #End Region
 
-    
 End Class

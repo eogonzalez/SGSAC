@@ -2,6 +2,7 @@
 Imports Reglas_del_negocio
 Public Class frmAsignaCategoriasSAC
     Inherits System.Web.UI.Page
+    Dim objCNAsignaCategoria As CNAsignaCategoriasSAC
 
 #Region "Funciones del sistema"
 
@@ -231,7 +232,7 @@ Public Class frmAsignaCategoriasSAC
     End Sub
 
     Protected Sub btn_asigna_categoria_Click(sender As Object, e As EventArgs) Handles btn_asigna_categoria.Click
-        Dim objCN_asigna As New CNInstrumentosComerciales
+
         Dim objCEAsigna As New CEIncisoAsociaCategoria
 
         Dim tabla_incisos As DataTable
@@ -250,7 +251,7 @@ Public Class frmAsignaCategoriasSAC
         objCEAsigna.id_categoria = getIdCategoria()
 
 
-        If objCN_asigna.InsertAsignaCategoria(objCEAsigna) Then
+        If objCNAsignaCategoria.InsertAsignaCategoria(objCEAsigna) Then
 
             Mensaje("Se asigno categoria con exito.")
 
@@ -293,10 +294,8 @@ Public Class frmAsignaCategoriasSAC
 
     'Metodo para llenar controles de la seleccion del inciso
     Sub LlenarSeleccionCodigoInciso(ByVal id_instrumento As Integer, ByVal inciso As String)
-        Dim objCNAsignaCat As New CNInstrumentosComerciales
 
-
-        With objCNAsignaCat.SelectDatosCodigoInciso(id_instrumento, inciso)
+        With objCNAsignaCategoria.SelectDatosCodigoInciso(id_instrumento, inciso)
 
             If Not .Tables(0).Rows.Count = 0 Then
                 txt_descripcion_capitulo.Text = .Tables(0).Rows(0)("descripcion_capitulo").ToString()
@@ -339,10 +338,10 @@ Public Class frmAsignaCategoriasSAC
 
     'Metodo para llenar los controles del Mantenimiento
     Sub LlenarAsignaCategoriaMant(ByVal id_instrumento As Integer)
-        Dim objCNAsignaCat As New CNInstrumentosComerciales
+
         Dim categoria_id As Integer
 
-        With objCNAsignaCat.SelectDatosAsignaCategoriaMant(id_instrumento)
+        With objCNAsignaCategoria.SelectDatosAsignaCategoriaMant(id_instrumento)
 
             If Not .Tables(0).Rows.Count = 0 Then
                 txt_año_vigencia.Text = .Tables(0).Rows(0)("anio_version").ToString()

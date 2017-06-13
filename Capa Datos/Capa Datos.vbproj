@@ -63,12 +63,19 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CDInstrumentosComerciales.vb" />
+    <Compile Include="Administracion\ConfigurarMenu.vb" />
     <Compile Include="General\Coneccion.vb" />
+    <Compile Include="Incisos\ApruebaSAC.vb" />
+    <Compile Include="Incisos\CorrelacionSAC.vb" />
+    <Compile Include="Incisos\Enmiendas.vb" />
     <Compile Include="Mantenimientos\CDPartidas.vb" />
     <Compile Include="Mantenimientos\CDSubPartidas.vb" />
     <Compile Include="General\General.vb" />
     <Compile Include="General\Login.vb" />
+    <Compile Include="Mantenimientos\TipoDesgravacion.vb" />
+    <Compile Include="Mantenimientos\TipoInstrumentos.vb" />
+    <Compile Include="Mantenimientos\TipoPeriodo.vb" />
+    <Compile Include="Mantenimientos\TipoRelacionInstrumento.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -86,6 +93,13 @@
     </Compile>
     <Compile Include="Reportes\CDReportesGeneral.vb" />
     <Compile Include="Reportes\CDReporteVerSAC.vb" />
+    <Compile Include="Tratados\AsignaCategoriasSAC.vb" />
+    <Compile Include="Tratados\AsignaPrecision.vb" />
+    <Compile Include="Tratados\CategoriasDesgravacion.vb" />
+    <Compile Include="Tratados\CierraInstrumento.vb" />
+    <Compile Include="Tratados\CorteDesgravacion.vb" />
+    <Compile Include="Tratados\PaisesInstrumento.vb" />
+    <Compile Include="Tratados\TratadosyAcuerdos.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
